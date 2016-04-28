@@ -1,0 +1,28 @@
+{
+  "name": "tapnwin-backend",
+  "version": "0.0.1",
+  "description": "Tap&Win's games backend",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app.js",
+    "nodemon": "nodemon ./app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://jlsan92@bitbucket.org/ludopia/tapnwin-backend.git"
+  },
+  "author": "Juan Sanchez",
+  "license": "SEE LICENSE IN LICENSE FILE",
+  "homepage": "https://bitbucket.org/ludopia/tapnwin-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.13",
+    "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.9.1"
+  }
+}
