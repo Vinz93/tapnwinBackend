@@ -1,5 +1,7 @@
 'use strict';
 
+//TODO: Global config file for default values/messages
+
 /**
  * Module dependencies.
  */
