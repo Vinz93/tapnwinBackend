@@ -6,19 +6,11 @@
 
 'use strict';
 
-/**
- * Module dependencies.
- */
-
 const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
 const crypto = require('crypto');
 
 const Schema = mongoose.Schema;
-
-/**
- * Validators
- */
 
 const emailValidator = [
   validate({
@@ -26,10 +18,6 @@ const emailValidator = [
     message: 'not a valid email'
   })
 ];
-
-/**
- * Schema
- */
 
 const UserSchema = new Schema({
   firstName: {
@@ -68,10 +56,6 @@ const UserSchema = new Schema({
   timestamps: true
 });
 
-/**
- * Methods
- */
-
 UserSchema.methods = {
 
   /**
@@ -87,10 +71,6 @@ UserSchema.methods = {
   }
 
 };
-
-/**
-* Statics
-*/
 
 UserSchema.statics = {
 

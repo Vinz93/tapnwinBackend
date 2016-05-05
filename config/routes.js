@@ -10,8 +10,6 @@ const router = require('express').Router();
  * Controllers dependencies.
  */
 
-const user = require('../controllers/user');
-
 /**
  * Expose
  */
