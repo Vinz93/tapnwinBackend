@@ -35,13 +35,13 @@ const MissionsListSchema = new Schema({
   }
 });
 
-const GamesInstancesSchema = new Schema({
+const GamesListSchema = new Schema({
   gameId: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Game'
   },
-  missionInstances: [MissionsListSchema]
+  missions: [MissionsListSchema]
 });
 
 const CampaignSchema = new Schema({
@@ -50,7 +50,7 @@ const CampaignSchema = new Schema({
     required: true,
     ref: 'Company'
   },
-  gameInstances: [GamesInstancesSchema],
+  games: [GamesListSchema],
   name: {
     type: String,
     required: true
@@ -59,11 +59,11 @@ const CampaignSchema = new Schema({
     type: String,
     required: true
   },
-  startDate: {
+  startAt: {
     type: Date,
     required: true
   },
-  finishDate: {
+  finishAt: {
     type: Date,
     required: true
   }

@@ -10,10 +10,18 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
+const urlValidator = [
+  validate({
+    validator: 'isURL',
+    message: 'not a valid url'
+  })
+];
+
 const ItemSchema = new Schema({
-  assetUrl: {
+  url: {
     type: String,
-    required: true
+    required: true,
+    validate: urlValidator
   }
 });
 
@@ -30,7 +38,7 @@ const CategorySchema = new Schema({
   zone: {
     type: String,
     enum: {
-      values: 'chest legs shoes'.split(' '),
+      values: 'top mid bot'.split(' '),
       message: '`{VALUE}` is not a valid zone'
     }
   },
