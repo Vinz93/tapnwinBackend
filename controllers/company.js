@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 
-require('../../models/shared/company');
+require('../models/company');
 
 const User = mongoose.model('Company');
 
