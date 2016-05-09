@@ -13,4 +13,4 @@ const CompanySchema = new Schema({
   timestamps: true
 });
 
-const Company = mongoose.model('Company', CompanySchema);
+mongoose.model('Company', CompanySchema);

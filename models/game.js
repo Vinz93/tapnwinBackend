@@ -13,4 +13,4 @@ const GameSchema = new Schema({
   timestamps: true
 });
 
-const Game = mongoose.model('Game', GameSchema);
+mongoose.model('Game', GameSchema);

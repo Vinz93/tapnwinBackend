@@ -31,11 +31,6 @@ module.exports = app;
 // Bootstrap routes
 require('./config/express')(app);
 
-connect()
- .on('error', console.log)
- .on('disconnected', connect)
- .once('open', listen);
-
 function listen () {
  if (app.get('env') === 'test') return;
  app.listen(port);
@@ -46,3 +41,8 @@ function connect () {
  var options = { server: { socketOptions: { keepAlive: 1 } } };
  return mongoose.connect(config.db, options).connection;
 }
+
+connect()
+ .on('error', console.log)
+ .on('disconnected', connect)
+ .once('open', listen);

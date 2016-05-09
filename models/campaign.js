@@ -79,4 +79,4 @@ CampaignSchema.statics = {
 
 };
 
-const Campaign = mongoose.model('Campaign', CampaignSchema);
+mongoose.model('Campaign', CampaignSchema);

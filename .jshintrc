@@ -10,5 +10,7 @@
   "newcap": true,
   "camelcase": true,
   "sub": true,
-  "quotmark": "single"
+  "quotmark": "single",
+  "esversion": 6,
+  "node": true
 }

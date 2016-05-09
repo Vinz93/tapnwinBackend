@@ -7,6 +7,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const validate = require('mongoose-validator');
 
 const Schema = mongoose.Schema;
 
@@ -53,4 +54,4 @@ CategorySchema.statics = {
 
 };
 
-const Category = mongoose.model('Category', CategorySchema);
+mongoose.model('Category', CategorySchema);

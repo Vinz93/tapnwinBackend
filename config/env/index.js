@@ -1,8 +1,5 @@
 'use strict';
 
-/**
- * Module dependencies
- */
 const path = require('path');
 const extend = require('util')._extend;
 
@@ -12,10 +9,6 @@ const production = require('./production');
 const defaults = {
   root: path.join(__dirname, '..')
 };
-
-/**
- * Expose
- */
 
 module.exports = {
   development: extend(development, defaults),

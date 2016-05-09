@@ -1,6 +1,6 @@
 /**
  * @author Juan Sanchez
- * @description User model definition
+ * @description Admin model definition
  * @lastModifiedBy Juan Sanchez
  */
 
@@ -19,7 +19,7 @@ const emailValidator = [
   })
 ];
 
-const UserSchema = new Schema({
+const AdminSchema = new Schema({
   firstName: {
     type: String,
     required: true
@@ -27,17 +27,6 @@ const UserSchema = new Schema({
   lastName: {
     type: String,
     required: true
-  },
-  gender: {
-    type: String,
-    enum: {
-      values: 'male female'.split(' '),
-      message: '`{VALUE}` is not a valid gender'
-    }
-  },
-  age: {
-    type: Number,
-    min: [0, '`{VALUE}` is not a valid age']
   },
   email: {
     type: String,
@@ -56,7 +45,7 @@ const UserSchema = new Schema({
   timestamps: true
 });
 
-UserSchema.methods = {
+AdminSchema.methods = {
 
   /**
    * Authenticate
@@ -73,7 +62,7 @@ UserSchema.methods = {
 
 };
 
-UserSchema.statics = {
+AdminSchema.statics = {
 
   /**
    * Load
@@ -92,4 +81,4 @@ UserSchema.statics = {
 
 };
 
-mongoose.model('User', UserSchema);
+mongoose.model('Admin', AdminSchema);
