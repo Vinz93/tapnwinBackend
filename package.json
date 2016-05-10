@@ -23,6 +23,7 @@
     "morgan": "^1.7.0"
   },
   "devDependencies": {
+    "hercule": "^3.0.2",
     "nodemon": "^1.9.1"
   }
 }
