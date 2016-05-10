@@ -1,0 +1,10 @@
+{
+    "_id":"XXXXXXXXXXX",
+    "firstName":"Joao",
+    "lastName":"Sanchez",
+    "gender": "male",
+    "age": 23,
+    "email": "joao@ludopia.net",
+    "createdAt":"2015-12-01T17:39:22.939Z",
+    "updatedAt":"2015-12-01T17:39:22.952Z"
+}
