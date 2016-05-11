@@ -12,7 +12,7 @@
 
     [
       ```
-      :[](status.json)
+      :[](sticker.json)
       ```
     ]
 
@@ -27,5 +27,5 @@
 + Response 200 (application/json)
 
     ```
-    :[](status.json)
+    :[](sticker.json)
     ```
