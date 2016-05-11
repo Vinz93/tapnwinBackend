@@ -1,0 +1,43 @@
+## Model [/campaigns/{campaign_id}/models/{model_id}]
+
++ Parameters
+    + campaign_id: `507f191e810c19729de860ea` (string, required) - ID of a Campaign in the form of an ObjectId
+    + model_id: `507f191e810c19729de860eb` (string, required) - ID of a Model in the form of an ObjectId
+
+### Read [GET]
+
++ Request (application/json)
+
+    + Headers
+
+            authToken: token
+
++ Response 200 (application/json)
+
+        :[](model.json)
+
+### Update [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            authToken: token
+
+    + Body
+
+            {
+              "url": "http://tapnwin.ludopia.net/api/assets/manikin01.png"
+            }
+
++ Response 204 (application/json)
+
+### Delete [DELETE]
+
++ Request (application/json)
+
+    + Headers
+
+            authToken: token
+
++ Response 204 (application/json)
