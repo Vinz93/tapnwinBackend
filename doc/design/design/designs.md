@@ -10,11 +10,9 @@
 
 + Response 200 (application/json)
 
-    [
-      ```
-      :[](design.json)
-      ```
-    ]
+        [
+          :[](design.json)
+        ]
 
 ### Create [POST]
 
@@ -26,9 +24,7 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](design.json)
-    ```
+        :[](design.json)
 
 ## My designs [/users/me/designs]
 
@@ -42,11 +38,9 @@
 
 + Response 200 (application/json)
 
-    [
-      ```
-      :[](design.json)
-      ```
-    ]
+        [
+          :[](design.json)
+        ]
 
 ## User's designs [/users/{user_id}/designs]
 
@@ -60,8 +54,6 @@
 
 + Response 200 (application/json)
 
-    [
-      ```
-      :[](design.json)
-      ```
-    ]
+        [
+          :[](design.json)
+        ]

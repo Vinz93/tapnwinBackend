@@ -1,4 +1,4 @@
-## Design [/design/{desing_id}]
+## Design [/design/{design_id}]
 
 + Parameters
     + design_id (string) - ObjectId
@@ -13,9 +13,7 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](design.json)
-    ```
+        :[](design.json)
 
 ### Update [PATCH]
 
@@ -27,9 +25,7 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](design.json)
-    ```
+        :[](design.json)
 
 ### Delete [DELETE]
 

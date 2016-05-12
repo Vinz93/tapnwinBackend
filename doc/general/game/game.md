@@ -13,9 +13,7 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](game.json)
-    ```
+        :[](game.json)
 
 ### Update [PATCH]
 
@@ -27,9 +25,7 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](game.json)
-    ```
+        :[](game.json)
 
 ### Delete [DELETE]
 

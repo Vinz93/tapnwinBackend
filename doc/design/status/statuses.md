@@ -10,11 +10,9 @@
 
 + Response 200 (application/json)
 
-    [
-      ```
-      :[](status.json)
-      ```
-    ]
+        [
+          :[](status.json)
+        ]
 
 ### Create [POST]
 
@@ -26,6 +24,4 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](status.json)
-    ```
+        :[](status.json)

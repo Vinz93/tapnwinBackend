@@ -13,9 +13,7 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](status.json)
-    ```
+        :[](status.json)
 
 ### Update [PATCH]
 
@@ -27,9 +25,7 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](status.json)
-    ```
+        :[](status.json)
 
 ### Delete [DELETE]
 

@@ -10,11 +10,9 @@
 
 + Response 200 (application/json)
 
-    [
-      ```
-      :[](mission.json)
-      ```
-    ]
+        [
+          :[](mission.json)
+        ]
 
 ### Create [POST]
 
@@ -26,9 +24,7 @@
 
 + Response 200 (application/json)
 
-    ```
-    :[](mission.json)
-    ```
+        :[](mission.json)
 
 ## Game's missions [/games/{game_id}/missions]
 

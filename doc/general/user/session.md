@@ -5,14 +5,15 @@
 + Request (application/json)
 
         {
-            "email": "test@ludopia.net",
-            "password": "123456"
+            "email": "saulg@ludopia.net",
+            "password": "123456",
+            "type": 0
         }
 
 + Response 201 (application/json)
 
         {
-            "authToken":"XXXXXXX"
+            "authToken": "507f19dx810c1b7a9de160ea"
         }
 
 ### Delete [DELETE]
@@ -21,6 +22,6 @@
 
     + Headers
 
-            authToken: token
+            authToken: 507f19dx810c1b7a9de160ea
 
 + Response 204
