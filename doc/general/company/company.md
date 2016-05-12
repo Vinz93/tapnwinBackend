@@ -1,7 +1,7 @@
 ## Company [/companies/{company_id}]
 
 + Parameters
-    + company_id: `507f191e810c19729de860ea` (required, string) - ID of a Company in the form of an ObjectId
+    + company_id: `507f191e810c19729de860ea` (required, string) - ObjectId
 
 ### Read [GET]
 
@@ -9,7 +9,7 @@
 
     + Headers
 
-            authToken: adminToken
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -21,7 +21,7 @@
 
     + Headers
 
-            authToken: adminToken
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 204 (application/json)
 
@@ -31,6 +31,6 @@
 
     + Headers
 
-            authToken: adminToken
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 204 (application/json)

@@ -1,4 +1,8 @@
-## Users [/users]
+## Users [/users{?limit,offset}]
+
++ Parameters
+    + limit: `20` (number, optional)
+    + offset: `0` (number, optional)
 
 ### Read all [GET]
 
@@ -6,12 +10,11 @@
 
     + Headers
 
-            authToken: adminToken
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
         [
-          :[](user.json),
           :[](user.json)
         ]
 

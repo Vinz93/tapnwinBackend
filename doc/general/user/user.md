@@ -1,7 +1,7 @@
 ## User [/users/{user_id}]
 
 + Parameters
-    + user_id: `507f191e810c19729de860ea` (required, string) - ID of an User in the form of an ObjectId
+    + user_id: `507f191e810c19729de860ea` (required, string) - ObjectId
 
 ### Read [GET]
 
@@ -9,7 +9,7 @@
 
     + Headers
 
-            authToken: adminToken
+            authToken: 507f19dx810c1b7a9de160ea
 
 + Response 200 (application/json)
 
@@ -21,7 +21,7 @@
 
     + Headers
 
-            authToken: adminToken
+            authToken: 507f19dx810c1b7a9de160ea
 
 + Response 204 (application/json)
 
@@ -31,7 +31,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 507f19dx810c1b7a9de160ea
 
 + Response 200 (application/json)
 
@@ -43,7 +43,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 507f19dx810c1b7a9de160ea
 
     + Body
 

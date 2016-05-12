@@ -1,4 +1,8 @@
-## Categories [/categories]
+## Categories [/categories{?limit,offset}]
+
++ Parameters
+    + limit: `20` (number, optional)
+    + offset: `0` (number, optional)
 
 ### Read all [GET]
 
@@ -11,14 +15,13 @@
 + Response 200 (application/json)
 
         [
-          :[](category.json),
           :[](category.json)
         ]
 
 ### Create Category of a Campaign [POST /campaigns/{campaign_id}/categories]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ID of a Campaign in the form of an ObjectId
+    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
 
 + Request (application/json)
 
@@ -45,10 +48,12 @@
 
         :[](category.json)
 
-### Read Categories of a Campaign [GET /campaigns/{campaign_id}/categories]
+### Read Categories of a Campaign [GET /campaigns/{campaign_id}/categories{?limit,offset}]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ID of a Campaign in the form of an ObjectId
+    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+    + limit: `20` (number, optional)
+    + offset: `0` (number, optional)
 
 + Request (application/json)
 
@@ -59,6 +64,5 @@
 + Response 200 (application/json)
 
         [
-          :[](category.json),
           :[](category.json)
         ]

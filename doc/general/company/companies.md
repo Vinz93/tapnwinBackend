@@ -1,4 +1,8 @@
-## Companies [/companies]
+## Companies [/companies{?limit,offset}]
+
++ Parameters
+    + limit: `20` (number, optional)
+    + offset: `0` (number, optional)
 
 ### Read all [GET]
 
@@ -6,12 +10,11 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
         [
-            :[](company.json),
             :[](company.json)
         ]
 
@@ -21,7 +24,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
     + Body
 

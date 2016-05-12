@@ -1,4 +1,8 @@
-## Models [/models]
+## Models [/models{?limit,offset}]
+
++ Parameters
+    + limit: `20` (number, optional)
+    + offset: `0` (number, optional)
 
 ### Read all [GET]
 
@@ -6,12 +10,11 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
         [
-          :[](model.json),
           :[](model.json)
         ]
 
@@ -24,7 +27,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
     + Body
 
@@ -36,20 +39,21 @@
 
         :[](model.json)
 
-### Read Models of a Campaign [GET /campaigns/{campaign_id}/models]
+### Read Models of a Campaign [GET /campaigns/{campaign_id}/models{?limit,offset}]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ID of a Campaign in the form of an ObjectId
+    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+    + limit: `20` (number, optional)
+    + offset: `0` (number, optional)
 
 + Request (application/json)
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
         [
-          :[](model.json),
           :[](model.json)
         ]
