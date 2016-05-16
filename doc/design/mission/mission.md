@@ -1,7 +1,7 @@
 ## Mission [/missions/{mission_id}]
 
 + Parameters
-    + mission_id (string) - ObjectId
+    + mission_id `57336aaf646a1de8c24efdda` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -9,7 +9,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -21,7 +21,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -33,6 +33,6 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)

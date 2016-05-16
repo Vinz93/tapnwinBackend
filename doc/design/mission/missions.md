@@ -1,12 +1,16 @@
 ## Missions [/missions]
 
-### Read all [GET]
+### Read all [GET /missions{?limit,offset}]
+
++ Parameters
+    + limit: `20` (number, optional)
+    + offset: `0` (number, optional)
 
 + Request (application/json)
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -20,23 +24,8 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
         :[](mission.json)
-
-## Game's missions [/games/{game_id}/missions]
-
-+ Parameters
-    + game_id (string) - ObjectId
-
-### Read all [GET]
-
-+ Request (application/json)
-
-    + Headers
-
-            authToken: token
-
-+ Response 200 (application/json)

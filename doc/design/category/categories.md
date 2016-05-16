@@ -10,7 +10,7 @@
 
     + Headers
 
-            authToken: adminToken
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -59,7 +59,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 

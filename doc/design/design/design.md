@@ -1,7 +1,7 @@
 ## Design [/design/{design_id}]
 
 + Parameters
-    + design_id (string) - ObjectId
+    + design_id `57333cf3fd76f522ec646ae5` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -9,7 +9,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -21,7 +21,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -33,6 +33,6 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)

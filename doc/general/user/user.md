@@ -57,3 +57,15 @@
             }
 
 + Response 204 (application/json)
+
+### Reset user's password [PUT /users/{user_recovery_token}/reset_password]
+
++ Request (application/json)
+
+    + Body
+
+            {
+                "password": "654321"
+            }
+
++ Response 204 (application/json)

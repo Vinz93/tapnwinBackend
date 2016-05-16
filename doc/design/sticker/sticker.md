@@ -1,7 +1,7 @@
 ## Sticker [/stickers/{sticker_id}]
 
 + Parameters
-    + sticker_id (string) - ObjectId
+    + sticker_id `57336ef1d1325ff2916a4143` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -9,7 +9,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -21,7 +21,7 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -33,6 +33,6 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)

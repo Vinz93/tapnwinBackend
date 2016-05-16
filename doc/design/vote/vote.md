@@ -1,7 +1,7 @@
-## My vote [/users/me/votes/{vote_id}]
+## My vote [/votes/{vote_id}]
 
 + Parameters
-    + vote_id (string) - ObjectId
+    + vote_id `5733737c346588ad7610bcb0` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -9,19 +9,22 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
         :[](vote.json)
 
-### Update [POST]
+### Update [PATCH /users/me/votes/{vote_id}]
+
++ Parameters
+    + vote_id `5733737c346588ad7610bcb0` (string, required) - ObjectId
 
 + Request (application/json)
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -33,6 +36,6 @@
 
     + Headers
 
-            authToken: token
+            authToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
