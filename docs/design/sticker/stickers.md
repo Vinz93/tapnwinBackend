@@ -18,7 +18,7 @@
           :[](sticker.json)
         ]
 
-### Read all stickers of a campaign [GET /campaigns/{campaign_id}/stickers]
+### Read all stickers of a campaign [GET /campaigns/{campaign_id}/stickers{?limit,offset}]
 
 + Parameters
     + campaign_id: `507f191e810c19729de860ea` (required, string) - ObjectId

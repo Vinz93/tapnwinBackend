@@ -1,7 +1,7 @@
-## Design [/design/{design_id}]
+## My vote [/votes/{vote_id}]
 
 + Parameters
-    + design_id `57333cf3fd76f522ec646ae5` (string, required) - ObjectId
+    + vote_id: `5733737c346588ad7610bcb0` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -13,9 +13,12 @@
 
 + Response 200 (application/json)
 
-        :[](design.json)
+        :[](vote.json)
 
-### Update [PATCH]
+### Update [PATCH /users/me/votes/{vote_id}]
+
++ Parameters
+    + vote_id: `5733737c346588ad7610bcb0` (string, required) - ObjectId
 
 + Request (application/json)
 
@@ -25,7 +28,7 @@
 
 + Response 200 (application/json)
 
-        :[](design.json)
+        :[](vote.json)
 
 ### Delete [DELETE]
 

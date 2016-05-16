@@ -21,7 +21,7 @@
 ### Create a Model of a Campaign [POST /campaigns/{campaign_id}/models]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ID of a Campaign in the form of an ObjectId
+    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
 
 + Request (application/json)
 

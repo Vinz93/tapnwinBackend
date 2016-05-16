@@ -2,9 +2,9 @@
 
 const mongoose = require('mongoose');
 
-require('../models/user');
+require('../../models/common/company');
 
-const User = mongoose.model('User');
+const User = mongoose.model('Company');
 
 
 module.exports = {

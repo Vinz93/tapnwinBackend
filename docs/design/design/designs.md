@@ -37,7 +37,7 @@
           :[](design.json)
         ]
 
-### Read all my designs of a campaign [GET /users/me/campaigns/{campaign_id}/designs]
+### Read all my designs of a campaign [GET /users/me/campaigns/{campaign_id}/designs{?limit,offset}]
 
 + Parameters
     + campaign_id: `507f191e810c19729de860ea` (required, string) - ObjectId

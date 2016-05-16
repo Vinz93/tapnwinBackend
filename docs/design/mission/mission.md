@@ -1,7 +1,7 @@
-## Sticker [/stickers/{sticker_id}]
+## Mission [/missions/{mission_id}]
 
 + Parameters
-    + sticker_id `57336ef1d1325ff2916a4143` (string, required) - ObjectId
+    + mission_id: `57336aaf646a1de8c24efdda` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -13,7 +13,7 @@
 
 + Response 200 (application/json)
 
-        :[](sticker.json)
+        :[](mission.json)
 
 ### Update [PATCH]
 
@@ -25,7 +25,7 @@
 
 + Response 200 (application/json)
 
-        :[](sticker.json)
+        :[](mission.json)
 
 ### Delete [DELETE]
 

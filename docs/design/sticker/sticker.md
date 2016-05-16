@@ -1,7 +1,7 @@
-## Status [/statuses/{status_id}]
+## Sticker [/stickers/{sticker_id}]
 
 + Parameters
-    + status_id `57336abfc4711310edbb28b9` (string, required) - ObjectId
+    + sticker_id: `57336ef1d1325ff2916a4143` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -13,7 +13,7 @@
 
 + Response 200 (application/json)
 
-        :[](status.json)
+        :[](sticker.json)
 
 ### Update [PATCH]
 
@@ -25,7 +25,7 @@
 
 + Response 200 (application/json)
 
-        :[](status.json)
+        :[](sticker.json)
 
 ### Delete [DELETE]
 

@@ -1,7 +1,7 @@
-## Mission [/missions/{mission_id}]
+## Design [/design/{design_id}]
 
 + Parameters
-    + mission_id `57336aaf646a1de8c24efdda` (string, required) - ObjectId
+    + design_id: `57333cf3fd76f522ec646ae5` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -13,7 +13,7 @@
 
 + Response 200 (application/json)
 
-        :[](mission.json)
+        :[](design.json)
 
 ### Update [PATCH]
 
@@ -25,7 +25,7 @@
 
 + Response 200 (application/json)
 
-        :[](mission.json)
+        :[](design.json)
 
 ### Delete [DELETE]
 

@@ -1,7 +1,7 @@
-## My vote [/votes/{vote_id}]
+## Status [/statuses/{status_id}]
 
 + Parameters
-    + vote_id `5733737c346588ad7610bcb0` (string, required) - ObjectId
+    + status_id: `57336abfc4711310edbb28b9` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -13,12 +13,9 @@
 
 + Response 200 (application/json)
 
-        :[](vote.json)
+        :[](status.json)
 
-### Update [PATCH /users/me/votes/{vote_id}]
-
-+ Parameters
-    + vote_id `5733737c346588ad7610bcb0` (string, required) - ObjectId
+### Update [PATCH]
 
 + Request (application/json)
 
@@ -28,7 +25,7 @@
 
 + Response 200 (application/json)
 
-        :[](vote.json)
+        :[](status.json)
 
 ### Delete [DELETE]
 

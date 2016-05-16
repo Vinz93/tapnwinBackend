@@ -1,8 +1,8 @@
 ## Model [/campaigns/{campaign_id}/models/{model_id}]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ID of a Campaign in the form of an ObjectId
-    + model_id: `507f191e810c19729de860eb` (string, required) - ID of a Model in the form of an ObjectId
+    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+    + model_id: `507f191e810c19729de860eb` (string, required) - ObjectId
 
 ### Read [GET]
 
