@@ -88,5 +88,21 @@ module.exports = {
 
       res.status(204).end();
     });
+  },
+
+
+  check: function (req, res, next) {
+
+    Company.findById(req.params.company_id)
+    .exec(function (err, company) {
+
+      if (err)
+        return res.status(500).send(err);
+
+      if (!company)
+        return res.status(404).end();
+
+      next();
+    });
   }
 };
