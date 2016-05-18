@@ -37,8 +37,8 @@ module.exports = {
       if (err) {
         if (err.name === 'ValidationError')
           return res.status(400).json(err).end();
-        else
-          return res.status(500).send(err);
+
+        return res.status(500).send(err);
       }
 
       res.json(json).status(201).end();
@@ -51,11 +51,10 @@ module.exports = {
     .exec(function (err, company) {
 
       if (err) {
-        if(err.name === 'CastError' && err.kind === 'ObjectId') {
-          return res.status(404).end();
-        }else{
-          return res.status(500).send(err);
-        }
+        if(err.name === 'CastError')
+          return res.status(400).send(err);
+
+        return res.status(500).send(err);
       }
 
       if (!company)
@@ -72,11 +71,10 @@ module.exports = {
       function (err, company) {
 
       if (err) {
-        if(err.name === 'CastError' && err.kind === 'ObjectId') {
-          return res.status(404).end();
-        }else{
-          return res.status(500).send(err);
-        }
+        if(err.name === 'CastError')
+          return res.status(400).send(err);
+
+        return res.status(500).send(err);
       }
 
       if (!company)
@@ -91,11 +89,10 @@ module.exports = {
     Company.findByIdAndRemove(req.params.company_id, function (err, company) {
 
       if (err) {
-        if(err.name === 'CastError' && err.kind === 'ObjectId') {
-          return res.status(404).end();
-        }else{
-          return res.status(500).send(err);
-        }
+        if(err.name === 'CastError')
+          return res.status(400).send(err);
+
+        return res.status(500).send(err);
       }
 
       if (!company)
@@ -113,11 +110,10 @@ module.exports = {
     .exec(function (err, company) {
 
       if (err) {
-        if(err.name === 'CastError' && err.kind === 'ObjectId') {
-          return res.status(404).end();
-        }else{
-          return res.status(500).send(err);
-        }
+        if(err.name === 'CastError')
+          return res.status(400).send(err);
+
+        return res.status(500).send(err);
       }
 
       if (!company)

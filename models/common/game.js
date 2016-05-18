@@ -1,7 +1,15 @@
 'use strict';
 
+//TODO: Cascade delete of relations with Mission model
+
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator')
+const uniqueValidator = require('mongoose-unique-validator');
+
+const Promise = require('bluebird');
+
+//require('../../models/common/mission');
+
+//const Mission = mongoose.model('Mission');
 
 const Schema = mongoose.Schema;
 
@@ -24,25 +32,30 @@ GameSchema.statics = {
     const offset = options.offset ? parseInt(options.offset) : 0;
     const limit = options.limit ? parseInt(options.limit) : 20;
     return model.find(criteria)
-      .sort({ createdAt: 1 })
-      .limit(limit)
-      .skip(offset)
-      .exec(function(err, data) {
+    .sort({ createdAt: 1 })
+    .limit(limit)
+    .skip(offset)
+    .exec(function(err, data) {
+
+      if(err)
+        return cb(err);
+
+      return model.count(criteria)
+      .exec(function(err, total) {
 
         if(err)
           return cb(err);
 
-        return model.count(criteria)
-        .exec(function(err, total) {
-
-          if(err)
-            return cb(err);
-
-          return cb(null, { data, total, limit, offset });
-        });
+        return cb(null, { data, total, limit, offset });
       });
+    });
   }
 };
+
+GameSchema.pre('remove', function (next) {
+
+  next();
+});
 
 GameSchema.plugin(uniqueValidator);
 

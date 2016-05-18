@@ -3,6 +3,7 @@
 const Company = require('../../controllers/common/company');
 const Campaign = require('../../controllers/common/campaign');
 const Game = require('../../controllers/common/game');
+const Mission = require('../../controllers/common/mission');
 
 const router = require('express').Router();
 const user = require('../../controllers/common/user');
@@ -54,3 +55,14 @@ router.route('/games/:game_id')
 .get(Game.read)
 .patch(Game.update)
 .delete(Game.delete);
+
+//Missions
+
+router.route('/missions')
+.get(Mission.readAll)
+.post(Mission.create);
+
+router.route('/missions/:mission_id')
+.get(Mission.read)
+.patch(Mission.update)
+.delete(Mission.delete);

@@ -1,6 +1,6 @@
 /**
  * @author Juan Sanchez
- * @description Company model definition
+ * @description Game controller definition
  * @lastModifiedBy Juan Sanchez
  */
 
@@ -51,8 +51,8 @@ module.exports = {
     .exec(function (err, game) {
 
       if (err) {
-        if(err.name === 'CastError' && err.kind === 'ObjectId') {
-          return res.status(404).end();
+        if(err.name === 'CastError') {
+          return res.status(400).send(err);
         }else{
           return res.status(500).send(err);
         }
@@ -72,8 +72,8 @@ module.exports = {
       function (err, company) {
 
       if (err) {
-        if(err.name === 'CastError' && err.kind === 'ObjectId') {
-          return res.status(404).end();
+        if(err.name === 'CastError') {
+          return res.status(400).send(err);
         }else{
           return res.status(500).send(err);
         }
@@ -91,8 +91,8 @@ module.exports = {
     Game.findByIdAndRemove(req.params.game_id, function (err, game) {
 
       if (err) {
-        if(err.name === 'CastError' && err.kind === 'ObjectId') {
-          return res.status(404).end();
+        if(err.name === 'CastError') {
+          return res.status(400).send(err);
         }else{
           return res.status(500).send(err);
         }
