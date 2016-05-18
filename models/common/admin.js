@@ -15,34 +15,34 @@ const Schema = mongoose.Schema;
 const emailValidator = [
   validate({
     validator: 'isEmail',
-    message: 'not a valid email'
-  })
+    message: 'not a valid email',
+  }),
 ];
 
 const AdminSchema = new Schema({
   firstName: {
     type: String,
-    required: true
+    required: true,
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
-    validate: emailValidator
+    validate: emailValidator,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   authToken: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
 AdminSchema.methods = {
@@ -58,7 +58,7 @@ AdminSchema.methods = {
   authenticate: function (plainText) {
     return crypto.createHash('md5').update(plainText)
       .digest('hex') === this.password;
-  }
+  },
 
 };
 
@@ -77,7 +77,7 @@ AdminSchema.statics = {
     return this.findOne(options.criteria)
       .select(options.select)
       .exec(cb);
-  }
+  },
 
 };
 
