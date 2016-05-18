@@ -33,7 +33,7 @@ const MissionsListSchema = new Schema({
     min: [1, '`{VALUE}` is not a valid max'],
     default: 1
   }
-});
+}, { _id: false });
 
 const GamesListSchema = new Schema({
   gameId: {
@@ -42,7 +42,7 @@ const GamesListSchema = new Schema({
     ref: 'Game'
   },
   missions: [MissionsListSchema]
-});
+}, { _id: false });
 
 const CampaignSchema = new Schema({
   companyId: {
@@ -71,12 +71,12 @@ const CampaignSchema = new Schema({
   timestamps: true
 });
 
-CampaignSchema.methods = {
+CampaignSchema.methods = {};
 
-};
+CampaignSchema.statics = {};
 
-CampaignSchema.statics = {
-
-};
+CampaignSchema.pre('remove', function (next) {
+  next();
+});
 
 mongoose.model('Campaign', CampaignSchema);
