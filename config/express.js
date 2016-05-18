@@ -18,8 +18,8 @@ module.exports = function (app) {
     extended: true
   }));
 
-  app.use('/api', commonRoutes);
-  app.use('/api', designRoutes);
-  app.use('/api', cors());
-  app.use('/api', morgan('dev'));
+  app.use('/api/v1', commonRoutes);
+  app.use('/api/v1', designRoutes);
+  app.use('/api/v1', cors());
+  app.use('/api/v1', morgan('dev'));
 };
