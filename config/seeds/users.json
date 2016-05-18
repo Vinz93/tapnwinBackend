@@ -1,0 +1,13 @@
+{
+  "users": {
+    "_model": "User",
+    "andres": {
+      "firstName": "Andres",
+      "lastName": "Alvarez",
+      "gender": "male",
+      "age": 24,
+      "email": "andresa@ludopia.net",
+      "password": "secret"
+    }
+  }
+}

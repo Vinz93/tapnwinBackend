@@ -4,6 +4,12 @@ const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
 
 const Schema = mongoose.Schema;
+const urlValidator = [
+  validate({
+    validator: 'isURL',
+    message: 'The url provided is not valid.'
+  })
+];
 
 const StickerSchema = new Schema({
   campaignId: {
@@ -17,10 +23,7 @@ const StickerSchema = new Schema({
   url: {
     type: String,
     required: true,
-    validate: validate({
-      validator: 'isUrl',
-      message: 'The url provided is not valid.'
-    })
+    validate: urlValidator
   }
 }, {
   timestamps: true

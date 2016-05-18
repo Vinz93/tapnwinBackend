@@ -50,7 +50,7 @@ const UserSchema = new Schema({
   },
   authToken: {
     type: String,
-    required: true
+    required: false
   }
 }, {
   timestamps: true

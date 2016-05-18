@@ -5,12 +5,17 @@ const Campaign = require('../../controllers/common/campaign');
 const Game = require('../../controllers/common/game');
 
 const router = require('express').Router();
+const user = require('../../controllers/common/user');
 
 module.exports = router;
 
 router.get('/', function (req, res) {
   res.send('Sup buddy!');
 });
+
+//Users
+
+router.get('/users', user.readAll);
 
 //Companies
 
