@@ -13,7 +13,10 @@
     "type": "git",
     "url": "git+https://jlsan92@bitbucket.org/ludopia/tapnwin-backend.git"
   },
-  "author": "Juan Sanchez",
+  "author": [
+    "Juan Sanchez",
+    "Andres Alvarez"
+  ],
   "license": "SEE LICENSE IN LICENSE FILE",
   "homepage": "https://bitbucket.org/ludopia/tapnwin-backend#readme",
   "dependencies": {
@@ -27,6 +30,10 @@
     "morgan": "^1.7.0"
   },
   "devDependencies": {
+    "babel-eslint": "^6.0.4",
+    "eslint": "^2.10.2",
+    "eslint-config-airbnb-base": "^3.0.1",
+    "eslint-plugin-import": "^1.8.0",
     "hercule": "^3.0.2",
     "mongoose-seeder": "^1.2.1",
     "nodemon": "^1.9.1",
