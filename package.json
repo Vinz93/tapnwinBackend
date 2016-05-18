@@ -17,6 +17,7 @@
   "license": "SEE LICENSE IN LICENSE FILE",
   "homepage": "https://bitbucket.org/ludopia/tapnwin-backend#readme",
   "dependencies": {
+    "bluebird": "^3.4.0",
     "body-parser": "^1.15.0",
     "cors": "^2.7.1",
     "crypto": "0.0.3",
