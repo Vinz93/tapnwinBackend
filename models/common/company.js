@@ -9,6 +9,10 @@
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 
+require('../../models/common/campaign');
+
+const Campaign = mongoose.model('Campaign');
+
 const Schema = mongoose.Schema;
 
 const CompanySchema = new Schema({
@@ -21,6 +25,8 @@ const CompanySchema = new Schema({
 }, {
   timestamps: true
 });
+
+CompanySchema.methods = {};
 
 CompanySchema.statics = {
 
@@ -48,8 +54,18 @@ CompanySchema.statics = {
         });
       });
   }
-
 };
+
+CompanySchema.pre('remove', function (next) {
+
+  Campaign.remove({ companyId: this._id }).exec(function(err) {
+
+    if(err)
+      next(err);
+
+    next();
+  });
+});
 
 CompanySchema.plugin(uniqueValidator);
 

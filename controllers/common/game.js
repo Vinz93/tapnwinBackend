@@ -1,6 +1,6 @@
 /**
  * @author Juan Sanchez
- * @description Company controller definition
+ * @description Company model definition
  * @lastModifiedBy Juan Sanchez
  */
 
@@ -8,16 +8,16 @@
 
 const mongoose = require('mongoose');
 
-require('../../models/common/company');
+require('../../models/common/game');
 
-const Company = mongoose.model('Company');
+const Game = mongoose.model('Game');
 
 
 module.exports = {
 
   readAll: function(req, res) {
 
-    Company.paginate({
+    Game.paginate({
       limit: req.query.limit,
       offset: req.query.offset,
       criteria: req.query.criteria
@@ -32,7 +32,7 @@ module.exports = {
 
   create: function(req, res) {
 
-    Company.create(req.body, function (err, json) {
+    Game.create(req.body, function (err, json) {
 
       if (err) {
         if (err.name === 'ValidationError')
@@ -47,8 +47,8 @@ module.exports = {
 
   read: function(req, res) {
 
-    Company.findById(req.params.company_id)
-    .exec(function (err, company) {
+    Game.findById(req.params.game_id)
+    .exec(function (err, game) {
 
       if (err) {
         if(err.name === 'CastError' && err.kind === 'ObjectId') {
@@ -58,16 +58,16 @@ module.exports = {
         }
       }
 
-      if (!company)
+      if (!game)
         return res.status(404).end();
 
-      res.json(company);
+      res.json(game);
     });
   },
 
   update: function(req, res) {
 
-    Company.findByIdAndUpdate(req.params.company_id, req.body,
+    Game.findByIdAndUpdate(req.params.game_id, req.body,
       { runValidators: true, context: 'query' },
       function (err, company) {
 
@@ -88,7 +88,7 @@ module.exports = {
 
   delete: function(req, res) {
 
-    Company.findByIdAndRemove(req.params.company_id, function (err, company) {
+    Game.findByIdAndRemove(req.params.game_id, function (err, game) {
 
       if (err) {
         if(err.name === 'CastError' && err.kind === 'ObjectId') {
@@ -98,32 +98,10 @@ module.exports = {
         }
       }
 
-      if (!company)
+      if (!game)
         return res.status(404).end();
 
       res.status(204).end();
-    });
-  },
-
-  //Middlewares
-
-  check: function (req, res, next) {
-
-    Company.findById(req.params.company_id)
-    .exec(function (err, company) {
-
-      if (err) {
-        if(err.name === 'CastError' && err.kind === 'ObjectId') {
-          return res.status(404).end();
-        }else{
-          return res.status(500).send(err);
-        }
-      }
-
-      if (!company)
-        return res.status(404).end();
-
-      next();
     });
   }
 };
