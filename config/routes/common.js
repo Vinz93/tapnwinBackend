@@ -1,23 +1,30 @@
 'use strict';
 
+const router = require('express').Router();
 const Company = require('../../controllers/common/company');
 const Campaign = require('../../controllers/common/campaign');
 const Game = require('../../controllers/common/game');
-
-const router = require('express').Router();
-const user = require('../../controllers/common/user');
+const User = require('../../controllers/common/user');
+const Session = require('../../controllers/common/session');
 
 module.exports = router;
 
-router.get('/', function (req, res) {
-  res.send('Sup buddy!');
-});
+// Users
 
-//Users
+router.route('/sessions')
+.post(Session.create)
+.delete(Session.delete);
 
-router.get('/users', user.readAll);
+router.route('/users')
+.get(User.readAll)
+.post(User.create);
 
-//Companies
+router.route('/users/:user_id')
+.get(User.read)
+.patch(User.update)
+.delete(User.delete);
+
+// Companies
 
 router.route('/companies')
 .get(Company.readAll)
@@ -28,7 +35,7 @@ router.route('/companies/:company_id')
 .patch(Company.update)
 .delete(Company.delete);
 
-//Campaigns
+// Campaigns
 
 router.route('/campaigns')
 .get(Campaign.readAll);
@@ -44,7 +51,7 @@ router.route('/companies/:company_id/campaigns/:campaign_id')
 .put(Campaign.update)
 .delete(Campaign.delete);
 
-//Games
+// Games
 
 router.route('/games')
 .get(Game.readAll)

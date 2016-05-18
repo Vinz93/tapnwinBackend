@@ -58,31 +58,19 @@ const UserSchema = new Schema({
 
 UserSchema.methods = {
   authenticate(password) {
-    return crypto.createHash('md5').update(password)
-      .digest('hex') === this.password;
-  },
-};
-
-UserSchema.statics = {
-  load(options, cb) {
-    options.select = options.select || 'firstName lastName email';
-
-    return this.findOne(options.criteria)
-      .select(options.select)
-      .exec(cb);
+    return crypto.createHash('md5').update(password).digest('hex') === this.password;
   },
 };
 
 UserSchema.pre('save', function (next) {
   const user = this;
 
-  if (!user.isModified('password')) {
+  if (!user.isModified('password'))
     return next();
-  }
 
   user.password = crypto.createHash('md5').update(user.password).digest('hex');
 
-  return next();
+  next();
 });
 
 mongoose.model('User', UserSchema);

@@ -10,11 +10,11 @@ const commonRoutes = require('./routes/common');
 const designRoutes = require('./routes/design');
 
 module.exports = function (app) {
-  app.use(express.static(config.root + '/public'));
+  app.use(express.static('${config.root}/public'));
 
   app.use('/api', bodyParser.json());
   app.use('/api', bodyParser.urlencoded({
-    extended: true
+    extended: true,
   }));
 
   app.use('/api/v1', commonRoutes);
