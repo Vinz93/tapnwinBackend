@@ -16,6 +16,17 @@ module.exports = {
 
   readAll: function (req, res) {
 
+    Campaign.paginate({
+      limit: req.query.limit,
+      offset: req.query.offset,
+      criteria: req.query.criteria
+    }, function (err, json) {
+
+      if (err)
+        return res.status(500).send(err);
+
+      res.json(json).end();
+    });
   },
 
   createByACompany: function (req, res) {
