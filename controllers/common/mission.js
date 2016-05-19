@@ -28,13 +28,13 @@ module.exports = {
       offset,
       limit,
     })
-    .then(missions => res.json(missions).end())
+    .then(missions => res.json(missions))
     .catch(err => res.status(500).send(err));
   },
 
   create(req, res) {
     Mission.create(req.body)
-    .then(mission => res.json(mission).status(201).end())
+    .then(mission => res.status(201).json(mission))
     .catch(err => {
       if (err.name === 'ValidationError')
         return res.status(400).json(err).end();
@@ -70,7 +70,7 @@ module.exports = {
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
         return res.status(400).send(err);
       }
       return res.status(500).send(err);
