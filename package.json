@@ -26,6 +26,8 @@
     "crypto": "0.0.3",
     "express": "^4.13.4",
     "mongoose": "^4.4.13",
+    "mongoose-id-validator": "^0.3.0",
+    "mongoose-paginate": "^5.0.0",
     "mongoose-unique-validator": "^1.0.2",
     "mongoose-validator": "^1.2.4",
     "morgan": "^1.7.0",

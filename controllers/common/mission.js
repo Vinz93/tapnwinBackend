@@ -15,14 +15,18 @@ const Mission = mongoose.model('Mission');
 
 module.exports = {
 
-  readAll: function(req, res) {
+  readAll(req, res) {
+    const criteria = req.query.criteria || {};
+    const offset = req.query.offset ? parseInt(req.query.offset, 10) : 0;
+    const limit = req.query.limit ? parseInt(req.query.limit, 10) : 20;
 
-    Mission.paginate({
-      limit: req.query.limit,
-      offset: req.query.offset,
-      criteria: req.query.criteria
-    }, function (err, json) {
-
+    Mission.paginate(criteria, {
+      sort: {
+        createdAt: 1,
+      },
+      offset,
+      limit,
+    }, (err, json) => {
       if (err)
         return res.status(500).send(err);
 
@@ -30,10 +34,8 @@ module.exports = {
     });
   },
 
-  create: function(req, res) {
-
-    Mission.create(req.body, function (err, json) {
-
+  create(req, res) {
+    Mission.create(req.body, (err, json) => {
       if (err) {
         if (err.name === 'ValidationError')
           return res.status(400).json(err).end();
@@ -45,18 +47,15 @@ module.exports = {
     });
   },
 
-  read: function(req, res) {
-
+  read(req, res) {
     Mission.findById(req.params.mission_id)
     .populate('gameIds')
-    .exec(function (err, mission) {
-
+    .exec((err, mission) => {
       if (err) {
-        if(err.name === 'CastError') {
+        if (err.name === 'CastError') {
           return res.status(400).send(err);
-        }else{
-          return res.status(500).send(err);
         }
+        return res.status(500).send(err);
       }
 
       if (!mission)
@@ -66,18 +65,31 @@ module.exports = {
     });
   },
 
-  update: function(req, res) {
-
+  update(req, res) {
     Mission.findByIdAndUpdate(req.params.mission_id, req.body,
       { runValidators: true, context: 'query' },
-      function (err, mission) {
-
-      if (err) {
-        if(err.name === 'CastError') {
-          return res.status(400).send(err);
-        }else{
+      (err, mission) => {
+        if (err) {
+          if (err.name === 'CastError') {
+            return res.status(400).send(err);
+          }
           return res.status(500).send(err);
         }
+
+        if (!mission)
+          return res.status(404).end();
+
+        res.status(204).end();
+      });
+  },
+
+  delete(req, res) {
+    Mission.findByIdAndRemove(req.params.mission_id, (err, mission) => {
+      if (err) {
+        if (err.name === 'CastError') {
+          return res.status(400).send(err);
+        }
+        return res.status(500).send(err);
       }
 
       if (!mission)
@@ -86,23 +98,4 @@ module.exports = {
       res.status(204).end();
     });
   },
-
-  delete: function(req, res) {
-
-    Mission.findByIdAndRemove(req.params.mission_id, function (err, mission) {
-
-      if (err) {
-        if(err.name === 'CastError') {
-          return res.status(400).send(err);
-        }else{
-          return res.status(500).send(err);
-        }
-      }
-
-      if (!mission)
-        return res.status(404).end();
-
-      res.status(204).end();
-    });
-  }
 };
