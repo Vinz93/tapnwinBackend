@@ -3,73 +3,56 @@
 require('../../models/common/user');
 
 const mongoose = require('mongoose');
-const randToken = require('rand-token');
 const User = mongoose.model('User');
 
 module.exports = {
   create(req, res) {
     User.findOne({
       email: req.body.email,
-    }, (err, user) => {
-      if (err)
-        return res.status(500).send(err);
-
+    })
+    .then(user => {
       if (!user)
         return res.status(404).end();
 
       if (!user.authenticate(req.body.password))
         return res.status(400).end();
 
-      user.authToken = randToken.generate(16);
+      user.authToken = user.generateToken();
 
-      user.save(err => {
-        if (err)
-          return res.status(500).send(err);
-
-        res.json({
-          authToken: user.authToken,
-        }).status(201).end();
-      });
-    });
+      user.save()
+      .then(() => res.status(201).json({
+        authToken: user.authToken,
+      }))
+      .catch(err => res.status(500).send(err));
+    })
+    .catch(err => res.status(500).send(err));
   },
   delete(req, res) {
-    User.findByIdAndRemove(req.params.user_id, (err, user) => {
-      if (err)
-        return res.status(500).send(err);
+    const user = res.locals.user;
 
-      if (!user)
-        return res.status(404).end();
+    user.authToken = undefined;
 
-      res.status(204).end();
-    });
+    user.save()
+    .then(() => res.status(204).end())
+    .catch(err => res.status(500).send(err));
   },
   validate(req, res, next) {
-    /*
     User.findOne({
       authToken: req.get('authToken'),
-    }, (err, user) => {
+    })
+    .then(user => {
+      if (!user)
+        return res.status(401).end();
 
-    });
-    req.app.locals.models.Session
-    .forge({
-      token: req.get('token'),
+      res.locals.user = user;
+
+      next();
     })
-    .fetch()
-    .then(function (session) {
-      if (session) {
-        res.locals.user = {
-          identity_card: session.get('user_identity_card'),
-        };
-        next();
-      }
-      else
-        res.status(401).json({
-          error: 'User or login not found',
-        });
-    })
-    .otherwise(function () {
-      res.status(400).send();
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      res.status(500).send(err);
     });
-    */
   },
 };
