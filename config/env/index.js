@@ -1,17 +1,16 @@
 'use strict';
 
 const path = require('path');
-
 const development = require('./development');
 const production = require('./production');
 
 const defaults = {
-  root: path.join(__dirname, '..'),
-  limit(limit) {
-    return !isNaN(limit) ? parseInt(limit, 10) : 20;
+  root: path.join(__dirname, '../..'),
+  limit(limit, value) {
+    return !isNaN(limit) ? parseInt(limit, 10) : value || 20;
   },
-  offset(offset) {
-    return !isNaN(offset) ? parseInt(offset, 10) : 0;
+  offset(offset, value) {
+    return !isNaN(offset) ? parseInt(offset, 10) : value || 0;
   },
 };
 

@@ -5,8 +5,24 @@
       "firstName": "Andres",
       "lastName": "Alvarez",
       "gender": "male",
-      "age": 24,
+      "age": 23,
       "email": "andresa@ludopia.net",
+      "password": "secret"
+    },
+    "juan": {
+      "firstName": "Juan",
+      "lastName": "Sanchez",
+      "gender": "male",
+      "age": 23,
+      "email": "juans@ludopia.net",
+      "password": "secret"
+    },
+    "karen": {
+      "firstName": "Karen",
+      "lastName": "Troiano",
+      "gender": "female",
+      "age": 23,
+      "email": "karent@ludopia.net",
       "password": "secret"
     }
   }

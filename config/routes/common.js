@@ -12,9 +12,12 @@ module.exports = router;
 
 // Users
 
+router.route('/users/recovery_token')
+.post(User.createPwdToken);
+
 router.route('/sessions')
 .post(Session.create)
-.delete(Session.delete);
+.delete(Session.validate, Session.delete);
 
 router.route('/users')
 .get(User.readAll)

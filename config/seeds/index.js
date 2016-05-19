@@ -18,7 +18,7 @@ walkSync(__dirname, {
   directories: false,
 }).forEach(file => {
   if (path.extname(file) === '.json')
-    Object.assign(seeds, require('./${file}'));
+    Object.assign(seeds, require(`./${file}`));
 });
 
 mongoose.connect(config.db).connection.once('open', () => {
