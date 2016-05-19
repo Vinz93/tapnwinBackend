@@ -21,4 +21,6 @@ module.exports = function (app) {
   app.use('/api/v1', designRoutes);
   app.use('/api/v1', cors());
   app.use('/api/v1', morgan('dev'));
+
+  app.locals.config = config;
 };
