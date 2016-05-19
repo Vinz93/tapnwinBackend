@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
-const idvalidator = require('mongoose-id-validator');
+const idValidator = require('mongoose-id-validator');
 
 require('../../models/common/game');
 
@@ -24,6 +24,6 @@ const MissionSchema = new Schema({
 MissionSchema.statics = {};
 
 MissionSchema.plugin(mongoosePaginate);
-MissionSchema.plugin(idvalidator);
+MissionSchema.plugin(idValidator);
 
 mongoose.model('Mission', MissionSchema);
