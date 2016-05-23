@@ -1,0 +1,16 @@
+{
+  "players": {
+    "_model": "Player",
+    "deps": ["users"],
+    "andres": {
+      "userId": "->users.andres",
+      "age": 23,
+      "gender": "male"
+    },
+    "juan": {
+      "userId": "->users.juan",
+      "age": 23,
+      "gender": "male"
+    }
+  }
+}

@@ -17,11 +17,11 @@ module.exports = {
       if (!user.authenticate(req.body.password))
         return res.status(400).end();
 
-      user.authToken = user.generateToken();
+      user.sessionToken = user.generateToken();
 
       user.save()
       .then(() => res.status(201).json({
-        authToken: user.authToken,
+        sessionToken: user.sessionToken,
       }))
       .catch(err => res.status(500).send(err));
     })
@@ -30,7 +30,7 @@ module.exports = {
   delete(req, res) {
     const user = res.locals.user;
 
-    user.authToken = undefined;
+    user.sessionToken = undefined;
 
     user.save()
     .then(() => res.status(204).end())
@@ -38,7 +38,7 @@ module.exports = {
   },
   validate(req, res, next) {
     User.findOne({
-      authToken: req.get('authToken'),
+      sessionToken: req.get('sessionToken'),
     })
     .then(user => {
       if (!user)

@@ -1,0 +1,12 @@
+{
+  "administrators": {
+    "_model": "Administrator",
+    "deps": ["users"],
+    "karen": {
+      "userId": "->users.karen"
+    },
+    "andres": {
+      "userId": "->users.andres"
+    }
+  }
+}

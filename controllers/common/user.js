@@ -51,7 +51,7 @@ module.exports = {
       res.status(500).send(err);
     });
   },
-  createPwdToken(req, res) {
+  createRecoveryToken(req, res) {
     User.findOne({
       email: req.body.email,
     })
@@ -63,7 +63,7 @@ module.exports = {
       const template = path.join(req.app.locals.config.root, '/views/mail/password_recovery');
       const send = mailer.templateSender(new EmailTemplate(template));
 
-      user.pwdToken = user.generateToken();
+      user.recoveryToken = user.generateToken();
 
       user.save()
       .then(() => {

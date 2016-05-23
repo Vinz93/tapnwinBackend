@@ -5,6 +5,8 @@ const Company = require('../../controllers/common/company');
 const Campaign = require('../../controllers/common/campaign');
 const Game = require('../../controllers/common/game');
 const User = require('../../controllers/common/user');
+const Administrator = require('../../controllers/common/administrator');
+const Player = require('../../controllers/common/player');
 const Session = require('../../controllers/common/session');
 const Mission = require('../../controllers/common/mission');
 
@@ -12,8 +14,14 @@ module.exports = router;
 
 // Users
 
+router.route('/administrators')
+.get(Administrator.readAll);
+
+router.route('/players')
+.get(Player.readAll);
+
 router.route('/users/recovery_token')
-.post(User.createPwdToken);
+.post(User.createRecoveryToken);
 
 router.route('/sessions')
 .post(Session.create)

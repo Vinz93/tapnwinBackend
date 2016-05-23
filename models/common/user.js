@@ -1,9 +1,3 @@
-/**
- * @author Juan Sanchez
- * @description User model definition
- * @lastModifiedBy Juan Sanchez
- */
-
 'use strict';
 
 const mongoose = require('mongoose');
@@ -30,17 +24,6 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  gender: {
-    type: String,
-    enum: {
-      values: 'male female'.split(' '),
-      message: '`{VALUE}` is not a valid gender',
-    },
-  },
-  age: {
-    type: Number,
-    min: [0, '`{VALUE}` is not a valid age'],
-  },
   email: {
     type: String,
     required: true,
@@ -50,11 +33,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  authToken: {
+  sessionToken: {
     type: String,
     required: false,
   },
-  pwdToken: {
+  recoveryToken: {
     type: String,
     required: false,
   },
