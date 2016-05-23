@@ -13,6 +13,7 @@ const designRoutes = require('./routes/design');
 
 module.exports = function (app) {
   app.use(express.static(path.join(config.root, '/public')));
+  app.use('/api/v1', morgan('dev'));
 
   app.use('/api', bodyParser.json());
   app.use('/api', bodyParser.urlencoded({
@@ -22,7 +23,6 @@ module.exports = function (app) {
   app.use('/api/v1', commonRoutes);
   app.use('/api/v1', designRoutes);
   app.use('/api/v1', cors());
-  app.use('/api/v1', morgan('dev'));
 
   app.locals.config = config;
   app.locals.mailer = nodemailer.createTransport(config.mailer);
