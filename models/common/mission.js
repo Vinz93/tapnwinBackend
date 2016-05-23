@@ -1,10 +1,14 @@
+/**
+ * @author Andres Alvarez
+ * @description Mission controller definition
+ * @lastModifiedBy Juan Sanchez
+ */
+
 'use strict';
 
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const idValidator = require('mongoose-id-validator');
-
-require('../../models/common/game');
 
 const Schema = mongoose.Schema;
 

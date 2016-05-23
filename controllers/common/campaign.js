@@ -39,7 +39,7 @@ module.exports = {
     Campaign.create(criteria)
     .then(campaign => res.status(201).json(campaign))
     .catch(err => {
-      if (err.name === 'ValidationError' || err.name === 'InvalidDateRange')
+      if (err.name === 'ValidationError')
         return res.status(400).json(err).end();
 
       return res.status(500).send(err);

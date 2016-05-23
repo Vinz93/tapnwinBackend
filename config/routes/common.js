@@ -9,6 +9,7 @@ const Administrator = require('../../controllers/common/administrator');
 const Player = require('../../controllers/common/player');
 const Session = require('../../controllers/common/session');
 const Mission = require('../../controllers/common/mission');
+const Status = require('../../controllers/common/status');
 
 module.exports = router;
 
@@ -84,3 +85,14 @@ router.route('/missions/:mission_id')
 .get(Mission.read)
 .patch(Mission.update)
 .delete(Mission.delete);
+
+// Status
+
+router.route('/statuses')
+.get(Status.readAll)
+.post(Status.create);
+
+router.route('/statuses/:status_id')
+.get(Status.read)
+.patch(Status.update)
+.delete(Status.delete);
