@@ -9,6 +9,12 @@
 const mongoose = require('mongoose');
 const mongoosePaginate = require('mongoose-paginate');
 const idValidator = require('mongoose-id-validator');
+const ValidationError = require('../../helpers/validationError');
+const Promise = require('bluebird');
+
+require('../../models/common/mission');
+
+const Mission = mongoose.model('Mission');
 
 const Schema = mongoose.Schema;
 
@@ -87,17 +93,48 @@ CampaignSchema.plugin(idValidator);
 const Campaign = mongoose.model('Campaign', CampaignSchema);
 
 CampaignSchema.pre('save', function (next) {
+  if (this.finishAt <= this.startAt) {
+    return next(new ValidationError('Invalid date range', {
+      startAt: this.startAt,
+      finishAt: this.finishAt,
+    }));
+  }
+  next();
+});
+
+CampaignSchema.pre('save', function (next) {
   Campaign.find({
     $or: [{ startAt: { $lte: this.startAt }, finishAt: { $gte: this.startAt } },
-    { startAt: { $lte: this.finishAt }, finishAt: { $gte: this.finishAt } }],
+    { startAt: { $lte: this.finishAt }, finishAt: { $gte: this.finishAt } },
+    { startAt: { $gte: this.startAt }, finishAt: { $lte: this.finishAt } }],
+    companyId: this.companyId,
   })
   .then(campaigns => {
     if (campaigns.length > 0) {
-      const err = new Error('InvalidDateRange');
-      err.name = 'InvalidDateRange';
-      return next(err);
+      return next(new ValidationError('Invalid date range', {
+        startAt: this.startAt,
+        finishAt: this.finishAt,
+      }));
     }
     next();
   })
+  .catch(next);
+});
+
+CampaignSchema.pre('save', function (next) {
+  Promise.map(this.games, game =>
+    Promise.map(game.missions, mission =>
+      Mission.findById(mission.missionId)
+      .then(missionDoc => {
+        if (missionDoc.gameIds.indexOf(game.gameId) === -1) {
+          return next(new ValidationError('Invalid date range', {
+            gameId: game.gameId,
+            missionId: mission.missionId,
+          }));
+        }
+      })
+    )
+  )
+  .then(next)
   .catch(next);
 });
