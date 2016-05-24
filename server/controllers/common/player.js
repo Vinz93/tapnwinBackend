@@ -1,12 +1,12 @@
-'use strict';
+/**
+ * @author Andres Alvarez
+ * @description Company controller definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
-require('../../models/common/player');
+import Player from '../../models/common/player';
 
-const mongoose = require('mongoose');
-
-const Player = mongoose.model('Player');
-
-module.exports = {
+const PlayerController = {
   readAll(req, res) {
     const locals = req.app.locals;
 
@@ -36,3 +36,5 @@ module.exports = {
     });
   },
 };
+
+export default PlayerController;

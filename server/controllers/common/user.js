@@ -1,14 +1,17 @@
-'use strict';
+/**
+ * @author Andres Alvarez
+ * @description Company controller definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
-require('../../models/common/user');
+import User from '../../models/common/user';
 
-const path = require('path');
-const mongoose = require('mongoose');
-const EmailTemplate = require('email-templates').EmailTemplate;
+import path from 'path';
+import templates from 'email-templates';
 
-const User = mongoose.model('User');
+const EmailTemplate = templates.EmailTemplate;
 
-module.exports = {
+const UserController = {
   read(req, res) {
     User.findById(req.params.user_id)
     .then(user => {
@@ -142,3 +145,5 @@ module.exports = {
     });
   },
 };
+
+export default UserController;

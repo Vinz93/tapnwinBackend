@@ -1,27 +1,31 @@
-'use strict';
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import nodemailer from 'nodemailer';
 
-const path = require('path');
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
+import config from './env';
+import commonRoutes from '../server/routes/common';
 
-const config = require('./env');
-const commonRoutes = require('../server/routes/common');
+const app = express();
 
-module.exports = function (app) {
-  app.use(express.static(path.join(config.root, '/public')));
-  app.use('/api/v1', morgan('dev'));
+app.disable('x-powered-by');
 
-  app.use('/api', bodyParser.json());
-  app.use('/api', bodyParser.urlencoded({
+if (config.env === 'development') {
+  app.use(morgan('dev'));
+  app.use(bodyParser.urlencoded({
     extended: true,
   }));
+}
 
-  app.use('/api/v1', commonRoutes);
-  app.use('/api/v1', cors());
+app.use(bodyParser.json());
 
-  app.locals.config = config;
-  app.locals.mailer = nodemailer.createTransport(config.mailer);
-};
+app.use(cors());
+
+app.use('/api/v1', commonRoutes); // Common routes
+// app.use('/api/v1', designRoutes); // Design routes
+
+app.locals.config = config;
+app.locals.mailer = nodemailer.createTransport(config.mailer);
+
+export default app;

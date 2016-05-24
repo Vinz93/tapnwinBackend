@@ -4,11 +4,9 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
-
-const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
-const idValidator = require('mongoose-id-validator');
+import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate';
+import idValidator from 'mongoose-id-validator';
 
 const Schema = mongoose.Schema;
 
@@ -39,4 +37,4 @@ const StatusSchema = new Schema({
 StatusSchema.plugin(mongoosePaginate);
 StatusSchema.plugin(idValidator);
 
-mongoose.model('Status', StatusSchema);
+export default mongoose.model('Status', StatusSchema);

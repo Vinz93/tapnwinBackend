@@ -4,16 +4,9 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
+import Company from '../../models/common/company';
 
-const mongoose = require('mongoose');
-
-require('../../models/common/company');
-
-const Company = mongoose.model('Company');
-
-
-module.exports = {
+const CompanyController = {
 
   readAll(req, res) {
     const locals = req.app.locals;
@@ -110,3 +103,5 @@ module.exports = {
     });
   },
 };
+
+export default CompanyController;

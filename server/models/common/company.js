@@ -4,15 +4,11 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
+import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate';
+import uniqueValidator from 'mongoose-unique-validator';
 
-const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
-const uniqueValidator = require('mongoose-unique-validator');
-
-require('../../models/common/campaign');
-
-const Campaign = mongoose.model('Campaign');
+import Campaign from '../../models/common/campaign';
 
 const Schema = mongoose.Schema;
 
@@ -40,4 +36,4 @@ CompanySchema.pre('remove', next => {
 CompanySchema.plugin(uniqueValidator);
 CompanySchema.plugin(mongoosePaginate);
 
-mongoose.model('Company', CompanySchema);
+export default mongoose.model('Company', CompanySchema);

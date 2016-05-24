@@ -1,11 +1,12 @@
-'use strict';
+/**
+ * @author Andres Alvarez
+ * @description Company controller definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
-require('../../models/common/user');
+import User from '../../models/common/user';
 
-const mongoose = require('mongoose');
-const User = mongoose.model('User');
-
-module.exports = {
+const SessionController = {
   create(req, res) {
     User.findOne({
       email: req.body.email,
@@ -56,3 +57,5 @@ module.exports = {
     });
   },
 };
+
+export default SessionController;

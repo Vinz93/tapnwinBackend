@@ -1,10 +1,14 @@
-'use strict';
+/**
+ * @author Andres Alvarez
+ * @description Mission controller definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
-const mongoose = require('mongoose');
-const validate = require('mongoose-validator');
-const paginate = require('mongoose-paginate');
-const crypto = require('crypto');
-const randtoken = require('rand-token');
+import mongoose from 'mongoose';
+import validate from 'mongoose-validator';
+import paginate from 'mongoose-paginate';
+import crypto from 'crypto';
+import randtoken from 'rand-token';
 
 const Schema = mongoose.Schema;
 
@@ -59,4 +63,4 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.plugin(paginate);
 
-mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);

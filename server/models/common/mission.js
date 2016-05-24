@@ -4,11 +4,9 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
-
-const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
-const idValidator = require('mongoose-id-validator');
+import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate';
+import idValidator from 'mongoose-id-validator';
 
 const Schema = mongoose.Schema;
 
@@ -30,4 +28,4 @@ MissionSchema.statics = {};
 MissionSchema.plugin(mongoosePaginate);
 MissionSchema.plugin(idValidator);
 
-mongoose.model('Mission', MissionSchema);
+export default mongoose.model('Mission', MissionSchema);

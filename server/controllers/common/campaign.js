@@ -4,15 +4,9 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
+import Campaign from '../../models/common/campaign';
 
-const mongoose = require('mongoose');
-
-require('../../models/common/campaign');
-
-const Campaign = mongoose.model('Campaign');
-
-module.exports = {
+const CampaignController = {
 
   readAll(req, res) {
     const locals = req.app.locals;
@@ -150,3 +144,5 @@ module.exports = {
     });
   },
 };
+
+export default CampaignController;

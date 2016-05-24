@@ -75,17 +75,17 @@ module.exports = function(grunt) {
     },
   });
 
-grunt.event.on('watch', function(action, filepath) {
-  grunt.config('babel.src.files.0.src', filepath);
-});
+  grunt.event.on('watch', function(action, filepath) {
+    grunt.config('babel.src.files.0.src', filepath);
+  });
 
-/*
-grunt.event.on(['watch', 'nosrc'], function(action, filepath) {
-  console.log(action);
-  grunt.config('copy.srcno.files.0.src', filepath);
-});
-*/
-
+  /*
+  grunt.event.on(['watch', 'nosrc'], function(action, filepath) {
+    console.log(action);
+    grunt.config('copy.srcno.files.0.src', filepath);
+  });
+  */
+  
   grunt.registerTask('build', ['clean', 'babel', 'copy']);
   grunt.registerTask('serve', ['concurrent']);
   grunt.registerTask('default', 'serve');

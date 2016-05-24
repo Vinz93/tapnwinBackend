@@ -1,6 +1,6 @@
-'use strict';
-
-module.exports = {
+export default {
+  env: 'production',
+  port: 3000,
   db: process.env.TAPNWIN_PROD_URL,
   mailer: {
     from: 'no-reply@example.com',

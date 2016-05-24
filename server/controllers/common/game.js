@@ -4,16 +4,9 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
+import Game from '../../models/common/game';
 
-const mongoose = require('mongoose');
-
-require('../../models/common/game');
-
-const Game = mongoose.model('Game');
-
-
-module.exports = {
+const GameController = {
 
   readAll(req, res) {
     const criteria = req.query.criteria || {};
@@ -91,3 +84,5 @@ module.exports = {
     });
   },
 };
+
+export default GameController;
