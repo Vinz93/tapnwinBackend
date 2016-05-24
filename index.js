@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 mongoose.Promise = Promise;
+
 module.exports = app;
 
 require('./config/express')(app);

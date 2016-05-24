@@ -8,8 +8,7 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 
 const config = require('./env');
-const commonRoutes = require('./routes/common');
-const designRoutes = require('./routes/design');
+const commonRoutes = require('../server/routes/common');
 
 module.exports = function (app) {
   app.use(express.static(path.join(config.root, '/public')));
@@ -21,7 +20,6 @@ module.exports = function (app) {
   }));
 
   app.use('/api/v1', commonRoutes);
-  app.use('/api/v1', designRoutes);
   app.use('/api/v1', cors());
 
   app.locals.config = config;

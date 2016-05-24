@@ -1,15 +1,15 @@
 'use strict';
 
-const router = require('express').Router();
-const Company = require('../../controllers/common/company');
-const Campaign = require('../../controllers/common/campaign');
-const Game = require('../../controllers/common/game');
-const User = require('../../controllers/common/user');
-const Administrator = require('../../controllers/common/administrator');
-const Player = require('../../controllers/common/player');
-const Session = require('../../controllers/common/session');
-const Mission = require('../../controllers/common/mission');
-const Status = require('../../controllers/common/status');
+const router = require('express').Router(); // eslint-disable-line new-cap
+const Company = require('../controllers/common/company');
+const Campaign = require('../controllers/common/campaign');
+const Game = require('../controllers/common/game');
+const User = require('../controllers/common/user');
+const Administrator = require('../controllers/common/administrator');
+const Player = require('../controllers/common/player');
+const Session = require('../controllers/common/session');
+const Mission = require('../controllers/common/mission');
+const Status = require('../controllers/common/status');
 
 module.exports = router;
 

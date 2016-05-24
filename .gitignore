@@ -39,3 +39,6 @@ jspm_packages
 # Apiary doc
 /docs/*.apib
 !/docs/main.apib
+
+# Babel ES6 compiles files
+dist
