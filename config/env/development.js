@@ -1,6 +1,6 @@
-'use strict';
-
-module.exports = {
+export default {
+  env: 'development',
+  port: 3000,
   db: 'mongodb://localhost/tapnwin_dev',
   mailer: {
     host: 'smtp.gmail.com',

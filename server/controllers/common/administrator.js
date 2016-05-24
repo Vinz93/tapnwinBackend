@@ -1,12 +1,13 @@
-'use strict';
+/**
+ * @author Andres Alvarez
+ * @description Company controller definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
-require('../../models/common/administrator');
+import Administrator from '../../models/common/administrator';
 
-const mongoose = require('mongoose');
+const AdminController = {
 
-const Administrator = mongoose.model('Administrator');
-
-module.exports = {
   readAll(req, res) {
     const locals = req.app.locals;
 
@@ -35,3 +36,5 @@ module.exports = {
     });
   },
 };
+
+export default AdminController;

@@ -1,10 +1,14 @@
-'use strict';
+/**
+ * @author Juan Sanchez
+ * @description Company model definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
 // TODO: Cascade delete of relations with Mission model
 
-const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
-const uniqueValidator = require('mongoose-unique-validator');
+import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate';
+import uniqueValidator from 'mongoose-unique-validator';
 
 // const Promise = require('bluebird');
 
@@ -34,4 +38,4 @@ GameSchema.pre('remove', next => {
 GameSchema.plugin(mongoosePaginate);
 GameSchema.plugin(uniqueValidator);
 
-mongoose.model('Game', GameSchema);
+export default mongoose.model('Game', GameSchema);

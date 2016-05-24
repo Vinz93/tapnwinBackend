@@ -1,26 +1,18 @@
-'use strict';
+import mongoose from 'mongoose';
+import Promise from 'bluebird';
 
-const express = require('express');
-const mongoose = require('mongoose');
-const Promise = require('bluebird');
-
-const config = require('./config/env');
-const port = process.env.PORT || 3000;
-const app = express();
+import config from './config/env';
+import app from './config/express';
 
 mongoose.Promise = Promise;
 
-module.exports = app;
-
-require('./config/express')(app);
-
 function listen() {
-  if (app.get('env') === 'test')
+  if (config.env === 'test')
     return;
 
-  app.listen(port);
+  app.listen(config.port);
 
-  console.log(`App started on port ${port}`);
+  console.log(`TapNWin API started on port ${config.port}`);
 }
 
 function connect() {
@@ -39,3 +31,5 @@ connect()
 .on('error', console.log)
 .on('disconnected', connect)
 .once('open', listen);
+
+export default app;

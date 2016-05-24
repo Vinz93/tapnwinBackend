@@ -4,15 +4,9 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
+import Mission from '../../models/common/mission';
 
-const mongoose = require('mongoose');
-
-require('../../models/common/mission');
-
-const Mission = mongoose.model('Mission');
-
-module.exports = {
+const MissionController = {
 
   readAll(req, res) {
     const locals = req.app.locals;
@@ -93,3 +87,5 @@ module.exports = {
     });
   },
 };
+
+export default MissionController;

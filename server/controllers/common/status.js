@@ -6,13 +6,9 @@
 
 'use strict';
 
-const mongoose = require('mongoose');
+import Status from '../../models/common/status';
 
-require('../../models/common/status');
-
-const Status = mongoose.model('Status');
-
-module.exports = {
+const StatusController = {
 
   readAll(req, res) {
     const locals = req.app.locals;
@@ -93,3 +89,5 @@ module.exports = {
     });
   },
 };
+
+export default StatusController;

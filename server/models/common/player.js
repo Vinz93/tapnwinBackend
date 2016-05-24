@@ -1,7 +1,11 @@
-'use strict';
+/**
+ * @author Andres Alvarez
+ * @description Company model definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
-const mongoose = require('mongoose');
-const paginate = require('mongoose-paginate');
+import mongoose from 'mongoose';
+import paginate from 'mongoose-paginate';
 
 const Schema = mongoose.Schema;
 
@@ -28,4 +32,4 @@ const PlayerSchema = new Schema({
 
 PlayerSchema.plugin(paginate);
 
-mongoose.model('Player', PlayerSchema);
+export default mongoose.model('Player', PlayerSchema);

@@ -1,17 +1,15 @@
-'use strict';
+import express from 'express';
+import Company from '../controllers/common/company';
+import Campaign from '../controllers/common/campaign';
+import Game from '../controllers/common/game';
+import User from '../controllers/common/user';
+import Administrator from '../controllers/common/administrator';
+import Player from '../controllers/common/player';
+import Session from '../controllers/common/session';
+import Mission from '../controllers/common/mission';
+import Status from '../controllers/common/status';
 
-const router = require('express').Router(); // eslint-disable-line new-cap
-const Company = require('../controllers/common/company');
-const Campaign = require('../controllers/common/campaign');
-const Game = require('../controllers/common/game');
-const User = require('../controllers/common/user');
-const Administrator = require('../controllers/common/administrator');
-const Player = require('../controllers/common/player');
-const Session = require('../controllers/common/session');
-const Mission = require('../controllers/common/mission');
-const Status = require('../controllers/common/status');
-
-module.exports = router;
+const router = express.Router(); // eslint-disable-line new-cap
 
 // Users
 
@@ -96,3 +94,5 @@ router.route('/statuses/:status_id')
 .get(Status.read)
 .patch(Status.update)
 .delete(Status.delete);
+
+export default router;

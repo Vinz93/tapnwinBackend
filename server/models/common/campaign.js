@@ -4,17 +4,13 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
+import mongoose from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate';
+import idValidator from 'mongoose-id-validator';
+import ValidationError from '../../helpers/validationError';
+import Promise from 'bluebird';
 
-const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
-const idValidator = require('mongoose-id-validator');
-const ValidationError = require('../../helpers/validationError');
-const Promise = require('bluebird');
-
-require('../../models/common/mission');
-
-const Mission = mongoose.model('Mission');
+import Mission from '../../models/common/mission';
 
 const Schema = mongoose.Schema;
 
@@ -138,3 +134,5 @@ CampaignSchema.pre('save', function (next) {
   .then(next)
   .catch(next);
 });
+
+export default Campaign;
