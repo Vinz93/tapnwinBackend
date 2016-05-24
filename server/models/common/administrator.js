@@ -1,12 +1,14 @@
-'use strict';
+/**
+ * @author Andres Alvarez
+ * @description Company model definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
-require('./user');
-
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import User from './user';
 
 const Schema = mongoose.Schema;
-const User = mongoose.model('User');
 
 const AdministratorSchema = new Schema({});
 
-User.discriminator('Administrator', AdministratorSchema);
+export default User.discriminator('Administrator', AdministratorSchema);

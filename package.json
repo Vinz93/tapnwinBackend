@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "grunt",
     "build": "grunt build",
-    "seed": "node ./config/seeds"
+    "seed": "node ./dist/config/seeds"
   },
   "repository": {
     "type": "git",

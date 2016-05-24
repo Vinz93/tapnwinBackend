@@ -1,10 +1,11 @@
-const mongoose = require('mongoose');
-const seeder = require('mongoose-seeder');
-const path = require('path');
-const walkSync = require('walk-sync');
+import mongoose from 'mongoose';
+import seeder from 'mongoose-seeder';
+import path from 'path';
+import walkSync from 'walk-sync';
 
-const DepTree = require('deptree');
-const config = require('../env');
+import DepTree from 'deptree';
+import config from '../env';
+
 const modelsPath = '../../server/models';
 const seeds = {};
 const files = {};
