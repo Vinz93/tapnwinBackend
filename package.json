@@ -47,6 +47,7 @@
     "grunt-babel": "^6.0.0",
     "grunt-concurrent": "^2.3.0",
     "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-nodemon": "^0.4.2",
     "hercule": "^3.0.2",

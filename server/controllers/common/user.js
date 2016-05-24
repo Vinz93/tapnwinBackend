@@ -24,6 +24,9 @@ module.exports = {
       res.status(500).send(err);
     });
   },
+  readMe(req, res) {
+    res.json(res.locals.user);
+  },
   readAll(req, res) {
     const locals = req.app.locals;
 
@@ -41,16 +44,6 @@ module.exports = {
     .then(users => res.json(users))
     .catch(err => res.status(500).send(err));
   },
-  create(req, res) {
-    User.create(req.body)
-    .then(user => res.status(201).json(user))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err);
-
-      res.status(500).send(err);
-    });
-  },
   createRecoveryToken(req, res) {
     User.findOne({
       email: req.body.email,
@@ -59,8 +52,9 @@ module.exports = {
       if (!user)
         return res.status(404).end();
 
-      const mailer = req.app.locals.mailer;
-      const template = path.join(req.app.locals.config.root, '/views/mail/password_recovery');
+      const locals = req.app.locals;
+      const mailer = locals.mailer;
+      const template = path.join(locals.config.root, '/server/views/mail/password_recovery');
       const send = mailer.templateSender(new EmailTemplate(template));
 
       user.recoveryToken = user.generateToken();
@@ -94,6 +88,39 @@ module.exports = {
 
       res.status(204).end();
     }).catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      res.status(500).send(err);
+    });
+  },
+  updateMe(req, res) {
+    const user = res.locals.user;
+
+    delete req.body.password;
+
+    Object.assign(user, req.body);
+
+    user.save()
+    .then(() => res.status(204).end())
+    .catch(err => res.status(500).send(err));
+  },
+  updateMyPassword(req, res) {
+    User.findOne({
+      recoveryToken: req.query.recovery_token,
+    })
+    .then(user => {
+      if (!user)
+        return res.status(401).end();
+
+      user.password = req.body.password;
+      user.recoveryToken = undefined;
+
+      user.save()
+      .then(() => res.status(204).end())
+      .catch(err => res.status(500).send(err));
+    })
+    .catch(err => {
       if (err.name === 'CastError')
         return res.status(400).send(err);
 

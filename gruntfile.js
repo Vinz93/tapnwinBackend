@@ -4,7 +4,8 @@ module.exports = function(grunt) {
   var paths = {
     src: {
       main: 'index.js',
-      all: ['server/**/*.js', 'config/**/*.js']
+      all: ['server/**/*.js', 'config/**/*.js'],
+      no: ['package.json', 'server/**/*', 'config/**/*', '!server/**/*.js', '!config/**/*.js']
     },
     dist: 'dist/',
   };
@@ -14,6 +15,15 @@ module.exports = function(grunt) {
       dist: {
         src: paths.dist
       }
+    },
+    copy: {
+      srcno: {
+        files: [{
+          expand: true,
+          src: paths.src.no,
+          dest: paths.dist
+        }],
+      },
     },
     babel: {
       options: {
@@ -37,6 +47,13 @@ module.exports = function(grunt) {
           spawn: false,
         },
       },
+      srcno: {
+        files: paths.src.no,
+        tasks: ['copy'],
+        options: {
+          spawn: false,
+        },
+      },
     },
     nodemon: {
       dist: {
@@ -49,18 +66,27 @@ module.exports = function(grunt) {
     },
     concurrent: {
       all: {
-        tasks: ['nodemon', 'watch'],
+        tasks: ['nodemon', 'watch:src', 'watch:srcno'],
         options: {
           logConcurrentOutput: true,
+          limit: 3
         },
       },
     },
   });
 
-  grunt.event.on('watch', function(action, filepath) {
-    grunt.config('babel.src.files.0.src', filepath);
-  });
+grunt.event.on('watch', function(action, filepath) {
+  grunt.config('babel.src.files.0.src', filepath);
+});
 
-  grunt.registerTask('default', ['concurrent']);
-  grunt.registerTask('build', ['clean', 'babel']);
+/*
+grunt.event.on(['watch', 'nosrc'], function(action, filepath) {
+  console.log(action);
+  grunt.config('copy.srcno.files.0.src', filepath);
+});
+*/
+
+  grunt.registerTask('build', ['clean', 'babel', 'copy']);
+  grunt.registerTask('serve', ['concurrent']);
+  grunt.registerTask('default', 'serve');
 };

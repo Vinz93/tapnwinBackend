@@ -5,7 +5,7 @@ const walkSync = require('walk-sync');
 
 const DepTree = require('deptree');
 const config = require('../env');
-const modelsPath = '../../models';
+const modelsPath = '../../server/models';
 const seeds = {};
 const files = {};
 const tree = new DepTree();

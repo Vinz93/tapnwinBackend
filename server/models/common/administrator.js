@@ -1,20 +1,12 @@
 'use strict';
 
+require('./user');
+
 const mongoose = require('mongoose');
-const paginate = require('mongoose-paginate');
 
 const Schema = mongoose.Schema;
+const User = mongoose.model('User');
 
-const AdministratorSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'User',
-  },
-}, {
-  timestamps: true,
-});
+const AdministratorSchema = new Schema({});
 
-AdministratorSchema.plugin(paginate);
-
-mongoose.model('Administrator', AdministratorSchema);
+User.discriminator('Administrator', AdministratorSchema);

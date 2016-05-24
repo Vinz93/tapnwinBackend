@@ -1,7 +1,6 @@
 {
   "extends": "airbnb-base",
   "rules": {
-    "strict": 0,
     "func-names": 0,
     "global-require": 0,
     "no-console": 0,
@@ -17,5 +16,8 @@
       "props": false
     }],
     "import/no-unresolved": 0
-  }
+  },
+  "env": {
+		"node": true
+	}
 }

@@ -13,24 +13,30 @@ const Status = require('../controllers/common/status');
 
 module.exports = router;
 
-// Users
-
 router.route('/administrators')
-.get(Administrator.readAll);
+.get(Administrator.readAll)
+.post(Administrator.create);
 
 router.route('/players')
-.get(Player.readAll);
+.get(Player.readAll)
+.post(Player.create);
 
 router.route('/users/recovery_token')
 .post(User.createRecoveryToken);
+
+router.route('/users/password')
+.put(User.updateMyPassword);
 
 router.route('/sessions')
 .post(Session.create)
 .delete(Session.validate, Session.delete);
 
 router.route('/users')
-.get(User.readAll)
-.post(User.create);
+.get(User.readAll);
+
+router.route('/users/me')
+.get(Session.validate, User.readMe)
+.patch(Session.validate, User.updateMe);
 
 router.route('/users/:user_id')
 .get(User.read)

@@ -1,14 +1,19 @@
 {
   "players": {
     "_model": "Player",
-    "deps": ["users"],
     "andres": {
-      "userId": "->users.andres",
+      "firstName": "Andres",
+      "lastName": "Alvarez",
+      "email": "a.alvarez.sor@gmail.com",
+      "password": "secret",
       "age": 23,
       "gender": "male"
     },
     "juan": {
-      "userId": "->users.juan",
+      "firstName": "Juan",
+      "lastName": "Sanchez",
+      "email": "juans@ludopia.net",
+      "password": "secret",
       "age": 23,
       "gender": "male"
     }

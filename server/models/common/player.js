@@ -1,15 +1,20 @@
 'use strict';
 
+require('./user');
+
 const mongoose = require('mongoose');
-const paginate = require('mongoose-paginate');
 
 const Schema = mongoose.Schema;
+const User = mongoose.model('User');
 
 const PlayerSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
+  firstName: {
+    type: String,
     required: true,
-    ref: 'User',
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
   gender: {
     type: String,
@@ -22,10 +27,6 @@ const PlayerSchema = new Schema({
     type: Number,
     min: [0, '`{VALUE}` is not a valid age'],
   },
-}, {
-  timestamps: true,
 });
 
-PlayerSchema.plugin(paginate);
-
-mongoose.model('Player', PlayerSchema);
+User.discriminator('Player', PlayerSchema);
