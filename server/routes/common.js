@@ -15,9 +15,15 @@ router.route('/administrators')
 .get(Administrator.readAll)
 .post(Administrator.create);
 
+router.route('/administrators/:administrator_id')
+.patch(Administrator.update);
+
 router.route('/players')
 .get(Player.readAll)
 .post(Player.create);
+
+router.route('/players/:player_id')
+.patch(Player.update);
 
 router.route('/users/recovery_token')
 .post(User.createRecoveryToken);
@@ -38,7 +44,6 @@ router.route('/users/me')
 
 router.route('/users/:user_id')
 .get(User.read)
-.patch(User.update)
 .delete(User.delete);
 
 // Companies

@@ -20,7 +20,6 @@ const PlayerController = {
       },
       offset,
       limit,
-      populate: ['userId'],
     })
     .then(player => res.json(player))
     .catch(err => res.status(500).send(err));
@@ -31,6 +30,23 @@ const PlayerController = {
     .catch(err => {
       if (err.name === 'ValidationError')
         return res.status(400).json(err);
+
+      res.status(500).send(err);
+    });
+  },
+  update(req, res) {
+    Player.findByIdAndUpdate(req.params.player_id, req.body, {
+      runValidators: true,
+      context: 'query',
+    })
+    .then(user => {
+      if (!user)
+        return res.status(404).end();
+
+      res.status(204).end();
+    }).catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
 
       res.status(500).send(err);
     });

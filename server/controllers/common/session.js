@@ -1,14 +1,18 @@
 /**
  * @author Andres Alvarez
  * @description Company controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
 import User from '../../models/common/user';
+import Player from '../../models/common/player';
+import Administrator from '../../models/common/administrator';
 
 const SessionController = {
   create(req, res) {
-    User.findOne({
+    const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
+
+    UserAbs.findOne({
       email: req.body.email,
     })
     .then(user => {
@@ -18,7 +22,7 @@ const SessionController = {
       if (!user.authenticate(req.body.password))
         return res.status(400).end();
 
-      user.sessionToken = user.generateToken();
+      user.createSessionToken();
 
       user.save()
       .then(() => res.status(201).json({

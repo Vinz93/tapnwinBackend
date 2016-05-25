@@ -11,4 +11,8 @@ export default {
       pass: 'supersecret',
     },
   },
+  times: {
+    recovery: 1800000,
+    update: 1800000,
+  },
 };

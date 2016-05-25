@@ -35,6 +35,23 @@ const AdminController = {
       res.status(500).send(err);
     });
   },
+  update(req, res) {
+    Administrator.findByIdAndUpdate(req.params.administrator_id, req.body, {
+      runValidators: true,
+      context: 'query',
+    })
+    .then(user => {
+      if (!user)
+        return res.status(404).end();
+
+      res.status(204).end();
+    }).catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      res.status(500).send(err);
+    });
+  },
 };
 
 export default AdminController;

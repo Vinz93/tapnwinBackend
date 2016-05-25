@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Company controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
 import User from '../../models/common/user';
@@ -56,46 +56,28 @@ const UserController = {
         return res.status(404).end();
 
       const locals = req.app.locals;
-      const mailer = locals.mailer;
-      const template = path.join(locals.config.root, '/server/views/mail/password_recovery');
-      const send = mailer.templateSender(new EmailTemplate(template));
+      const config = locals.config;
+      const template = path.join(config.root, '/server/views/mail/password_recovery');
+      const send = locals.mailer.templateSender(new EmailTemplate(template));
 
-      user.recoveryToken = user.generateToken();
+      if (!user.createRecoveryToken(config.times.recovery))
+        return res.status(409).end();
 
-      user.save()
-      .then(() => {
-        send({
-          to: 'a.alvarez.sor@gmail.com',
-          subject: 'Password recovery',
-        }, {
-          user,
-        }, err => {
-          if (err)
-            return res.status(500).send(err);
+      send({
+        to: user.email,
+        subject: 'Password recovery',
+      }, {
+        user,
+      }, err => {
+        if (err)
+          return res.status(500).send(err);
 
-          res.status(201).end();
-        });
-      })
-      .catch(err => res.status(500).send(err));
+        user.save()
+        .then(() => res.status(201).end())
+        .catch(err => res.status(500).send(err));
+      });
     })
     .catch(err => res.status(500).send(err));
-  },
-  update(req, res) {
-    User.findByIdAndUpdate(req.params.user_id, req.body, {
-      runValidators: true,
-      context: 'query',
-    })
-    .then(user => {
-      if (!user)
-        return res.status(404).end();
-
-      res.status(204).end();
-    }).catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(500).send(err);
-    });
   },
   updateMe(req, res) {
     const user = res.locals.user;
@@ -116,8 +98,10 @@ const UserController = {
       if (!user)
         return res.status(401).end();
 
-      user.password = req.body.password;
-      user.recoveryToken = undefined;
+      const config = req.app.locals.config;
+
+      if (!user.updatePassword(req.body.password, config.times.update))
+        return res.status(409).end();
 
       user.save()
       .then(() => res.status(204).end())
@@ -143,6 +127,18 @@ const UserController = {
 
       res.status(500).send(err);
     });
+  },
+  isAdministrator(req, res, next) {
+    if (res.locals.user.__t !== 'Administrator')
+      return res.status(401).end();
+
+    next();
+  },
+  isPlayer(req, res, next) {
+    if (res.locals.user.__t !== 'Player')
+      return res.status(401).end();
+
+    next();
   },
 };
 
