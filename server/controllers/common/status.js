@@ -4,8 +4,6 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
-
 import Status from '../../models/common/status';
 
 const StatusController = {
@@ -41,7 +39,6 @@ const StatusController = {
 
   read(req, res) {
     Status.findById(req.params.status_id)
-    // .populate('gameIds')
     .then(status => {
       if (!status)
         return res.status(404).end();

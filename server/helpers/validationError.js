@@ -1,4 +1,8 @@
-'use strict';
+/**
+ * @author Juan Sanchez
+ * @description Validation Error
+ * @lastModifiedBy Juan Sanchez
+ */
 
 module.exports = function ValidationError(message, value) {
   Error.captureStackTrace(this, this.constructor);

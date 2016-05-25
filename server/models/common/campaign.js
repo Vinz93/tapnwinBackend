@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import ValidationError from '../../helpers/validationError';
+import fieldRemover from '../../helpers/fieldRemover';
 import Promise from 'bluebird';
 
 import Mission from '../../models/common/mission';
@@ -15,7 +16,7 @@ import Mission from '../../models/common/mission';
 const Schema = mongoose.Schema;
 
 const MissionsListSchema = new Schema({
-  missionId: {
+  mission: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Mission',
@@ -40,7 +41,7 @@ const MissionsListSchema = new Schema({
 }, { _id: false });
 
 const GamesListSchema = new Schema({
-  gameId: {
+  game: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Game',
@@ -49,7 +50,7 @@ const GamesListSchema = new Schema({
 }, { _id: false });
 
 const CampaignSchema = new Schema({
-  companyId: {
+  company: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Company',
@@ -85,6 +86,7 @@ CampaignSchema.pre('remove', next => {
 
 CampaignSchema.plugin(mongoosePaginate);
 CampaignSchema.plugin(idValidator);
+CampaignSchema.plugin(fieldRemover, 'createdAt');
 
 const Campaign = mongoose.model('Campaign', CampaignSchema);
 
@@ -103,7 +105,7 @@ CampaignSchema.pre('save', function (next) {
     $or: [{ startAt: { $lte: this.startAt }, finishAt: { $gte: this.startAt } },
     { startAt: { $lte: this.finishAt }, finishAt: { $gte: this.finishAt } },
     { startAt: { $gte: this.startAt }, finishAt: { $lte: this.finishAt } }],
-    companyId: this.companyId,
+    company: this.company,
   })
   .then(campaigns => {
     if (campaigns.length > 0) {
@@ -120,12 +122,13 @@ CampaignSchema.pre('save', function (next) {
 CampaignSchema.pre('save', function (next) {
   Promise.map(this.games, game =>
     Promise.map(game.missions, mission =>
-      Mission.findById(mission.missionId)
+      Mission.findById(mission.mission)
       .then(missionDoc => {
-        if (missionDoc.gameIds.indexOf(game.gameId) === -1) {
+        if (missionDoc.games.indexOf(game.game) === -1) {
+          console.log('chupalo');
           return next(new ValidationError('Invalid date range', {
-            gameId: game.gameId,
-            missionId: mission.missionId,
+            game: game.game,
+            mission: mission.mission,
           }));
         }
       })

@@ -11,7 +11,7 @@ import idValidator from 'mongoose-id-validator';
 const Schema = mongoose.Schema;
 
 const MissionSchema = new Schema({
-  gameIds: [{
+  games: [{
     type: Schema.Types.ObjectId,
     ref: 'Game',
   }],

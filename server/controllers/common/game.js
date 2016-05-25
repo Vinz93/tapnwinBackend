@@ -9,9 +9,11 @@ import Game from '../../models/common/game';
 const GameController = {
 
   readAll(req, res) {
+    const locals = req.app.locals;
+
     const criteria = req.query.criteria || {};
-    const offset = !isNaN(req.query.offset) ? parseInt(req.query.offset, 10) : 0;
-    const limit = !isNaN(req.query.limit) ? parseInt(req.query.limit, 10) : 20;
+    const offset = locals.config.offset(req.query.offset);
+    const limit = locals.config.limit(req.query.limit);
 
     Game.paginate(criteria, {
       sort: {
