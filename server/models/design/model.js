@@ -4,41 +4,31 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
-
-const mongoose = require('mongoose');
-const validate = require('mongoose-validator');
+import mongoose from 'mongoose';
+import validate from 'mongoose-validator';
 
 const Schema = mongoose.Schema;
 
-const urlValidator = [
-  validate({
-    validator: 'isURL',
-    message: 'not a valid url'
-  })
-];
-
 const ModelSchema = new Schema({
-  campaignId: {
+  campaign: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Campaign'
+    ref: 'Campaign',
   },
   url: {
     type: String,
     required: true,
-    validate: urlValidator
-  }
+    validate: validate({
+      validator: 'isURL',
+      message: 'not a valid url',
+    }),
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
-ModelSchema.methods = {
+ModelSchema.methods = {};
 
-};
-
-ModelSchema.statics = {
-
-};
+ModelSchema.statics = {};
 
 mongoose.model('Model', ModelSchema);

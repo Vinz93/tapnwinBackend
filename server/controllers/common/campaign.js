@@ -21,14 +21,14 @@ const CampaignController = {
       },
       offset,
       limit,
-      populate: ['companyId', 'games.gameId', 'games.missions.missionId'],
+      populate: ['company', 'games.game', 'games.missions.mission'],
     })
     .then(campaigns => res.json(campaigns))
     .catch(err => res.status(500).send(err));
   },
 
   createByACompany(req, res) {
-    const criteria = Object.assign({ companyId: req.params.company_id }, req.body);
+    const criteria = Object.assign({ company: req.params.company_id }, req.body);
 
     Campaign.create(criteria)
     .then(campaign => res.status(201).json(campaign))
@@ -47,7 +47,7 @@ const CampaignController = {
       const today = new Date();
 
       Campaign.findOne({ startAt: { $lt: today }, finishAt: { $gte: today } })
-      .populate('companyId games.gameId games.missions.missionId')
+      .populate('company games.game games.missions.mission')
       .then(campaign => {
         if (!campaign)
           return res.status(404).end();
@@ -60,19 +60,19 @@ const CampaignController = {
         return res.status(500).send(err);
       });
     } else {
-      const companyId = req.params.company_id;
+      const company = req.params.company_id;
       const offset = locals.config.offset(req.query.offset);
       const limit = locals.config.limit(req.query.limit);
 
       Campaign.paginate({
-        companyId,
+        company,
       }, {
         sort: {
           createdAt: 1,
         },
         offset,
         limit,
-        populate: ['companyId', 'games.gameId', 'games.missions.missionId'],
+        populate: ['company', 'games.game', 'games.missions.mission'],
       })
       .then(campaigns => res.json(campaigns))
       .catch(err => res.status(500).send(err));
@@ -81,12 +81,12 @@ const CampaignController = {
 
   read(req, res) {
     const criteria = {
-      companyId: req.params.company_id,
+      company: req.params.company_id,
       _id: req.params.campaign_id,
     };
 
     Campaign.findOne(criteria)
-    .populate('companyId games.gameId games.missions.missionId')
+    .populate('company games.game games.missions.mission')
     .then(campaign => {
       if (!campaign)
         return res.status(404).end();
@@ -102,7 +102,7 @@ const CampaignController = {
 
   update(req, res) {
     const criteria = {
-      companyId: req.params.company_id,
+      company: req.params.company_id,
       _id: req.params.campaign_id,
     };
 
@@ -125,7 +125,7 @@ const CampaignController = {
 
   delete(req, res) {
     const criteria = {
-      companyId: req.params.company_id,
+      company: req.params.company_id,
       _id: req.params.campaign_id,
     };
 

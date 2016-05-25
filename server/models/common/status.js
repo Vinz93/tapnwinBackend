@@ -11,17 +11,17 @@ import idValidator from 'mongoose-id-validator';
 const Schema = mongoose.Schema;
 
 const StatusSchema = new Schema({
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  campaignId: {
+  campaign: {
     type: Schema.Types.ObjectId,
     ref: 'Campaign',
     required: true,
   },
-  missionId: {
+  mission: {
     type: Schema.Types.ObjectId,
     ref: 'Mission',
     required: true,

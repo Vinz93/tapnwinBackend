@@ -39,7 +39,7 @@ const MissionController = {
 
   read(req, res) {
     Mission.findById(req.params.mission_id)
-    .populate('gameIds')
+    .populate('games')
     .then(mission => {
       if (!mission)
         return res.status(404).end();

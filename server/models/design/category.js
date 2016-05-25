@@ -4,54 +4,44 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-'use strict';
-
-const mongoose = require('mongoose');
-const validate = require('mongoose-validator');
+import mongoose from 'mongoose';
+import validate from 'mongoose-validator';
 
 const Schema = mongoose.Schema;
-
-const urlValidator = [
-  validate({
-    validator: 'isURL',
-    message: 'not a valid url'
-  })
-];
 
 const ItemSchema = new Schema({
   url: {
     type: String,
     required: true,
-    validate: urlValidator
-  }
+    validate: validate({
+      validator: 'isURL',
+      message: 'not a valid url',
+    }),
+  },
 });
 
 const CategorySchema = new Schema({
-  campaignId: {
+  campaign: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Campaign'
+    ref: 'Campaign',
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   zone: {
     type: String,
     enum: {
       values: 'top mid bot'.split(' '),
-      message: '`{VALUE}` is not a valid zone'
-    }
+      message: '`{VALUE}` is not a valid zone',
+    },
   },
-  items: [ItemSchema]
+  items: [ItemSchema],
 });
 
-CategorySchema.methods = {
+CategorySchema.methods = {};
 
-};
-
-CategorySchema.statics = {
-
-};
+CategorySchema.statics = {};
 
 mongoose.model('Category', CategorySchema);

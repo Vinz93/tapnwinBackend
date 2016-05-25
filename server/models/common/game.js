@@ -10,12 +10,6 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import uniqueValidator from 'mongoose-unique-validator';
 
-// const Promise = require('bluebird');
-
-// require('../../models/common/mission');
-
-// const Mission = mongoose.model('Mission');
-
 const Schema = mongoose.Schema;
 
 const GameSchema = new Schema({
@@ -30,10 +24,6 @@ const GameSchema = new Schema({
 });
 
 GameSchema.statics = {};
-
-GameSchema.pre('remove', next => {
-  next();
-});
 
 GameSchema.plugin(mongoosePaginate);
 GameSchema.plugin(uniqueValidator);

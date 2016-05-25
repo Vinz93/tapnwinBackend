@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
 
 import config from './env';
-import commonRoutes from '../server/routes/common';
+import routes from '../server/routes';
 
 const app = express();
 
@@ -22,8 +22,7 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use('/api/v1', commonRoutes); // Common routes
-// app.use('/api/v1', designRoutes); // Design routes
+app.use('/api/v1', routes); // Common routes
 
 app.locals.config = config;
 app.locals.mailer = nodemailer.createTransport(config.mailer);
