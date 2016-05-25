@@ -1,32 +1,33 @@
-'use strict';
+/**
+ * @author Andres Alvarez
+ * @description Category model definition
+ * @lastModifiedBy Juan Sanchez
+ */
 
-const mongoose = require('mongoose');
-const validate = require('mongoose-validator');
+import mongoose from 'mongoose';
+import validate from 'mongoose-validator';
 
 const Schema = mongoose.Schema;
-const urlValidator = [
-  validate({
-    validator: 'isURL',
-    message: 'The url provided is not valid.'
-  })
-];
 
 const StickerSchema = new Schema({
-  campaignId: {
+  campaign: {
     type: Schema.Types.ObjectId,
-    ref: 'Campaign'
+    ref: 'Campaign',
   },
   isPositive: {
     type: Boolean,
-    required: true
+    required: true,
   },
   url: {
     type: String,
     required: true,
-    validate: urlValidator
-  }
+    validate: validate({
+      validator: 'isURL',
+      message: 'The url provided is not valid.',
+    }),
+  },
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
 mongoose.model('Sticker', StickerSchema);
