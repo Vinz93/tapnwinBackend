@@ -1,9 +1,5 @@
 {
-    "_id": "507f191e810c19729de860ea",
-    "firstName": "Saul",
-    "lastName": "Gomez",
-    "gender": "male",
-    "age": 33,
+    "id": "507f191e810c19729de860ea",
     "email": "saulg@ludopia.net",
     "createdAt": "2015-12-01T17:39:22.939Z",
     "updatedAt": "2015-12-01T17:39:22.952Z"

@@ -10,7 +10,7 @@
 
     + Headers
 
-            authToken: 5734ed0a1dd3b2b88b35ece3
+            sessionToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -35,7 +35,7 @@
 
         :[](user.json)
 
-### Create user's recovery password token [POST /users/recovery_token]
+### Create user's recovery token [POST /users/recovery_token]
 
 + Request (application/json)
 

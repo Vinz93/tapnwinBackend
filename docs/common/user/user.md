@@ -9,7 +9,7 @@
 
     + Headers
 
-            authToken: 507f19dx810c1b7a9de160ea
+            sessionToken: 507f19dx810c1b7a9de160ea
 
 + Response 200 (application/json)
 
@@ -21,7 +21,7 @@
 
     + Headers
 
-            authToken: 507f19dx810c1b7a9de160ea
+            sessionToken: 507f19dx810c1b7a9de160ea
 
 + Response 204 (application/json)
 
@@ -31,7 +31,7 @@
 
     + Headers
 
-            authToken: 507f19dx810c1b7a9de160ea
+            sessionToken: 507f19dx810c1b7a9de160ea
 
 + Response 200 (application/json)
 
@@ -43,22 +43,21 @@
 
     + Headers
 
-            authToken: 507f19dx810c1b7a9de160ea
+            sessionToken: 507f19dx810c1b7a9de160ea
 
     + Body
 
             {
-                "firstName":"Andres",
-                "lastName":"Alvarez",
-                "gender": "male",
-                "age": 23,
                 "email": "andres@ludopia.net",
                 "password": "654321"
             }
 
 + Response 204 (application/json)
 
-### Reset user's password [PUT /users/{user_recovery_token}/reset_password]
+### Update user's password [PUT /users/password{?recovery_token}]
+
++ Parameters
+    + recovery_token: `5734ed0a1dd3b2b88b35edd2` (string, required)
 
 + Request (application/json)
 

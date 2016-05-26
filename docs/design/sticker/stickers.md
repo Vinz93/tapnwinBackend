@@ -10,7 +10,7 @@
 
     + Headers
 
-            authToken: 5734ed0a1dd3b2b88b35ece3
+            sessionToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -29,7 +29,7 @@
 
     + Headers
 
-            authToken: 5734ed0a1dd3b2b88b35ece3
+            sessionToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -43,7 +43,7 @@
 
     + Headers
 
-            authToken: 5734ed0a1dd3b2b88b35ece3
+            sessionToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 

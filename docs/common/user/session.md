@@ -1,4 +1,7 @@
-## Session [/sessions]
+## Session [/sessions{?type}]
+
++ Parameters
+    + type: `Player` (string, optional)
 
 ### Create [POST]
 
@@ -6,14 +9,13 @@
 
         {
             "email": "saulg@ludopia.net",
-            "password": "123456",
-            "type": 0
+            "password": "123456"
         }
 
 + Response 201 (application/json)
 
         {
-            "authToken": "507f19dx810c1b7a9de160ea"
+            "sessionToken": "507f19dx810c1b7a9de160ea"
         }
 
 ### Delete [DELETE]
@@ -22,6 +24,6 @@
 
     + Headers
 
-            authToken: 507f19dx810c1b7a9de160ea
+            sessionToken: 507f19dx810c1b7a9de160ea
 
 + Response 204

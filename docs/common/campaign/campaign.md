@@ -1,8 +1,8 @@
 ## Campaign [/companies/{company_id}/campaigns/{campaign_id}]
 
 + Parameters
-    + company_id: `507f191e810c19729de860ea` (string, required) - ID of a Company in the form of an ObjectId
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ID of a Campaign in the form of an ObjectId
+    + company_id: `507f191e810c19729de860ea` (string, required) -  ObjectId
+    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -10,7 +10,7 @@
 
     + Headers
 
-            authToken: 5734ed0a1dd3b2b88b35ece3
+            sessionToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 200 (application/json)
 
@@ -22,7 +22,7 @@
 
     + Headers
 
-            authToken: 5734ed0a1dd3b2b88b35ece3
+            sessionToken: 5734ed0a1dd3b2b88b35ece3
 
     + Body
 
@@ -55,6 +55,6 @@
 
     + Headers
 
-            authToken: 5734ed0a1dd3b2b88b35ece3
+            sessionToken: 5734ed0a1dd3b2b88b35ece3
 
 + Response 204 (application/json)

@@ -1,14 +1,14 @@
 {
-    "_id":"507f191e810c19729de860ea",
+    "id":"507f191e810c19729de860ea",
     "campaignId": "507f1f77bcf86cd799439011",
     "zone": "top",
     "items": [
       {
-        "_id": "507f191e810c19729de860ea",
+        "id": "507f191e810c19729de860ea",
         "url": "http://tapnwin.ludopia.net/api/assets/shirt01.png"
       },
       {
-        "_id": "507f191e810c19729de860eb",
+        "id": "507f191e810c19729de860eb",
         "url": "http://tapnwin.ludopia.net/api/assets/shirt02.png"
       }
     ],
