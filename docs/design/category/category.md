@@ -16,7 +16,7 @@
 
         :[](category.json)
 
-### Create [PUT]
+### Update [PUT]
 
 + Request (application/json)
 
