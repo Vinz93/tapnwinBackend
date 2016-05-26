@@ -6,6 +6,9 @@
 
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
+import mongoosePaginate from 'mongoose-paginate';
+import idValidator from 'mongoose-id-validator';
+import fieldRemover from '../../helpers/fieldRemover';
 
 const Schema = mongoose.Schema;
 
@@ -40,8 +43,12 @@ const CategorySchema = new Schema({
   items: [ItemSchema],
 });
 
+CategorySchema.plugin(mongoosePaginate);
+CategorySchema.plugin(idValidator);
+CategorySchema.plugin(fieldRemover);
+
 CategorySchema.methods = {};
 
 CategorySchema.statics = {};
 
-mongoose.model('Category', CategorySchema);
+export default mongoose.model('Category', CategorySchema);

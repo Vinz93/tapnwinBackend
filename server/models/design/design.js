@@ -6,6 +6,9 @@
 
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
+import mongoosePaginate from 'mongoose-paginate';
+import idValidator from 'mongoose-id-validator';
+import fieldRemover from '../../helpers/fieldRemover';
 
 const Schema = mongoose.Schema;
 
@@ -55,4 +58,8 @@ const DesingSchema = new Schema({
   timestamps: true,
 });
 
-mongoose.model('Desing', DesingSchema);
+DesingSchema.plugin(mongoosePaginate);
+DesingSchema.plugin(idValidator);
+DesingSchema.plugin(fieldRemover);
+
+export default mongoose.model('Desing', DesingSchema);

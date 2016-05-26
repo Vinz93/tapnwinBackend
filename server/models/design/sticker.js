@@ -6,6 +6,9 @@
 
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
+import mongoosePaginate from 'mongoose-paginate';
+import idValidator from 'mongoose-id-validator';
+import fieldRemover from '../../helpers/fieldRemover';
 
 const Schema = mongoose.Schema;
 
@@ -30,4 +33,8 @@ const StickerSchema = new Schema({
   timestamps: true,
 });
 
-mongoose.model('Sticker', StickerSchema);
+StickerSchema.plugin(mongoosePaginate);
+StickerSchema.plugin(idValidator);
+StickerSchema.plugin(fieldRemover);
+
+export default mongoose.model('Sticker', StickerSchema);

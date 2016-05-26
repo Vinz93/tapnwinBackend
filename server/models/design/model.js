@@ -6,6 +6,9 @@
 
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
+import mongoosePaginate from 'mongoose-paginate';
+import idValidator from 'mongoose-id-validator';
+import fieldRemover from '../../helpers/fieldRemover';
 
 const Schema = mongoose.Schema;
 
@@ -31,4 +34,8 @@ ModelSchema.methods = {};
 
 ModelSchema.statics = {};
 
-mongoose.model('Model', ModelSchema);
+ModelSchema.plugin(mongoosePaginate);
+ModelSchema.plugin(idValidator);
+ModelSchema.plugin(fieldRemover);
+
+export default mongoose.model('Model', ModelSchema);
