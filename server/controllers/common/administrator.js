@@ -7,7 +7,6 @@
 import Administrator from '../../models/common/administrator';
 
 const AdminController = {
-
   readAll(req, res) {
     const locals = req.app.locals;
 

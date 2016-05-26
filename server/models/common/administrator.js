@@ -3,7 +3,6 @@
  * @description Company model definition
  * @lastModifiedBy Juan Sanchez
  */
-
 import mongoose from 'mongoose';
 import User from './user';
 

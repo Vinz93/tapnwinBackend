@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 import paginate from 'mongoose-paginate';
 import uniqueValidator from 'mongoose-unique-validator';
+import fieldRemover from '../../helpers/fieldRemover';
 import crypto from 'crypto';
 import randtoken from 'rand-token';
 
@@ -45,19 +46,6 @@ const UserSchema = new Schema({
     required: false,
   },
 }, {
-  toJSON: {
-    transform(doc, ret) {
-      ret.id = ret._id;
-      delete ret._id;
-      delete ret.__v;
-      delete ret.__t;
-      delete ret.createdAt;
-      delete ret.updatedAt;
-      delete ret.password;
-      delete ret.sessionToken;
-      delete ret.recoveryToken;
-    },
-  },
   timestamps: true,
 });
 
@@ -103,6 +91,7 @@ UserSchema.pre('save', function (next) {
   next();
 });
 
+UserSchema.plugin(fieldRemover, 'password sessionToken recoveryToken recoveredAt');
 UserSchema.plugin(uniqueValidator);
 UserSchema.plugin(paginate);
 
