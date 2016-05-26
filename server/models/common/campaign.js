@@ -86,7 +86,7 @@ CampaignSchema.pre('remove', next => {
 
 CampaignSchema.plugin(mongoosePaginate);
 CampaignSchema.plugin(idValidator);
-CampaignSchema.plugin(fieldRemover, 'createdAt');
+CampaignSchema.plugin(fieldRemover);
 
 const Campaign = mongoose.model('Campaign', CampaignSchema);
 
@@ -125,7 +125,6 @@ CampaignSchema.pre('save', function (next) {
       Mission.findById(mission.mission)
       .then(missionDoc => {
         if (missionDoc.games.indexOf(game.game) === -1) {
-          console.log('chupalo');
           return next(new ValidationError('Invalid date range', {
             game: game.game,
             mission: mission.mission,
