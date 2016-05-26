@@ -7,6 +7,7 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
+import fieldRemover from '../../helpers/fieldRemover';
 
 const Schema = mongoose.Schema;
 
@@ -36,5 +37,6 @@ const StatusSchema = new Schema({
 
 StatusSchema.plugin(mongoosePaginate);
 StatusSchema.plugin(idValidator);
+StatusSchema.plugin(fieldRemover);
 
 export default mongoose.model('Status', StatusSchema);
