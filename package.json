@@ -4,9 +4,9 @@
   "description": "Tap&Win's games backend",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "grunt",
     "build": "grunt build",
+    "doc": "hercule docs/main.apib -o dist/output.md",
     "seed": "node ./dist/config/seeds"
   },
   "repository": {
@@ -45,11 +45,12 @@
     "eslint-plugin-import": "^1.8.0",
     "grunt": "^1.0.1",
     "grunt-babel": "^6.0.0",
+    "grunt-changed": "^1.0.0",
     "grunt-concurrent": "^2.3.0",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-newer": "^1.2.0",
+    "grunt-hercule": "^1.0.3",
     "grunt-nodemon": "^0.4.2",
     "hercule": "^3.0.2",
     "load-grunt-tasks": "^3.5.0",

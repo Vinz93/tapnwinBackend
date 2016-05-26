@@ -42,14 +42,14 @@ module.exports = function(grunt) {
     watch: {
       src: {
         files: [paths.src.main, paths.src.all],
-        tasks: ['newer:babel'],
+        tasks: ['changed:babel'],
         options: {
           spawn: false,
         },
       },
       srcno: {
         files: paths.src.no,
-        tasks: ['newer:copy'],
+        tasks: ['changed:copy'],
         options: {
           spawn: false,
         },
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.registerTask('build', ['clean', 'newer:babel', 'newer:copy']);
+  grunt.registerTask('build', ['clean', 'changed:babel', 'changed:copy']);
   grunt.registerTask('serve', ['concurrent']);
   grunt.registerTask('default', 'serve');
 };
