@@ -1,0 +1,17 @@
+{
+  "games": {
+    "_model": "Game",
+    "design": {
+      "name": "Diseña y gana"
+    },
+    "voice": {
+      "name": "Voz de la gente"
+    },
+    "match3": {
+      "name": "Match3"
+    },
+    "owner": {
+      "name": "Dueño de tiendas"
+    }
+  }
+}
