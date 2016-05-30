@@ -4,7 +4,7 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-import Design from '../../designs/design/design';
+import Design from '../../models/design/design';
 
 const DesignController = {
 

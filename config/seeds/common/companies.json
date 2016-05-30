@@ -1,0 +1,11 @@
+{
+  "companies": {
+    "_model": "Company",
+    "levis": {
+      "name": "Levis"
+    },
+    "tommy": {
+      "name": "Tommy Hilfiger"
+    }
+  }
+}
