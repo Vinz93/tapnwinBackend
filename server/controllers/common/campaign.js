@@ -47,7 +47,7 @@ const CampaignController = {
       const today = new Date();
 
       Campaign.findOne({ startAt: { $lt: today }, finishAt: { $gte: today } })
-      .populate('company games.game games.missions.mission')
+      .populate('games.game games.missions.mission')
       .then(campaign => {
         if (!campaign)
           return res.status(404).end();
@@ -72,7 +72,7 @@ const CampaignController = {
         },
         offset,
         limit,
-        populate: ['company', 'games.game', 'games.missions.mission'],
+        populate: ['games.game', 'games.missions.mission'],
       })
       .then(campaigns => res.json(campaigns))
       .catch(err => res.status(500).send(err));

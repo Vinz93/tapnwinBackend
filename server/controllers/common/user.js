@@ -82,8 +82,6 @@ const UserController = {
   updateMe(req, res) {
     const user = res.locals.user;
 
-    delete req.body.password;
-
     Object.assign(user, req.body);
 
     user.save()
@@ -130,13 +128,13 @@ const UserController = {
   },
   isAdministrator(req, res, next) {
     if (res.locals.user.__t !== 'Administrator')
-      return res.status(401).end();
+      return res.status(403).end();
 
     next();
   },
   isPlayer(req, res, next) {
     if (res.locals.user.__t !== 'Player')
-      return res.status(401).end();
+      return res.status(403).end();
 
     next();
   },

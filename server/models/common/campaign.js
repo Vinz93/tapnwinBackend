@@ -125,7 +125,7 @@ CampaignSchema.pre('save', function (next) {
       Mission.findById(mission.mission)
       .then(missionDoc => {
         if (missionDoc.games.indexOf(game.game) === -1) {
-          return next(new ValidationError('Invalid date range', {
+          return next(new ValidationError('Missions/Game don\'t match', {
             game: game.game,
             mission: mission.mission,
           }));

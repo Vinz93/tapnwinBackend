@@ -21,6 +21,7 @@ const MissionController = {
       },
       offset,
       limit,
+      populate: ['games'],
     })
     .then(missions => res.json(missions))
     .catch(err => res.status(500).send(err));
