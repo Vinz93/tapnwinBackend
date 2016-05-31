@@ -1,7 +1,7 @@
 /**
  * @author Juan Sanchez
  * @description Model model definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
 import mongoose from 'mongoose';
@@ -18,6 +18,10 @@ const ModelSchema = new Schema({
     required: true,
     ref: 'Campaign',
   },
+  name: {
+    type: String,
+    required: true,
+  },
   url: {
     type: String,
     required: true,
@@ -29,10 +33,6 @@ const ModelSchema = new Schema({
 }, {
   timestamps: true,
 });
-
-ModelSchema.methods = {};
-
-ModelSchema.statics = {};
 
 ModelSchema.plugin(mongoosePaginate);
 ModelSchema.plugin(idValidator);

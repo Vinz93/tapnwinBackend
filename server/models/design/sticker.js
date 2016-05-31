@@ -17,6 +17,10 @@ const StickerSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Campaign',
   },
+  name: {
+    type: String,
+    required: true,
+  },
   isPositive: {
     type: Boolean,
     required: true,

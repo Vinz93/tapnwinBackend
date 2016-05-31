@@ -14,18 +14,14 @@ import randtoken from 'rand-token';
 
 const Schema = mongoose.Schema;
 
-const emailValidator = [
-  validate({
-    validator: 'isEmail',
-    message: 'not a valid email',
-  }),
-];
-
 const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    validate: emailValidator,
+    validate: validate({
+      validator: 'isEmail',
+      message: 'not a valid email',
+    }),
     unique: true,
     uniqueCaseInsensitive: true,
   },

@@ -24,10 +24,6 @@ const CompanySchema = new Schema({
   timestamps: true,
 });
 
-CompanySchema.methods = {};
-
-CompanySchema.statics = {};
-
 CompanySchema.pre('remove', next => {
   Campaign.remove({ companyId: this.id })
   .then(next)

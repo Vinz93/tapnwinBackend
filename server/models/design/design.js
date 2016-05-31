@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Category model definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
 import mongoose from 'mongoose';
@@ -9,13 +9,14 @@ import validate from 'mongoose-validator';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import random from 'mongoose-random';
 
 const Schema = mongoose.Schema;
 
 const VoteSchema = new Schema({
-  user: {
+  player: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Player',
   },
   stickers: {
     type: [{
@@ -33,9 +34,9 @@ const VoteSchema = new Schema({
 });
 
 const DesingSchema = new Schema({
-  user: {
+  player: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Player',
   },
   campaign: {
     type: Schema.Types.ObjectId,

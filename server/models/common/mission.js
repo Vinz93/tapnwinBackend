@@ -24,8 +24,6 @@ const MissionSchema = new Schema({
   timestamps: true,
 });
 
-MissionSchema.statics = {};
-
 MissionSchema.plugin(mongoosePaginate);
 MissionSchema.plugin(idValidator);
 MissionSchema.plugin(fieldRemover);

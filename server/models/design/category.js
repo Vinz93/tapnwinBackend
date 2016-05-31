@@ -1,7 +1,7 @@
 /**
  * @author Juan Sanchez
  * @description Category model definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
 import mongoose from 'mongoose';
@@ -13,6 +13,10 @@ import fieldRemover from 'mongoose-field-remover';
 const Schema = mongoose.Schema;
 
 const ItemSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   url: {
     type: String,
     required: true,
@@ -46,9 +50,5 @@ const CategorySchema = new Schema({
 CategorySchema.plugin(mongoosePaginate);
 CategorySchema.plugin(idValidator);
 CategorySchema.plugin(fieldRemover);
-
-CategorySchema.methods = {};
-
-CategorySchema.statics = {};
 
 export default mongoose.model('Category', CategorySchema);
