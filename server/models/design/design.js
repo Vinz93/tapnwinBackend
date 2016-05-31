@@ -61,5 +61,6 @@ const DesingSchema = new Schema({
 DesingSchema.plugin(mongoosePaginate);
 DesingSchema.plugin(idValidator);
 DesingSchema.plugin(fieldRemover);
+DesingSchema.plugin(random);
 
 export default mongoose.model('Desing', DesingSchema);
