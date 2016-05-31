@@ -10,7 +10,7 @@
       "allow": ["err"]
     }],
     "no-underscore-dangle": [2, {
-      "allow": ["_id", "__v", "__t", "_deps"]
+      "allow": ["_id", "__v", "__t", "_require", "_model"]
     }],
     "no-param-reassign": [2, {
       "props": false
