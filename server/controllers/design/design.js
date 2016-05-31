@@ -1,13 +1,12 @@
 /**
  * @author Juan Sanchez
  * @description Company controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
-import Design from '../../designs/design/design';
+import Design from '../../models/design/design';
 
 const DesignController = {
-
   readAll(req, res) {
     const locals = req.app.locals;
 
@@ -26,7 +25,7 @@ const DesignController = {
     .catch(err => res.status(500).send(err));
   },
 
-  createByACampaign(req, res) {
+  createByCampaign(req, res) {
     const criteria = Object.assign({ campaign: req.params.campaign_id }, req.body);
 
     Design.create(criteria)
@@ -39,11 +38,8 @@ const DesignController = {
     });
   },
 
-  readByACampaign(req, res) {
-    // TODO: Random read
-
+  readByCampaign(req, res) {
     const locals = req.app.locals;
-
     const campaign = req.params.campaign_id;
     const offset = locals.config.offset(req.query.offset);
     const limit = locals.config.limit(req.query.limit);
@@ -61,7 +57,7 @@ const DesignController = {
     .catch(err => res.status(500).send(err));
   },
 
-  readByMeByACampaign(req, res) {
+  readByMeCampaign(req, res) {
     const locals = req.app.locals;
 
     const campaign = req.params.campaign_id;
@@ -85,8 +81,8 @@ const DesignController = {
 
   read(req, res) {
     const criteria = {
-      campaign: req.params.campaign_id,
       _id: req.params.design_id,
+      campaign: req.params.campaign_id,
     };
 
     Design.findOne(criteria)

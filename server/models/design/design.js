@@ -9,6 +9,7 @@ import validate from 'mongoose-validator';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from '../../helpers/fieldRemover';
+import random from 'mongoose-simple-random';
 
 const Schema = mongoose.Schema;
 
@@ -61,5 +62,6 @@ const DesingSchema = new Schema({
 DesingSchema.plugin(mongoosePaginate);
 DesingSchema.plugin(idValidator);
 DesingSchema.plugin(fieldRemover);
+DesingSchema.plugin(random);
 
 export default mongoose.model('Desing', DesingSchema);

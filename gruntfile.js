@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     src: {
       main: 'index.js',
       all: ['server/**/*.js', 'config/**/*.js'],
-      no: ['package.json', 'server/**/*', 'config/**/*', '!server/**/*.js', '!config/**/*.js']
+      no: ['server/**/*', 'config/**/*', '!server/**/*.js', '!config/**/*.js']
     },
     dist: 'dist/',
   };
@@ -23,6 +23,15 @@ module.exports = function(grunt) {
           src: paths.src.no,
           dest: paths.dist
         }],
+      },
+    },
+    mkdir: {
+      dist: {
+        options: {
+          create: ['files'].map(function(str) {
+            return paths.dist.concat(str);
+          })
+        },
       },
     },
     babel: {
@@ -59,8 +68,7 @@ module.exports = function(grunt) {
       dist: {
         script: paths.src.main,
         options: {
-          cwd: paths.dist,
-          ignore: ['node_modules/**/*.js'],
+          cwd: paths.dist
         },
       },
     },
@@ -72,10 +80,10 @@ module.exports = function(grunt) {
           limit: 3
         },
       },
-    },
+    }
   });
 
-  grunt.registerTask('build', ['clean', 'changed:babel', 'changed:copy']);
+  grunt.registerTask('build', ['clean', 'changed:babel', 'changed:copy', 'mkdir']);
   grunt.registerTask('serve', ['concurrent']);
   grunt.registerTask('default', 'serve');
 };
