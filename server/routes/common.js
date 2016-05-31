@@ -29,7 +29,7 @@ router.route('/users/recovery_token')
 .post(User.createRecoveryToken);
 
 router.route('/users/password')
-.put(User.updateMyPassword);
+.put(User.updatePassword);
 
 router.route('/sessions')
 .post(Session.create)
@@ -39,8 +39,8 @@ router.route('/users')
 .get(User.readAll);
 
 router.route('/users/me')
-.get(Session.validate, User.readMe)
-.patch(Session.validate, User.updateMe);
+.get(Session.validate, User.readByMe)
+.patch(Session.validate, User.updateByMe);
 
 router.route('/users/:user_id')
 .get(User.read)
