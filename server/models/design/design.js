@@ -8,8 +8,7 @@ import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
-import fieldRemover from '../../helpers/fieldRemover';
-import random from 'mongoose-simple-random';
+import fieldRemover from 'mongoose-field-remover';
 
 const Schema = mongoose.Schema;
 

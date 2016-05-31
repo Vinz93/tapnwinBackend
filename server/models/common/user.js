@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 import paginate from 'mongoose-paginate';
 import uniqueValidator from 'mongoose-unique-validator';
-import fieldRemover from '../../helpers/fieldRemover';
+import fieldRemover from 'mongoose-field-remover';
 import crypto from 'crypto';
 import randtoken from 'rand-token';
 

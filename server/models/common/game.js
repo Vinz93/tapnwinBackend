@@ -7,7 +7,7 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import uniqueValidator from 'mongoose-unique-validator';
-import fieldRemover from '../../helpers/fieldRemover';
+import fieldRemover from 'mongoose-field-remover';
 
 const Schema = mongoose.Schema;
 
