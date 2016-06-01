@@ -88,7 +88,7 @@ const Campaign = mongoose.model('Campaign', CampaignSchema);
 
 CampaignSchema.pre('save', function (next) {
   if (this.finishAt <= this.startAt) {
-    return next(new ValidationError('Invalid date range', {
+    return next(new ValidationError('InvalidDateRange', {
       startAt: this.startAt,
       finishAt: this.finishAt,
     }));
@@ -105,7 +105,7 @@ CampaignSchema.pre('save', function (next) {
   })
   .then(campaigns => {
     if (campaigns.length > 0) {
-      return next(new ValidationError('Invalid date range', {
+      return next(new ValidationError('InvalidDateRange', {
         startAt: this.startAt,
         finishAt: this.finishAt,
       }));
@@ -121,7 +121,7 @@ CampaignSchema.pre('save', function (next) {
       Mission.findById(mission.mission)
       .then(missionDoc => {
         if (missionDoc.games.indexOf(game.game) === -1) {
-          return next(new ValidationError('Missions/Game don\'t match', {
+          return next(new ValidationError('MissionsGameDontMatch', {
             game: game.game,
             mission: mission.mission,
           }));
