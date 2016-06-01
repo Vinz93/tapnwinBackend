@@ -1,0 +1,18 @@
+{
+  "missions": {
+    "_model": "Mission",
+    "_require": ["Game"],
+    "friend": {
+      "games": ["->games.design", "->games.voice", "->games.match3", "->games.owner"],
+      "description": "Add a friend"
+    },
+    "create": {
+      "games": ["->games.design"],
+      "description": "Create a design"
+    },
+    "vote": {
+      "games": ["->games.design"],
+      "description": "Vote for n designs"
+    }
+  }
+}

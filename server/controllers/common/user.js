@@ -4,10 +4,12 @@
  * @lastModifiedBy Andres Alvarez
  */
 
-import User from '../../models/common/user';
-
 import path from 'path';
 import templates from 'email-templates';
+
+import User from '../../models/common/user';
+import Player from '../../models/common/player';
+import Administrator from '../../models/common/administrator';
 
 const EmailTemplate = templates.EmailTemplate;
 
@@ -27,7 +29,7 @@ const UserController = {
       res.status(500).send(err);
     });
   },
-  readMe(req, res) {
+  readByMe(req, res) {
     res.json(res.locals.user);
   },
   readAll(req, res) {
@@ -48,7 +50,9 @@ const UserController = {
     .catch(err => res.status(500).send(err));
   },
   createRecoveryToken(req, res) {
-    User.findOne({
+    const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
+
+    UserAbs.findOne({
       email: req.body.email,
     })
     .then(user => {
@@ -79,7 +83,7 @@ const UserController = {
     })
     .catch(err => res.status(500).send(err));
   },
-  updateMe(req, res) {
+  updateByMe(req, res) {
     const user = res.locals.user;
 
     Object.assign(user, req.body);
@@ -88,7 +92,7 @@ const UserController = {
     .then(() => res.status(204).end())
     .catch(err => res.status(500).send(err));
   },
-  updateMyPassword(req, res) {
+  updatePassword(req, res) {
     User.findOne({
       recoveryToken: req.query.recovery_token,
     })

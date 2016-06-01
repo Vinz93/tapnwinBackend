@@ -26,7 +26,9 @@ const DesignController = {
   },
 
   createByCampaign(req, res) {
-    const criteria = Object.assign({ campaign: req.params.campaign_id }, req.body);
+    const criteria = Object.assign({
+      campaign: req.params.campaign_id,
+    }, req.body);
 
     Design.create(criteria)
     .then(design => res.status(201).json(design))
@@ -38,7 +40,7 @@ const DesignController = {
     });
   },
 
-  readByCampaign(req, res) {
+  readAllByCampaign(req, res) {
     const locals = req.app.locals;
     const campaign = req.params.campaign_id;
     const offset = locals.config.offset(req.query.offset);
@@ -57,7 +59,7 @@ const DesignController = {
     .catch(err => res.status(500).send(err));
   },
 
-  readByMeCampaign(req, res) {
+  readAllByMeCampaign(req, res) {
     const locals = req.app.locals;
 
     const campaign = req.params.campaign_id;

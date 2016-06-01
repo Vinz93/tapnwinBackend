@@ -24,8 +24,6 @@ const MissionSchema = new Schema({
   timestamps: true,
 });
 
-MissionSchema.statics = {};
-
 MissionSchema.pre('save', function (next) {
   console.log(this);
   next();

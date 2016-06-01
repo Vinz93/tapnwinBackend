@@ -22,8 +22,6 @@ const GameSchema = new Schema({
   timestamps: true,
 });
 
-GameSchema.statics = {};
-
 GameSchema.plugin(mongoosePaginate);
 GameSchema.plugin(uniqueValidator);
 GameSchema.plugin(fieldRemover);

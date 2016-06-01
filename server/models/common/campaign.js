@@ -76,10 +76,6 @@ const CampaignSchema = new Schema({
   timestamps: true,
 });
 
-CampaignSchema.methods = {};
-
-CampaignSchema.statics = {};
-
 CampaignSchema.pre('remove', next => {
   next();
 });

@@ -12,9 +12,9 @@ import fieldRemover from 'mongoose-field-remover';
 const Schema = mongoose.Schema;
 
 const StatusSchema = new Schema({
-  user: {
+  player: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Player',
     required: true,
   },
   campaign: {

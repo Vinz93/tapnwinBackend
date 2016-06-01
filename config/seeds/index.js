@@ -24,11 +24,12 @@ walkSync(__dirname, {
   if (path.extname(file) === '.json') {
     const name = path.basename(file, '.json');
     const content = require(`./${file}`);
+    const model = content[name]._model;
 
-    tree.add(name, content[name]._deps);
-    delete content[name]._deps;
+    tree.add(model, content[name]._require);
+    delete content[name]._require;
 
-    files[name] = content;
+    files[model] = content;
   }
 });
 
