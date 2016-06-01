@@ -26,6 +26,11 @@ const MissionSchema = new Schema({
 
 MissionSchema.statics = {};
 
+MissionSchema.pre('save', function (next) {
+  console.log(this);
+  next();
+});
+
 MissionSchema.plugin(mongoosePaginate);
 MissionSchema.plugin(idValidator);
 MissionSchema.plugin(fieldRemover);

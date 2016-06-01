@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     mkdir: {
       dist: {
         options: {
-          create: ['files'].map(function(str) {
+          create: ['uploads'].map(function(str) {
             return paths.dist.concat(str);
           })
         },
