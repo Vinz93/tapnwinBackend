@@ -1,6 +1,15 @@
 module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
+  var path = require('path');
+
+  var games = {
+    design: 'design',
+    voice: 'voice',
+    match3: 'match3',
+    owner: 'owner',
+  };
+
   var paths = {
     src: {
       main: 'index.js',
@@ -28,8 +37,8 @@ module.exports = function(grunt) {
     mkdir: {
       dist: {
         options: {
-          create: ['uploads'].map(function(str) {
-            return paths.dist.concat(str);
+          create: [games.design, games.voice, games.match3, games.owner].map(function(str) {
+            return path.join(paths.dist, 'uploads', str);
           })
         },
       },
