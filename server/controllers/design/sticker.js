@@ -10,11 +10,13 @@ import uploader from '../../helpers/uploader';
 const StickerController = {
 
   upload(req, res) {
-    uploader('design', 'file')(req, res, err => {
+    const asset = 'design';
+
+    uploader(asset, 'file')(req, res, err => {
       if (err) {
         return res.status(400).send(err);
       }
-      res.json({ url: req.file.path });
+      res.json({ url: `${req.app.locals.config.host}uploads/${asset}/${req.file.filename}` });
     });
   },
 

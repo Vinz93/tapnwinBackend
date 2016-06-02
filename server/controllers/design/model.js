@@ -6,6 +6,8 @@
 
 import Model from '../../models/design/model';
 import uploader from '../../helpers/uploader';
+import fs from 'fs';
+import path from 'path';
 
 const ModelController = {
 
@@ -125,6 +127,9 @@ const ModelController = {
     .then(model => {
       if (!model)
         return res.status(404).end();
+
+      fs.unlinkSync(path.join(req.app.locals.config.root,
+      `/uploads${model.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })

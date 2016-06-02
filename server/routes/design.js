@@ -17,4 +17,10 @@ router.route('/campaigns/:campaign_id/models')
 .get(Model.readByACampaign)
 .post(Model.createByACampaign);
 
+router.route('/campaigns/:campaign_id/models/:model_id')
+.all(Campaign.check)
+.get(Model.read)
+// .put(Model.update)
+.delete(Model.delete);
+
 export default router;
