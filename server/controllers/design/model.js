@@ -1,12 +1,24 @@
 /**
  * @author Juan Sanchez
- * @description Company controller definition
+ * @description Model controller definition
  * @lastModifiedBy Juan Sanchez
  */
 
 import Model from '../../models/design/model';
+import uploader from '../../helpers/uploader';
 
 const ModelController = {
+
+  upload(req, res) {
+    const asset = 'design';
+
+    uploader(asset, 'file')(req, res, err => {
+      if (err) {
+        return res.status(400).send(err);
+      }
+      res.json({ url: `${req.app.locals.config.host}uploads/${asset}/${req.file.filename}` });
+    });
+  },
 
   readAll(req, res) {
     const locals = req.app.locals;
@@ -21,6 +33,7 @@ const ModelController = {
       },
       offset,
       limit,
+      populate: ['campaign'],
     })
     .then(models => res.json(models))
     .catch(err => res.status(500).send(err));

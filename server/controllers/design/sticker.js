@@ -5,8 +5,18 @@
  */
 
 import Sticker from '../../models/design/sticker';
+import uploader from '../../helpers/uploader';
 
 const StickerController = {
+
+  upload(req, res) {
+    uploader('design', 'file')(req, res, err => {
+      if (err) {
+        return res.status(400).send(err);
+      }
+      res.json({ url: req.file.path });
+    });
+  },
 
   readAll(req, res) {
     const locals = req.app.locals;

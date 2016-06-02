@@ -143,6 +143,23 @@ const CampaignController = {
       return res.status(500).send(err);
     });
   },
+
+  // Middlewares
+
+  check(req, res, next) {
+    Campaign.findById(req.params.campaign_id)
+    .then(campaign => {
+      if (!campaign)
+        return res.status(404).json('Campaign not found');
+
+      next();
+    })
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+      return res.status(500).send(err);
+    });
+  },
 };
 
 export default CampaignController;
