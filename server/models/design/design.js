@@ -33,7 +33,7 @@ const VoteSchema = new Schema({
   _id: false,
 });
 
-const DesingSchema = new Schema({
+const DesignSchema = new Schema({
   player: {
     type: Schema.Types.ObjectId,
     ref: 'Player',
@@ -59,9 +59,9 @@ const DesingSchema = new Schema({
   timestamps: true,
 });
 
-DesingSchema.plugin(mongoosePaginate);
-DesingSchema.plugin(idValidator);
-DesingSchema.plugin(fieldRemover);
-DesingSchema.plugin(random);
+DesignSchema.plugin(mongoosePaginate);
+DesignSchema.plugin(idValidator);
+DesignSchema.plugin(fieldRemover);
+DesignSchema.plugin(random);
 
-export default mongoose.model('Desing', DesingSchema);
+export default mongoose.model('Design', DesignSchema);

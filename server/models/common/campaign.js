@@ -23,11 +23,11 @@ const MissionsListSchema = new Schema({
   },
   isRequired: {
     type: Boolean,
-    defualt: false,
+    default: false,
   },
   isBlocking: {
     type: Boolean,
-    defualt: false,
+    default: false,
   },
   blockedTime: { // Minutes
     type: Number,
