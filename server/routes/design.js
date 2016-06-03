@@ -3,9 +3,25 @@ import Session from '../controllers/common/session';
 import Category from '../controllers/design/category';
 import Design from '../controllers/design/design';
 import Item from '../controllers/design/item';
-import Sticker from '../controllers/design/sticker';
+import Model from '../controllers/design/model';
+import Campaign from '../controllers/common/campaign';
 
 const router = express.Router(); // eslint-disable-line new-cap
+
+router.get('/models', Model.readAll);
+
+router.post('/models/media', Model.upload);
+
+router.route('/campaigns/:campaign_id/models')
+.all(Campaign.check)
+.get(Model.readAllByCampaign)
+.post(Model.create);
+
+router.route('/campaigns/:campaign_id/models/:model_id')
+.all(Campaign.check)
+.get(Model.read)
+// .put(Model.update)
+.delete(Model.delete);
 
 export default router;
 

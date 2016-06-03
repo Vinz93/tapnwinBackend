@@ -4,6 +4,7 @@ import production from './production';
 
 const defaults = {
   root: path.join(__dirname, '../..'),
+  host: 'http://tapnwin.ludopia.net/api/v1/',
   limit(limit, value) {
     return !isNaN(limit) ? parseInt(limit, 10) : value || 20;
   },
