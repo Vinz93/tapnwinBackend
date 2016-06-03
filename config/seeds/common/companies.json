@@ -1,6 +1,9 @@
 {
   "companies": {
     "_model": "Company",
+    "nike": {
+      "name": "Nike"
+    },
     "levis": {
       "name": "Levis"
     },

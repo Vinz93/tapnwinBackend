@@ -38,9 +38,10 @@ tree.resolve().forEach(name => {
 });
 
 mongoose.connect(config.db).connection.once('open', () => {
-  seeder.seed(seeds).then(() => {
+  seeder.seed(seeds, {}, (err) => {
+    if (err)
+      console.err(err);
+
     mongoose.connection.close();
-  }).catch(err => {
-    console.err(err);
   });
 });

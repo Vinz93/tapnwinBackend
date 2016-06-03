@@ -1,0 +1,29 @@
+{
+  "items": {
+    "_model": "Item",
+    "janoski": {
+      "name": "Janoski",
+      "url": "http://development.com/media/janoski.jpg"
+    },
+    "mercurial": {
+      "name": "Mercuarial",
+      "url": "http://development.com/media/mercurial.jpg"
+    },
+    "tech": {
+      "name": "Tech Fleece 2.0",
+      "url": "http://development.com/media/tech.jpg"
+    },
+    "court": {
+      "name": "Court 23cm Plaid",
+      "url": "http://development.com/media/court.jpg"
+    },
+    "barcelona": {
+      "name": "FC Barcelona Dry Squad",
+      "url": "http://development.com/media/barcelona.jpg"
+    },
+    "paris": {
+      "name": "Paris Saint-Germain Stadium Home",
+      "url": "http://development.com/media/paris.jpg"
+    }
+  }
+}

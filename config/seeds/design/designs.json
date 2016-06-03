@@ -1,0 +1,30 @@
+{
+  "designs": {
+    "_model": "Design",
+    "_require": ["Player", "Campaign", "Item"],
+    "design1": {
+      "player": "->players.andres",
+      "campaign": "->campaigns.summer",
+      "topItem": "->items.janoski",
+      "midItem": "->items.court",
+      "botItem": "->items.paris",
+      "votes": []
+    },
+    "design2": {
+      "player": "->players.andres",
+      "campaign": "->campaigns.summer",
+      "topItem": "->items.janoski",
+      "midItem": "->items.court",
+      "botItem": "->items.barcelona",
+      "votes": []
+    },
+    "design3": {
+      "player": "->players.andres",
+      "campaign": "->campaigns.summer",
+      "topItem": "->items.mercurial",
+      "midItem": "->items.court",
+      "botItem": "->items.paris",
+      "votes": []
+    }
+  }
+}

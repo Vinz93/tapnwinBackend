@@ -1,0 +1,24 @@
+{
+  "categories": {
+    "_model": "Category",
+    "_require": ["Campaign", "Item"],
+    "shoes": {
+      "name": "Shoes",
+      "zone": "bot",
+      "campaign": "->campaigns.summer",
+      "items": ["->items.janoski", "->items.mercurial"]
+    },
+    "shorts": {
+      "name": "Shorts",
+      "zone": "mid",
+      "campaign": "->campaigns.summer",
+      "items": ["->items.tech", "->items.court"]
+    },
+    "shirts": {
+      "name": "Shirts",
+      "zone": "top",
+      "campaign": "->campaigns.summer",
+      "items": ["->items.barcelona", "->items.paris"]
+    }
+  }
+}
