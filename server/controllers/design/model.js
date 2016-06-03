@@ -1,13 +1,12 @@
 /**
  * @author Juan Sanchez
  * @description Company controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
 import Model from '../../models/design/model';
 
 const ModelController = {
-
   readAll(req, res) {
     const locals = req.app.locals;
 
@@ -26,20 +25,7 @@ const ModelController = {
     .catch(err => res.status(500).send(err));
   },
 
-  createByACampaign(req, res) {
-    const criteria = Object.assign({ campaign: req.params.campaign_id }, req.body);
-
-    Model.create(criteria)
-    .then(model => res.status(201).json(model))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err).end();
-
-      return res.status(500).send(err);
-    });
-  },
-
-  readByACampaign(req, res) {
+  readAllByCampaign(req, res) {
     const locals = req.app.locals;
 
     const campaign = req.params.campaign_id;
@@ -57,6 +43,21 @@ const ModelController = {
     })
     .then(models => res.json(models))
     .catch(err => res.status(500).send(err));
+  },
+
+  create(req, res) {
+    const criteria = Object.assign({
+      campaign: req.params.campaign_id,
+    }, req.body);
+
+    Model.create(criteria)
+    .then(model => res.status(201).json(model))
+    .catch(err => {
+      if (err.name === 'ValidationError')
+        return res.status(400).json(err).end();
+
+      return res.status(500).send(err);
+    });
   },
 
   read(req, res) {

@@ -1,13 +1,12 @@
 /**
  * @author Juan Sanchez
  * @description Company controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres ALvarez
  */
 
 import Category from '../../models/design/category';
 
 const CategoryController = {
-
   readAll(req, res) {
     const locals = req.app.locals;
 
@@ -21,13 +20,36 @@ const CategoryController = {
       },
       offset,
       limit,
+      populate: ['items'],
     })
     .then(categories => res.json(categories))
     .catch(err => res.status(500).send(err));
   },
 
-  createByACampaign(req, res) {
-    const criteria = Object.assign({ campaign: req.params.campaign_id }, req.body);
+  readAllByCampaign(req, res) {
+    const locals = req.app.locals;
+    const offset = locals.config.offset(req.query.offset);
+    const limit = locals.config.limit(req.query.limit);
+    const criteria = Object.assign(req.query.criteria || {}, {
+      campaign: req.params.campaign_id,
+    });
+
+    Category.paginate(criteria, {
+      sort: {
+        createdAt: 1,
+      },
+      offset,
+      limit,
+      populate: ['items'],
+    })
+    .then(categories => res.json(categories))
+    .catch(err => res.status(500).send(err));
+  },
+
+  create(req, res) {
+    const criteria = Object.assign({
+      campaign: req.params.campaign_id,
+    }, req.body);
 
     Category.create(criteria)
     .then(category => res.status(201).json(category))
@@ -39,53 +61,23 @@ const CategoryController = {
     });
   },
 
-  readByACampaign(req, res) {
-    const locals = req.app.locals;
-
-    const campaign = req.params.campaign_id;
-    const offset = locals.config.offset(req.query.offset);
-    const limit = locals.config.limit(req.query.limit);
-
-    Category.paginate({
-      campaign,
-    }, {
-      sort: {
-        createdAt: 1,
-      },
-      offset,
-      limit,
-    })
-    .then(categories => res.json(categories))
-    .catch(err => res.status(500).send(err));
-  },
-
   read(req, res) {
-    const criteria = {
-      campaign: req.params.campaign_id,
-      _id: req.params.category_id,
-    };
-
-    Category.findOne(criteria)
+    Category.findById(req.params.category_id)
     .then(category => {
       if (!category)
         return res.status(404).end();
       res.json(category);
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
 
   update(req, res) {
-    const criteria = {
-      campaign: req.params.campaign_id,
-      _id: req.params.category_id,
-    };
-
-    Category.findOneAndUpdate(criteria, req.body, {
+    Category.findByIdAndUpdate(req.params.category_id, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -95,20 +87,15 @@ const CategoryController = {
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.name === 'CastError' || err.name === 'ValidationError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
 
   delete(req, res) {
-    const criteria = {
-      campaign: req.params.campaign_id,
-      _id: req.params.category_id,
-    };
-
-    Category.findOneAndRemove(criteria)
+    Category.findByIdAndRemove(req.params.category_id)
     .then(category => {
       if (!category)
         return res.status(404).end();
@@ -116,9 +103,9 @@ const CategoryController = {
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
