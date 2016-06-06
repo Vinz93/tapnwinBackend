@@ -10,6 +10,7 @@ import idValidator from 'mongoose-id-validator';
 import ValidationError from '../../helpers/validationError';
 import fieldRemover from 'mongoose-field-remover';
 import Promise from 'bluebird';
+import config from '../../../config/env';
 
 import Mission from '../../models/common/mission';
 
@@ -40,12 +41,43 @@ const MissionsListSchema = new Schema({
   },
 }, { _id: false });
 
-const GamesListSchema = new Schema({
+/* const GamesListSchema = new Schema({
   game: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: 'Game',
   },
+  missions: [MissionsListSchema],
+}, { _id: false });*/
+
+const DesignSchema = new Schema({
+  missions: [MissionsListSchema],
+  models: [{
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Model',
+  }],
+  stickers: [{
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Sticker',
+  }],
+  categories: [{
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Category',
+  }],
+}, { _id: false });
+
+const VoiceSchema = new Schema({
+  missions: [MissionsListSchema],
+}, { _id: false });
+
+const Match3Schema = new Schema({
+  missions: [MissionsListSchema],
+}, { _id: false });
+
+const OwnerSchema = new Schema({
   missions: [MissionsListSchema],
 }, { _id: false });
 
@@ -55,7 +87,7 @@ const CampaignSchema = new Schema({
     required: true,
     ref: 'Company',
   },
-  games: [GamesListSchema],
+  // games: [GamesListSchema],
   name: {
     type: String,
     required: true,
@@ -72,6 +104,10 @@ const CampaignSchema = new Schema({
     type: Date,
     required: true,
   },
+  design: DesignSchema,
+  voice: VoiceSchema,
+  match3: Match3Schema,
+  owner: OwnerSchema,
 }, {
   timestamps: true,
 });
@@ -116,14 +152,14 @@ CampaignSchema.pre('save', function (next) {
 });
 
 CampaignSchema.pre('save', function (next) {
-  Promise.map(this.games, game =>
-    Promise.map(game.missions, mission =>
+  Promise.map(config.games, game =>
+    Promise.map(this[game.name].missions, mission =>
       Mission.findById(mission.mission)
       .then(missionDoc => {
-        if (missionDoc.games.indexOf(game.game) === -1) {
+        if (missionDoc.games.indexOf(game.id) === -1) {
           return next(new ValidationError('MissionsGameDontMatch', {
-            game: game.game,
-            mission: mission.mission,
+            game: game.name,
+            mission: missionDoc.description,
           }));
         }
       })
