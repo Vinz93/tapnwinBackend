@@ -14,8 +14,8 @@ const StickerController = {
     const locals = req.app.locals;
 
     const criteria = req.query.criteria || {};
-    const offset = locals.config.offset(req.query.offset);
-    const limit = locals.config.limit(req.query.limit);
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
 
     Sticker.paginate(criteria, {
       sort: {
@@ -46,8 +46,8 @@ const StickerController = {
     const locals = req.app.locals;
 
     const campaign = req.params.campaign_id;
-    const offset = locals.config.offset(req.query.offset);
-    const limit = locals.config.limit(req.query.limit);
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
 
     Sticker.paginate({
       campaign,

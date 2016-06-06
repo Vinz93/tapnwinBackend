@@ -9,8 +9,8 @@ import Design from '../../models/design/design';
 const DesignController = {
   readAll(req, res) {
     const locals = req.app.locals;
-    const offset = locals.config.offset(req.query.offset);
-    const limit = locals.config.limit(req.query.limit);
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
     const criteria = req.query.criteria || {};
 
     Design.paginate(criteria, {
@@ -61,7 +61,7 @@ const DesignController = {
       .then(designs => res.json(designs))
       .catch(err => res.status(500).send(err));
     } else {
-      const offset = locals.config.offset(req.query.offset);
+      const offset = locals.config.paginate.offset(req.query.offset);
 
       Design.paginate(criteria, {
         sort: {
