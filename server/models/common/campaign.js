@@ -7,6 +7,7 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
+import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-vars
 import ValidationError from '../../helpers/validationError';
 import fieldRemover from 'mongoose-field-remover';
 import Promise from 'bluebird';
@@ -41,17 +42,15 @@ const MissionsListSchema = new Schema({
   },
 }, { _id: false });
 
-/* const GamesListSchema = new Schema({
-  game: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Game',
+const GameSchema = new Schema({
+  active: {
+    type: Boolean,
+    default: false,
   },
   missions: [MissionsListSchema],
-}, { _id: false });*/
+}, { _id: false });
 
-const DesignSchema = new Schema({
-  missions: [MissionsListSchema],
+const DesignSchema = GameSchema.extend({
   models: [{
     type: Schema.Types.ObjectId,
     required: true,
@@ -63,23 +62,24 @@ const DesignSchema = new Schema({
     ref: 'Sticker',
   }],
   categories: [{
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Category',
+    category: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Category',
+    },
+    items: [{
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'Item',
+    }],
   }],
-}, { _id: false });
+});
 
-const VoiceSchema = new Schema({
-  missions: [MissionsListSchema],
-}, { _id: false });
+const VoiceSchema = GameSchema.extend({});
 
-const Match3Schema = new Schema({
-  missions: [MissionsListSchema],
-}, { _id: false });
+const Match3Schema = GameSchema.extend({});
 
-const OwnerSchema = new Schema({
-  missions: [MissionsListSchema],
-}, { _id: false });
+const OwnerSchema = GameSchema.extend({});
 
 const CampaignSchema = new Schema({
   company: {
@@ -87,7 +87,6 @@ const CampaignSchema = new Schema({
     required: true,
     ref: 'Company',
   },
-  // games: [GamesListSchema],
   name: {
     type: String,
     required: true,
@@ -104,10 +103,22 @@ const CampaignSchema = new Schema({
     type: Date,
     required: true,
   },
-  design: DesignSchema,
-  voice: VoiceSchema,
-  match3: Match3Schema,
-  owner: OwnerSchema,
+  design: {
+    type: DesignSchema,
+    default: {},
+  },
+  voice: {
+    type: VoiceSchema,
+    default: {},
+  },
+  match3: {
+    type: Match3Schema,
+    default: {},
+  },
+  owner: {
+    type: OwnerSchema,
+    default: {},
+  },
 }, {
   timestamps: true,
 });

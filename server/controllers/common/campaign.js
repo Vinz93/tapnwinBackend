@@ -29,13 +29,11 @@ const CampaignController = {
 
   createByACompany(req, res) {
     const criteria = Object.assign({ company: req.params.company_id }, req.body);
-
     Campaign.create(criteria)
     .then(campaign => res.status(201).json(campaign))
     .catch(err => {
       if (err.name === 'ValidationError')
         return res.status(400).json(err).end();
-
       return res.status(500).send(err);
     });
   },
