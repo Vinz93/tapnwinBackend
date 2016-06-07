@@ -4,34 +4,17 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import Promise from 'bluebird';
 import mongoose from 'mongoose';
-import validate from 'mongoose-validator';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 import random from 'mongoose-random';
 
-const Schema = mongoose.Schema;
+// import Vote from './vote';
+// import Sticker from './sticker';
 
-const VoteSchema = new Schema({
-  player: {
-    type: Schema.Types.ObjectId,
-    ref: 'Player',
-  },
-  stickers: {
-    type: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Sticker',
-    }],
-    validate: validate({
-      validator: 'isLength',
-      arguments: [0, 4],
-    }),
-  },
-}, {
-  timestamps: true,
-  _id: false,
-});
+const Schema = mongoose.Schema;
 
 const DesignSchema = new Schema({
   player: {
@@ -54,7 +37,6 @@ const DesignSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Item',
   },
-  votes: [VoteSchema],
 }, {
   timestamps: true,
 });
@@ -63,5 +45,22 @@ DesignSchema.plugin(mongoosePaginate);
 DesignSchema.plugin(idValidator);
 DesignSchema.plugin(fieldRemover);
 DesignSchema.plugin(random);
+/*
+DesignSchema.virtual('votes').get(function () {
+  const res = {};
+  const criteria = {
+    design: this._id,
+  };
 
+  Sticker.find()
+  .then(stickers => Promise.map(stickers, sticker => {
+    criteria['stickers._id'] = sticker._id;
+
+    return Vote.count(criteria)
+      .then(count => {
+        res[sticker._id] = count;
+      });
+  }).then(() => res));
+});
+*/
 export default mongoose.model('Design', DesignSchema);

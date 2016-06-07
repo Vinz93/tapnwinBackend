@@ -9,9 +9,9 @@ import Design from '../../models/design/design';
 const DesignController = {
   readAll(req, res) {
     const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = req.query.criteria || {};
+    const offset = locals.config.offset(req.query.offset);
+    const limit = locals.config.limit(req.query.limit);
+    const criteria = Object.assign(req.query.criteria || {});
 
     Design.paginate(criteria, {
       sort: {
@@ -19,7 +19,7 @@ const DesignController = {
       },
       offset,
       limit,
-      populate: ['player', 'campaign', 'topItem', 'midItem', 'botItem'],
+      populate: ['player', 'topItem', 'midItem', 'botItem'],
     })
     .then(designs => res.json(designs))
     .catch(err => res.status(500).send(err));
@@ -27,8 +27,8 @@ const DesignController = {
 
   readAllByCampaign(req, res) {
     const locals = req.app.locals;
-    const offset = locals.config.offset(req.query.offset);
     const limit = locals.config.limit(req.query.limit);
+    const offset = locals.config.paginate.offset(req.query.offset);
     const criteria = Object.assign(req.query.criteria || {}, {
       campaign: req.params.campaign_id,
     });
@@ -39,7 +39,7 @@ const DesignController = {
       },
       offset,
       limit,
-      populate: ['player', 'topItem', 'midItem', 'botItem'],
+      populate: ['topItem', 'midItem', 'botItem'],
     })
     .then(designs => res.json(designs))
     .catch(err => res.status(500).send(err));
@@ -77,11 +77,11 @@ const DesignController = {
   },
 
   create(req, res) {
-    const criteria = Object.assign({
+    const data = Object.assign({
       campaign: req.params.campaign_id,
     }, req.body);
 
-    Design.create(criteria)
+    Design.create(data)
     .then(design => res.status(201).json(design))
     .catch(err => {
       if (err.name === 'ValidationError')
@@ -97,40 +97,6 @@ const DesignController = {
       if (!design)
         return res.status(404).end();
       res.json(design);
-    })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
-  },
-
-  update(req, res) {
-    Design.findByIdAndUpdate(req.params.design_id, req.body, {
-      runValidators: true,
-      context: 'query',
-    })
-    .then(design => {
-      if (!design)
-        return res.status(404).end();
-      res.status(204).end();
-    })
-    .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
-  },
-
-  delete(req, res) {
-    Design.findByIdAndRemove(req.params.design_id)
-    .then(design => {
-      if (!design)
-        return res.status(404).end();
-
-      res.status(204).end();
     })
     .catch(err => {
       if (err.name === 'CastError')
