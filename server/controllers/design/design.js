@@ -48,7 +48,7 @@ const DesignController = {
   readAllByMeCampaign(req, res) {
     const locals = req.app.locals;
     const limit = locals.config.limit(req.query.limit);
-    const player = (!req.query.exclusive) ? res.locals.user._id : {
+    const player = (req.query.exclusive === 'false') ? res.locals.user._id : {
       $ne: res.locals.user._id,
     };
     const criteria = Object.assign(req.query.criteria || {}, {
@@ -56,7 +56,7 @@ const DesignController = {
       player,
     });
 
-    if (req.query.random) {
+    if (req.query.random === 'true') {
       Design.findRandom().limit(limit)
       .then(designs => res.json(designs))
       .catch(err => res.status(500).send(err));
