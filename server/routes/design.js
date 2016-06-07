@@ -1,11 +1,12 @@
 import express from 'express';
 import Session from '../controllers/common/session';
+import Campaign from '../controllers/common/campaign';
 import Category from '../controllers/design/category';
 import Design from '../controllers/design/design';
 import Item from '../controllers/design/item';
 import Model from '../controllers/design/model';
+import Vote from '../controllers/design/vote';
 import Sticker from '../controllers/design/sticker';
-import Campaign from '../controllers/common/campaign';
 
 import uploader from '../helpers/uploader';
 
@@ -73,10 +74,14 @@ router.route('/campaigns/:campaign_id/designs')
 router.route('/players/me/campaigns/:campaign_id/designs')
 .get(Session.validate, Design.readAllByMeCampaign);
 
-router.route('/designs/:category_id')
+router.route('/designs/:design_id')
 .get(Design.read)
 .patch(Design.update)
 .delete(Design.delete);
+
+router.route('/players/me/designs/:design_id/votes')
+.get(Session.validate, Vote.read)
+.post(Session.validate, Vote.create);
 
 router.route('/categories')
 .get(Category.readAll);
