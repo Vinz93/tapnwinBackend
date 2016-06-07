@@ -1,7 +1,10 @@
 {
-    "id": "57336aaf646a1de8c24efdda",
-    "gameIds": ["57333d41c7793b6f1315c7ed"],
-    "description": "Invite a friend",
-    "createdAt": "2015-12-01T17:39:22.939Z",
-    "updatedAt": "2015-12-01T17:39:22.952Z"
+  "updatedAt": "2016-06-07T15:23:54.574Z",
+  "createdAt": "2016-06-07T15:23:54.574Z",
+  "description": "Rank N users",
+  "games": [
+    "0001",
+    "0002"
+  ],
+  "id": "5756e70ab3bf52470cd290f4"
 }

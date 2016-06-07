@@ -1,26 +1,42 @@
 {
-    "id":"507f191e810c19729de860ea",
-    "companyId": "507f1f77bcf86cd799439011",
-    "games": [
+  "updatedAt": "2016-06-07T19:44:38.753Z",
+  "createdAt": "2016-06-07T19:44:38.753Z",
+  "company": {
+    "updatedAt": "2016-06-07T15:30:21.992Z",
+    "createdAt": "2016-06-07T15:30:21.992Z",
+    "name": "Levis",
+    "id": "5756e88df047d3610c77d97a"
+  },
+  "name": "Winter",
+  "banner": "Winter favorites clothes!",
+  "startAt": "2015-12-06T17:39:22.939Z",
+  "finishAt": "2015-12-08T17:39:22.939Z",
+  "owner": {
+    "missions": [],
+    "active": false
+  },
+  "match3": {
+    "missions": [],
+    "active": false
+  },
+  "voice": {
+    "missions": [],
+    "active": false
+  },
+  "design": {
+    "categories": [],
+    "stickers": [],
+    "models": [],
+    "missions": [
       {
-        "id": "507f131f810c19729de860ea",
-        "gameId": "507f1f77bcf86cd799439011",
-        "missions": [
-          {
-            "id": "507f191e810c19729de860ea",
-            "missionId": "507f1f77bcf86cd799439011",
-            "isRequired": true,
-            "isBlocking": false,
-            "blockedTime": 20,
-            "max": 3
-          }
-        ]
+        "mission": "5756e70ab3bf52470cd290f4",
+        "max": 3,
+        "blockedTime": 20,
+        "isBlocking": false,
+        "isRequired": true
       }
     ],
-    "name": "Winter",
-    "banner": "Winter favorites clothes!",
-    "startAt": "2015-12-01T17:39:22.939Z",
-    "finishAt": "2015-12-01T17:39:22.939Z",
-    "createdAt":"2015-12-01T17:39:22.939Z",
-    "updatedAt":"2015-12-01T17:39:22.952Z"
+    "active": true
+  },
+  "id": "575724262633737910b75591"
 }
