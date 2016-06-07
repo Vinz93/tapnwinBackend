@@ -14,9 +14,7 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](mission.json)
-        ]
+        :[](missions.json)
 
 ### Create [POST]
 
@@ -25,6 +23,13 @@
     + Headers
 
             sessionToken: 5734ed0a1dd3b2b88b35ece3
+
+    + Body
+
+            {
+                "description": "Rank N users",
+                "games": ["0001", "0002"]
+            }
 
 + Response 200 (application/json)
 

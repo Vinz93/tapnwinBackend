@@ -1,17 +1,16 @@
 {
   "missions": {
     "_model": "Mission",
-    "_require": ["Game"],
     "friend": {
-      "games": ["->games.design", "->games.voice", "->games.match3", "->games.owner"],
+      "games": ["0001", "0002", "0003", "0004"],
       "description": "Add a friend"
     },
     "create": {
-      "games": ["->games.design"],
+      "games": ["0001"],
       "description": "Create a design"
     },
     "vote": {
-      "games": ["->games.design"],
+      "games": ["0001"],
       "description": "Vote for n designs"
     }
   }

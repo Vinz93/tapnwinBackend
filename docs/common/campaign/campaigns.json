@@ -1,0 +1,73 @@
+{
+  "docs": [
+    {
+      "updatedAt": "2016-06-07T19:44:14.520Z",
+      "createdAt": "2016-06-07T19:44:14.520Z",
+      "company": "5756e88df047d3610c77d97a",
+      "name": "Winter",
+      "banner": "Winter favorites clothes!",
+      "startAt": "2015-12-10T17:39:22.939Z",
+      "finishAt": "2015-12-11T17:39:22.939Z",
+      "owner": {
+        "missions": [],
+        "active": false
+      },
+      "match3": {
+        "missions": [],
+        "active": false
+      },
+      "voice": {
+        "missions": [],
+        "active": false
+      },
+      "design": {
+        "categories": [],
+        "stickers": [],
+        "models": [],
+        "missions": [],
+        "active": false
+      },
+      "id": "5757240e2633737910b75590"
+    },
+    {
+      "updatedAt": "2016-06-07T19:44:38.753Z",
+      "createdAt": "2016-06-07T19:44:38.753Z",
+      "company": "5756e88df047d3610c77d97a",
+      "name": "Winter",
+      "banner": "Winter favorites clothes!",
+      "startAt": "2015-12-06T17:39:22.939Z",
+      "finishAt": "2015-12-08T17:39:22.939Z",
+      "owner": {
+        "missions": [],
+        "active": false
+      },
+      "match3": {
+        "missions": [],
+        "active": false
+      },
+      "voice": {
+        "missions": [],
+        "active": false
+      },
+      "design": {
+        "categories": [],
+        "stickers": [],
+        "models": [],
+        "missions": [
+          {
+            "mission": "5756e70ab3bf52470cd290f4",
+            "max": 3,
+            "blockedTime": 20,
+            "isBlocking": false,
+            "isRequired": true
+          }
+        ],
+        "active": true
+      },
+      "id": "575724262633737910b75591"
+    }
+  ],
+  "total": 2,
+  "limit": 20,
+  "offset": 0
+}

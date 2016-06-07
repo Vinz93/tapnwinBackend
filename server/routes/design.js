@@ -16,9 +16,9 @@ router.post('/media', (req, res) => {
   const asset = 'design';
 
   uploader(asset, 'file')(req, res, err => {
-    if (err) {
+    if (err)
       return res.status(400).send(err);
-    }
+
     res.json({ url: `${req.app.locals.config.host}uploads/${asset}/${req.file.filename}` });
   });
 });

@@ -14,9 +14,7 @@
 
 + Response 200 (application/json)
 
-        [
-            :[](company.json)
-        ]
+        :[](companies.json)
 
 ### Create [POST]
 

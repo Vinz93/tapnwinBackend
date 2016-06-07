@@ -21,7 +21,6 @@ const MissionController = {
       },
       offset,
       limit,
-      populate: ['games'],
     })
     .then(missions => res.json(missions))
     .catch(err => res.status(500).send(err));
@@ -40,7 +39,6 @@ const MissionController = {
 
   read(req, res) {
     Mission.findById(req.params.mission_id)
-    .populate('games')
     .then(mission => {
       if (!mission)
         return res.status(404).end();

@@ -1,0 +1,19 @@
+{
+  "docs": [
+    {
+      "updatedAt": "2016-06-07T15:30:17.828Z",
+      "createdAt": "2016-06-07T15:30:17.828Z",
+      "name": "McDonalds",
+      "id": "5756e889f047d3610c77d979"
+    },
+    {
+      "updatedAt": "2016-06-07T15:30:21.992Z",
+      "createdAt": "2016-06-07T15:30:21.992Z",
+      "name": "Levis",
+      "id": "5756e88df047d3610c77d97a"
+    }
+  ],
+  "total": 2,
+  "limit": 20,
+  "offset": 0
+}

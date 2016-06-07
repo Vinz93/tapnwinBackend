@@ -14,9 +14,7 @@
 
 + Response 200 (application/json)
 
-        [
-            :[](campaign.json)
-        ]
+        :[](campaigns.json)
 
 ### Create Campaign of a Company [POST /companies/{company_id}/campaigns]
 
@@ -31,26 +29,25 @@
 
     + Body
 
-            {
-              "name": "Winter",
-              "banner": "Winter favorites clothes!",
-              "startAt": "2015-12-01T17:39:22.939Z",
-              "finishAt": "2015-12-01T17:39:22.939Z",
-              "games": [
-                {
-                  "gameId": "507f1f77bcf86cd799439011",
-                  "missions": [
-                    {
-                      "missionId": "507f1f77bcf86cd799439011",
-                      "isRequired": true,
-                      "isBlocking": false,
-                      "blockedTime": 20,
-                      "max": 3
-                    }
-                  ]
+              {
+                "name": "Winter",
+                "banner": "Winter favorites clothes!",
+                "startAt": "2015-12-06T17:39:22.939Z",
+                "finishAt": "2015-12-08T17:39:22.939Z",
+                "design": {
+                  "active": true,
+                  "missions": [{
+                    "mission": "5756e70ab3bf52470cd290f4",
+                    "isRequired": true,
+                    "isBlocking": false,
+                    "blockedTime": 20,
+                    "max": 3
+                  }],
+                  "models": [],
+                  "stickers": [],
+                  "categories": []
                 }
-              ]
-            }
+              }
 
 + Response 201 (application/json)
 
@@ -72,14 +69,7 @@
 
 + Response 200 (application/json)
 
-        {
-          "limit": 20,
-          "offset": 0,
-          "total": 200,
-          [
-              :[](campaign.json)
-          ]
-        }
+        :[](campaigns.json)
 
 + Request Active = true (application/json)
 

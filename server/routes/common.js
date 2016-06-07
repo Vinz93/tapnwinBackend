@@ -1,7 +1,6 @@
 import express from 'express';
 import Company from '../controllers/common/company';
 import Campaign from '../controllers/common/campaign';
-import Game from '../controllers/common/game';
 import User from '../controllers/common/user';
 import Administrator from '../controllers/common/administrator';
 import Player from '../controllers/common/player';
@@ -72,17 +71,6 @@ router.route('/companies/:company_id/campaigns/:campaign_id')
 .get(Campaign.read)
 .put(Campaign.update)
 .delete(Campaign.delete);
-
-// Games
-
-router.route('/games')
-.get(Game.readAll)
-.post(Game.create);
-
-router.route('/games/:game_id')
-.get(Game.read)
-.patch(Game.update)
-.delete(Game.delete);
 
 // Missions
 
