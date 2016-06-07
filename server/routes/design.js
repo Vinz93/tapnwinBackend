@@ -45,8 +45,7 @@ router.route('/campaigns/:campaign_id/stickers')
 .get(Sticker.readAllByCampaign)
 .post(Sticker.create);
 
-router.route('/campaigns/:campaign_id/stickers/:sticker_id')
-.all(Campaign.check)
+router.route('/stickers/:sticker_id')
 .get(Sticker.read)
 .put(Sticker.update)
 .delete(Sticker.delete);
@@ -75,12 +74,10 @@ router.route('/players/me/campaigns/:campaign_id/designs')
 .get(Session.validate, Design.readAllByMeCampaign);
 
 router.route('/designs/:design_id')
-.get(Design.read)
-.patch(Design.update)
-.delete(Design.delete);
+.get(Design.read);
 
 router.route('/players/me/designs/:design_id/votes')
-.get(Session.validate, Vote.read)
+.get(Session.validate, Vote.readByMe)
 .post(Session.validate, Vote.create);
 
 router.route('/categories')
