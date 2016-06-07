@@ -5,12 +5,27 @@ import production from './production';
 const defaults = {
   root: path.join(__dirname, '../..'),
   host: 'http://tapnwin.ludopia.net/api/v1/',
-  limit(limit, value) {
-    return !isNaN(limit) ? parseInt(limit, 10) : value || 20;
+  paginate: {
+    limit(limit, value) {
+      return !isNaN(limit) ? parseInt(limit, 10) : value || 20;
+    },
+    offset(offset, value) {
+      return !isNaN(offset) ? parseInt(offset, 10) : value || 0;
+    },
   },
-  offset(offset, value) {
-    return !isNaN(offset) ? parseInt(offset, 10) : value || 0;
-  },
+  games: [{
+    name: 'design',
+    id: '0001',
+  }, {
+    name: 'voice',
+    id: '0002',
+  }, {
+    name: 'match3',
+    id: '0003',
+  }, {
+    name: 'owner',
+    id: '0004',
+  }],
 };
 
 const config = {

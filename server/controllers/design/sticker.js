@@ -5,27 +5,17 @@
  */
 
 import Sticker from '../../models/design/sticker';
-import uploader from '../../helpers/uploader';
+import fs from 'fs';
+import path from 'path';
 
 const StickerController = {
-
-  upload(req, res) {
-    const asset = 'design';
-
-    uploader(asset, 'file')(req, res, err => {
-      if (err) {
-        return res.status(400).send(err);
-      }
-      res.json({ url: `${req.app.locals.config.host}uploads/${asset}/${req.file.filename}` });
-    });
-  },
 
   readAll(req, res) {
     const locals = req.app.locals;
 
     const criteria = req.query.criteria || {};
-    const offset = locals.config.offset(req.query.offset);
-    const limit = locals.config.limit(req.query.limit);
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
 
     Sticker.paginate(criteria, {
       sort: {
@@ -33,12 +23,13 @@ const StickerController = {
       },
       offset,
       limit,
+      populate: ['campaign'],
     })
     .then(stickers => res.json(stickers))
     .catch(err => res.status(500).send(err));
   },
 
-  createByACampaign(req, res) {
+  create(req, res) {
     const criteria = Object.assign({ campaign: req.params.campaign_id }, req.body);
 
     Sticker.create(criteria)
@@ -51,12 +42,12 @@ const StickerController = {
     });
   },
 
-  readByACampaign(req, res) {
+  readAllByCampaign(req, res) {
     const locals = req.app.locals;
 
     const campaign = req.params.campaign_id;
-    const offset = locals.config.offset(req.query.offset);
-    const limit = locals.config.limit(req.query.limit);
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
 
     Sticker.paginate({
       campaign,
@@ -104,6 +95,10 @@ const StickerController = {
     .then(sticker => {
       if (!sticker)
         return res.status(404).end();
+
+      fs.unlinkSync(path.join(req.app.locals.config.root,
+      `/uploads${sticker.url.split('uploads')[1]}`));
+
       res.status(204).end();
     })
     .catch(err => {
@@ -124,6 +119,9 @@ const StickerController = {
     .then(sticker => {
       if (!sticker)
         return res.status(404).end();
+
+      fs.unlinkSync(path.join(req.app.locals.config.root,
+      `/uploads${sticker.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })

@@ -6,12 +6,26 @@ import Design from '../controllers/design/design';
 import Item from '../controllers/design/item';
 import Model from '../controllers/design/model';
 import Vote from '../controllers/design/vote';
+import Sticker from '../controllers/design/sticker';
+
+import uploader from '../helpers/uploader';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.get('/models', Model.readAll);
+router.post('/media', (req, res) => {
+  const asset = 'design';
 
-router.post('/models/media', Model.upload);
+  uploader(asset, 'file')(req, res, err => {
+    if (err) {
+      return res.status(400).send(err);
+    }
+    res.json({ url: `${req.app.locals.config.host}uploads/${asset}/${req.file.filename}` });
+  });
+});
+
+// Models
+
+router.get('/models', Model.readAll);
 
 router.route('/campaigns/:campaign_id/models')
 .all(Campaign.check)
@@ -21,8 +35,32 @@ router.route('/campaigns/:campaign_id/models')
 router.route('/campaigns/:campaign_id/models/:model_id')
 .all(Campaign.check)
 .get(Model.read)
-// .put(Model.update)
+.put(Model.update)
 .delete(Model.delete);
+
+// Stickers
+
+router.route('/campaigns/:campaign_id/stickers')
+.all(Campaign.check)
+.get(Sticker.readAllByCampaign)
+.post(Sticker.create);
+
+router.route('/campaigns/:campaign_id/stickers/:sticker_id')
+.all(Campaign.check)
+.get(Sticker.read)
+.put(Sticker.update)
+.delete(Sticker.delete);
+
+// Items
+
+router.route('/items')
+.get(Item.readAll)
+.post(Item.create);
+
+router.route('/items/:item_id')
+.get(Item.read)
+.patch(Item.update)
+.delete(Item.delete);
 
 export default router;
 
@@ -56,12 +94,3 @@ router.route('/categories/:category_id')
 .get(Category.read)
 .patch(Category.update)
 .delete(Category.delete);
-
-router.route('/items')
-.get(Item.readAll)
-.post(Item.create);
-
-router.route('/items/:item_id')
-.get(Item.read)
-.patch(Item.update)
-.delete(Item.delete);

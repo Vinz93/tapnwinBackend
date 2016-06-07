@@ -9,8 +9,8 @@ import Item from '../../models/design/item';
 const GameController = {
   readAll(req, res) {
     const locals = req.app.locals;
-    const offset = locals.config.offset(req.query.offset);
-    const limit = locals.config.limit(req.query.limit);
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
     const criteria = req.query.criteria || {};
 
     Item.paginate(criteria, {
