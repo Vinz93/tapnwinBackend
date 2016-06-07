@@ -77,7 +77,8 @@ module.exports = function(grunt) {
       dist: {
         script: paths.src.main,
         options: {
-          cwd: paths.dist
+          cwd: paths.dist,
+          nodeArgs: ['--harmony_proxies'],
         },
       },
     },
