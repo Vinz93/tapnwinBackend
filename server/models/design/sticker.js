@@ -13,9 +13,10 @@ import fieldRemover from 'mongoose-field-remover';
 const Schema = mongoose.Schema;
 
 const StickerSchema = new Schema({
-  campaign: {
+  company: {
     type: Schema.Types.ObjectId,
-    ref: 'Campaign',
+    ref: 'Company',
+    required: true,
   },
   name: {
     type: String,

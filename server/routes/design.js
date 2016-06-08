@@ -98,12 +98,10 @@ router.route('/players/me/campaigns/:campaign_id/designs')
 .get(Session.validate, Design.readAllByMeCampaign);
 
 router.route('/designs/:design_id')
-.get(Design.read)
-.patch(Design.update)
-.delete(Design.delete);
+.get(Design.read);
 
 router.route('/players/me/designs/:design_id/votes')
-.get(Session.validate, Vote.read)
+.get(Session.validate, Vote.readByMe)
 .post(Session.validate, Vote.create);
 
 export default router;

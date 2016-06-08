@@ -1,21 +1,21 @@
 /**
  * @author Juan Sanchez
  * @description Company controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
-import Sticker from '../../models/design/sticker';
 import fs from 'fs';
 import path from 'path';
+
+import Sticker from '../../models/design/sticker';
 
 const StickerController = {
 
   readAll(req, res) {
     const locals = req.app.locals;
-
-    const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
+    const criteria = req.query.criteria || {};
 
     Sticker.paginate(criteria, {
       sort: {
@@ -29,8 +29,30 @@ const StickerController = {
     .catch(err => res.status(500).send(err));
   },
 
+  readAllByCompany(req, res) {
+    const locals = req.app.locals;
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
+
+    const criteria = Object.assign(req.query.criteria, {
+      company: req.params.company_id,
+    });
+
+    Sticker.paginate(criteria, {
+      sort: {
+        createdAt: 1,
+      },
+      offset,
+      limit,
+    })
+    .then(stickers => res.json(stickers))
+    .catch(err => res.status(500).send(err));
+  },
+
   create(req, res) {
-    const criteria = Object.assign({ campaign: req.params.campaign_id }, req.body);
+    const criteria = Object.assign({
+      company: req.params.company_id,
+    }, req.body);
 
     Sticker.create(criteria)
     .then(sticker => res.status(201).json(sticker))
@@ -42,53 +64,34 @@ const StickerController = {
     });
   },
 
-  readAllByCompany(req, res) {
-    const locals = req.app.locals;
-
-    const campaign = req.params.campaign_id;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
-
-    Sticker.paginate({
-      campaign,
-    }, {
-      sort: {
-        createdAt: 1,
-      },
-      offset,
-      limit,
-    })
-    .then(stickers => res.json(stickers))
-    .catch(err => res.status(500).send(err));
-  },
-
   read(req, res) {
     const criteria = {
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
       _id: req.params.sticker_id,
     };
 
-    Sticker.findOne(criteria)
+    Sticker.findById(criteria)
     .then(sticker => {
       if (!sticker)
         return res.status(404).end();
+
       res.json(sticker);
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
 
   update(req, res) {
     const criteria = {
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
       _id: req.params.sticker_id,
     };
 
-    Sticker.findOneAndUpdate(criteria, req.body, {
+    Sticker.findByIdAndUpdate(criteria, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -97,38 +100,38 @@ const StickerController = {
         return res.status(404).end();
 
       fs.unlinkSync(path.join(req.app.locals.config.root,
-      `/uploads${sticker.url.split('uploads')[1]}`));
+        `/uploads${sticker.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.name === 'CastError' || err.name === 'ValidationError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
 
   delete(req, res) {
     const criteria = {
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
       _id: req.params.sticker_id,
     };
 
-    Sticker.findOneAndRemove(criteria)
+    Sticker.findByIdAndRemove(criteria)
     .then(sticker => {
       if (!sticker)
         return res.status(404).end();
 
       fs.unlinkSync(path.join(req.app.locals.config.root,
-      `/uploads${sticker.url.split('uploads')[1]}`));
+        `/uploads${sticker.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },

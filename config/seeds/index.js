@@ -37,10 +37,12 @@ tree.resolve().forEach(name => {
   Object.assign(seeds, files[name]);
 });
 
+console.log(tree.resolve());
+
 mongoose.connect(config.db).connection.once('open', () => {
   seeder.seed(seeds, {}, (err) => {
     if (err)
-      console.err(err);
+      console.log(err);
 
     mongoose.connection.close();
   });

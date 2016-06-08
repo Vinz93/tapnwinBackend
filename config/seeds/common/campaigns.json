@@ -1,15 +1,15 @@
 {
   "campaigns": {
     "_model": "Campaign",
-    "_require": ["Company", "Game", "Mission"],
+    "_require": ["Company", "Mission", "Model", "Sticker", "Category", "Item"],
     "summer": {
       "name": "Summer",
       "banner": "Summer favorites clothes for sports",
       "startAt": "2015-12-01T17:39:22.939Z",
       "finishAt": "2016-12-01T17:39:22.939Z",
       "company": "->companies.nike",
-      "games": [{
-        "game": "->games.design",
+      "design": {
+        "active": true,
         "missions": [{
           "mission": "->missions.friend",
           "isRequired": true,
@@ -30,8 +30,14 @@
           "isBlocking": false,
           "blockedTime": 20,
           "max": 10
+        }],
+        "models": ["->models.model1"],
+        "stickers": ["->stickers.sticker1", "->stickers.sticker3"],
+        "categories": [{
+          "category": "->categories.shoes",
+          "items": ["->items.janoski", "->items.mercurial"]
         }]
-      }]
+      }
     }
   }
 }

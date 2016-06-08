@@ -1,0 +1,24 @@
+{
+  "stickers": {
+    "_model": "Sticker",
+    "_require": ["Company"],
+    "sticker1": {
+      "company": "->companies.nike",
+      "name": "sticker1",
+      "isPositive": true,
+      "url": "http://development.com/media/sticker1.jpg"
+    },
+    "sticker2": {
+      "company": "->companies.nike",
+      "name": "sticker2",
+      "isPositive": false,
+      "url": "http://development.com/media/sticker2.jpg"
+    },
+    "sticker3": {
+      "company": "->companies.nike",
+      "name": "sticker3",
+      "isPositive": true,
+      "url": "http://development.com/media/sticker3.jpg"
+    }
+  }
+}

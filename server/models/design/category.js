@@ -14,8 +14,8 @@ const Schema = mongoose.Schema;
 const CategorySchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,
-    required: true,
     ref: 'Company',
+    required: true,
   },
   name: {
     type: String,
@@ -28,10 +28,6 @@ const CategorySchema = new Schema({
       message: '`{VALUE}` is not a valid zone',
     },
   },
-  items: [{ // FIXME
-    type: Schema.Types.ObjectId,
-    ref: 'Item',
-  }],
 }, {
   timestamps: true,
 });

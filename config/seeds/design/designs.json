@@ -7,24 +7,21 @@
       "campaign": "->campaigns.summer",
       "topItem": "->items.janoski",
       "midItem": "->items.court",
-      "botItem": "->items.paris",
-      "votes": []
+      "botItem": "->items.paris"
     },
     "design2": {
       "player": "->players.andres",
       "campaign": "->campaigns.summer",
       "topItem": "->items.janoski",
       "midItem": "->items.court",
-      "botItem": "->items.barcelona",
-      "votes": []
+      "botItem": "->items.barcelona"
     },
     "design3": {
-      "player": "->players.andres",
+      "player": "->players.juan",
       "campaign": "->campaigns.summer",
       "topItem": "->items.mercurial",
       "midItem": "->items.court",
-      "botItem": "->items.paris",
-      "votes": []
+      "botItem": "->items.paris"
     }
   }
 }
