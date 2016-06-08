@@ -16,6 +16,7 @@ const StickerSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,
     ref: 'Company',
+    required: true,
   },
   name: {
     type: String,

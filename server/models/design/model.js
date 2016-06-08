@@ -13,10 +13,10 @@ import fieldRemover from 'mongoose-field-remover';
 const Schema = mongoose.Schema;
 
 const ModelSchema = new Schema({
-  campaign: {
+  company: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Campaign',
+    ref: 'Company',
   },
   name: {
     type: String,

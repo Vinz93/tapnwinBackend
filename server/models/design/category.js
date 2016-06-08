@@ -12,10 +12,10 @@ import fieldRemover from 'mongoose-field-remover';
 const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema({
-  campaign: {
+  company: {
     type: Schema.Types.ObjectId,
+    ref: 'Company',
     required: true,
-    ref: 'Campaign',
   },
   name: {
     type: String,
@@ -28,10 +28,6 @@ const CategorySchema = new Schema({
       message: '`{VALUE}` is not a valid zone',
     },
   },
-  items: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Item',
-  }],
 }, {
   timestamps: true,
 });

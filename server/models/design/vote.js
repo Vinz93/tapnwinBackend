@@ -5,7 +5,6 @@
  */
 
 import mongoose from 'mongoose';
-import validate from 'mongoose-validator';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
@@ -28,10 +27,6 @@ const VoteSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Sticker',
     }],
-    validate: validate({
-      validator: 'isLength',
-      arguments: [0, 4],
-    }),
   },
 }, {
   timestamps: true,
