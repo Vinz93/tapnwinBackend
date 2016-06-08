@@ -7,7 +7,7 @@
     "start": "grunt",
     "build": "grunt build",
     "doc": "hercule docs/main.apib -o dist/output.md",
-    "seed": "node ./dist/config/seeds"
+    "seed": "node --harmony_proxies ./dist/config/seeds"
   },
   "repository": {
     "type": "git",
