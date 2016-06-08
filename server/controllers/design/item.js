@@ -6,7 +6,8 @@
 
 import Item from '../../models/design/item';
 
-const GameController = {
+const ItemController = {
+
   readAll(req, res) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
@@ -19,13 +20,38 @@ const GameController = {
       },
       offset,
       limit,
+      populate: ['company'],
     })
-    .then(games => res.json(games))
+    .then(items => res.json(items))
+    .catch(err => res.status(500).send(err));
+  },
+
+  readAllByCompany(req, res) {
+    const locals = req.app.locals;
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
+
+    const criteria = Object.assign(req.query.criteria || {}, {
+      company: req.params.company_id,
+    });
+
+    Item.paginate(criteria, {
+      sort: {
+        createdAt: 1,
+      },
+      offset,
+      limit,
+    })
+    .then(items => res.json(items))
     .catch(err => res.status(500).send(err));
   },
 
   create(req, res) {
-    Item.create(req.body)
+    const criteria = Object.assign({
+      company: req.params.company_id,
+    }, req.body);
+
+    Item.create(criteria)
     .then(item => res.status(201).json(item))
     .catch(err => {
       if (err.name === 'ValidationError')
@@ -36,7 +62,12 @@ const GameController = {
   },
 
   read(req, res) {
-    Item.findById(req.params.item_id)
+    const criteria = {
+      company: req.params.company_id,
+      _id: req.params.item_id,
+    };
+
+    Item.findById(criteria)
     .then(item => {
       if (!item)
         return res.status(404).end();
@@ -51,7 +82,12 @@ const GameController = {
   },
 
   update(req, res) {
-    Item.findByIdAndUpdate(req.params.item_id, req.body, {
+    const criteria = {
+      company: req.params.company_id,
+      _id: req.params.item_id,
+    };
+
+    Item.findByIdAndUpdate(criteria, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -69,7 +105,12 @@ const GameController = {
   },
 
   delete(req, res) {
-    Item.findByIdAndRemove(req.params.item_id)
+    const criteria = {
+      company: req.params.company_id,
+      _id: req.params.item_id,
+    };
+
+    Item.findByIdAndRemove(criteria)
     .then(item => {
       if (!item)
         return res.status(404).end();
@@ -85,4 +126,4 @@ const GameController = {
   },
 };
 
-export default GameController;
+export default ItemController;

@@ -42,7 +42,7 @@ const StickerController = {
     });
   },
 
-  readAllByCampaign(req, res) {
+  readAllByCompany(req, res) {
     const locals = req.app.locals;
 
     const campaign = req.params.campaign_id;

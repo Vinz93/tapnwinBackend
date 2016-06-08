@@ -13,7 +13,7 @@ import fieldRemover from 'mongoose-field-remover';
 import Promise from 'bluebird';
 import config from '../../../config/env';
 
-import Mission from '../../models/common/mission';
+import Mission from './mission';
 
 const Schema = mongoose.Schema;
 

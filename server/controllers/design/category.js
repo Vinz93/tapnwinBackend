@@ -20,18 +20,19 @@ const CategoryController = {
       },
       offset,
       limit,
-      populate: ['items'],
+      populate: ['company'],
     })
     .then(categories => res.json(categories))
     .catch(err => res.status(500).send(err));
   },
 
-  readAllByCampaign(req, res) {
+  readAllByCompany(req, res) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
+
     const criteria = Object.assign(req.query.criteria || {}, {
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
     });
 
     Category.paginate(criteria, {
@@ -40,7 +41,7 @@ const CategoryController = {
       },
       offset,
       limit,
-      populate: ['items'],
+      populate: ['company'],
     })
     .then(categories => res.json(categories))
     .catch(err => res.status(500).send(err));
@@ -48,7 +49,7 @@ const CategoryController = {
 
   create(req, res) {
     const criteria = Object.assign({
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
     }, req.body);
 
     Category.create(criteria)
@@ -62,7 +63,12 @@ const CategoryController = {
   },
 
   read(req, res) {
-    Category.findById(req.params.category_id)
+    const criteria = {
+      company: req.params.company_id,
+      _id: req.params.category_id,
+    };
+
+    Category.findById(criteria)
     .then(category => {
       if (!category)
         return res.status(404).end();
@@ -77,7 +83,12 @@ const CategoryController = {
   },
 
   update(req, res) {
-    Category.findByIdAndUpdate(req.params.category_id, req.body, {
+    const criteria = {
+      company: req.params.company_id,
+      _id: req.params.category_id,
+    };
+
+    Category.findByIdAndUpdate(criteria, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -95,7 +106,12 @@ const CategoryController = {
   },
 
   delete(req, res) {
-    Category.findByIdAndRemove(req.params.category_id)
+    const criteria = {
+      company: req.params.company_id,
+      _id: req.params.category_id,
+    };
+
+    Category.findByIdAndRemove(criteria)
     .then(category => {
       if (!category)
         return res.status(404).end();

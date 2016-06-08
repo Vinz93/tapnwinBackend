@@ -1,6 +1,8 @@
 import express from 'express';
+
 import Session from '../controllers/common/session';
-import Campaign from '../controllers/common/campaign';
+import Company from '../controllers/common/company';
+
 import Category from '../controllers/design/category';
 import Design from '../controllers/design/design';
 import Item from '../controllers/design/item';
@@ -12,7 +14,7 @@ import uploader from '../helpers/uploader';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.post('/media', (req, res) => {
+router.post('/design/media', (req, res) => {
   const asset = 'design';
 
   uploader(asset, 'file')(req, res, err => {
@@ -27,42 +29,63 @@ router.post('/media', (req, res) => {
 
 router.get('/models', Model.readAll);
 
-router.route('/campaigns/:campaign_id/models')
-.all(Campaign.check)
-.get(Model.readAllByCampaign)
+router.route('/companies/:company_id/models')
+.all(Company.check)
+.get(Model.readAllByCompany)
 .post(Model.create);
 
-router.route('/campaigns/:campaign_id/models/:model_id')
-.all(Campaign.check)
+router.route('/companies/:company_id/models/:model_id')
+.all(Company.check)
 .get(Model.read)
 .put(Model.update)
 .delete(Model.delete);
 
 // Stickers
 
-router.route('/campaigns/:campaign_id/stickers')
-.all(Campaign.check)
-.get(Sticker.readAllByCampaign)
+router.get('/stickers', Sticker.readAll);
+
+router.route('/companies/:company_id/stickers')
+.all(Company.check)
+.get(Sticker.readAllByCompany)
 .post(Sticker.create);
 
-router.route('/campaigns/:campaign_id/stickers/:sticker_id')
-.all(Campaign.check)
+router.route('/companies/:company_id/stickers/:sticker_id')
+.all(Company.check)
 .get(Sticker.read)
 .put(Sticker.update)
 .delete(Sticker.delete);
 
 // Items
 
-router.route('/items')
-.get(Item.readAll)
+router.get('/items', Item.readAll);
+
+router.route('/companies/:company_id/items')
+.all(Company.check)
+.get(Item.readAllByCompany)
 .post(Item.create);
 
-router.route('/items/:item_id')
+router.route('/companies/:company_id/items/:item_id')
+.all(Company.check)
 .get(Item.read)
-.patch(Item.update)
+.put(Item.update)
 .delete(Item.delete);
 
-export default router;
+// Categories
+
+router.get('/categories', Category.readAll);
+
+router.route('/companies/:company_id/categories')
+.all(Company.check)
+.get(Category.readAllByCompany)
+.post(Category.create);
+
+router.route('/companies/:company_id/categories/:category_id')
+.all(Company.check)
+.get(Category.read)
+.patch(Category.update)
+.delete(Category.delete);
+
+// ///
 
 router.route('/designs')
 .get(Design.readAll);
@@ -83,14 +106,4 @@ router.route('/players/me/designs/:design_id/votes')
 .get(Session.validate, Vote.read)
 .post(Session.validate, Vote.create);
 
-router.route('/categories')
-.get(Category.readAll);
-
-router.route('/campaigns/:campaign_id/categories')
-.get(Category.readAllByCampaign)
-.post(Category.create);
-
-router.route('/categories/:category_id')
-.get(Category.read)
-.patch(Category.update)
-.delete(Category.delete);
+export default router;

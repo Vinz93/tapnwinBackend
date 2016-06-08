@@ -23,22 +23,22 @@ const ModelController = {
       },
       offset,
       limit,
-      populate: ['campaign'],
+      populate: ['company'],
     })
     .then(models => res.json(models))
     .catch(err => res.status(500).send(err));
   },
 
-  readAllByCampaign(req, res) {
+  readAllByCompany(req, res) {
     const locals = req.app.locals;
-
-    const campaign = req.params.campaign_id;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
 
-    Model.paginate({
-      campaign,
-    }, {
+    const criteria = Object.assign(req.query.criteria || {}, {
+      company: req.params.company_id,
+    });
+
+    Model.paginate(criteria, {
       sort: {
         createdAt: 1,
       },
@@ -51,7 +51,7 @@ const ModelController = {
 
   create(req, res) {
     const criteria = Object.assign({
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
     }, req.body);
 
     Model.create(criteria)
@@ -66,7 +66,7 @@ const ModelController = {
 
   read(req, res) {
     const criteria = {
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
       _id: req.params.model_id,
     };
 
@@ -86,7 +86,7 @@ const ModelController = {
 
   update(req, res) {
     const criteria = {
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
       _id: req.params.model_id,
     };
 
@@ -113,7 +113,7 @@ const ModelController = {
 
   delete(req, res) {
     const criteria = {
-      campaign: req.params.campaign_id,
+      company: req.params.company_id,
       _id: req.params.model_id,
     };
 
