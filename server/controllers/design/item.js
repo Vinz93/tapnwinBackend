@@ -5,6 +5,8 @@
  */
 
 import Item from '../../models/design/item';
+import fs from 'fs';
+import path from 'path';
 
 const ItemController = {
 
@@ -41,6 +43,7 @@ const ItemController = {
       },
       offset,
       limit,
+      populate: ['company'],
     })
     .then(items => res.json(items))
     .catch(err => res.status(500).send(err));
@@ -94,6 +97,10 @@ const ItemController = {
     .then(item => {
       if (!item)
         return res.status(404).end();
+
+      fs.unlinkSync(path.join(req.app.locals.config.root,
+      `/uploads${item.url.split('uploads')[1]}`));
+
       res.status(204).end();
     })
     .catch(err => {
@@ -114,6 +121,9 @@ const ItemController = {
     .then(item => {
       if (!item)
         return res.status(404).end();
+
+      fs.unlinkSync(path.join(req.app.locals.config.root,
+      `/uploads${item.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })

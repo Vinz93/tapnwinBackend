@@ -1,0 +1,20 @@
+{
+  "docs": [
+    {
+      "updatedAt": "2016-06-09T13:52:17.250Z",
+      "createdAt": "2016-06-09T13:52:17.250Z",
+      "company": {
+        "updatedAt": "2016-06-07T15:30:21.992Z",
+        "createdAt": "2016-06-07T15:30:21.992Z",
+        "name": "Levis",
+        "id": "5756e88df047d3610c77d97a"
+      },
+      "name": "manikin01",
+      "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/2aae56a0-1da4-422f-bfd2-b599d48e2636.png",
+      "id": "57597491e961c75f086255c8"
+    }
+  ],
+  "total": 1,
+  "limit": 20,
+  "offset": 0
+}

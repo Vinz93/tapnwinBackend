@@ -1,4 +1,4 @@
-## Stickers [/stickers{?limit,offset}]
+## Items [/items{?limit,offset}]
 
 + Parameters
     + limit: `20` (number, optional)
@@ -14,9 +14,9 @@
 
 + Response 200 (application/json)
 
-        :[](stickers.json)
+        :[](items.json)
 
-### Create a Model of a Company [POST /companies/{company_id}/stickers]
+### Create a Item of a Company [POST /companies/{company_id}/items]
 
 + Parameters
     + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
@@ -30,16 +30,15 @@
     + Body
 
             {
-              "name": "Sticker01",
-              "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/2aae56a0-1da4-422f-bfd2-b599d48e2636.png",
-              "isPositive": true
+              "name": "Item01",
+              "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/2aae56a0-1da4-422f-bfd2-b599d48e2636.png"
             }
 
 + Response 201 (application/json)
 
-        :[](sticker.json)
+        :[](item.json)
 
-### Read Stickers of a Company [GET /companies/{company_id}/stickers{?limit,offset}]
+### Read Items of a Company [GET /companies/{company_id}/items{?limit,offset}]
 
 + Parameters
     + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
@@ -54,4 +53,4 @@
 
 + Response 200 (application/json)
 
-        :[](stickers.json)
+        :[](items.json)

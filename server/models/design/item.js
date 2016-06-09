@@ -15,8 +15,8 @@ const Schema = mongoose.Schema;
 const ItemSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,
-    required: true,
     ref: 'Company',
+    required: true,
   },
   name: {
     type: String,

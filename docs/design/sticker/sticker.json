@@ -1,8 +1,9 @@
 {
-    "id": "57336ef1d1325ff2916a4143",
-    "campaignId": "57336d51825558d95bf06437",
-    "isPositive": true,
-    "url": "/images/sticker1.png",
-    "createdAt": "2015-12-01T17:39:22.939Z",
-    "updatedAt": "2015-12-01T17:39:22.952Z"
+  "updatedAt": "2016-06-09T14:04:21.567Z",
+  "createdAt": "2016-06-09T14:04:21.567Z",
+  "company": "5756e889f047d3610c77d979",
+  "name": "Sticker01",
+  "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/b389a447-421d-465f-bcd5-2f50542bfe46.png",
+  "isPositive": true,
+  "id": "57597765bfebb784098e19e5"
 }

@@ -14,14 +14,12 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](model.json)
-        ]
+        :[](models.json)
 
-### Create a Model of a Campaign [POST /campaigns/{campaign_id}/models]
+### Create a Model of a Company [POST /companies/{company_id}/models]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
 
 + Request (application/json)
 
@@ -32,17 +30,18 @@
     + Body
 
             {
-              "url": "http://tapnwin.ludopia.net/api/assets/manikin01.png"
+              "name": "manikin01",
+              "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/2aae56a0-1da4-422f-bfd2-b599d48e2636.png"
             }
 
 + Response 201 (application/json)
 
         :[](model.json)
 
-### Read Models of a Campaign [GET /campaigns/{campaign_id}/models{?limit,offset}]
+### Read Models of a Company [GET /companies/{company_id}/models{?limit,offset}]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
     + limit: `20` (number, optional)
     + offset: `0` (number, optional)
 
@@ -54,6 +53,4 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](model.json)
-        ]
+        :[](models.json)

@@ -25,7 +25,7 @@ const CompanySchema = new Schema({
 });
 
 CompanySchema.pre('remove', next => {
-  Campaign.remove({ companyId: this.id })
+  Campaign.remove({ company: this.id })
   .then(next)
   .catch(next);
 });

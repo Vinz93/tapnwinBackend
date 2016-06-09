@@ -14,14 +14,12 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](category.json)
-        ]
+        :[](categories.json)
 
-### Create Category of a Campaign [POST /campaigns/{campaign_id}/categories]
+### Create Category of a Company [POST /companies/{company_id}/categories]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
 
 + Request (application/json)
 
@@ -32,26 +30,18 @@
     + Body
 
             {
-                "campaignId": "507f1f77bcf86cd799439011",
+                "name": "Category01",
                 "zone": "top",
-                "items": [
-                  {
-                    "url": "http://tapnwin.ludopia.net/api/assets/shirt01.png"
-                  },
-                  {
-                    "url": "http://tapnwin.ludopia.net/api/assets/shirt02.png"
-                  }
-                ]
             }
 
 + Response 201 (application/json)
 
         :[](category.json)
 
-### Read Categories of a Campaign [GET /campaigns/{campaign_id}/categories{?limit,offset}]
+### Read Categories of a Company [GET /companies/{company_id}/categories{?limit,offset}]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
     + limit: `20` (number, optional)
     + offset: `0` (number, optional)
 
@@ -63,6 +53,4 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](category.json)
-        ]
+        :[](categories.json)
