@@ -4,7 +4,10 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import Promise from 'bluebird';
+import Design from '../../models/design/design';
 import Vote from '../../models/design/vote';
+import Sticker from '../../models/design/sticker';
 
 const VoteController = {
   readAll(req, res) {
@@ -28,7 +31,7 @@ const VoteController = {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = Object.assign(req.query.criteria, {
+    const criteria = Object.assign(req.query.criteria || {}, {
       design: req.params.design_id,
     });
 
@@ -43,9 +46,7 @@ const VoteController = {
     .catch(err => res.status(500).send(err));
   },
 
-  create(req, res) {
-    // TODO check the desing doesn't belong to player
-
+  createByMeDesign(req, res) {
     const data = Object.assign(req.body, {
       design: req.params.design_id,
       player: res.locals.user._id,
@@ -76,9 +77,9 @@ const VoteController = {
     });
   },
 
-  readByMe(req, res) {
+  readByMeDesign(req, res) {
     const criteria = {
-      _id: req.params.vote_id,
+      design: req.params.design_id,
       player: res.locals.user._id,
     };
 
@@ -93,6 +94,34 @@ const VoteController = {
         return res.status(400).send(err);
 
       return res.status(500).send(err);
+    });
+  },
+
+  readStatisticByDesign(req, res) {
+    Design.findById(req.params.design_id)
+    .populate('campaign')
+    .then((design) => {
+      const criteria = {
+        company: design.campaign.company,
+      };
+
+      Sticker.find(criteria)
+      .then(stickers => Promise.map(stickers, sticker => {
+        const criteria = {
+          design: design._id,
+          stickers: sticker._id,
+        };
+
+        return Vote.count(criteria)
+          .then(count => {
+            const data = {
+              sticker: sticker._id,
+              count,
+            };
+
+            return data;
+          });
+      }).then(data => res.send(data)));
     });
   },
 

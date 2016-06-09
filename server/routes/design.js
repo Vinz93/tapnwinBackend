@@ -40,21 +40,6 @@ router.route('/companies/:company_id/models/:model_id')
 .put(Model.update)
 .delete(Model.delete);
 
-// Stickers
-
-router.get('/stickers', Sticker.readAll);
-
-router.route('/companies/:company_id/stickers')
-.all(Company.check)
-.get(Sticker.readAllByCompany)
-.post(Sticker.create);
-
-router.route('/companies/:company_id/stickers/:sticker_id')
-.all(Company.check)
-.get(Sticker.read)
-.put(Sticker.update)
-.delete(Sticker.delete);
-
 // Items
 
 router.get('/items', Item.readAll);
@@ -85,23 +70,54 @@ router.route('/companies/:company_id/categories/:category_id')
 .patch(Category.update)
 .delete(Category.delete);
 
-// ///
+// Designs
 
 router.route('/designs')
 .get(Design.readAll);
 
 router.route('/campaigns/:campaign_id/designs')
-.get(Design.readAllByCampaign)
-.post(Design.create);
+.get(Design.readAllByCampaign);
 
 router.route('/players/me/campaigns/:campaign_id/designs')
-.get(Session.validate, Design.readAllByMeCampaign);
+.get(Session.validate, Design.readAllByMeCampaign)
+.post(Session.validate, Design.createByMeCampaign);
 
 router.route('/designs/:design_id')
 .get(Design.read);
 
+// Votes
+
+router.route('/votes')
+.get(Vote.readAll);
+
+router.route('/designs/:design_id/votes')
+.get(Vote.readAllByDesign);
+
 router.route('/players/me/designs/:design_id/votes')
-.get(Session.validate, Vote.readByMe)
-.post(Session.validate, Vote.create);
+.get(Session.validate, Vote.readByMeDesign)
+.post(Session.validate, Design.doesntBelongToMe, Vote.createByMeDesign);
+
+router.route('/designs/:design_id/votes/statistics')
+.get(Vote.readStatisticByDesign);
+
+router.route('/votes/:vote_id')
+.get(Vote.read)
+.patch(Session.validate, Vote.update);
+
+// Stickers
+
+router.route('/stickers')
+.get(Sticker.readAll);
+
+router.route('/companies/:company_id/stickers')
+.all(Company.check)
+.get(Sticker.readAllByCompany)
+.post(Sticker.create);
+
+router.route('/companies/:company_id/stickers/:sticker_id')
+.all(Company.check)
+.get(Sticker.read)
+.put(Sticker.update)
+.delete(Sticker.delete);
 
 export default router;

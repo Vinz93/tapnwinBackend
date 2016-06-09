@@ -9,9 +9,9 @@ import Design from '../../models/design/design';
 const DesignController = {
   readAll(req, res) {
     const locals = req.app.locals;
-    const offset = locals.config.offset(req.query.offset);
-    const limit = locals.config.limit(req.query.limit);
-    const criteria = Object.assign(req.query.criteria || {});
+    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = locals.config.paginate.limit(req.query.limit);
+    const criteria = req.query.criteria || {};
 
     Design.paginate(criteria, {
       sort: {
@@ -76,10 +76,11 @@ const DesignController = {
     }
   },
 
-  create(req, res) {
-    const data = Object.assign({
+  createByMeCampaign(req, res) {
+    const data = Object.assign(req.body, {
       campaign: req.params.campaign_id,
-    }, req.body);
+      player: res.locals.user._id,
+    });
 
     Design.create(data)
     .then(design => res.status(201).json(design))
@@ -96,6 +97,7 @@ const DesignController = {
     .then(design => {
       if (!design)
         return res.status(404).end();
+
       res.json(design);
     })
     .catch(err => {
@@ -103,6 +105,26 @@ const DesignController = {
         return res.status(400).send(err);
 
       return res.status(500).send(err);
+    });
+  },
+
+  doesntBelongToMe(req, res, next) {
+    const criteria = {
+      design: req.params.design_id,
+      player: res.locals.user._id,
+    };
+
+    Design.findOne(criteria).then(design => {
+      if (!design)
+        next();
+
+      res.status(400).end();
+    })
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      res.status(500).send(err);
     });
   },
 };

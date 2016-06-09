@@ -10,7 +10,6 @@ import path from 'path';
 import Sticker from '../../models/design/sticker';
 
 const StickerController = {
-
   readAll(req, res) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
@@ -33,8 +32,7 @@ const StickerController = {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-
-    const criteria = Object.assign(req.query.criteria, {
+    const criteria = Object.assign(req.query.criteria || {}, {
       company: req.params.company_id,
     });
 
@@ -50,11 +48,11 @@ const StickerController = {
   },
 
   create(req, res) {
-    const criteria = Object.assign({
+    const data = Object.assign(req.body, {
       company: req.params.company_id,
-    }, req.body);
+    });
 
-    Sticker.create(criteria)
+    Sticker.create(data)
     .then(sticker => res.status(201).json(sticker))
     .catch(err => {
       if (err.name === 'ValidationError')
