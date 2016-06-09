@@ -44,6 +44,7 @@ const ModelController = {
       },
       offset,
       limit,
+      populate: ['company'],
     })
     .then(models => res.json(models))
     .catch(err => res.status(500).send(err));

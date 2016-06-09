@@ -21,7 +21,14 @@ const CampaignController = {
       },
       offset,
       limit,
-      populate: ['company', 'games.game', 'games.missions.mission'],
+      populate: [
+        'company',
+        'design.missions..mission',
+        'design.models',
+        'design.stickers',
+        'design.categories.category',
+        'design.categories.items',
+      ],
     })
     .then(campaigns => res.json(campaigns))
     .catch(err => res.status(500).send(err));
@@ -45,7 +52,12 @@ const CampaignController = {
       const today = new Date();
 
       Campaign.findOne({ startAt: { $lt: today }, finishAt: { $gte: today } })
-      .populate('games.game games.missions.mission')
+      .populate('company')
+      .populate('design.missions..mission')
+      .populate('design.models')
+      .populate('design.stickers')
+      .populate('design.categories.category')
+      .populate('design.categories.items')
       .then(campaign => {
         if (!campaign)
           return res.status(404).end();
@@ -70,7 +82,14 @@ const CampaignController = {
         },
         offset,
         limit,
-        populate: ['games.game', 'games.missions.mission'],
+        populate: [
+          'company',
+          'design.missions..mission',
+          'design.models',
+          'design.stickers',
+          'design.categories.category',
+          'design.categories.items',
+        ],
       })
       .then(campaigns => res.json(campaigns))
       .catch(err => res.status(500).send(err));
@@ -84,7 +103,12 @@ const CampaignController = {
     };
 
     Campaign.findOne(criteria)
-    .populate('company games.game games.missions.mission')
+    .populate('company')
+    .populate('design.missions..mission')
+    .populate('design.models')
+    .populate('design.stickers')
+    .populate('design.categories.category')
+    .populate('design.categories.items')
     .then(campaign => {
       if (!campaign)
         return res.status(404).end();

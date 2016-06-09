@@ -34,7 +34,7 @@ const StickerController = {
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
 
-    const criteria = Object.assign(req.query.criteria, {
+    const criteria = Object.assign(req.query.criteria || {}, {
       company: req.params.company_id,
     });
 
