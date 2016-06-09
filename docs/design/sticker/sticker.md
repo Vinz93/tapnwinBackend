@@ -1,7 +1,8 @@
-## Sticker [/stickers/{sticker_id}]
+## Sticker [/companies/{company_id}/stickers/{sticker_id}]
 
 + Parameters
-    + sticker_id: `57336ef1d1325ff2916a4143` (string, required) - ObjectId
+    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+    + sticker_id: `507f191e810c19729de860eb` (string, required) - ObjectId
 
 ### Read [GET]
 
@@ -15,7 +16,7 @@
 
         :[](sticker.json)
 
-### Update [PATCH]
+### Update [PUT]
 
 + Request (application/json)
 
@@ -23,9 +24,15 @@
 
             sessionToken: 5734ed0a1dd3b2b88b35ece3
 
-+ Response 200 (application/json)
+    + Body
 
-        :[](sticker.json)
+            {
+              "name": "Sticker01",
+              "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/2aae56a0-1da4-422f-bfd2-b599d48e2636.png",
+              "isPositive": true
+            }
+
++ Response 204 (application/json)
 
 ### Delete [DELETE]
 
@@ -35,4 +42,4 @@
 
             sessionToken: 5734ed0a1dd3b2b88b35ece3
 
-+ Response 200 (application/json)
++ Response 204 (application/json)
