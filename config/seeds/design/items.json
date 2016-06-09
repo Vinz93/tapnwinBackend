@@ -1,27 +1,34 @@
 {
   "items": {
     "_model": "Item",
+    "_require": ["Company"],
     "janoski": {
+      "company": "->companies.nike",
       "name": "Janoski",
       "url": "http://development.com/media/janoski.jpg"
     },
     "mercurial": {
+      "company": "->companies.nike",
       "name": "Mercuarial",
       "url": "http://development.com/media/mercurial.jpg"
     },
     "tech": {
+      "company": "->companies.nike",
       "name": "Tech Fleece 2.0",
       "url": "http://development.com/media/tech.jpg"
     },
     "court": {
+      "company": "->companies.nike",
       "name": "Court 23cm Plaid",
       "url": "http://development.com/media/court.jpg"
     },
     "barcelona": {
+      "company": "->companies.nike",
       "name": "FC Barcelona Dry Squad",
       "url": "http://development.com/media/barcelona.jpg"
     },
     "paris": {
+      "company": "->companies.nike",
       "name": "Paris Saint-Germain Stadium Home",
       "url": "http://development.com/media/paris.jpg"
     }
