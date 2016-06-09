@@ -13,6 +13,11 @@ import fieldRemover from 'mongoose-field-remover';
 const Schema = mongoose.Schema;
 
 const ItemSchema = new Schema({
+  company: {
+    type: Schema.Types.ObjectId,
+    ref: 'Company',
+    required: true,
+  },
   name: {
     type: String,
     required: true,
