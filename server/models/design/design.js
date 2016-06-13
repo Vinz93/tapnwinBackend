@@ -35,12 +35,6 @@ const DesignSchema = new Schema({
   },
 }, {
   timestamps: true,
-  toObject: {
-    virtuals: true,
-  },
-  toJSON: {
-    virtuals: true,
-  },
 });
 
 DesignSchema.plugin(mongoosePaginate);
