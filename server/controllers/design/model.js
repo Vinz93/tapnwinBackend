@@ -9,13 +9,11 @@ import fs from 'fs';
 import path from 'path';
 
 const ModelController = {
-
   readAll(req, res) {
     const locals = req.app.locals;
-
-    const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
+    const criteria = req.query.criteria || {};
 
     Model.paginate(criteria, {
       sort: {
@@ -33,7 +31,6 @@ const ModelController = {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-
     const criteria = Object.assign(req.query.criteria || {}, {
       company: req.params.company_id,
     });
@@ -51,11 +48,11 @@ const ModelController = {
   },
 
   create(req, res) {
-    const criteria = Object.assign({
+    const data = Object.assign(req.body, {
       company: req.params.company_id,
-    }, req.body);
+    });
 
-    Model.create(criteria)
+    Model.create(data)
     .then(model => res.status(201).json(model))
     .catch(err => {
       if (err.name === 'ValidationError')
@@ -66,12 +63,7 @@ const ModelController = {
   },
 
   read(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.model_id,
-    };
-
-    Model.findOne(criteria)
+    Model.findById(req.params.model_id)
     .then(model => {
       if (!model)
         return res.status(404).end();
@@ -86,12 +78,7 @@ const ModelController = {
   },
 
   update(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.model_id,
-    };
-
-    Model.findOneAndUpdate(criteria, req.body, {
+    Model.findByIdAndUpdate(req.params.model_id, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -113,12 +100,7 @@ const ModelController = {
   },
 
   delete(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.model_id,
-    };
-
-    Model.findOneAndRemove(criteria)
+    Model.findByIdAndRemove(req.params.model_id)
     .then(model => {
       if (!model)
         return res.status(404).end();
@@ -129,9 +111,9 @@ const ModelController = {
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },

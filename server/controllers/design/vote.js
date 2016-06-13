@@ -7,7 +7,6 @@
 import Promise from 'bluebird';
 import Design from '../../models/design/design';
 import Vote from '../../models/design/vote';
-import Sticker from '../../models/design/sticker';
 
 const VoteController = {
   readAll(req, res) {
@@ -100,28 +99,33 @@ const VoteController = {
   readStatisticByDesign(req, res) {
     Design.findById(req.params.design_id)
     .populate('campaign')
-    .then((design) => {
-      const criteria = {
-        company: design.campaign.company,
-      };
+    .then(design => {
+      if (!design)
+        return res.status(404).end();
 
-      Sticker.find(criteria)
-      .then(stickers => Promise.map(stickers, sticker => {
+      Promise.map(design.campaign.design.stickers, sticker => {
         const criteria = {
           design: design._id,
-          stickers: sticker._id,
+          stickers: sticker,
         };
 
         return Vote.count(criteria)
           .then(count => {
             const data = {
-              sticker: sticker._id,
+              sticker,
               count,
             };
 
             return data;
           });
-      }).then(data => res.send(data)));
+      })
+      .then(data => res.send(data));
+    })
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      return res.status(500).send(err);
     });
   },
 

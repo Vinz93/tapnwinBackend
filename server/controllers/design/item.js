@@ -9,7 +9,6 @@ import fs from 'fs';
 import path from 'path';
 
 const ItemController = {
-
   readAll(req, res) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
@@ -32,7 +31,6 @@ const ItemController = {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-
     const criteria = Object.assign(req.query.criteria || {}, {
       company: req.params.company_id,
     });
@@ -50,11 +48,11 @@ const ItemController = {
   },
 
   create(req, res) {
-    const criteria = Object.assign({
+    const data = Object.assign(req.body, {
       company: req.params.company_id,
-    }, req.body);
+    });
 
-    Item.create(criteria)
+    Item.create(data)
     .then(item => res.status(201).json(item))
     .catch(err => {
       if (err.name === 'ValidationError')
@@ -65,12 +63,7 @@ const ItemController = {
   },
 
   read(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.item_id,
-    };
-
-    Item.findById(criteria)
+    Item.findById(req.params.item_id)
     .then(item => {
       if (!item)
         return res.status(404).end();
@@ -85,12 +78,7 @@ const ItemController = {
   },
 
   update(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.item_id,
-    };
-
-    Item.findByIdAndUpdate(criteria, req.body, {
+    Item.findByIdAndUpdate(req.params.item_id, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -112,12 +100,7 @@ const ItemController = {
   },
 
   delete(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.item_id,
-    };
-
-    Item.findByIdAndRemove(criteria)
+    Item.findByIdAndRemove(req.params.item_id)
     .then(item => {
       if (!item)
         return res.status(404).end();

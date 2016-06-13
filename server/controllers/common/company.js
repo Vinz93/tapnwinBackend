@@ -45,9 +45,9 @@ const CompanyController = {
       res.json(company);
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
@@ -63,9 +63,9 @@ const CompanyController = {
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
@@ -79,16 +79,14 @@ const CompanyController = {
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
 
-  // Middlewares
-
-  check(req, res, next) {
+  validate(req, res, next) {
     Company.findById(req.params.company_id)
     .then(company => {
       if (!company)
@@ -99,6 +97,7 @@ const CompanyController = {
     .catch(err => {
       if (err.name === 'CastError')
         return res.status(400).send(err);
+
       return res.status(500).send(err);
     });
   },

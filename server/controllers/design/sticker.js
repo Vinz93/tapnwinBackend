@@ -63,12 +63,7 @@ const StickerController = {
   },
 
   read(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.sticker_id,
-    };
-
-    Sticker.findById(criteria)
+    Sticker.findById(req.params.sticker_id)
     .then(sticker => {
       if (!sticker)
         return res.status(404).end();
@@ -84,12 +79,7 @@ const StickerController = {
   },
 
   update(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.sticker_id,
-    };
-
-    Sticker.findByIdAndUpdate(criteria, req.body, {
+    Sticker.findByIdAndUpdate(req.params.sticker_id, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -111,12 +101,7 @@ const StickerController = {
   },
 
   delete(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.sticker_id,
-    };
-
-    Sticker.findByIdAndRemove(criteria)
+    Sticker.findByIdAndRemove(req.params.sticker_id)
     .then(sticker => {
       if (!sticker)
         return res.status(404).end();

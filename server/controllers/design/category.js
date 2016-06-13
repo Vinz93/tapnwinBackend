@@ -9,10 +9,9 @@ import Category from '../../models/design/category';
 const CategoryController = {
   readAll(req, res) {
     const locals = req.app.locals;
-
-    const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
+    const criteria = req.query.criteria || {};
 
     Category.paginate(criteria, {
       sort: {
@@ -30,7 +29,6 @@ const CategoryController = {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-
     const criteria = Object.assign(req.query.criteria || {}, {
       company: req.params.company_id,
     });
@@ -48,11 +46,11 @@ const CategoryController = {
   },
 
   create(req, res) {
-    const criteria = Object.assign({
+    const data = Object.assign(req.body, {
       company: req.params.company_id,
-    }, req.body);
+    });
 
-    Category.create(criteria)
+    Category.create(data)
     .then(category => res.status(201).json(category))
     .catch(err => {
       if (err.name === 'ValidationError')
@@ -63,12 +61,7 @@ const CategoryController = {
   },
 
   read(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.category_id,
-    };
-
-    Category.findById(criteria)
+    Category.findById(req.params.category_id)
     .then(category => {
       if (!category)
         return res.status(404).end();
@@ -83,12 +76,7 @@ const CategoryController = {
   },
 
   update(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.category_id,
-    };
-
-    Category.findByIdAndUpdate(criteria, req.body, {
+    Category.findByIdAndUpdate(req.params.category_id, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -106,12 +94,7 @@ const CategoryController = {
   },
 
   delete(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.category_id,
-    };
-
-    Category.findByIdAndRemove(criteria)
+    Category.findByIdAndRemove(req.params.category_id)
     .then(category => {
       if (!category)
         return res.status(404).end();
