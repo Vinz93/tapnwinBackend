@@ -27,7 +27,7 @@ const DesignController = {
 
   readAllByCampaign(req, res) {
     const locals = req.app.locals;
-    const limit = locals.config.limit(req.query.limit);
+    const limit = locals.config.paginate.limit(req.query.limit);
     const offset = locals.config.paginate.offset(req.query.offset);
     const criteria = Object.assign(req.query.criteria || {}, {
       campaign: req.params.campaign_id,
@@ -47,7 +47,7 @@ const DesignController = {
 
   readAllByMeCampaign(req, res) {
     const locals = req.app.locals;
-    const limit = locals.config.limit(req.query.limit);
+    const limit = locals.config.paginate.limit(req.query.limit);
     const player = (req.query.exclusive === 'false') ? res.locals.user._id : {
       $ne: res.locals.user._id,
     };
