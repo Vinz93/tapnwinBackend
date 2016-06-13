@@ -1,7 +1,7 @@
 import express from 'express';
 
+import User from '../controllers/common/user';
 import Session from '../controllers/common/session';
-import Company from '../controllers/common/company';
 
 import Category from '../controllers/design/category';
 import Design from '../controllers/design/design';
@@ -25,52 +25,38 @@ router.post('/design/media', (req, res) => {
   });
 });
 
-// Models
-
 router.get('/models', Model.readAll);
 
 router.route('/companies/:company_id/models')
-.all(Company.check)
 .get(Model.readAllByCompany)
 .post(Model.create);
 
-router.route('/companies/:company_id/models/:model_id')
-.all(Company.check)
+router.route('/models/:model_id')
 .get(Model.read)
 .put(Model.update)
 .delete(Model.delete);
 
-// Items
-
 router.get('/items', Item.readAll);
 
 router.route('/companies/:company_id/items')
-.all(Company.check)
 .get(Item.readAllByCompany)
 .post(Item.create);
 
-router.route('/companies/:company_id/items/:item_id')
-.all(Company.check)
+router.route('/items/:item_id')
 .get(Item.read)
 .put(Item.update)
 .delete(Item.delete);
 
-// Categories
-
 router.get('/categories', Category.readAll);
 
 router.route('/companies/:company_id/categories')
-.all(Company.check)
 .get(Category.readAllByCompany)
 .post(Category.create);
 
-router.route('/companies/:company_id/categories/:category_id')
-.all(Company.check)
+router.route('/categories/:category_id')
 .get(Category.read)
 .patch(Category.update)
 .delete(Category.delete);
-
-// Designs
 
 router.route('/designs')
 .get(Design.readAll);
@@ -79,13 +65,12 @@ router.route('/campaigns/:campaign_id/designs')
 .get(Design.readAllByCampaign);
 
 router.route('/players/me/campaigns/:campaign_id/designs')
-.get(Session.validate, Design.readAllByMeCampaign)
-.post(Session.validate, Design.createByMeCampaign);
+.all(Session.validate, User.isPlayer)
+.get(Design.readAllByMeCampaign)
+.post(Design.createByMeCampaign);
 
 router.route('/designs/:design_id')
 .get(Design.read);
-
-// Votes
 
 router.route('/votes')
 .get(Vote.readAll);
@@ -94,8 +79,9 @@ router.route('/designs/:design_id/votes')
 .get(Vote.readAllByDesign);
 
 router.route('/players/me/designs/:design_id/votes')
-.get(Session.validate, Vote.readByMeDesign)
-.post(Session.validate, Design.doesntBelongToMe, Vote.createByMeDesign);
+.all(Session.validate, User.isPlayer)
+.get(Vote.readByMeDesign)
+.post(Design.doesntBelongToMe, Vote.createByMeDesign);
 
 router.route('/designs/:design_id/votes/statistics')
 .get(Vote.readStatisticByDesign);
@@ -104,18 +90,14 @@ router.route('/votes/:vote_id')
 .get(Vote.read)
 .patch(Session.validate, Vote.update);
 
-// Stickers
-
 router.route('/stickers')
 .get(Sticker.readAll);
 
 router.route('/companies/:company_id/stickers')
-.all(Company.check)
 .get(Sticker.readAllByCompany)
 .post(Sticker.create);
 
-router.route('/companies/:company_id/stickers/:sticker_id')
-.all(Company.check)
+router.route('/stickers/:sticker_id')
 .get(Sticker.read)
 .put(Sticker.update)
 .delete(Sticker.delete);

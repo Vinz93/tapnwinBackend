@@ -62,12 +62,12 @@ router.route('/campaigns')
 .get(Campaign.readAll);
 
 router.route('/companies/:company_id/campaigns')
-.all(Company.check)
+.all(Company.validate)
 .get(Campaign.readByACompany)
 .post(Campaign.createByACompany);
 
 router.route('/companies/:company_id/campaigns/:campaign_id')
-.all(Company.check)
+.all(Company.validate)
 .get(Campaign.read)
 .put(Campaign.update)
 .delete(Campaign.delete);
