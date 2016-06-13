@@ -9,7 +9,14 @@ import mongoosePaginate from 'mongoose-paginate';
 import uniqueValidator from 'mongoose-unique-validator';
 import fieldRemover from 'mongoose-field-remover';
 
-import Campaign from '../../models/common/campaign';
+import Promise from 'bluebird';
+
+import Campaign from './campaign';
+
+import Model from '../design/model';
+import Category from '../design/category';
+import Item from '../design/item';
+import Sticker from '../design/sticker';
 
 const Schema = mongoose.Schema;
 
@@ -25,7 +32,13 @@ const CompanySchema = new Schema({
 });
 
 CompanySchema.pre('remove', next => {
-  Campaign.remove({ company: this.id })
+  Promise.all([
+    Campaign.remove({ company: this.id }),
+    Model.remove({ company: this.id }),
+    Category.remove({ company: this.id }),
+    Item.remove({ company: this.id }),
+    Sticker.remove({ company: this.id }),
+  ])
   .then(next)
   .catch(next);
 });

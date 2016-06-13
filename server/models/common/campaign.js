@@ -14,6 +14,9 @@ import Promise from 'bluebird';
 import config from '../../../config/env';
 
 import Mission from './mission';
+import Status from './status';
+
+import Design from '../design/design';
 
 const Schema = mongoose.Schema;
 
@@ -124,7 +127,12 @@ const CampaignSchema = new Schema({
 });
 
 CampaignSchema.pre('remove', next => {
-  next();
+  Promise.all([
+    Status.remove({ campaign: this.id }),
+    Design.remove({ campaign: this.id }),
+  ])
+  .then(next)
+  .catch(next);
 });
 
 CampaignSchema.plugin(mongoosePaginate);
