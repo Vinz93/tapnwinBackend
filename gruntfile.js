@@ -94,6 +94,6 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('build', ['clean', 'changed:babel', 'changed:copy', 'mkdir']);
-  grunt.registerTask('serve', ['concurrent']);
+  grunt.registerTask('serve', ['build', 'concurrent']);
   grunt.registerTask('default', 'serve');
 };
