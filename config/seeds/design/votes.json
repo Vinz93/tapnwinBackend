@@ -5,7 +5,7 @@
     "vote1": {
       "player": "->players.juan",
       "design": "->designs.design1",
-      "stickers": ["->stickers.sticker1", "->stickers.sticker2"]
+      "stickers": ["->stickers.sticker1", "->stickers.sticker3"]
     }
   }
 }
