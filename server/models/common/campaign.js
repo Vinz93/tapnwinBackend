@@ -1,21 +1,20 @@
 /**
  * @author Juan Sanchez
  * @description Campaign model definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Andres Alvarez
  */
 
+import Promise from 'bluebird';
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-vars
-import ValidationError from '../../helpers/validationError';
 import fieldRemover from 'mongoose-field-remover';
-import Promise from 'bluebird';
-import config from '../../../config/env';
 
+import config from '../../../config/env';
+import ValidationError from '../../helpers/validationError';
 import Mission from './mission';
 import Status from './status';
-
 import Design from '../design/design';
 
 const Schema = mongoose.Schema;

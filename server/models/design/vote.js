@@ -9,6 +9,10 @@ import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
+import ValidationError from '../../helpers/validationError';
+import Campaign from '../common/campaign';
+import Design from '../common/design';
+
 const Schema = mongoose.Schema;
 
 const VoteSchema = new Schema({
@@ -37,6 +41,31 @@ VoteSchema.index({
   design: 1,
 }, {
   unique: true,
+});
+
+VoteSchema.pre('save', function (next) {
+  Design.findById(this.design)
+  .then(design => {
+    const today = new Date();
+
+    Campaign.findOne({
+      _id: design.campaign,
+      startAt: {
+        $lt: today,
+      },
+      finishAt: {
+        $gte: today,
+      },
+    })
+    .then(campaign => {
+      if (!campaign)
+        return next(new ValidationError('NotActiveCampaign'));
+
+      next();
+    })
+    .catch(next);
+  })
+  .catch(next);
 });
 
 VoteSchema.plugin(mongoosePaginate);
