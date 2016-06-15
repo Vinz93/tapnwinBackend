@@ -7,13 +7,11 @@
 import Campaign from '../../models/common/campaign';
 
 const CampaignController = {
-
   readAll(req, res) {
     const locals = req.app.locals;
-
-    const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
+    const criteria = req.query.criteria || {};
 
     Campaign.paginate(criteria, {
       sort: {
@@ -34,24 +32,34 @@ const CampaignController = {
     .catch(err => res.status(500).send(err));
   },
 
-  createByACompany(req, res) {
-    const criteria = Object.assign({ company: req.params.company_id }, req.body);
+  createByCompany(req, res) {
+    const criteria = Object.assign(req.body, {
+      company: req.params.company_id,
+    });
+
     Campaign.create(criteria)
     .then(campaign => res.status(201).json(campaign))
     .catch(err => {
       if (err.name === 'ValidationError')
         return res.status(400).json(err).end();
+
       return res.status(500).send(err);
     });
   },
 
-  readByACompany(req, res) {
+  readAllByCompany(req, res) {
     const locals = req.app.locals;
 
     if (req.query.active === 'true') {
       const today = new Date();
 
-      Campaign.findOne({ startAt: { $lt: today }, finishAt: { $gte: today } })
+      Campaign.findOne({
+        startAt: {
+          $lt: today,
+        }, finishAt: {
+          $gte: today,
+        },
+      })
       .populate('company')
       .populate('design.missions..mission')
       .populate('design.models')
@@ -61,12 +69,13 @@ const CampaignController = {
       .then(campaign => {
         if (!campaign)
           return res.status(404).end();
+
         res.json(campaign);
       })
       .catch(err => {
-        if (err.name === 'CastError') {
+        if (err.name === 'CastError')
           return res.status(400).send(err);
-        }
+
         return res.status(500).send(err);
       });
     } else {
@@ -97,12 +106,7 @@ const CampaignController = {
   },
 
   read(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.campaign_id,
-    };
-
-    Campaign.findOne(criteria)
+    Campaign.findById(req.params.campaign_id)
     .populate('company')
     .populate('design.missions..mission')
     .populate('design.models')
@@ -115,20 +119,15 @@ const CampaignController = {
       res.json(campaign);
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
 
   update(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.campaign_id,
-    };
-
-    Campaign.findOneAndUpdate(criteria, req.body, {
+    Campaign.findByIdAndUpdate(req.params.campaign_id, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -138,20 +137,15 @@ const CampaignController = {
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.name === 'CastError' || err.name === 'ValidationError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
 
   delete(req, res) {
-    const criteria = {
-      company: req.params.company_id,
-      _id: req.params.campaign_id,
-    };
-
-    Campaign.findOneAndRemove(criteria)
+    Campaign.findOneAndRemove(req.params.campaign_id)
     .then(campaign => {
       if (!campaign)
         return res.status(404).end();
@@ -159,16 +153,14 @@ const CampaignController = {
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError') {
+      if (err.name === 'CastError')
         return res.status(400).send(err);
-      }
+
       return res.status(500).send(err);
     });
   },
 
-  // Middlewares
-
-  check(req, res, next) {
+  validate(req, res, next) {
     Campaign.findById(req.params.campaign_id)
     .then(campaign => {
       if (!campaign)
@@ -179,6 +171,7 @@ const CampaignController = {
     .catch(err => {
       if (err.name === 'CastError')
         return res.status(400).send(err);
+
       return res.status(500).send(err);
     });
   },
