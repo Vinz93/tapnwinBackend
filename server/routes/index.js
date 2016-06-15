@@ -4,8 +4,7 @@ import designRoutes from './design';
 
 const router = express.Router();  // eslint-disable-line new-cap
 
-/** GET /health-check - Check service health */
-router.get('/health-check', (req, res) =>
+router.get('/health_check', (req, res) =>
   res.send('OK')
 );
 

@@ -45,8 +45,6 @@ router.route('/users/:user_id')
 .get(User.read)
 .delete(User.delete);
 
-// Companies
-
 router.route('/companies')
 .get(Company.readAll)
 .post(Company.create);
@@ -56,23 +54,17 @@ router.route('/companies/:company_id')
 .patch(Company.update)
 .delete(Company.delete);
 
-// Campaigns
-
 router.route('/campaigns')
 .get(Campaign.readAll);
 
 router.route('/companies/:company_id/campaigns')
-.all(Company.validate)
-.get(Campaign.readByACompany)
-.post(Campaign.createByACompany);
+.get(Campaign.readAllByCompany)
+.post(Campaign.createByCompany);
 
-router.route('/companies/:company_id/campaigns/:campaign_id')
-.all(Company.validate)
+router.route('/campaigns/:campaign_id')
 .get(Campaign.read)
 .put(Campaign.update)
 .delete(Campaign.delete);
-
-// Missions
 
 router.route('/missions')
 .get(Mission.readAll)
@@ -82,8 +74,6 @@ router.route('/missions/:mission_id')
 .get(Mission.read)
 .patch(Mission.update)
 .delete(Mission.delete);
-
-// Status
 
 router.route('/statuses')
 .get(Status.readAll)
