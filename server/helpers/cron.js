@@ -1,3 +1,9 @@
+/**
+ * @author Juan Sanchez
+ * @description Cron file remover
+ * @lastModifiedBy Juan Sanchez
+ */
+
 import cron from 'cron';
 import fs from 'fs';
 import path from 'path';

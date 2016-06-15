@@ -1,3 +1,9 @@
+/**
+ * @author Juan Sanchez
+ * @description File uploader
+ * @lastModifiedBy Juan Sanchez
+ */
+
 import multer from 'multer';
 import uuid from 'node-uuid';
 import mime from 'mime';
