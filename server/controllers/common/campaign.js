@@ -61,7 +61,7 @@ const CampaignController = {
         },
       })
       .populate('company')
-      .populate('design.missions..mission')
+      .populate('design.missions.mission')
       .populate('design.models')
       .populate('design.stickers')
       .populate('design.categories.category')

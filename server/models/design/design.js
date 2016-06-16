@@ -26,6 +26,11 @@ const DesignSchema = new Schema({
     ref: 'Campaign',
     required: true,
   },
+  model: {
+    type: Schema.Types.ObjectId,
+    ref: 'Model',
+    required: true,
+  },
   topItem: {
     type: Schema.Types.ObjectId,
     ref: 'Item',
@@ -56,10 +61,16 @@ DesignSchema.pre('save', function (next) {
     finishAt: {
       $gte: today,
     },
+    $and: [
+      { 'design.models': this.model },
+      { 'design.categories.items': this.botItem },
+      { 'design.categories.items': this.midItem },
+      { 'design.categories.items': this.topItem },
+    ],
   })
   .then(campaign => {
     if (!campaign)
-      return next(new ValidationError('NotActiveCampaign'));
+      return next(new ValidationError('Design validation failed'));
 
     next();
   })

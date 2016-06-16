@@ -11,7 +11,7 @@ import fieldRemover from 'mongoose-field-remover';
 
 import ValidationError from '../../helpers/validationError';
 import Campaign from '../common/campaign';
-import Design from '../common/design';
+import Design from '../design/design';
 
 const Schema = mongoose.Schema;
 
@@ -56,10 +56,13 @@ VoteSchema.pre('save', function (next) {
       finishAt: {
         $gte: today,
       },
+      $and: [
+        { 'design.stickers': this.stickers },
+      ],
     })
     .then(campaign => {
       if (!campaign)
-        return next(new ValidationError('NotActiveCampaign'));
+        return next(new ValidationError('Sticker validation failed'));
 
       next();
     })

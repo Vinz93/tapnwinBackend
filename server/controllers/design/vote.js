@@ -54,8 +54,8 @@ const VoteController = {
     Vote.create(data)
     .then(vote => res.status(201).json(vote))
     .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err).end();
+      if (err.name === 'ValidationError' || err.code === 11000)
+        return res.status(400).json(err);
 
       return res.status(500).send(err);
     });

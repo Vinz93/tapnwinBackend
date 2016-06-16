@@ -19,7 +19,7 @@ const DesignController = {
       },
       offset,
       limit,
-      populate: ['player', 'topItem', 'midItem', 'botItem'],
+      populate: ['player', 'topItem', 'midItem', 'botItem', 'model'],
     })
     .then(designs => res.json(designs))
     .catch(err => res.status(500).send(err));
@@ -39,7 +39,7 @@ const DesignController = {
       },
       offset,
       limit,
-      populate: ['topItem', 'midItem', 'botItem'],
+      populate: ['topItem', 'midItem', 'botItem', 'model'],
     })
     .then(designs => res.json(designs))
     .catch(err => res.status(500).send(err));
@@ -48,9 +48,10 @@ const DesignController = {
   readAllByMeCampaign(req, res) {
     const locals = req.app.locals;
     const limit = locals.config.paginate.limit(req.query.limit);
-    const player = (req.query.exclusive === 'false') ? res.locals.user._id : {
-      $ne: res.locals.user._id,
-    };
+    const player = (req.query.exclusive === undefined ||
+      req.query.exclusive === 'false') ? res.locals.user._id : {
+        $ne: res.locals.user._id,
+      };
     const criteria = Object.assign(req.query.criteria || {}, {
       campaign: req.params.campaign_id,
       player,
@@ -69,7 +70,7 @@ const DesignController = {
         },
         offset,
         limit,
-        populate: ['topItem', 'midItem', 'botItem'],
+        populate: ['topItem', 'midItem', 'botItem', 'model'],
       })
       .then(designs => res.json(designs))
       .catch(err => res.status(500).send(err));
@@ -86,7 +87,7 @@ const DesignController = {
     .then(design => res.status(201).json(design))
     .catch(err => {
       if (err.name === 'ValidationError')
-        return res.status(400).json(err).end();
+        return res.status(400).json(err);
 
       return res.status(500).send(err);
     });
@@ -110,21 +111,21 @@ const DesignController = {
 
   doesntBelongToMe(req, res, next) {
     const criteria = {
-      design: req.params.design_id,
+      _id: req.params.design_id,
       player: res.locals.user._id,
     };
 
     Design.findOne(criteria).then(design => {
       if (!design)
-        next();
+        return next();
 
-      res.status(400).end();
+      res.status(400).send();
     })
     .catch(err => {
       if (err.name === 'CastError')
         return res.status(400).send(err);
 
-      res.status(500).send(err);
+      res.status(400).send(err);
     });
   },
 };
