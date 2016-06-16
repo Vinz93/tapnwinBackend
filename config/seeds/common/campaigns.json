@@ -36,6 +36,14 @@
         "categories": [{
           "category": "->categories.shoes",
           "items": ["->items.janoski", "->items.mercurial"]
+        },
+        {
+          "category": "->categories.shorts",
+          "items": ["->items.tech", "->items.court"]
+        },
+        {
+          "category": "->categories.shirts",
+          "items": ["->items.barcelona", "->items.paris"]
         }]
       }
     }

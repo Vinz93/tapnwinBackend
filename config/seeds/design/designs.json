@@ -1,10 +1,11 @@
 {
   "designs": {
     "_model": "Design",
-    "_require": ["Player", "Campaign", "Item"],
+    "_require": ["Player", "Campaign", "Item", "Model"],
     "design1": {
       "player": "->players.andres",
       "campaign": "->campaigns.summer",
+      "model": "->models.model1",
       "topItem": "->items.janoski",
       "midItem": "->items.court",
       "botItem": "->items.paris"
@@ -12,6 +13,7 @@
     "design2": {
       "player": "->players.andres",
       "campaign": "->campaigns.summer",
+      "model": "->models.model1",
       "topItem": "->items.janoski",
       "midItem": "->items.court",
       "botItem": "->items.barcelona"
@@ -19,6 +21,7 @@
     "design3": {
       "player": "->players.juan",
       "campaign": "->campaigns.summer",
+      "model": "->models.model1",
       "topItem": "->items.mercurial",
       "midItem": "->items.court",
       "botItem": "->items.paris"
