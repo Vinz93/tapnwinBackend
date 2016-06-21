@@ -1,4 +1,4 @@
-## Status [/missionStatuses/{missionStatus_id}]
+## Mission Status [/missionStatuses/{missionStatus_id}]
 
 + Parameters
     + missionStatus_id: `57336abfc4711310edbb28b9` (string, required) - ObjectId

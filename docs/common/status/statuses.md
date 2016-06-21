@@ -1,4 +1,4 @@
-## Statuses [/missionStatuses]
+## Mission Statuses [/missionStatuses]
 
 ### Read all [GET /missionStatuses{?limit,offset}]
 
