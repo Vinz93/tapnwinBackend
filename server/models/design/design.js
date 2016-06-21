@@ -51,12 +51,8 @@ const DesignSchema = new Schema({
 });
 
 DesignSchema.pre('save', function (next) {
-  const today = new Date();
-
-  Campaign.findOne({
+  Campaign.findActive({
     _id: this.campaign,
-    startAt: { $lt: today },
-    finishAt: { $gte: today },
     $and: [
       { 'design.models': this.model },
       { 'design.categories.items': { $all: [

@@ -46,12 +46,8 @@ VoteSchema.index({
 VoteSchema.pre('save', function (next) {
   Design.findById(this.design)
   .then(design => {
-    const today = new Date();
-
-    Campaign.findOne({
+    Campaign.findActive({
       _id: design.campaign,
-      startAt: { $lt: today },
-      finishAt: { $gte: today },
       'design.stickers': { $all: this.stickers },
     })
     .then(campaign => {

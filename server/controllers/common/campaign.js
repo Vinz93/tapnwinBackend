@@ -51,15 +51,7 @@ const CampaignController = {
     const locals = req.app.locals;
 
     if (req.query.active === 'true') {
-      const today = new Date();
-
-      Campaign.findOne({
-        startAt: {
-          $lt: today,
-        }, finishAt: {
-          $gte: today,
-        },
-      })
+      Campaign.findActive()
       .populate('company')
       .populate('design.missions.mission')
       .populate('design.models')

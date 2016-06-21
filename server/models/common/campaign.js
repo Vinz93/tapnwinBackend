@@ -133,6 +133,19 @@ const CampaignSchema = new Schema({
   timestamps: true,
 });
 
+CampaignSchema.statics = {
+  findActive(criteria) {
+    const today = new Date();
+
+    Object.assign(criteria || {}, {
+      startAt: { $lt: today },
+      finishAt: { $gte: today },
+    });
+
+    return this.findOne(criteria);
+  },
+};
+
 CampaignSchema.pre('remove', next => {
   Promise.all([
     Status.remove({ campaign: this.id }),
@@ -142,12 +155,6 @@ CampaignSchema.pre('remove', next => {
   .catch(next);
 });
 
-CampaignSchema.plugin(mongoosePaginate);
-CampaignSchema.plugin(idValidator);
-CampaignSchema.plugin(fieldRemover);
-
-const Campaign = mongoose.model('Campaign', CampaignSchema);
-
 CampaignSchema.pre('save', function (next) {
   if (this.finishAt <= this.startAt) {
     return next(new ValidationError('InvalidDateRange', {
@@ -156,25 +163,6 @@ CampaignSchema.pre('save', function (next) {
     }));
   }
   next();
-});
-
-CampaignSchema.pre('save', function (next) {
-  Campaign.find({
-    $or: [{ startAt: { $lte: this.startAt }, finishAt: { $gte: this.startAt } },
-    { startAt: { $lte: this.finishAt }, finishAt: { $gte: this.finishAt } },
-    { startAt: { $gte: this.startAt }, finishAt: { $lte: this.finishAt } }],
-    company: this.company,
-  })
-  .then(campaigns => {
-    if (campaigns.length > 0) {
-      return next(new ValidationError('InvalidDateRange', {
-        startAt: this.startAt,
-        finishAt: this.finishAt,
-      }));
-    }
-    next();
-  })
-  .catch(next);
 });
 
 CampaignSchema.pre('save', function (next) {
@@ -194,5 +182,30 @@ CampaignSchema.pre('save', function (next) {
   .then(next)
   .catch(next);
 });
+
+CampaignSchema.pre('save', function (next) {
+  Campaign.find({ // eslint-disable-line no-use-before-define
+    $or: [{ startAt: { $lte: this.startAt }, finishAt: { $gte: this.startAt } },
+    { startAt: { $lte: this.finishAt }, finishAt: { $gte: this.finishAt } },
+    { startAt: { $gte: this.startAt }, finishAt: { $lte: this.finishAt } }],
+    company: this.company,
+  })
+  .then(campaigns => {
+    if (campaigns.length > 0) {
+      return next(new ValidationError('InvalidDateRange', {
+        startAt: this.startAt,
+        finishAt: this.finishAt,
+      }));
+    }
+    next();
+  })
+  .catch(next);
+});
+
+CampaignSchema.plugin(mongoosePaginate);
+CampaignSchema.plugin(idValidator);
+CampaignSchema.plugin(fieldRemover);
+
+const Campaign = mongoose.model('Campaign', CampaignSchema);
 
 export default Campaign;
