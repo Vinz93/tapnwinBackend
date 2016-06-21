@@ -37,6 +37,10 @@ const MissionsListSchema = new Schema({
     type: Number,
     default: 0,
   },
+  balance: {
+    type: Number,
+    default: 0.0,
+  },
   max: {
     type: Number,
     min: [1, '`{VALUE}` is not a valid max'],
@@ -95,6 +99,10 @@ const CampaignSchema = new Schema({
   },
   banner: {
     type: String,
+    required: true,
+  },
+  balance: {
+    type: Number,
     required: true,
   },
   startAt: {

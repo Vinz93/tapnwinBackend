@@ -7,8 +7,14 @@ import Player from '../controllers/common/player';
 import Session from '../controllers/common/session';
 import Mission from '../controllers/common/mission';
 import Status from '../controllers/common/status';
+import CampaignStatus from '../controllers/common/campaignStatus';
 
 const router = express.Router(); // eslint-disable-line new-cap
+
+router.get('/time', (req, res) => {
+  const time = new Date();
+  res.json({ time });
+});
 
 router.route('/administrators')
 .get(Administrator.readAll)
@@ -83,5 +89,10 @@ router.route('/statuses/:status_id')
 .get(Status.read)
 .patch(Status.update)
 .delete(Status.delete);
+
+router.route('/players/me/campaigns/:campaign_id/campaignStatus')
+.all(Session.validate, User.isPlayer, Campaign.validate)
+.get(CampaignStatus.readByMe)
+.patch(CampaignStatus.updateByMe);
 
 export default router;
