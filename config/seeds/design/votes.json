@@ -1,11 +1,18 @@
 {
   "votes": {
     "_model": "Vote",
-    "_require": ["Player", "Design", "Sticker"],
+    "_require": [
+      "Player",
+      "Design",
+      "Sticker"
+    ],
     "vote1": {
       "player": "->players.juan",
       "design": "->designs.design1",
-      "stickers": ["->stickers.sticker1", "->stickers.sticker3"]
+      "stickers": [
+        "->stickers.vintage",
+        "->stickers.sexy"
+      ]
     }
   }
 }

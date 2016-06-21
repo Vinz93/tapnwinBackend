@@ -3,19 +3,40 @@
     "_model": "Category",
     "_require": ["Company"],
     "shoes": {
-      "name": "Shoes",
+      "name": "Zapatos",
       "zone": "bot",
-      "company": "->companies.nike"
+      "company": "->companies.company1",
+      "media": {
+        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOff.png",
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOn.png"
+      }
     },
-    "shorts": {
-      "name": "Shorts",
+    "pants": {
+      "name": "Pantalones",
       "zone": "mid",
-      "company": "->companies.nike"
+      "company": "->companies.company1",
+      "media": {
+        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOff.png",
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOn.png"
+      }
     },
-    "shirts": {
-      "name": "Shirts",
+    "skirts": {
+      "name": "Faldas",
+      "zone": "mid",
+      "company": "->companies.company1",
+      "media": {
+        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOff.png",
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOn.png"
+      }
+    },
+    "tops": {
+      "name": "Tops",
       "zone": "top",
-      "company": "->companies.nike"
+      "company": "->companies.company1",
+      "media": {
+        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOff.png",
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOn.png"
+      }
     }
   }
 }

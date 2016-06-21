@@ -2,35 +2,213 @@
   "items": {
     "_model": "Item",
     "_require": ["Company"],
-    "janoski": {
-      "company": "->companies.nike",
-      "name": "Janoski",
-      "url": "http://development.com/media/janoski.jpg"
+    "shoes1": {
+      "company": "->companies.company1",
+      "name": "Zapatos1",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes01.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes01.png"
+      }
     },
-    "mercurial": {
-      "company": "->companies.nike",
-      "name": "Mercuarial",
-      "url": "http://development.com/media/mercurial.jpg"
+    "shoes2": {
+      "company": "->companies.company1",
+      "name": "Zapatos2",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes02.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes02.png"
+      }
     },
-    "tech": {
-      "company": "->companies.nike",
-      "name": "Tech Fleece 2.0",
-      "url": "http://development.com/media/tech.jpg"
+    "shoes3": {
+      "company": "->companies.company1",
+      "name": "Zapatos3",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes03.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes03.png"
+      }
     },
-    "court": {
-      "company": "->companies.nike",
-      "name": "Court 23cm Plaid",
-      "url": "http://development.com/media/court.jpg"
+    "shoes4": {
+      "company": "->companies.company1",
+      "name": "Zapatos4",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes04.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes04.png"
+      }
     },
-    "barcelona": {
-      "company": "->companies.nike",
-      "name": "FC Barcelona Dry Squad",
-      "url": "http://development.com/media/barcelona.jpg"
+    "shoes5": {
+      "company": "->companies.company1",
+      "name": "Zapatos5",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes05.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes05.png"
+      }
     },
-    "paris": {
-      "company": "->companies.nike",
-      "name": "Paris Saint-Germain Stadium Home",
-      "url": "http://development.com/media/paris.jpg"
+    "shoes6": {
+      "company": "->companies.company1",
+      "name": "Zapatos1",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes06.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes06.png"
+      }
+    },
+    "pant1": {
+      "company": "->companies.company1",
+      "name": "Pantalon1",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants01.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants01.png"
+      }
+    },
+    "pant2": {
+      "company": "->companies.company1",
+      "name": "Pantalon2",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants02.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants02.png"
+      }
+    },
+    "pant3": {
+      "company": "->companies.company1",
+      "name": "Pantalon3",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants03.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants03.png"
+      }
+    },
+    "pant4": {
+      "company": "->companies.company1",
+      "name": "Pantalon4",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants04.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants04.png"
+      }
+    },
+    "pant5": {
+      "company": "->companies.company1",
+      "name": "Pantalon5",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants05.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants05.png"
+      }
+    },
+    "short1": {
+      "company": "->companies.company1",
+      "name": "Short1",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShorts01.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShorts01.png"
+      }
+    },
+    "skirt1": {
+      "company": "->companies.company1",
+      "name": "Falda1",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt01.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt01.png"
+      }
+    },
+    "skirt2": {
+      "company": "->companies.company1",
+      "name": "Falda2",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt02.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt02.png"
+      }
+    },
+    "skirt3": {
+      "company": "->companies.company1",
+      "name": "Falda3",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt03.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt03.png"
+      }
+    },
+    "skirt4": {
+      "company": "->companies.company1",
+      "name": "Falda4",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt04.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt04.png"
+      }
+    },
+    "skirt5": {
+      "company": "->companies.company1",
+      "name": "Falda5",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt05.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt05.png"
+      }
+    },
+    "skirt6": {
+      "company": "->companies.company1",
+      "name": "Falda6",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt06.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt06.png"
+      }
+    },
+    "top1": {
+      "company": "->companies.company1",
+      "name": "Top1",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop01.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop01.png"
+      }
+    },
+    "top2": {
+      "company": "->companies.company1",
+      "name": "Top2",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop02.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop02.png"
+      }
+    },
+    "top3": {
+      "company": "->companies.company1",
+      "name": "Top3",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop03.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop03.png"
+      }
+    },
+    "top4": {
+      "company": "->companies.company1",
+      "name": "Top4",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop04.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop04.png"
+      }
+    },
+    "top5": {
+      "company": "->companies.company1",
+      "name": "Top5",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop05.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop05.png"
+      }
+    },
+    "top6": {
+      "company": "->companies.company1",
+      "name": "Top6",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop06.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop06.png"
+      }
+    },
+    "top7": {
+      "company": "->companies.company1",
+      "name": "Top7",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop07.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop07.png"
+      }
+    },
+    "top8": {
+      "company": "->companies.company1",
+      "name": "Top8",
+      "media": {
+        "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop08.png",
+        "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop08.png"
+      }
     }
   }
 }

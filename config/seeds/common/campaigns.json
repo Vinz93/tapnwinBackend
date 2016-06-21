@@ -2,49 +2,94 @@
   "campaigns": {
     "_model": "Campaign",
     "_require": ["Company", "Mission", "Model", "Sticker", "Category", "Item"],
-    "summer": {
-      "name": "Summer",
-      "banner": "Summer favorites clothes for sports",
+    "campaign1": {
+      "name": "Campaña1",
+      "banner": "Estandarte",
       "startAt": "2015-12-01T17:39:22.939Z",
       "finishAt": "2016-12-01T17:39:22.939Z",
-      "company": "->companies.nike",
+      "company": "->companies.company1",
       "design": {
         "active": true,
-        "missions": [{
-          "mission": "->missions.friend",
-          "isRequired": true,
-          "isBlocking": false,
-          "blockedTime": 20,
-          "max": 1
-        },
-        {
-          "mission": "->missions.create",
-          "isRequired": true,
-          "isBlocking": false,
-          "blockedTime": 20,
-          "max": 1
-        },
-        {
-          "mission": "->missions.vote",
-          "isRequired": true,
-          "isBlocking": false,
-          "blockedTime": 20,
-          "max": 10
-        }],
-        "models": ["->models.model1"],
-        "stickers": ["->stickers.sticker1", "->stickers.sticker3"],
-        "categories": [{
-          "category": "->categories.shoes",
-          "items": ["->items.janoski", "->items.mercurial"]
-        },
-        {
-          "category": "->categories.shorts",
-          "items": ["->items.tech", "->items.court"]
-        },
-        {
-          "category": "->categories.shirts",
-          "items": ["->items.barcelona", "->items.paris"]
-        }]
+        "missions": [
+          {
+            "mission": "->missions.mission1",
+            "isRequired": true,
+            "isBlocking": false,
+            "blockedTime": 20,
+            "max": 1
+          },
+          {
+            "mission": "->missions.mission2",
+            "isRequired": true,
+            "isBlocking": false,
+            "blockedTime": 20,
+            "max": 1
+          },
+          {
+            "mission": "->missions.mission3",
+            "isRequired": true,
+            "isBlocking": false,
+            "blockedTime": 20,
+            "max": 10
+          }
+        ],
+        "models": [
+          "->models.model1"
+        ],
+        "stickers": [
+          "->stickers.vintage",
+          "->stickers.sexy",
+          "->stickers.formal",
+          "->stickers.modern"
+        ],
+        "categories": [
+          {
+            "category": "->categories.shoes",
+            "items": [
+              "->items.shoes1",
+              "->items.shoes2",
+              "->items.shoes3",
+              "->items.shoes4",
+              "->items.shoes5",
+              "->items.shoes6"
+            ]
+          },
+          {
+            "category": "->categories.pants",
+            "items": [
+              "->items.pant1",
+              "->items.pant2",
+              "->items.pant3",
+              "->items.pant4",
+              "->items.pant5",
+              "->items.short1"
+            ]
+          },
+          {
+            "category": "->categories.skirts",
+            "items": [
+              "->items.skirt1",
+              "->items.skirt2",
+              "->items.skirt3",
+              "->items.skirt4",
+              "->items.skirt5",
+              "->items.skirt6"
+            ]
+          },
+          {
+            "category": "->categories.tops",
+            "items": [
+              "->items.top1",
+              "->items.top2",
+              "->items.top3",
+              "->items.top4",
+              "->items.top5",
+              "->items.top6",
+              "->items.top7",
+              "->items.top8"
+            ]
+          }
+        ]
       }
     }
   }

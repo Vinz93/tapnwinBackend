@@ -3,19 +3,9 @@
     "_model": "Model",
     "_require": ["Company"],
     "model1": {
-      "company": "->companies.nike",
-      "name": "Model1",
-      "url": "http://development.com/media/model1.jpg"
-    },
-    "model2": {
-      "company": "->companies.levis",
-      "name": "Model2",
-      "url": "http://development.com/media/model2.jpg"
-    },
-    "model3": {
-      "company": "->companies.nike",
-      "name": "Model3",
-      "url": "http://development.com/media/model3.jpg"
+      "company": "->companies.company1",
+      "name": "Modelo1",
+      "media": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprModel01.png"
     }
   }
 }

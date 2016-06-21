@@ -1,17 +1,14 @@
 {
   "companies": {
     "_model": "Company",
-    "nike": {
-      "name": "Nike"
+    "company1": {
+      "name": "Compañia1"
     },
-    "levis": {
-      "name": "Levis"
+    "company2": {
+      "name": "Compañia2"
     },
-    "tommy": {
-      "name": "Tommy Hilfiger"
-    },
-    "mcdonalds": {
-      "name": "McDonald's"
+    "company3": {
+      "name": "Compañia3"
     }
   }
 }

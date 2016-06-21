@@ -2,23 +2,45 @@
   "stickers": {
     "_model": "Sticker",
     "_require": ["Company"],
-    "sticker1": {
-      "company": "->companies.nike",
-      "name": "sticker1",
-      "isPositive": true,
-      "url": "http://development.com/media/sticker1.jpg"
-    },
-    "sticker2": {
-      "company": "->companies.nike",
-      "name": "sticker2",
+    "vintage": {
+      "company": "->companies.company1",
+      "name": "Anticuado",
       "isPositive": false,
-      "url": "http://development.com/media/sticker2.jpg"
+      "media": {
+        "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker01.png",
+        "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerVintage.png",
+        "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerVintage_off.png"
+      }
     },
-    "sticker3": {
-      "company": "->companies.nike",
-      "name": "sticker3",
+    "formal": {
+      "company": "->companies.company1",
+      "name": "Formal",
       "isPositive": true,
-      "url": "http://development.com/media/sticker3.jpg"
+      "media": {
+        "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker02.png",
+        "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerFormal.png",
+        "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerFormal_off.png"
+      }
+    },
+    "sexy": {
+      "company": "->companies.company1",
+      "name": "Sexy",
+      "isPositive": true,
+      "media": {
+        "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker03.png",
+        "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerSexy.png",
+        "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerSexy_off.png"
+      }
+    },
+    "modern": {
+      "company": "->companies.company1",
+      "name": "Moderno",
+      "isPositive": true,
+      "media": {
+        "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker04.png",
+        "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerModern.png",
+        "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerModern_off.png"
+      }
     }
   }
 }

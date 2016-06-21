@@ -1,17 +1,17 @@
 {
   "missions": {
     "_model": "Mission",
-    "friend": {
+    "mission1": {
       "games": ["0001", "0002", "0003", "0004"],
-      "description": "Add a friend"
+      "description": "Misión1"
     },
-    "create": {
+    "mission2": {
       "games": ["0001"],
-      "description": "Create a design"
+      "description": "Misión2"
     },
-    "vote": {
+    "mission3": {
       "games": ["0001"],
-      "description": "Vote for n designs"
+      "description": "Misión3"
     }
   }
 }
