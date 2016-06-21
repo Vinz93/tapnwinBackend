@@ -33,7 +33,7 @@ const MissionsListSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  blockedTime: { // Minutes
+  blockedTime: {
     type: Number,
     default: 0,
   },

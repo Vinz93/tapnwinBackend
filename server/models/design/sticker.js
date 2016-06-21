@@ -12,6 +12,11 @@ import fieldRemover from 'mongoose-field-remover';
 
 const Schema = mongoose.Schema;
 
+const isURL = validate({
+  validator: 'isURL',
+  message: 'not a valid url',
+});
+
 const StickerSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,
@@ -26,13 +31,22 @@ const StickerSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  url: {
-    type: String,
-    required: true,
-    validate: validate({
-      validator: 'isURL',
-      message: 'The url provided is not valid.',
-    }),
+  media: {
+    animation: {
+      type: String,
+      required: true,
+      validate: isURL,
+    },
+    enable: {
+      type: String,
+      required: true,
+      validate: isURL,
+    },
+    disable: {
+      type: String,
+      required: true,
+      validate: isURL,
+    },
   },
 }, {
   timestamps: true,

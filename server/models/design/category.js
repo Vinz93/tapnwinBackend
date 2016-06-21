@@ -5,11 +5,17 @@
  */
 
 import mongoose from 'mongoose';
+import validate from 'mongoose-validator';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
 const Schema = mongoose.Schema;
+
+const isURL = validate({
+  validator: 'isURL',
+  message: 'not a valid url',
+});
 
 const CategorySchema = new Schema({
   company: {
@@ -26,6 +32,18 @@ const CategorySchema = new Schema({
     enum: {
       values: 'top mid bot'.split(' '),
       message: '`{VALUE}` is not a valid zone',
+    },
+  },
+  media: {
+    selected: {
+      type: String,
+      required: true,
+      validate: isURL,
+    },
+    unselected: {
+      type: String,
+      required: true,
+      validate: isURL,
     },
   },
 }, {

@@ -12,6 +12,11 @@ import fieldRemover from 'mongoose-field-remover';
 
 const Schema = mongoose.Schema;
 
+const isURL = validate({
+  validator: 'isURL',
+  message: 'not a valid url',
+});
+
 const ModelSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,
@@ -22,13 +27,10 @@ const ModelSchema = new Schema({
     type: String,
     required: true,
   },
-  url: {
+  media: {
     type: String,
     required: true,
-    validate: validate({
-      validator: 'isURL',
-      message: 'not a valid url',
-    }),
+    validate: isURL,
   },
 }, {
   timestamps: true,

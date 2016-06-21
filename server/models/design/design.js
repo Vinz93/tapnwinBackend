@@ -55,17 +55,15 @@ DesignSchema.pre('save', function (next) {
 
   Campaign.findOne({
     _id: this.campaign,
-    startAt: {
-      $lt: today,
-    },
-    finishAt: {
-      $gte: today,
-    },
+    startAt: { $lt: today },
+    finishAt: { $gte: today },
     $and: [
       { 'design.models': this.model },
-      { 'design.categories.items': this.botItem },
-      { 'design.categories.items': this.midItem },
-      { 'design.categories.items': this.topItem },
+      { 'design.categories.items': { $all: [
+        this.botItem,
+        this.midItem,
+        this.topItem,
+      ] } },
     ],
   })
   .then(campaign => {

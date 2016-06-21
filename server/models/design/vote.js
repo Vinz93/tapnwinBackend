@@ -50,19 +50,13 @@ VoteSchema.pre('save', function (next) {
 
     Campaign.findOne({
       _id: design.campaign,
-      startAt: {
-        $lt: today,
-      },
-      finishAt: {
-        $gte: today,
-      },
-      $and: [
-        { 'design.stickers': this.stickers },
-      ],
+      startAt: { $lt: today },
+      finishAt: { $gte: today },
+      'design.stickers': { $all: this.stickers },
     })
     .then(campaign => {
       if (!campaign)
-        return next(new ValidationError('Sticker validation failed'));
+        return next(new ValidationError('Vote validation failed'));
 
       next();
     })
