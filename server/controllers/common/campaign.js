@@ -83,12 +83,8 @@ const CampaignController = {
       const offset = locals.config.paginate.offset(req.query.offset);
       const limit = locals.config.paginate.limit(req.query.limit);
 
-      Campaign.paginate({
-        company,
-      }, {
-        sort: {
-          createdAt: 1,
-        },
+      Campaign.paginate({ company }, {
+        sort: { createdAt: 1 },
         offset,
         limit,
         populate: [
