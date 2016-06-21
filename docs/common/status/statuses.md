@@ -1,6 +1,6 @@
-## Statuses [/statuses]
+## Statuses [/missionStatuses]
 
-### Read all [GET /statuses{?limit,offset}]
+### Read all [GET /missionStatuses{?limit,offset}]
 
 + Parameters
     + limit: `20` (number, optional)

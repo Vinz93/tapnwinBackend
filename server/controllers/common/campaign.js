@@ -171,6 +171,70 @@ const CampaignController = {
       return res.status(500).send(err);
     });
   },
+
+  designActive(req, res, next) {
+    Campaign.findById(req.params.campaign_id)
+    .then(campaign => {
+      if (!campaign.design.active)
+        return res.status(409).json('Design game is not active');
+
+      next();
+    })
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      return res.status(500).send(err);
+    });
+  },
+
+  voiceActive(req, res, next) {
+    Campaign.findById(req.params.campaign_id)
+    .then(campaign => {
+      if (!campaign.design.active)
+        return res.status(409).json('Voice game is not active');
+
+      next();
+    })
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      return res.status(500).send(err);
+    });
+  },
+
+  match3Active(req, res, next) {
+    Campaign.findById(req.params.campaign_id)
+    .then(campaign => {
+      if (!campaign.design.active)
+        return res.status(409).json('Match3 game is not active');
+
+      next();
+    })
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      return res.status(500).send(err);
+    });
+  },
+
+  ownerActive(req, res, next) {
+    Campaign.findById(req.params.campaign_id)
+    .then(campaign => {
+      if (!campaign.design.active)
+        return res.status(409).json('Owner game is not active');
+
+      next();
+    })
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      return res.status(500).send(err);
+    });
+  },
 };
 
 export default CampaignController;

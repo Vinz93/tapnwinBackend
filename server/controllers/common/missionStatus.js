@@ -4,9 +4,9 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-import Status from '../../models/common/status';
+import Status from '../../models/common/missionStatus';
 
-const StatusController = {
+const MissionStatusController = {
 
   readAll(req, res) {
     const locals = req.app.locals;
@@ -38,7 +38,7 @@ const StatusController = {
   },
 
   read(req, res) {
-    Status.findById(req.params.status_id)
+    Status.findById(req.params.missionStatus_id)
     .then(status => {
       if (!status)
         return res.status(404).end();
@@ -53,7 +53,7 @@ const StatusController = {
   },
 
   update(req, res) {
-    Status.findByIdAndUpdate(req.params.status_id, req.body, {
+    Status.findByIdAndUpdate(req.params.missionStatus_id, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -71,7 +71,7 @@ const StatusController = {
   },
 
   delete(req, res) {
-    Status.findByIdAndRemove(req.params.status_id)
+    Status.findByIdAndRemove(req.params.missionStatus_id)
     .then(status => {
       if (!status)
         return res.status(404).end();
@@ -87,4 +87,4 @@ const StatusController = {
   },
 };
 
-export default StatusController;
+export default MissionStatusController;

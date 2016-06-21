@@ -1,7 +1,7 @@
-## Status [/statuses/{status_id}]
+## Status [/missionStatuses/{missionStatus_id}]
 
 + Parameters
-    + status_id: `57336abfc4711310edbb28b9` (string, required) - ObjectId
+    + missionStatus_id: `57336abfc4711310edbb28b9` (string, required) - ObjectId
 
 ### Read [GET]
 

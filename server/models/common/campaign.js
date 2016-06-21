@@ -14,7 +14,7 @@ import fieldRemover from 'mongoose-field-remover';
 import config from '../../../config/env';
 import ValidationError from '../../helpers/validationError';
 import Mission from './mission';
-import Status from './status';
+import MissionStatus from './missionStatus';
 import Design from '../design/design';
 
 const Schema = mongoose.Schema;
@@ -56,6 +56,20 @@ const GameSchema = new Schema({
   missions: [MissionsListSchema],
 }, { _id: false });
 
+const CategorySchema = new Schema({
+  category: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Category',
+  },
+  items: [{
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: 'Item',
+  }],
+
+}, { _id: false });
+
 const DesignSchema = GameSchema.extend({
   models: [{
     type: Schema.Types.ObjectId,
@@ -67,18 +81,7 @@ const DesignSchema = GameSchema.extend({
     required: true,
     ref: 'Sticker',
   }],
-  categories: [{
-    category: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'Category',
-    },
-    items: [{
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'Item',
-    }],
-  }],
+  categories: [CategorySchema],
 });
 
 const VoiceSchema = GameSchema.extend({});
@@ -135,7 +138,7 @@ const CampaignSchema = new Schema({
 
 CampaignSchema.pre('remove', next => {
   Promise.all([
-    Status.remove({ campaign: this.id }),
+    MissionStatus.remove({ campaign: this.id }),
     Design.remove({ campaign: this.id }),
   ])
   .then(next)

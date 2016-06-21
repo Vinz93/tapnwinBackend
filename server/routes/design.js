@@ -2,6 +2,7 @@ import express from 'express';
 
 import User from '../controllers/common/user';
 import Session from '../controllers/common/session';
+import Campaign from '../controllers/common/campaign';
 import Category from '../controllers/design/category';
 import Design from '../controllers/design/design';
 import Item from '../controllers/design/item';
@@ -61,10 +62,11 @@ router.route('/designs')
 .get(Design.readAll);
 
 router.route('/campaigns/:campaign_id/designs')
+.all(Campaign.validate, Campaign.designActive)
 .get(Design.readAllByCampaign);
 
 router.route('/players/me/campaigns/:campaign_id/designs')
-.all(Session.validate, User.isPlayer)
+.all(Session.validate, User.isPlayer, Campaign.validate, Campaign.designActive)
 .get(Design.readAllByMeCampaign)
 .post(Design.createByMeCampaign);
 

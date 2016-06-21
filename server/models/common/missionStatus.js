@@ -11,7 +11,7 @@ import fieldRemover from 'mongoose-field-remover';
 
 const Schema = mongoose.Schema;
 
-const StatusSchema = new Schema({
+const MissionStatusSchema = new Schema({
   player: {
     type: Schema.Types.ObjectId,
     ref: 'Player',
@@ -35,8 +35,8 @@ const StatusSchema = new Schema({
   timestamps: true,
 });
 
-StatusSchema.plugin(mongoosePaginate);
-StatusSchema.plugin(idValidator);
-StatusSchema.plugin(fieldRemover);
+MissionStatusSchema.plugin(mongoosePaginate);
+MissionStatusSchema.plugin(idValidator);
+MissionStatusSchema.plugin(fieldRemover);
 
-export default mongoose.model('Status', StatusSchema);
+export default mongoose.model('Status', MissionStatusSchema);
