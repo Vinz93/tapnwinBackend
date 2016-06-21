@@ -11,6 +11,11 @@ import CampaignStatus from '../controllers/common/campaignStatus';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
+router.get('/time', (req, res) => {
+  const time = new Date();
+  res.json({ time });
+});
+
 router.route('/administrators')
 .get(Administrator.readAll)
 .post(Administrator.create);
