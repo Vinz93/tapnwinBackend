@@ -2,15 +2,15 @@
   "missions": {
     "_model": "Mission",
     "mission1": {
-      "games": ["0001", "0002", "0003", "0004"],
+      "code": "0001",
       "description": "Misión1"
     },
     "mission2": {
-      "games": ["0001"],
+      "code": "0002",
       "description": "Misión2"
     },
     "mission3": {
-      "games": ["0001"],
+      "code": "0003",
       "description": "Misión3"
     }
   }
