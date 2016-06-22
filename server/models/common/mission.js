@@ -7,20 +7,25 @@
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
-import ValidationError from '../../helpers/validationError';
+// import ValidationError from '../../helpers/validationError';
 import fieldRemover from 'mongoose-field-remover';
-import config from '../../../config/env';
+// import config from '../../../config/env';
 
 const Schema = mongoose.Schema;
 
 const MissionSchema = new Schema({
-  games: [{
+  /* games: [{
     type: String,
     enum: {
       values: config.games.map(game => game.id),
       message: '`{VALUE}` is not a valid game',
     },
-  }],
+  }],*/
+  code: {
+    type: String,
+    unique: true,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
@@ -29,9 +34,9 @@ const MissionSchema = new Schema({
   timestamps: true,
 });
 
-MissionSchema.pre('save', function (next) {
-  if (this.games.length === 0)
-    return next(new ValidationError('GamesArrayEmpty'));
+MissionSchema.pre('save', next => {
+  /* if (this.games.length === 0)
+    return next(new ValidationError('GamesArrayEmpty'));*/
   next();
 });
 

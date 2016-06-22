@@ -29,6 +29,10 @@ const PlayerSchema = new Schema({
     type: Number,
     min: [0, '`{VALUE}` is not a valid age'],
   },
+  balance: {
+    type: Number,
+    default: 0.0,
+  },
 });
 
 export default User.discriminator('Player', PlayerSchema);

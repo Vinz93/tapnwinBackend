@@ -1,48 +1,36 @@
 /**
  * @author Juan Sanchez
- * @description Status controller definition
+ * @description Mission-Status controller definition
  * @lastModifiedBy Juan Sanchez
  */
 
-import Status from '../../models/common/missionStatus';
+import MissionStatus from '../../models/common/missionStatus';
+import MissionCampaign from '../../models/common/missionCampaign';
+
+import Promise from 'bluebird';
 
 const MissionStatusController = {
 
-  readAll(req, res) {
-    const locals = req.app.locals;
+  readAllByMe(req, res) {
+    MissionCampaign.find({ campaign: req.params.campaign_id })
+    .then(missionCampaign => {
+      if (missionCampaign.length === 0)
+        return res.json([]);
 
-    const criteria = req.query.criteria || {};
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
-
-    Status.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
-      offset,
-      limit,
-    })
-    .then(status => res.json(status))
-    .catch(err => res.status(500).send(err));
-  },
-
-  create(req, res) {
-    Status.create(req.body)
-    .then(status => res.status(201).json(status))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err).end();
-
-      return res.status(500).send(err);
-    });
-  },
-
-  read(req, res) {
-    Status.findById(req.params.missionStatus_id)
-    .then(status => {
-      if (!status)
-        return res.status(404).end();
-      res.json(status);
+      return Promise.map(missionCampaign, mission => {
+        MissionStatus.findOrCreate({
+          player: res.locals.user.id,
+          missionCampaign: mission.id,
+        })
+        .then(status => status);
+      })
+      .then(statuses => res.json(statuses))
+      .catch(err => {
+        if (err.name === 'CastError') {
+          return res.status(400).send(err);
+        }
+        return res.status(500).send(err);
+      });
     })
     .catch(err => {
       if (err.name === 'CastError') {
@@ -52,8 +40,13 @@ const MissionStatusController = {
     });
   },
 
-  update(req, res) {
-    Status.findByIdAndUpdate(req.params.missionStatus_id, req.body, {
+  updateByMe(req, res) {
+    const criteria = {
+      player: res.locals.user.id,
+      missionCampaign: req.params.campaign_id,
+    };
+
+    MissionStatus.findOneAndUpdate(criteria, req.body, {
       runValidators: true,
       context: 'query',
     })
@@ -64,22 +57,6 @@ const MissionStatusController = {
     })
     .catch(err => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
-  },
-
-  delete(req, res) {
-    Status.findByIdAndRemove(req.params.missionStatus_id)
-    .then(status => {
-      if (!status)
-        return res.status(404).end();
-
-      res.status(204).end();
-    })
-    .catch(err => {
-      if (err.name === 'CastError') {
         return res.status(400).send(err);
       }
       return res.status(500).send(err);

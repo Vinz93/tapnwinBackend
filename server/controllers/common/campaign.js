@@ -21,11 +21,12 @@ const CampaignController = {
       limit,
       populate: [
         'company',
-        'design.missions..mission',
+        // Design game
         'design.models',
         'design.stickers',
         'design.categories.category',
         'design.categories.items',
+        // Voice game
       ],
     })
     .then(campaigns => res.json(campaigns))
@@ -53,11 +54,12 @@ const CampaignController = {
     if (req.query.active === 'true') {
       Campaign.findActive()
       .populate('company')
-      .populate('design.missions.mission')
+      // Design game
       .populate('design.models')
       .populate('design.stickers')
       .populate('design.categories.category')
       .populate('design.categories.items')
+      // Voice game
       .then(campaign => {
         if (!campaign)
           return res.status(404).end();
@@ -81,11 +83,12 @@ const CampaignController = {
         limit,
         populate: [
           'company',
-          'design.missions..mission',
+          // Design game
           'design.models',
           'design.stickers',
           'design.categories.category',
           'design.categories.items',
+          // Voice game
         ],
       })
       .then(campaigns => res.json(campaigns))
@@ -96,11 +99,12 @@ const CampaignController = {
   read(req, res) {
     Campaign.findById(req.params.campaign_id)
     .populate('company')
-    .populate('design.missions..mission')
+    // Design game
     .populate('design.models')
     .populate('design.stickers')
     .populate('design.categories.category')
     .populate('design.categories.items')
+    // Voice game
     .then(campaign => {
       if (!campaign)
         return res.status(404).end();

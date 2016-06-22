@@ -1,6 +1,6 @@
 /**
  * @author Andres Alvarez
- * @description Mission controller definition
+ * @description Mission-PlayerStatus model definition
  * @lastModifiedBy Juan Sanchez
  */
 
@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import findOrCreate from 'mongoose-findorcreate';
 
 const Schema = mongoose.Schema;
 
@@ -17,19 +18,14 @@ const MissionStatusSchema = new Schema({
     ref: 'Player',
     required: true,
   },
-  campaign: {
+  missionCampaign: {
     type: Schema.Types.ObjectId,
-    ref: 'Campaign',
-    required: true,
-  },
-  mission: {
-    type: Schema.Types.ObjectId,
-    ref: 'Mission',
+    ref: 'MissionCampaign',
     required: true,
   },
   value: {
     type: Number,
-    required: true,
+    default: 0,
   },
 }, {
   timestamps: true,
@@ -38,5 +34,8 @@ const MissionStatusSchema = new Schema({
 MissionStatusSchema.plugin(mongoosePaginate);
 MissionStatusSchema.plugin(idValidator);
 MissionStatusSchema.plugin(fieldRemover);
+MissionStatusSchema.plugin(findOrCreate);
 
-export default mongoose.model('Status', MissionStatusSchema);
+const MissionStatus = mongoose.model('Status', MissionStatusSchema);
+
+export default MissionStatus;

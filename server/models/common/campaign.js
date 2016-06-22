@@ -1,7 +1,7 @@
 /**
  * @author Juan Sanchez
  * @description Campaign model definition
- * @lastModifiedBy Andres Alvarez
+ * @lastModifiedBy Juan Sanchez
  */
 
 import Promise from 'bluebird';
@@ -11,15 +11,15 @@ import idValidator from 'mongoose-id-validator';
 import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-vars
 import fieldRemover from 'mongoose-field-remover';
 
-import config from '../../../config/env';
+// import config from '../../../config/env';
 import ValidationError from '../../helpers/validationError';
-import Mission from './mission';
-import MissionStatus from './missionStatus';
+// import Mission from './mission';
+import MissionCampaign from './missionCampaign';
 import Design from '../design/design';
 
 const Schema = mongoose.Schema;
 
-const MissionsListSchema = new Schema({
+/* const MissionsListSchema = new Schema({
   mission: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -46,14 +46,13 @@ const MissionsListSchema = new Schema({
     min: [1, '`{VALUE}` is not a valid max'],
     default: 1,
   },
-}, { _id: false });
+}, { _id: false });*/
 
 const GameSchema = new Schema({
   active: {
     type: Boolean,
     default: false,
   },
-  missions: [MissionsListSchema],
 }, { _id: false });
 
 const CategorySchema = new Schema({
@@ -149,10 +148,10 @@ CampaignSchema.statics = {
   },
 };
 
-CampaignSchema.pre('remove', next => {
+CampaignSchema.pre('remove', function (next) {
   Promise.all([
-    MissionStatus.remove({ campaign: this.id }),
     Design.remove({ campaign: this.id }),
+    MissionCampaign.remove({ campaign: this.id }),
   ])
   .then(next)
   .catch(next);
@@ -168,7 +167,7 @@ CampaignSchema.pre('save', function (next) {
   next();
 });
 
-CampaignSchema.pre('save', function (next) {
+/* CampaignSchema.pre('save', function (next) {
   Promise.map(config.games, game =>
     Promise.map(this[game.name].missions, mission =>
       Mission.findById(mission.mission)
@@ -184,7 +183,7 @@ CampaignSchema.pre('save', function (next) {
   )
   .then(next)
   .catch(next);
-});
+});*/
 
 CampaignSchema.pre('save', function (next) {
   Campaign.find({ // eslint-disable-line no-use-before-define
