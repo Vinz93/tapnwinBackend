@@ -2,13 +2,13 @@
   "companies": {
     "_model": "Company",
     "company1": {
-      "name": "Compañia1"
+      "name": "Compañia 1"
     },
     "company2": {
-      "name": "Compañia2"
+      "name": "Compañia 2"
     },
     "company3": {
-      "name": "Compañia3"
+      "name": "Compañia 3"
     }
   }
 }

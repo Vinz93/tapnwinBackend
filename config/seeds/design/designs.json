@@ -1,7 +1,12 @@
 {
   "designs": {
     "_model": "Design",
-    "_require": ["Player", "Campaign", "Item", "Model"],
+    "_require": [
+      "Player",
+      "Campaign",
+      "Item",
+      "Model"
+    ],
     "design1": {
       "player": "->players.andres",
       "campaign": "->campaigns.campaign1",
