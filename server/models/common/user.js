@@ -77,12 +77,10 @@ UserSchema.methods = {
 };
 
 UserSchema.pre('save', function (next) {
-  const user = this;
-
-  if (!user.isModified('password'))
+  if (!this.isModified('password'))
     return next();
 
-  user.password = crypto.createHash('md5').update(user.password).digest('hex');
+  this.password = crypto.createHash('md5').update(this.password).digest('hex');
 
   next();
 });

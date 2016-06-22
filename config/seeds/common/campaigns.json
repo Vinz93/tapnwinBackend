@@ -1,9 +1,16 @@
 {
   "campaigns": {
     "_model": "Campaign",
-    "_require": ["Company", "Mission", "Model", "Sticker", "Category", "Item"],
+    "_require": [
+      "Company",
+      "Mission",
+      "Model",
+      "Sticker",
+      "Category",
+      "Item"
+    ],
     "campaign1": {
-      "name": "Campaña1",
+      "name": "Campaña 1",
       "banner": "Estandarte",
       "startAt": "2015-12-01T17:39:22.939Z",
       "finishAt": "2016-12-01T17:39:22.939Z",
@@ -61,8 +68,7 @@
               "->items.pant2",
               "->items.pant3",
               "->items.pant4",
-              "->items.pant5",
-              "->items.short1"
+              "->items.pant5"
             ]
           },
           {
