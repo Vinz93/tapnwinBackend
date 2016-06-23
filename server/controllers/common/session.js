@@ -32,6 +32,7 @@ const SessionController = {
     })
     .catch(err => res.status(500).send(err));
   },
+
   delete(req, res) {
     const user = res.locals.user;
 
@@ -41,6 +42,7 @@ const SessionController = {
     .then(() => res.status(204).end())
     .catch(err => res.status(500).send(err));
   },
+
   validate(req, res, next) {
     User.findOne({
       sessionToken: req.get('sessionToken'),
