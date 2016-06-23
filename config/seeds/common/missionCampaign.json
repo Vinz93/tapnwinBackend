@@ -1,0 +1,36 @@
+{
+  "missionCampaigns": {
+    "_model": "MissionCampaign",
+    "_require": [
+      "Campaign",
+      "Mission"
+    ],
+    "missionCampaign1": {
+      "campaign": "->campaings.campaign1",
+      "mission": "->missions.mission1",
+      "balance": 0.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockedTime": 60,
+      "max": 3
+    },
+    "missionCampaign2": {
+      "campaign": "->campaings.campaign1",
+      "mission": "->missions.mission2",
+      "balance": 100.0,
+      "isRequired": false,
+      "isBlocking": false,
+      "blockedTime": 0,
+      "max": 5
+    },
+    "missionCampaign3": {
+      "campaign": "->campaings.campaign1",
+      "mission": "->missions.mission3",
+      "balance": 50.0,
+      "isRequired": false,
+      "isBlocking": false,
+      "blockedTime": 0,
+      "max": 1
+    }
+  }
+}
