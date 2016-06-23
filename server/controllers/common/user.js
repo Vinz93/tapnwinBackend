@@ -29,12 +29,13 @@ const UserController = {
       res.status(500).send(err);
     });
   },
+
   readByMe(req, res) {
     res.json(res.locals.user);
   },
+
   readAll(req, res) {
     const locals = req.app.locals;
-
     const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
@@ -49,6 +50,7 @@ const UserController = {
     .then(users => res.json(users))
     .catch(err => res.status(500).send(err));
   },
+
   createRecoveryToken(req, res) {
     const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
 
@@ -83,6 +85,7 @@ const UserController = {
     })
     .catch(err => res.status(500).send(err));
   },
+
   updateByMe(req, res) {
     const user = res.locals.user;
 
@@ -92,6 +95,7 @@ const UserController = {
     .then(() => res.status(204).end())
     .catch(err => res.status(500).send(err));
   },
+
   updatePassword(req, res) {
     User.findOne({
       recoveryToken: req.query.recovery_token,
@@ -116,6 +120,7 @@ const UserController = {
       res.status(500).send(err);
     });
   },
+
   delete(req, res) {
     User.findByIdAndRemove(req.params.user_id)
     .then(user => {
@@ -130,12 +135,14 @@ const UserController = {
       res.status(500).send(err);
     });
   },
+
   isAdministrator(req, res, next) {
     if (res.locals.user.__t !== 'Administrator')
       return res.status(403).end();
 
     next();
   },
+
   isPlayer(req, res, next) {
     if (res.locals.user.__t !== 'Player')
       return res.status(403).end();
