@@ -86,4 +86,12 @@ router.route('/players/me/campaigns/:campaign_id/campaignStatus')
 .get(CampaignStatus.readByMe)
 .patch(CampaignStatus.updateByMe);
 
+router.route('/players/me/campaigns/:campaign_id/missionStatuses')
+.all(Session.validate, User.isPlayer, Campaign.validate)
+.get(MissionStatus.readAllByMe);
+
+router.route('/players/me/missionStatuses/:missionStatus_id')
+.all(Session.validate, User.isPlayer)
+.patch(MissionStatus.updateByMe);
+
 export default router;
