@@ -17,13 +17,22 @@ const MissionStatusController = {
       if (missionCampaign.length === 0)
         return res.json([]);
 
-      return Promise.map(missionCampaign, mission => {
-        MissionStatus.findOrCreate({
+      Promise.map(missionCampaign, mission =>
+        MissionStatus.findOne({
           player: res.locals.user.id,
           missionCampaign: mission.id,
         })
-        .then(status => status);
-      })
+        .populate('missionCampaign')
+        .then(status => {
+          if (!status)
+            return MissionStatus.create({
+              player: res.locals.user.id,
+              missionCampaign: mission.id,
+            })
+            .then(newStatus => newStatus);
+          return status;
+        })
+      )
       .then(statuses => res.json(statuses))
       .catch(err => {
         if (err.name === 'CastError') {
@@ -43,17 +52,68 @@ const MissionStatusController = {
   updateByMe(req, res) {
     const criteria = {
       player: res.locals.user.id,
-      missionCampaign: req.params.campaign_id,
+      _id: req.params.missionStatus_id,
     };
 
-    MissionStatus.findOneAndUpdate(criteria, req.body, {
+    MissionStatus.findOneAndUpdate(criteria, { $inc: { value: 1 } }, {
       runValidators: true,
       context: 'query',
     })
+    .populate('missionCampaign')
     .then(status => {
       if (!status)
         return res.status(404).end();
-      res.status(204).end();
+      if (status.value + 1 >= status.missionCampaign.max) {
+        return status.update({ isDone: true }).then(() => {
+          if (status.missionCampaign.isRequired) {
+            return MissionCampaign.find({
+              campaign: status.missionCampaign.campaign,
+              isRequired: true,
+            })
+            .populate('campaign')
+            .then(missionCampaign => {
+              MissionStatus.find({
+                player: res.locals.user.id,
+                missionCampaign: { $in: missionCampaign.map(mission => mission.id) },
+              })
+              .then(statuses => {
+                if (statuses.reduce((prev, curr) => prev && curr.isDone, true)) {
+                  res.locals.user.update({ $inc: { balance: missionCampaign[0].campaign.balance } })
+                  .then(() => res.status(204).end())
+                  .catch(err => {
+                    if (err.name === 'CastError' || err.name === 'ValidationError') {
+                      return res.status(400).send(err);
+                    }
+                    return res.status(500).send(err);
+                  });
+                }
+              })
+              .catch(err => {
+                console.log(err);
+                if (err.name === 'CastError' || err.name === 'ValidationError') {
+                  return res.status(400).send(err);
+                }
+                return res.status(500).send(err);
+              });
+            })
+            .catch(err => {
+              if (err.name === 'CastError' || err.name === 'ValidationError') {
+                return res.status(400).send(err);
+              }
+              return res.status(500).send(err);
+            });
+          }
+          return res.locals.user.update({ $inc: { balance: status.missionCampaign.balance } })
+          .then(() => res.status(204).end())
+          .catch(err => {
+            if (err.name === 'CastError' || err.name === 'ValidationError') {
+              return res.status(400).send(err);
+            }
+            return res.status(500).send(err);
+          });
+        });
+      }
+      return res.status(204).end();
     })
     .catch(err => {
       if (err.name === 'CastError' || err.name === 'ValidationError') {

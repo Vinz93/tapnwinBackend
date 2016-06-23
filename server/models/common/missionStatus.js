@@ -27,6 +27,10 @@ const MissionStatusSchema = new Schema({
     type: Number,
     default: 0,
   },
+  isDone: {
+    type: Boolean,
+    default: false,
+  },
 }, {
   timestamps: true,
 });
