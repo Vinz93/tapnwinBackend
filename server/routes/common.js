@@ -81,15 +81,6 @@ router.route('/missions/:mission_id')
 .patch(Mission.update)
 .delete(Mission.delete);
 
-router.route('/missionStatuses')
-.get(MissionStatus.readAll)
-.post(MissionStatus.create);
-
-router.route('/missionStatuses/:missionStatus_id')
-.get(MissionStatus.read)
-.patch(MissionStatus.update)
-.delete(MissionStatus.delete);
-
 router.route('/players/me/campaigns/:campaign_id/campaignStatus')
 .all(Session.validate, User.isPlayer, Campaign.validate)
 .get(CampaignStatus.readByMe)
