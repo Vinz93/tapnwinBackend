@@ -17,6 +17,7 @@ const CronJob = cron.CronJob;
 import Item from '../models/design/item';
 import Model from '../models/design/model';
 import Sticker from '../models/design/sticker';
+import Category from '../models/design/category';
 
 // Voice models with assets
 
@@ -37,9 +38,20 @@ new CronJob('5 0 * * *', () => { // eslint-disable-line no-new
     dir.map(fileName => {
       const url = `${config.host}uploads/design/${fileName}`;
       return Promise.all([
-        Item.findOne({ url }),
-        Model.findOne({ url }),
-        Sticker.findOne({ url }),
+        Item.findOne({ $or: [
+          { 'media.small': url },
+          { 'media.large': url },
+        ] }),
+        Model.findOne({ media: url }),
+        Sticker.findOne({ $or: [
+          { 'media.animation': url },
+          { 'media.enable': url },
+          { 'media.disable': url },
+        ] }),
+        Category.findOne({ $or: [
+          { 'media.selected': url },
+          { 'media.unselected': url },
+        ] }),
       ])
       .then(array => {
         for (let i = 0; i < array.length; i++)
