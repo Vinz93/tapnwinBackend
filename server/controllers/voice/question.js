@@ -73,22 +73,52 @@ const QuestionController = {
 
     Question.find(criteria)
     .then(questions => {
-      Promise.filter(questions, question => {
-        const criteria = {
-          player: res.locals.user,
-          question: question._id,
-        };
-        return Answer.findOne(criteria)
-          .then(answer => !answer);
-      })
-      .then(data => res.send({
-        docs: data.slice(offset, limit),
-        total: data.length,
-        limit,
-        offset,
-      }));
+      if (!questions.length)
+        res.send({
+          docs: [],
+          total: 0,
+          limit,
+          offset,
+        });
+      else
+        Promise.filter(questions, question => {
+          const criteria = {
+            player: res.locals.user,
+            question: question._id,
+          };
+          return Answer.findOne(criteria)
+            .then(answer => !answer);
+        })
+        .then(data => res.send({
+          docs: data.slice(offset, limit),
+          total: data.length,
+          limit,
+          offset,
+        }));
     })
     .catch(err => res.status(500).send(err));
+  },
+
+  readStatistic(req, res) {
+    Question.findById(req.params.question_id)
+    .then(question => {
+      if (!question)
+        return res.status(404).end();
+
+      const answers = Array.from({ length: question.answers.length }, (v, k) => k);
+
+      Promise.map(answers, answer => Answer.count({
+        question: req.params.question_id,
+        popular: answer,
+      }))
+      .then(data => res.send(data));
+    })
+    .catch(err => {
+      if (err.name === 'CastError')
+        return res.status(400).send(err);
+
+      res.status(500).send(err);
+    });
   },
 };
 
