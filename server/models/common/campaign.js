@@ -19,37 +19,12 @@ import Design from '../design/design';
 
 const Schema = mongoose.Schema;
 
-/* const MissionsListSchema = new Schema({
-  mission: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: 'Mission',
-  },
-  isRequired: {
-    type: Boolean,
-    default: false,
-  },
-  isBlocking: {
-    type: Boolean,
-    default: false,
-  },
-  blockedTime: {
-    type: Number,
-    default: 0,
-  },
-  balance: {
-    type: Number,
-    default: 0.0,
-  },
-  max: {
-    type: Number,
-    min: [1, '`{VALUE}` is not a valid max'],
-    default: 1,
-  },
-}, { _id: false });*/
-
 const GameSchema = new Schema({
   active: {
+    type: Boolean,
+    default: false,
+  },
+  canBeBlocked: {
     type: Boolean,
     default: false,
   },
@@ -166,24 +141,6 @@ CampaignSchema.pre('save', function (next) {
   }
   next();
 });
-
-/* CampaignSchema.pre('save', function (next) {
-  Promise.map(config.games, game =>
-    Promise.map(this[game.name].missions, mission =>
-      Mission.findById(mission.mission)
-      .then(missionDoc => {
-        if (missionDoc.games.indexOf(game.id) === -1) {
-          return next(new ValidationError('MissionsGameDontMatch', {
-            game: game.name,
-            mission: missionDoc.description,
-          }));
-        }
-      })
-    )
-  )
-  .then(next)
-  .catch(next);
-});*/
 
 CampaignSchema.pre('save', function (next) {
   Campaign.find({ // eslint-disable-line no-use-before-define

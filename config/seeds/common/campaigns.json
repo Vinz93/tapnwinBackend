@@ -96,6 +96,12 @@
             ]
           }
         ]
+      },
+      "voice": {
+        "canBeBlocked": true
+      },
+      "match3": {
+        "canBeBlocked": true
       }
     }
   }
