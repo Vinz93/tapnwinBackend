@@ -73,28 +73,16 @@ const QuestionController = {
 
     Question.find(criteria)
     .then(questions => {
-      if (!questions.length)
-        res.send({
-          docs: [],
-          total: 0,
-          limit,
-          offset,
-        });
-      else
-        Promise.filter(questions, question => {
-          const criteria = {
-            player: res.locals.user,
-            question: question._id,
-          };
-          return Answer.findOne(criteria)
-            .then(answer => !answer);
-        })
-        .then(data => res.send({
-          docs: data.slice(offset, limit),
-          total: data.length,
-          limit,
-          offset,
-        }));
+      Promise.filter(questions, question => Answer.findOne({
+        player: res.locals.user,
+        question: question._id,
+      }).then(answer => !answer))
+      .then(data => res.send({
+        docs: data.slice(offset, limit),
+        total: data.length,
+        limit,
+        offset,
+      }));
     })
     .catch(err => res.status(500).send(err));
   },
@@ -109,9 +97,19 @@ const QuestionController = {
 
       Promise.map(answers, answer => Answer.count({
         question: req.params.question_id,
-        popular: answer,
+        personal: answer,
       }))
-      .then(data => res.send(data));
+      .then(data => {
+        const total = data.reduce((total, value) => total + value, 0);
+
+        res.send({
+          answers: {
+            count: data,
+            percent: data.map(value => value / total * 100),
+            total,
+          },
+        });
+      });
     })
     .catch(err => {
       if (err.name === 'CastError')
