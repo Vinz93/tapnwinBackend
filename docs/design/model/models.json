@@ -1,17 +1,17 @@
 {
   "docs": [
     {
-      "updatedAt": "2016-06-09T13:52:17.250Z",
-      "createdAt": "2016-06-09T13:52:17.250Z",
+      "updatedAt": "2016-06-28T18:02:49.077Z",
+      "createdAt": "2016-06-28T18:02:49.077Z",
       "company": {
-        "updatedAt": "2016-06-07T15:30:21.992Z",
-        "createdAt": "2016-06-07T15:30:21.992Z",
-        "name": "Levis",
-        "id": "5756e88df047d3610c77d97a"
+        "updatedAt": "2016-06-28T18:02:49.047Z",
+        "createdAt": "2016-06-28T18:02:49.047Z",
+        "name": "Compañia 1",
+        "id": "5772bbc93d43bec00e1e01ec"
       },
-      "name": "manikin01",
-      "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/2aae56a0-1da4-422f-bfd2-b599d48e2636.png",
-      "id": "57597491e961c75f086255c8"
+      "name": "Modelo 1",
+      "media": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprModel01.png",
+      "id": "5772bbc93d43bec00e1e01f2"
     }
   ],
   "total": 1,

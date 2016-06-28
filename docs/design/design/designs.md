@@ -14,9 +14,7 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](design.json)
-        ]
+        :[](designs.json)
 
 ### Read all designs of a campaign  [GET /campaigns/{campaign_id}/designs{?limit,offset}]
 
@@ -33,11 +31,9 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](design.json)
-        ]
+        :[](designs.json)
 
-### Read all my designs of a campaign [GET /users/me/campaigns/{campaign_id}/designs{?limit,offset}]
+### Read all my designs of a campaign [GET /players/me/campaigns/{campaign_id}/designs{?limit,offset}]
 
 + Parameters
     + campaign_id: `507f191e810c19729de860ea` (required, string) - ObjectId
@@ -52,9 +48,7 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](design.json)
-        ]
+        :[](designs.json)
 
 ### Create [POST /users/me/designs]
 

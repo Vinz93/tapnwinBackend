@@ -1,8 +1,16 @@
 {
-  "updatedAt": "2016-06-09T14:19:15.614Z",
-  "createdAt": "2016-06-09T14:19:15.614Z",
-  "company": "5756e889f047d3610c77d979",
-  "name": "Item01",
-  "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/b389a447-421d-465f-bcd5-2f50542bfe46.png",
-  "id": "57597ae35b5c5f180a50185a"
+  "updatedAt": "2016-06-28T18:02:49.237Z",
+  "createdAt": "2016-06-28T18:02:49.237Z",
+  "company": {
+    "updatedAt": "2016-06-28T18:02:49.047Z",
+    "createdAt": "2016-06-28T18:02:49.047Z",
+    "name": "Compañia 1",
+    "id": "5772bbc93d43bec00e1e01ec"
+  },
+  "name": "Top 3",
+  "media": {
+    "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop03.png",
+    "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop03.png"
+  },
+  "id": "5772bbc93d43bec00e1e020e"
 }

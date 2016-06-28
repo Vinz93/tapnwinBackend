@@ -1,8 +1,17 @@
 {
-  "updatedAt": "2016-06-09T13:47:55.995Z",
-  "createdAt": "2016-06-09T13:47:55.995Z",
-  "company": "5756e889f047d3610c77d979",
-  "name": "Category01",
-  "zone": "bot",
-  "id": "5759738be961c75f086255c7"
+  "updatedAt": "2016-06-28T18:02:49.135Z",
+  "createdAt": "2016-06-28T18:02:49.135Z",
+  "name": "Tops",
+  "zone": "top",
+  "company": {
+    "updatedAt": "2016-06-28T18:02:49.047Z",
+    "createdAt": "2016-06-28T18:02:49.047Z",
+    "name": "Compañia 1",
+    "id": "5772bbc93d43bec00e1e01ec"
+  },
+  "media": {
+    "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOff.png",
+    "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOn.png"
+  },
+  "id": "5772bbc93d43bec00e1e01fa"
 }

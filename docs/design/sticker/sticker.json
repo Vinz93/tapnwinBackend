@@ -1,9 +1,13 @@
 {
-  "updatedAt": "2016-06-09T14:04:21.567Z",
-  "createdAt": "2016-06-09T14:04:21.567Z",
-  "company": "5756e889f047d3610c77d979",
-  "name": "Sticker01",
-  "url": "http://tapnwin.ludopia.net/api/v1/uploads/design/b389a447-421d-465f-bcd5-2f50542bfe46.png",
+  "updatedAt": "2016-06-28T18:02:49.100Z",
+  "createdAt": "2016-06-28T18:02:49.100Z",
+  "company": "5772bbc93d43bec00e1e01ec",
+  "name": "Moderno",
   "isPositive": true,
-  "id": "57597765bfebb784098e19e5"
+  "media": {
+    "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker04.png",
+    "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerModern.png",
+    "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerModern_off.png"
+  },
+  "id": "5772bbc93d43bec00e1e01f6"
 }
