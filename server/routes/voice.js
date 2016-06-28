@@ -10,17 +10,20 @@ import Answer from '../controllers/voice/answer';
 const router = express.Router(); // eslint-disable-line new-cap
 
 router.get('/questions', Question.readAll);
-router.get('/questions/:id', Question.read);
 router.get('/campaigns/:campaign_id/questions', Question.readAllByCampaign);
 router.get('/players/me/campaigns/:campaign_id/questions', Session.validate, User.isPlayer,
   Question.readAllByMeCampaign);
+router.get('/questions/:question_id', Question.read);
+router.get('/questions/:question_id/statistics', Question.readStatistic);
 router.post('/campaigns/:campaign_id/string_questions', StringQuestion.createByCampaign);
 router.post('/campaigns/:campaign_id/media_questions', MediaQuestion.createByCampaign);
 
 router.get('/answers', Answer.readAll);
-router.get('/answers/:id', Answer.read);
+router.get('/answers/:answer_id', Answer.read);
 router.get('/players/me/campaigns/:campaign_id/answers', Session.validate, User.isPlayer,
   Answer.readAllByMeCampaign);
+router.get('/players/me/campaigns/:campaign_id/answers/statistics', Session.validate, User.isPlayer,
+  Answer.readStatisticByMeCampaign);
 router.post('/players/me/questions/:question_id/answers', Session.validate, User.isPlayer,
   Answer.createByMeQuestion);
 router.patch('/players/me/answers/:answer_id', Session.validate, User.isPlayer, Answer.updateByMe);
