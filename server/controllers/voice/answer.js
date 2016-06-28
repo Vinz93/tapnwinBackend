@@ -48,18 +48,17 @@ const AnswerController = {
       player: res.locals.user._id,
     });
 
-    Answer.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
-      offset,
-      limit,
-      populate: {
-        path: 'question',
-        match: { campaign: req.params.campaign_id },
-      },
+    Answer.find(criteria)
+    .populate('question')
+    .then(answers => {
+      answers.filter(answer => answer.question.campaign !== req.params.campaign_id);
+      res.send({
+        docs: answers.slice(offset, limit),
+        total: answers.length,
+        limit,
+        offset,
+      });
     })
-    .then(answers => res.json(answers))
     .catch(err => res.status(500).send(err));
   },
 
