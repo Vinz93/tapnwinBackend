@@ -1,19 +1,25 @@
 {
   "docs": [
     {
-      "updatedAt": "2016-06-07T15:30:17.828Z",
-      "createdAt": "2016-06-07T15:30:17.828Z",
-      "name": "McDonalds",
-      "id": "5756e889f047d3610c77d979"
+      "updatedAt": "2016-06-28T18:02:49.047Z",
+      "createdAt": "2016-06-28T18:02:49.047Z",
+      "name": "Compañia 1",
+      "id": "5772bbc93d43bec00e1e01ec"
     },
     {
-      "updatedAt": "2016-06-07T15:30:21.992Z",
-      "createdAt": "2016-06-07T15:30:21.992Z",
-      "name": "Levis",
-      "id": "5756e88df047d3610c77d97a"
+      "updatedAt": "2016-06-28T18:02:49.052Z",
+      "createdAt": "2016-06-28T18:02:49.052Z",
+      "name": "Compañia 2",
+      "id": "5772bbc93d43bec00e1e01ed"
+    },
+    {
+      "updatedAt": "2016-06-28T18:02:49.055Z",
+      "createdAt": "2016-06-28T18:02:49.055Z",
+      "name": "Compañia 3",
+      "id": "5772bbc93d43bec00e1e01ee"
     }
   ],
-  "total": 2,
+  "total": 3,
   "limit": 20,
   "offset": 0
 }

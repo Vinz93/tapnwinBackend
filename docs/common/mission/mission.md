@@ -23,6 +23,13 @@
 
             sessionToken: 5734ed0a1dd3b2b88b35ece3
 
+    + Body
+
+              {
+                "code": "0002",
+                "description": "Misión2"
+              }
+
 + Response 200 (application/json)
 
         :[](mission.json)

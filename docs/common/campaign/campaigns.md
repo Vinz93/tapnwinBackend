@@ -30,22 +30,98 @@
     + Body
 
               {
-                "name": "Winter",
-                "banner": "Winter favorites clothes!",
-                "startAt": "2015-12-06T17:39:22.939Z",
-                "finishAt": "2015-12-08T17:39:22.939Z",
+                "name": "Campaña 1",
+                "banner": "Estandarte",
+                "startAt": "2015-12-01T17:39:22.939Z",
+                "finishAt": "2016-12-01T17:39:22.939Z",
+                "company": "507f191e810c19729de860ea",
                 "design": {
                   "active": true,
-                  "missions": [{
-                    "mission": "5756e70ab3bf52470cd290f4",
-                    "isRequired": true,
-                    "isBlocking": false,
-                    "blockedTime": 20,
-                    "max": 3
-                  }],
-                  "models": [],
-                  "stickers": [],
-                  "categories": []
+                  "missions": [
+                    {
+                      "mission": "507f191e810c19729de860ea",
+                      "isRequired": true,
+                      "isBlocking": false,
+                      "blockedTime": 20,
+                      "max": 1
+                    },
+                    {
+                      "mission": "507f191e810c19729de860ea",
+                      "isRequired": true,
+                      "isBlocking": false,
+                      "blockedTime": 20,
+                      "max": 1
+                    },
+                    {
+                      "mission": "507f191e810c19729de860ea",
+                      "isRequired": true,
+                      "isBlocking": false,
+                      "blockedTime": 20,
+                      "max": 10
+                    }
+                  ],
+                  "models": [
+                    "507f191e810c19729de860ea"
+                  ],
+                  "stickers": [
+                    "507f191e810c19729de860ea",
+                    "507f191e810c19729de860ea",
+                    "507f191e810c19729de860ea",
+                    "507f191e810c19729de860ea"
+                  ],
+                  "categories": [
+                    {
+                      "category": "507f191e810c19729de860ea",
+                      "items": [
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea"
+                      ]
+                    },
+                    {
+                      "category": "507f191e810c19729de860ea",
+                      "items": [
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea"
+                      ]
+                    },
+                    {
+                      "category": "507f191e810c19729de860ea",
+                      "items": [
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea"
+                      ]
+                    },
+                    {
+                      "category": "507f191e810c19729de860ea",
+                      "items": [
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea",
+                        "507f191e810c19729de860ea"
+                      ]
+                    }
+                  ]
+                },
+                "voice": {
+                  "canBeBlocked": true
+                },
+                "match3": {
+                  "canBeBlocked": true
                 }
               }
 

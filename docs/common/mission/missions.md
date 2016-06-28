@@ -26,10 +26,10 @@
 
     + Body
 
-            {
-                "description": "Rank N users",
-                "games": ["0001", "0002"]
-            }
+              {
+                "code": "0002",
+                "description": "Misión2"
+              }
 
 + Response 200 (application/json)
 

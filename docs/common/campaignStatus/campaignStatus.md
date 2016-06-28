@@ -14,13 +14,15 @@
 + Response 200 (application/json)
 
         {
-          "updatedAt": "2016-06-21T20:10:31.243Z",
-          "createdAt": "2016-06-21T20:10:31.243Z",
-          "campaign": "57699d7dd827cd3312d8ed3f",
-          "player": "57699d7dd827cd3312d8ed41",
+          "campaign": "5772bbc93d43bec00e1e0214",
+          "createdAt": "2016-06-28T18:03:59.986Z",
           "design": true,
+          "match3": false,
+          "player": "5772bbc93d43bec00e1e0219",
+          "updatedAt": "2016-06-28T18:04:30.712Z",
+          "voice": false,
           "balance": 0,
-          "id": "57699f377fcb697a123746ec"
+          "id": "5772bc0f9570ecff0e626f8c"
         }
 
 ### Update [PATCH]

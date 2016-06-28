@@ -14,9 +14,7 @@
 
 + Response 200 (application/json)
 
-        [
-          :[](user.json)
-        ]
+        :[](users.json)
 
 ### Create [POST]
 

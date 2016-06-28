@@ -16,7 +16,7 @@
 
         :[](campaign.json)
 
-### Update [PUT]
+### Update [PATCH]
 
 + Request (application/json)
 
@@ -31,20 +31,6 @@
               "banner": "Winter favorites clothes!",
               "startAt": "2015-12-01T17:39:22.939Z",
               "finishAt": "2015-12-01T17:39:22.939Z",
-              "games": [
-                {
-                  "gameId": "507f1f77bcf86cd799439011",
-                  "missions": [
-                    {
-                      "missionId": "507f1f77bcf86cd799439011",
-                      "isRequired": true,
-                      "isBlocking": false,
-                      "blockedTime": 20,
-                      "max": 3
-                    }
-                  ]
-                }
-              ]
             }
 
 + Response 204 (application/json)

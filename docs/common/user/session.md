@@ -15,7 +15,7 @@
 + Response 201 (application/json)
 
         {
-            "sessionToken": "507f19dx810c1b7a9de160ea"
+            "sessionToken": "5772bbc93d43bec00e1e0219JYMWYhRMU3JckiUS"
         }
 
 ### Delete [DELETE]
@@ -24,6 +24,6 @@
 
     + Headers
 
-            sessionToken: 507f19dx810c1b7a9de160ea
+            sessionToken: 5772bbc93d43bec00e1e0219JYMWYhRMU3JckiUS
 
 + Response 204
