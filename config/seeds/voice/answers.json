@@ -1,5 +1,18 @@
 {
   "answers": {
-    "_model": "Answer"
+    "_model": "Answer",
+    "_require": ["Player", "StringQuestion"],
+    "answer1": {
+      "question": "->stringQuestions.stringQuestion1",
+      "player": "->players.andres",
+      "personal": 1,
+      "popular": 0
+    },
+    "answer2": {
+      "question": "->stringQuestions.stringQuestion2",
+      "player": "->players.andres",
+      "personal": 1,
+      "popular": 1
+    }
   }
 }

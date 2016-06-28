@@ -4,6 +4,8 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import Promise from 'bluebird';
+
 import Answer from '../../models/voice/answer';
 
 const AnswerController = {
@@ -51,12 +53,47 @@ const AnswerController = {
     Answer.find(criteria)
     .populate('question')
     .then(answers => {
-      answers.filter(answer => answer.question.campaign !== req.params.campaign_id);
+      answers.filter(answer => answer.question.campaign.toString() === req.params.campaign_id);
       res.send({
         docs: answers.slice(offset, limit),
         total: answers.length,
         limit,
         offset,
+      });
+    })
+    .catch(err => res.status(500).send(err));
+  },
+
+  readStatisticByMeCampaign(req, res) {
+    const criteria = Object.assign(req.query.criteria || {}, {
+      player: res.locals.user._id,
+    });
+
+    Answer.find(criteria)
+    .populate('question')
+    .then(answers => {
+      const fanswers = answers.filter(answer => answer.question.campaign.toString() ===
+        req.params.campaign_id);
+
+      Promise.map(fanswers, answer => {
+        const question = answer.question;
+        const answers = Array.from({ length: answer.question.answers.length }, (v, k) => k);
+
+        return Promise.map(answers, answer => Answer.count({
+          question: question._id,
+          personal: answer,
+        }))
+        .then(data => data.indexOf(Math.max(...data)));
+      })
+      .then(data => {
+        const correct = fanswers.filter((answer, i) => answer.popular === data[i]).length;
+        const total = fanswers.length;
+
+        res.send({
+          correct,
+          total,
+          percent: correct / total * 100,
+        });
       });
     })
     .catch(err => res.status(500).send(err));
