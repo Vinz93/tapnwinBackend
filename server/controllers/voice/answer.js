@@ -7,6 +7,7 @@
 import Promise from 'bluebird';
 
 import Answer from '../../models/voice/answer';
+import Question from '../../models/voice/question';
 
 const AnswerController = {
   read(req, res) {
@@ -46,53 +47,63 @@ const AnswerController = {
     const locals = req.app.locals;
     const limit = locals.config.paginate.limit(req.query.limit);
     const offset = locals.config.paginate.offset(req.query.offset);
-    const criteria = Object.assign(req.query.criteria || {}, {
-      player: res.locals.user._id,
-    });
 
-    Answer.find(criteria)
-    .populate('question')
-    .then(answers => {
-      answers.filter(answer => answer.question.campaign.toString() === req.params.campaign_id);
-      res.send({
-        docs: answers.slice(offset, limit),
-        total: answers.length,
-        limit,
-        offset,
+    Question.find({
+      campaign: req.params.campaign_id,
+    })
+    .select('_id')
+    .then(questions => {
+      const criteria = Object.assign(req.query.criteria || {}, {
+        player: res.locals.user._id,
+        question: { $in: questions.map(question => question._id) },
       });
+
+      Answer.paginate(criteria, {
+        sort: {
+          createdAt: 1,
+        },
+        offset,
+        limit,
+        populate: 'question',
+      })
+      .then(answers => res.json(answers));
     })
     .catch(err => res.status(500).send(err));
   },
 
   readStatisticByMeCampaign(req, res) {
-    const criteria = Object.assign(req.query.criteria || {}, {
-      player: res.locals.user._id,
-    });
+    Question.find({
+      campaign: req.params.campaign_id,
+    })
+    .select('_id')
+    .then(questions => {
+      const criteria = Object.assign(req.query.criteria || {}, {
+        player: res.locals.user._id,
+        question: { $in: questions.map(question => question._id) },
+      });
 
-    Answer.find(criteria)
-    .populate('question')
-    .then(answers => {
-      const fanswers = answers.filter(answer => answer.question.campaign.toString() ===
-        req.params.campaign_id);
+      Answer.find(criteria)
+      .populate('question')
+      .then(answers => {
+        Promise.map(answers, answer => {
+          const question = answer.question;
+          const possibilities = Array.from({ length: answer.question.answers.length }, (v, k) => k);
 
-      Promise.map(fanswers, answer => {
-        const question = answer.question;
-        const answers = Array.from({ length: answer.question.answers.length }, (v, k) => k);
+          return Promise.map(possibilities, answer => Answer.count({
+            question: question._id,
+            personal: answer,
+          }))
+          .then(data => data.indexOf(Math.max(...data)));
+        })
+        .then(data => {
+          const correct = answers.filter((answer, i) => answer.popular === data[i]).length;
+          const total = answers.length;
 
-        return Promise.map(answers, answer => Answer.count({
-          question: question._id,
-          personal: answer,
-        }))
-        .then(data => data.indexOf(Math.max(...data)));
-      })
-      .then(data => {
-        const correct = fanswers.filter((answer, i) => answer.popular === data[i]).length;
-        const total = fanswers.length;
-
-        res.send({
-          correct,
-          total,
-          percent: correct / total * 100,
+          res.send({
+            correct,
+            total,
+            percent: correct / total * 100,
+          });
         });
       });
     })

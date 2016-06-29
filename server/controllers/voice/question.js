@@ -28,7 +28,6 @@ const QuestionController = {
 
   readAll(req, res) {
     const locals = req.app.locals;
-
     const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
@@ -72,6 +71,7 @@ const QuestionController = {
     });
 
     Question.find(criteria)
+    .sort({ finishAt: 1 })
     .then(questions => {
       Promise.filter(questions, question => Answer.findOne({
         player: res.locals.user,
@@ -117,6 +117,10 @@ const QuestionController = {
 
       res.status(500).send(err);
     });
+  },
+
+  validate(req, res) {
+
   },
 };
 
