@@ -127,7 +127,7 @@ const MissionStatusController = {
           if (status.missionCampaign.isRequired) {
             balance = missions[0].campaign.balance;
 
-            statuses.map(status => { // eslint-disable-line array-callback-return
+            statuses.forEach(status => {
               if (status.isDone && !status.isRequired)
                 balance += status.missionCampaign.balance;
             });
@@ -145,7 +145,7 @@ const MissionStatusController = {
       (status, missions, campaignStatus, statuses, cb) => {
         if (status.missionCampaign.isBlocking) {
           const block = {};
-          config.games.map(game => { // eslint-disable-line
+          config.games.forEach(game => {
             if (missions[0].campaign[game.name].canBeBlocked)
               block[game.name] = false;
           });
