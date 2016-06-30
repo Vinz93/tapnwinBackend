@@ -14,7 +14,8 @@ import Administrator from '../../models/common/administrator';
 const EmailTemplate = templates.EmailTemplate;
 
 const UserController = {
-  read(req, res) {
+
+  read(req, res, next) {
     User.findById(req.params.user_id)
     .then(user => {
       if (!user)
@@ -22,36 +23,32 @@ const UserController = {
 
       res.json(user);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(500).send(err);
-    });
+    .catch(next);
   },
 
   readByMe(req, res) {
     res.json(res.locals.user);
   },
 
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
-    const criteria = req.query.criteria || {};
+
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
 
-    User.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    User.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(users => res.json(users))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  createRecoveryToken(req, res) {
+  createRecoveryToken(req, res, next) {
     const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
 
     UserAbs.findOne({
@@ -80,23 +77,23 @@ const UserController = {
 
         user.save()
         .then(() => res.status(201).end())
-        .catch(err => res.status(500).send(err));
+        .catch(next);
       });
     })
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  updateByMe(req, res) {
+  updateByMe(req, res, next) {
     const user = res.locals.user;
 
     Object.assign(user, req.body);
 
     user.save()
     .then(() => res.status(204).end())
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  updatePassword(req, res) {
+  updatePassword(req, res, next) {
     User.findOne({
       recoveryToken: req.query.recovery_token,
     })
@@ -111,29 +108,21 @@ const UserController = {
 
       user.save()
       .then(() => res.status(204).end())
-      .catch(err => res.status(500).send(err));
+      .catch(next);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
 
-      res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  delete(req, res) {
+  delete(req, res, next) {
     User.findByIdAndRemove(req.params.user_id)
     .then(user => {
       if (!user)
         return res.status(404).end();
 
       res.status(204).end();
-    }).catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(500).send(err);
-    });
+    })
+    .catch(next);
   },
 
   isAdministrator(req, res, next) {

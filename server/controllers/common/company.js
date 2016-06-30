@@ -8,51 +8,41 @@ import Company from '../../models/common/company';
 
 const CompanyController = {
 
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
 
-    const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
 
-    Company.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Company.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(companies => res.json(companies))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  create(req, res) {
+  create(req, res, next) {
     Company.create(req.body)
     .then(mission => res.status(201).json(mission))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err).end();
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  read(req, res) {
+  read(req, res, next) {
     Company.findById(req.params.company_id)
     .then(company => {
       if (!company)
         return res.status(404).end();
       res.json(company);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  update(req, res) {
+  update(req, res, next) {
     Company.findByIdAndUpdate(req.params.company_id, req.body, {
       runValidators: true,
       context: 'query',
@@ -62,15 +52,10 @@ const CompanyController = {
         return res.status(404).end();
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  delete(req, res) {
+  delete(req, res, next) {
     Company.findByIdAndRemove(req.params.company_id)
     .then(mission => {
       if (!mission)
@@ -78,12 +63,7 @@ const CompanyController = {
 
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
   validate(req, res, next) {
@@ -94,12 +74,7 @@ const CompanyController = {
 
       next();
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 };
 

@@ -9,7 +9,8 @@ import Player from '../../models/common/player';
 import Administrator from '../../models/common/administrator';
 
 const SessionController = {
-  create(req, res) {
+
+  create(req, res, next) {
     const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
 
     UserAbs.findOne({
@@ -28,19 +29,19 @@ const SessionController = {
       .then(() => res.status(201).json({
         sessionToken: user.sessionToken,
       }))
-      .catch(err => res.status(500).send(err));
+      .catch(next);
     })
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  delete(req, res) {
+  delete(req, res, next) {
     const user = res.locals.user;
 
     user.sessionToken = undefined;
 
     user.save()
     .then(() => res.status(204).end())
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
   validate(req, res, next) {
@@ -55,12 +56,7 @@ const SessionController = {
 
       next();
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(500).send(err);
-    });
+    .catch(next);
   },
 };
 

@@ -9,43 +9,43 @@ import Design from '../../models/dyg/design';
 import Vote from '../../models/dyg/vote';
 
 const VoteController = {
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = req.query.criteria || {};
 
-    Vote.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Vote.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(votes => res.json(votes))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readAllByDesign(req, res) {
+  readAllByDesign(req, res, next) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = Object.assign(req.query.criteria || {}, {
+
+    const find = Object.assign(req.query.find || {}, {
       design: req.params.design_id,
     });
+    const sort = req.query.sort || { createdAt: 1 };
 
-    Vote.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    Vote.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(votes => res.json(votes))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  createByMeDesign(req, res) {
+  createByMeDesign(req, res, next) {
     const data = Object.assign(req.body, {
       design: req.params.design_id,
       player: res.locals.user._id,
@@ -53,30 +53,20 @@ const VoteController = {
 
     Vote.create(data)
     .then(vote => res.status(201).json(vote))
-    .catch(err => {
-      if (err.name === 'ValidationError' || err.code === 11000)
-        return res.status(400).json(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  read(req, res) {
+  read(req, res, next) {
     Vote.findById(req.params.vote_id)
     .then(vote => {
       if (!vote)
         return res.status(404).end();
       res.json(vote);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  readByMeDesign(req, res) {
+  readByMeDesign(req, res, next) {
     const criteria = {
       design: req.params.design_id,
       player: res.locals.user._id,
@@ -88,15 +78,10 @@ const VoteController = {
         return res.status(404).end();
       res.json(vote);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  readStatisticByDesign(req, res) {
+  readStatisticByDesign(req, res, next) {
     Design.findById(req.params.design_id)
     .populate('campaign')
     .then(design => {
@@ -121,15 +106,10 @@ const VoteController = {
       })
       .then(data => res.send(data));
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  update(req, res) {
+  update(req, res, next) {
     const criteria = {
       _id: req.params.vote_id,
       player: res.locals.user._id,
@@ -144,12 +124,7 @@ const VoteController = {
         return res.status(404).end();
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 };
 

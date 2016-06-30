@@ -9,7 +9,7 @@ import Promise from 'bluebird';
 import Answer from '../../models/vdlg/answer';
 
 const AnswerController = {
-  read(req, res) {
+  read(req, res, next) {
     Answer.findById(req.params.answer_id)
     .then(answer => {
       if (!answer)
@@ -17,40 +17,36 @@ const AnswerController = {
 
       res.json(answer);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = req.query.criteria || {};
 
-    Answer.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Answer.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(answers => res.json(answers))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readAllByMeCampaign(req, res) {
+  readAllByMeCampaign(req, res, next) {
     const locals = req.app.locals;
     const limit = locals.config.paginate.limit(req.query.limit);
     const offset = locals.config.paginate.offset(req.query.offset);
-    const criteria = Object.assign(req.query.criteria || {}, {
+
+    const find = Object.assign(req.query.find || {}, {
       player: res.locals.user._id,
     });
 
-    Answer.find(criteria)
+    Answer.find(find)
     .populate('question')
     .then(answers => {
       answers.filter(answer => answer.question.campaign.toString() === req.params.campaign_id);
@@ -61,15 +57,15 @@ const AnswerController = {
         offset,
       });
     })
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readStatisticByMeCampaign(req, res) {
-    const criteria = Object.assign(req.query.criteria || {}, {
+  readStatisticByMeCampaign(req, res, next) {
+    const find = Object.assign(req.query.find || {}, {
       player: res.locals.user._id,
     });
 
-    Answer.find(criteria)
+    Answer.find(find)
     .populate('question')
     .then(answers => {
       const fanswers = answers.filter(answer => answer.question.campaign.toString() ===
@@ -96,10 +92,10 @@ const AnswerController = {
         });
       });
     })
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  createByMeQuestion(req, res) {
+  createByMeQuestion(req, res, next) {
     const data = Object.assign(req.body, {
       player: res.locals.user._id,
       question: req.params.question_id,
@@ -107,15 +103,10 @@ const AnswerController = {
 
     Answer.create(data)
     .then(answer => res.status(201).json(answer))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err);
-
-      res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  updateByMe(req, res) {
+  updateByMe(req, res, next) {
     const criteria = {
       _id: req.params.answer_id,
       player: res.locals.user._id,
@@ -131,12 +122,7 @@ const AnswerController = {
 
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 };
 

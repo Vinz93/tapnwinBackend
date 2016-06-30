@@ -8,7 +8,7 @@ import CampaignStatus from '../../models/common/campaignStatus';
 
 const StatusController = {
 
-  readByMe(req, res) {
+  readByMe(req, res, next) {
     const criteria = {
       player: res.locals.user.id,
       campaign: req.params.campaign_id,
@@ -21,14 +21,11 @@ const StatusController = {
     .catch(err => {
       if (err.id)
         return res.json(err);
-      if (err.name === 'CastError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
+      next(err);
     });
   },
 
-  updateByMe(req, res) {
+  updateByMe(req, res, next) {
     const criteria = {
       player: res.locals.user.id,
       campaign: req.params.campaign_id,
@@ -43,12 +40,7 @@ const StatusController = {
         return res.status(404).end();
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 };
 

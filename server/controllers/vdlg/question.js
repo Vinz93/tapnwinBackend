@@ -10,7 +10,7 @@ import Question from '../../models/vdlg/question';
 import Answer from '../../models/vdlg/answer';
 
 const QuestionController = {
-  read(req, res) {
+  read(req, res, next) {
     Question.findById(req.params.question_id)
     .then(question => {
       if (!question)
@@ -18,60 +18,56 @@ const QuestionController = {
 
       res.json(question);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
 
-    const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
 
-    Question.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Question.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(questions => res.json(questions))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readAllByCampaign(req, res) {
+  readAllByCampaign(req, res, next) {
     const locals = req.app.locals;
     const limit = locals.config.paginate.limit(req.query.limit);
     const offset = locals.config.paginate.offset(req.query.offset);
-    const criteria = Object.assign(req.query.criteria || {}, {
+
+    const find = Object.assign(req.query.find || {}, {
       campaign: req.params.campaign_id,
     });
+    const sort = req.query.sort || { createdAt: 1 };
 
-    Question.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    Question.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(questions => res.json(questions))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readAllByMeCampaign(req, res) {
+  readAllByMeCampaign(req, res, next) {
     const locals = req.app.locals;
     const limit = locals.config.paginate.limit(req.query.limit);
     const offset = locals.config.paginate.offset(req.query.offset);
-    const criteria = Object.assign(req.query.criteria || {}, {
+
+    const find = Object.assign(req.query.find || {}, {
       campaign: req.params.campaign_id,
     });
 
-    Question.find(criteria)
+    Question.find(find)
     .then(questions => {
       Promise.filter(questions, question => Answer.findOne({
         player: res.locals.user,
@@ -84,10 +80,10 @@ const QuestionController = {
         offset,
       }));
     })
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readStatistic(req, res) {
+  readStatistic(req, res, next) {
     Question.findById(req.params.question_id)
     .then(question => {
       if (!question)
@@ -111,12 +107,7 @@ const QuestionController = {
         });
       });
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(500).send(err);
-    });
+    .catch(next);
   },
 };
 

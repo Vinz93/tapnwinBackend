@@ -7,77 +7,77 @@
 import Design from '../../models/dyg/design';
 
 const DesignController = {
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = req.query.criteria || {};
 
-    Design.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Design.paginate(find, {
+      sort,
       offset,
       limit,
       populate: ['player', 'topItem', 'midItem', 'botItem', 'model'],
     })
     .then(designs => res.json(designs))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readAllByCampaign(req, res) {
+  readAllByCampaign(req, res, next) {
     const locals = req.app.locals;
     const limit = locals.config.paginate.limit(req.query.limit);
     const offset = locals.config.paginate.offset(req.query.offset);
-    const criteria = Object.assign(req.query.criteria || {}, {
+
+    const find = Object.assign(req.query.find || {}, {
       campaign: req.params.campaign_id,
     });
+    const sort = req.query.sort || { createdAt: 1 };
 
-    Design.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    Design.paginate(find, {
+      sort,
       offset,
       limit,
       populate: ['topItem', 'midItem', 'botItem', 'model'],
     })
     .then(designs => res.json(designs))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readAllByMeCampaign(req, res) {
+  readAllByMeCampaign(req, res, next) {
     const locals = req.app.locals;
     const limit = locals.config.paginate.limit(req.query.limit);
     const player = (req.query.exclusive === undefined ||
       req.query.exclusive === 'false') ? res.locals.user._id : {
         $ne: res.locals.user._id,
       };
-    const criteria = Object.assign(req.query.criteria || {}, {
+
+    const find = Object.assign(req.query.find || {}, {
       campaign: req.params.campaign_id,
       player,
     });
+    const sort = req.query.sort || { createdAt: 1 };
 
     if (req.query.random === 'true') {
       Design.findRandom().limit(limit)
       .then(designs => res.json(designs))
-      .catch(err => res.status(500).send(err));
+      .catch(next);
     } else {
       const offset = locals.config.paginate.offset(req.query.offset);
 
-      Design.paginate(criteria, {
-        sort: {
-          createdAt: 1,
-        },
+      Design.paginate(find, {
+        sort,
         offset,
         limit,
         populate: ['topItem', 'midItem', 'botItem', 'model'],
       })
       .then(designs => res.json(designs))
-      .catch(err => res.status(500).send(err));
+      .catch(next);
     }
   },
 
-  createByMeCampaign(req, res) {
+  createByMeCampaign(req, res, next) {
     const data = Object.assign(req.body, {
       campaign: req.params.campaign_id,
       player: res.locals.user._id,
@@ -85,15 +85,10 @@ const DesignController = {
 
     Design.create(data)
     .then(design => res.status(201).json(design))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  read(req, res) {
+  read(req, res, next) {
     Design.findById(req.params.design_id)
     .then(design => {
       if (!design)
@@ -101,12 +96,7 @@ const DesignController = {
 
       res.json(design);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
   doesntBelongToMe(req, res, next) {
@@ -121,12 +111,7 @@ const DesignController = {
 
       res.status(400).send();
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(400).send(err);
-    });
+    .catch(next);
   },
 };
 

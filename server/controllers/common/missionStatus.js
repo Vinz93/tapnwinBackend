@@ -18,7 +18,7 @@ const Transaction = mongooseTransaction(mongoose);
 
 const MissionStatusController = {
 
-  readAllByMe(req, res) {
+  readAllByMe(req, res, next) {
     MissionCampaign.find({ campaign: req.params.campaign_id })
     .then(missionCampaign => {
       if (missionCampaign.length === 0)
@@ -41,22 +41,12 @@ const MissionStatusController = {
         })
       )
       .then(statuses => res.json(statuses))
-      .catch(err => {
-        if (err.name === 'CastError') {
-          return res.status(400).send(err);
-        }
-        return res.status(500).send(err);
-      });
+      .catch(next);
     })
-    .catch(err => {
-      if (err.name === 'CastError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  updateByMe(req, res) {
+  updateByMe(req, res, next) {
     const transaction = new Transaction();
 
     waterfall([
@@ -154,13 +144,11 @@ const MissionStatusController = {
       },
     ], (err) => {
       if (err && !err.done) {
-        if (err.name === 'CastError' || err.name === 'ValidationError')
-          return res.status(400).send(err);
-        return res.status(500).send(err);
+        next(err);
       }
       transaction.run(err => {
         if (err)
-          return res.status(500).send(err);
+          return next(err);
 
         res.status(204).end();
       });
