@@ -27,7 +27,7 @@ const ItemSchema = new Schema({
     type: String,
     required: true,
   },
-  media: {
+  urls: {
     small: {
       type: String,
       required: true,

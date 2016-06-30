@@ -5,7 +5,7 @@
     "shoes1": {
       "company": "->companies.company1",
       "name": "Zapatos 1",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes01.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes01.png"
       }
@@ -13,7 +13,7 @@
     "shoes2": {
       "company": "->companies.company1",
       "name": "Zapatos 2",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes02.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes02.png"
       }
@@ -21,7 +21,7 @@
     "shoes3": {
       "company": "->companies.company1",
       "name": "Zapatos 3",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes03.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes03.png"
       }
@@ -29,7 +29,7 @@
     "shoes4": {
       "company": "->companies.company1",
       "name": "Zapatos 4",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes04.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes04.png"
       }
@@ -37,7 +37,7 @@
     "shoes5": {
       "company": "->companies.company1",
       "name": "Zapatos 5",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes05.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes05.png"
       }
@@ -45,7 +45,7 @@
     "shoes6": {
       "company": "->companies.company1",
       "name": "Zapatos 6",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes06.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes06.png"
       }
@@ -53,7 +53,7 @@
     "pant1": {
       "company": "->companies.company1",
       "name": "Pantalón 1",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants01.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants01.png"
       }
@@ -61,7 +61,7 @@
     "pant2": {
       "company": "->companies.company1",
       "name": "Pantalón 2",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants02.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants02.png"
       }
@@ -69,7 +69,7 @@
     "pant3": {
       "company": "->companies.company1",
       "name": "Pantalón 3",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants03.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants03.png"
       }
@@ -77,7 +77,7 @@
     "pant4": {
       "company": "->companies.company1",
       "name": "Pantalón 4",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants04.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants04.png"
       }
@@ -85,7 +85,7 @@
     "pant5": {
       "company": "->companies.company1",
       "name": "Pantalón 5",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants05.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants05.png"
       }
@@ -93,7 +93,7 @@
     "skirt1": {
       "company": "->companies.company1",
       "name": "Falda 1",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt01.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt01.png"
       }
@@ -101,7 +101,7 @@
     "skirt2": {
       "company": "->companies.company1",
       "name": "Falda 2",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt02.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt02.png"
       }
@@ -109,7 +109,7 @@
     "skirt3": {
       "company": "->companies.company1",
       "name": "Falda 3",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt03.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt03.png"
       }
@@ -117,7 +117,7 @@
     "skirt4": {
       "company": "->companies.company1",
       "name": "Falda 4",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt04.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt04.png"
       }
@@ -125,7 +125,7 @@
     "skirt5": {
       "company": "->companies.company1",
       "name": "Falda 5",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt05.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt05.png"
       }
@@ -133,7 +133,7 @@
     "skirt6": {
       "company": "->companies.company1",
       "name": "Falda 6",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemSkirt06.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirt06.png"
       }
@@ -141,7 +141,7 @@
     "top1": {
       "company": "->companies.company1",
       "name": "Top 1",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop01.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop01.png"
       }
@@ -149,7 +149,7 @@
     "top2": {
       "company": "->companies.company1",
       "name": "Top 2",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop02.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop02.png"
       }
@@ -157,7 +157,7 @@
     "top3": {
       "company": "->companies.company1",
       "name": "Top 3",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop03.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop03.png"
       }
@@ -165,7 +165,7 @@
     "top4": {
       "company": "->companies.company1",
       "name": "Top 4",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop04.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop04.png"
       }
@@ -173,7 +173,7 @@
     "top5": {
       "company": "->companies.company1",
       "name": "Top 5",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop05.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop05.png"
       }
@@ -181,7 +181,7 @@
     "top6": {
       "company": "->companies.company1",
       "name": "Top 6",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop06.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop06.png"
       }
@@ -189,7 +189,7 @@
     "top7": {
       "company": "->companies.company1",
       "name": "Top 7",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop07.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop07.png"
       }
@@ -197,7 +197,7 @@
     "top8": {
       "company": "->companies.company1",
       "name": "Top 8",
-      "media": {
+      "urls": {
         "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop08.png",
         "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop08.png"
       }

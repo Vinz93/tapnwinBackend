@@ -34,7 +34,7 @@ const CategorySchema = new Schema({
       message: '`{VALUE}` is not a valid zone',
     },
   },
-  media: {
+  urls: {
     selected: {
       type: String,
       required: true,

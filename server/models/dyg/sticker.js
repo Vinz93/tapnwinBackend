@@ -31,7 +31,7 @@ const StickerSchema = new Schema({
     type: Boolean,
     required: true,
   },
-  media: {
+  urls: {
     animation: {
       type: String,
       required: true,

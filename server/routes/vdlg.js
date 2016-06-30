@@ -4,7 +4,7 @@ import Session from '../controllers/common/session';
 import User from '../controllers/common/user';
 import Question from '../controllers/vdlg/question';
 import StringQuestion from '../controllers/vdlg/stringQuestion';
-import MediaQuestion from '../controllers/vdlg/mediaQuestion';
+import AssetQuestion from '../controllers/vdlg/assetQuestion';
 import Answer from '../controllers/vdlg/answer';
 
 const router = express.Router(); // eslint-disable-line new-cap
@@ -16,7 +16,7 @@ router.get('/players/me/campaigns/:campaign_id/questions', Session.validate, Use
 router.get('/questions/:question_id', Question.read);
 router.get('/questions/:question_id/statistics', Question.readStatistic);
 router.post('/campaigns/:campaign_id/string_questions', StringQuestion.createByCampaign);
-router.post('/campaigns/:campaign_id/media_questions', MediaQuestion.createByCampaign);
+router.post('/campaigns/:campaign_id/asset_questions', AssetQuestion.createByCampaign);
 
 router.get('/answers', Answer.readAll);
 router.get('/answers/:answer_id', Answer.read);

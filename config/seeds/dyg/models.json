@@ -5,7 +5,7 @@
     "model1": {
       "company": "->companies.company1",
       "name": "Modelo 1",
-      "media": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprModel01.png"
+      "url": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprModel01.png"
     }
   }
 }

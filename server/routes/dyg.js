@@ -3,6 +3,7 @@ import express from 'express';
 import User from '../controllers/common/user';
 import Session from '../controllers/common/session';
 import Campaign from '../controllers/common/campaign';
+import Asset from '../controllers/common/asset';
 import Category from '../controllers/dyg/category';
 import Design from '../controllers/dyg/design';
 import Item from '../controllers/dyg/item';
@@ -28,13 +29,12 @@ router.post('/dyg/media', (req, res) => {
 router.get('/models', Model.readAll);
 
 router.route('/companies/:company_id/models')
-.get(Model.readAllByCompany)
 .post(Model.create);
 
 router.route('/models/:model_id')
-.get(Model.read)
+.get(Asset.read)
 .put(Model.update)
-.delete(Model.delete);
+.delete(Asset.delete);
 
 router.get('/items', Item.readAll);
 

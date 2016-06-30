@@ -6,7 +6,7 @@
       "name": "Zapatos",
       "zone": "bot",
       "company": "->companies.company1",
-      "media": {
+      "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOff.png",
         "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOn.png"
       }
@@ -15,7 +15,7 @@
       "name": "Pantalones",
       "zone": "mid",
       "company": "->companies.company1",
-      "media": {
+      "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOff.png",
         "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOn.png"
       }
@@ -24,7 +24,7 @@
       "name": "Faldas",
       "zone": "mid",
       "company": "->companies.company1",
-      "media": {
+      "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOff.png",
         "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOn.png"
       }
@@ -33,7 +33,7 @@
       "name": "Tops",
       "zone": "top",
       "company": "->companies.company1",
-      "media": {
+      "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOff.png",
         "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOn.png"
       }

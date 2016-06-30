@@ -11,7 +11,7 @@ import Question from './question';
 const Schema = mongoose.Schema;
 
 const StringQuestionSchema = new Schema({
-  answers: {
+  possibilities: {
     type: [String],
   },
 });
