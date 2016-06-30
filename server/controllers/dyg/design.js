@@ -4,7 +4,7 @@
  * @lastModifiedBy Andres Alvarez
  */
 
-import Design from '../../models/design/design';
+import Design from '../../models/dyg/design';
 
 const DesignController = {
   readAll(req, res) {

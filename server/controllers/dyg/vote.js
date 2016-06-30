@@ -5,8 +5,8 @@
  */
 
 import Promise from 'bluebird';
-import Design from '../../models/design/design';
-import Vote from '../../models/design/vote';
+import Design from '../../models/dyg/design';
+import Vote from '../../models/dyg/vote';
 
 const VoteController = {
   readAll(req, res) {

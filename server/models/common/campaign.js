@@ -11,11 +11,9 @@ import idValidator from 'mongoose-id-validator';
 import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-vars
 import fieldRemover from 'mongoose-field-remover';
 
-// import config from '../../../config/env';
 import ValidationError from '../../helpers/validationError';
-// import Mission from './mission';
 import MissionCampaign from './missionCampaign';
-import Design from '../design/design';
+import Design from '../dyg/design';
 
 const Schema = mongoose.Schema;
 
@@ -44,7 +42,7 @@ const CategorySchema = new Schema({
 
 }, { _id: false });
 
-const DesignSchema = GameSchema.extend({
+const DYGSchema = GameSchema.extend({
   models: [{
     type: Schema.Types.ObjectId,
     required: true,
@@ -58,11 +56,11 @@ const DesignSchema = GameSchema.extend({
   categories: [CategorySchema],
 });
 
-const VoiceSchema = GameSchema.extend({});
+const VDLGSchema = GameSchema.extend({});
 
-const Match3Schema = GameSchema.extend({});
+const M3Schema = GameSchema.extend({});
 
-const OwnerSchema = GameSchema.extend({});
+const DDTSchema = GameSchema.extend({});
 
 const CampaignSchema = new Schema({
   company: {
@@ -90,20 +88,20 @@ const CampaignSchema = new Schema({
     type: Date,
     required: true,
   },
-  design: {
-    type: DesignSchema,
+  dyg: {
+    type: DYGSchema,
     default: {},
   },
-  voice: {
-    type: VoiceSchema,
+  vdlg: {
+    type: VDLGSchema,
     default: {},
   },
-  match3: {
-    type: Match3Schema,
+  m3: {
+    type: M3Schema,
     default: {},
   },
-  owner: {
-    type: OwnerSchema,
+  ddt: {
+    type: DDTSchema,
     default: {},
   },
 }, {

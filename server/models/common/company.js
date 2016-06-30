@@ -13,10 +13,10 @@ import Promise from 'bluebird';
 
 import Campaign from './campaign';
 
-import Model from '../design/model';
-import Category from '../design/category';
-import Item from '../design/item';
-import Sticker from '../design/sticker';
+import Model from '../dyg/model';
+import Category from '../dyg/category';
+import Item from '../dyg/item';
+import Sticker from '../dyg/sticker';
 
 const Schema = mongoose.Schema;
 

@@ -3,19 +3,19 @@ import express from 'express';
 import User from '../controllers/common/user';
 import Session from '../controllers/common/session';
 import Campaign from '../controllers/common/campaign';
-import Category from '../controllers/design/category';
-import Design from '../controllers/design/design';
-import Item from '../controllers/design/item';
-import Model from '../controllers/design/model';
-import Vote from '../controllers/design/vote';
-import Sticker from '../controllers/design/sticker';
+import Category from '../controllers/dyg/category';
+import Design from '../controllers/dyg/design';
+import Item from '../controllers/dyg/item';
+import Model from '../controllers/dyg/model';
+import Vote from '../controllers/dyg/vote';
+import Sticker from '../controllers/dyg/sticker';
 
 import uploader from '../helpers/uploader';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.post('/design/media', (req, res) => {
-  const asset = 'design';
+router.post('/dyg/media', (req, res) => {
+  const asset = 'dyg';
 
   uploader(asset, 'file')(req, res, err => {
     if (err)

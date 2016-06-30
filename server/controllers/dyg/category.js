@@ -1,30 +1,27 @@
 /**
  * @author Juan Sanchez
  * @description Company controller definition
- * @lastModifiedBy Andres Alvarez
+ * @lastModifiedBy Andres ALvarez
  */
 
-import fs from 'fs';
-import path from 'path';
+import Category from '../../models/dyg/category';
 
-import Sticker from '../../models/design/sticker';
-
-const StickerController = {
+const CategoryController = {
   readAll(req, res) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
     const criteria = req.query.criteria || {};
 
-    Sticker.paginate(criteria, {
+    Category.paginate(criteria, {
       sort: {
         createdAt: 1,
       },
       offset,
       limit,
-      populate: ['campaign'],
+      populate: ['company'],
     })
-    .then(stickers => res.json(stickers))
+    .then(categories => res.json(categories))
     .catch(err => res.status(500).send(err));
   },
 
@@ -36,14 +33,15 @@ const StickerController = {
       company: req.params.company_id,
     });
 
-    Sticker.paginate(criteria, {
+    Category.paginate(criteria, {
       sort: {
         createdAt: 1,
       },
       offset,
       limit,
+      populate: ['company'],
     })
-    .then(stickers => res.json(stickers))
+    .then(categories => res.json(categories))
     .catch(err => res.status(500).send(err));
   },
 
@@ -52,8 +50,8 @@ const StickerController = {
       company: req.params.company_id,
     });
 
-    Sticker.create(data)
-    .then(sticker => res.status(201).json(sticker))
+    Category.create(data)
+    .then(category => res.status(201).json(category))
     .catch(err => {
       if (err.name === 'ValidationError')
         return res.status(400).json(err).end();
@@ -63,12 +61,11 @@ const StickerController = {
   },
 
   read(req, res) {
-    Sticker.findById(req.params.sticker_id)
-    .then(sticker => {
-      if (!sticker)
+    Category.findById(req.params.category_id)
+    .then(category => {
+      if (!category)
         return res.status(404).end();
-
-      res.json(sticker);
+      res.json(category);
     })
     .catch(err => {
       if (err.name === 'CastError')
@@ -79,17 +76,13 @@ const StickerController = {
   },
 
   update(req, res) {
-    Sticker.findByIdAndUpdate(req.params.sticker_id, req.body, {
+    Category.findByIdAndUpdate(req.params.category_id, req.body, {
       runValidators: true,
       context: 'query',
     })
-    .then(sticker => {
-      if (!sticker)
+    .then(category => {
+      if (!category)
         return res.status(404).end();
-
-      fs.unlinkSync(path.join(req.app.locals.config.root,
-        `/uploads${sticker.url.split('uploads')[1]}`));
-
       res.status(204).end();
     })
     .catch(err => {
@@ -101,13 +94,10 @@ const StickerController = {
   },
 
   delete(req, res) {
-    Sticker.findByIdAndRemove(req.params.sticker_id)
-    .then(sticker => {
-      if (!sticker)
+    Category.findByIdAndRemove(req.params.category_id)
+    .then(category => {
+      if (!category)
         return res.status(404).end();
-
-      fs.unlinkSync(path.join(req.app.locals.config.root,
-        `/uploads${sticker.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })
@@ -120,4 +110,4 @@ const StickerController = {
   },
 };
 
-export default StickerController;
+export default CategoryController;

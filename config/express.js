@@ -9,7 +9,7 @@ import path from 'path';
 import config from './env';
 import routes from '../server/routes';
 
-import cronJob from '../server/helpers/cron'; // eslint-disable-line no-unused-vars
+// import cronJob from '../server/helpers/cron'; // eslint-disable-line no-unused-vars
 
 const app = express();
 

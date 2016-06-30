@@ -1,19 +1,21 @@
 /**
  * @author Juan Sanchez
- * @description Company controller definition
- * @lastModifiedBy Andres ALvarez
+ * @description Item controller definition
+ * @lastModifiedBy Juan Sanchez
  */
 
-import Category from '../../models/design/category';
+import Item from '../../models/dyg/item';
+import fs from 'fs';
+import path from 'path';
 
-const CategoryController = {
+const ItemController = {
   readAll(req, res) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
     const criteria = req.query.criteria || {};
 
-    Category.paginate(criteria, {
+    Item.paginate(criteria, {
       sort: {
         createdAt: 1,
       },
@@ -21,7 +23,7 @@ const CategoryController = {
       limit,
       populate: ['company'],
     })
-    .then(categories => res.json(categories))
+    .then(items => res.json(items))
     .catch(err => res.status(500).send(err));
   },
 
@@ -33,7 +35,7 @@ const CategoryController = {
       company: req.params.company_id,
     });
 
-    Category.paginate(criteria, {
+    Item.paginate(criteria, {
       sort: {
         createdAt: 1,
       },
@@ -41,7 +43,7 @@ const CategoryController = {
       limit,
       populate: ['company'],
     })
-    .then(categories => res.json(categories))
+    .then(items => res.json(items))
     .catch(err => res.status(500).send(err));
   },
 
@@ -50,8 +52,8 @@ const CategoryController = {
       company: req.params.company_id,
     });
 
-    Category.create(data)
-    .then(category => res.status(201).json(category))
+    Item.create(data)
+    .then(item => res.status(201).json(item))
     .catch(err => {
       if (err.name === 'ValidationError')
         return res.status(400).json(err).end();
@@ -61,11 +63,11 @@ const CategoryController = {
   },
 
   read(req, res) {
-    Category.findById(req.params.category_id)
-    .then(category => {
-      if (!category)
+    Item.findById(req.params.item_id)
+    .then(item => {
+      if (!item)
         return res.status(404).end();
-      res.json(category);
+      res.json(item);
     })
     .catch(err => {
       if (err.name === 'CastError')
@@ -76,17 +78,21 @@ const CategoryController = {
   },
 
   update(req, res) {
-    Category.findByIdAndUpdate(req.params.category_id, req.body, {
+    Item.findByIdAndUpdate(req.params.item_id, req.body, {
       runValidators: true,
       context: 'query',
     })
-    .then(category => {
-      if (!category)
+    .then(item => {
+      if (!item)
         return res.status(404).end();
+
+      fs.unlinkSync(path.join(req.app.locals.config.root,
+      `/uploads${item.url.split('uploads')[1]}`));
+
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError')
+      if (err.name === 'CastError')
         return res.status(400).send(err);
 
       return res.status(500).send(err);
@@ -94,10 +100,13 @@ const CategoryController = {
   },
 
   delete(req, res) {
-    Category.findByIdAndRemove(req.params.category_id)
-    .then(category => {
-      if (!category)
+    Item.findByIdAndRemove(req.params.item_id)
+    .then(item => {
+      if (!item)
         return res.status(404).end();
+
+      fs.unlinkSync(path.join(req.app.locals.config.root,
+      `/uploads${item.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })
@@ -110,4 +119,4 @@ const CategoryController = {
   },
 };
 
-export default CategoryController;
+export default ItemController;

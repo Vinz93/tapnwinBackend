@@ -14,16 +14,16 @@ const defaults = {
     },
   },
   games: [{
-    name: 'design',
+    name: 'dyg', // dyg = Diseña Y Gana
     id: '0001',
   }, {
-    name: 'voice',
+    name: 'vdlg', // vdlg = Voz De La Gente
     id: '0002',
   }, {
-    name: 'match3',
+    name: 'm3', // m3 = Match3
     id: '0003',
   }, {
-    name: 'owner',
+    name: 'ddt', // ddt = Dueño De Tienda
     id: '0004',
   }],
 };

@@ -1,21 +1,21 @@
 /**
  * @author Juan Sanchez
- * @description Item controller definition
+ * @description Model controller definition
  * @lastModifiedBy Juan Sanchez
  */
 
-import Item from '../../models/design/item';
+import Model from '../../models/dyg/model';
 import fs from 'fs';
 import path from 'path';
 
-const ItemController = {
+const ModelController = {
   readAll(req, res) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
     const criteria = req.query.criteria || {};
 
-    Item.paginate(criteria, {
+    Model.paginate(criteria, {
       sort: {
         createdAt: 1,
       },
@@ -23,7 +23,7 @@ const ItemController = {
       limit,
       populate: ['company'],
     })
-    .then(items => res.json(items))
+    .then(models => res.json(models))
     .catch(err => res.status(500).send(err));
   },
 
@@ -35,7 +35,7 @@ const ItemController = {
       company: req.params.company_id,
     });
 
-    Item.paginate(criteria, {
+    Model.paginate(criteria, {
       sort: {
         createdAt: 1,
       },
@@ -43,7 +43,7 @@ const ItemController = {
       limit,
       populate: ['company'],
     })
-    .then(items => res.json(items))
+    .then(models => res.json(models))
     .catch(err => res.status(500).send(err));
   },
 
@@ -52,8 +52,8 @@ const ItemController = {
       company: req.params.company_id,
     });
 
-    Item.create(data)
-    .then(item => res.status(201).json(item))
+    Model.create(data)
+    .then(model => res.status(201).json(model))
     .catch(err => {
       if (err.name === 'ValidationError')
         return res.status(400).json(err).end();
@@ -63,50 +63,50 @@ const ItemController = {
   },
 
   read(req, res) {
-    Item.findById(req.params.item_id)
-    .then(item => {
-      if (!item)
+    Model.findById(req.params.model_id)
+    .then(model => {
+      if (!model)
         return res.status(404).end();
-      res.json(item);
+      res.json(model);
     })
     .catch(err => {
-      if (err.name === 'CastError')
+      if (err.name === 'CastError') {
         return res.status(400).send(err);
-
+      }
       return res.status(500).send(err);
     });
   },
 
   update(req, res) {
-    Item.findByIdAndUpdate(req.params.item_id, req.body, {
+    Model.findByIdAndUpdate(req.params.model_id, req.body, {
       runValidators: true,
       context: 'query',
     })
-    .then(item => {
-      if (!item)
+    .then(model => {
+      if (!model)
         return res.status(404).end();
 
       fs.unlinkSync(path.join(req.app.locals.config.root,
-      `/uploads${item.url.split('uploads')[1]}`));
+      `/uploads${model.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })
     .catch(err => {
-      if (err.name === 'CastError')
+      if (err.name === 'CastError' || err.name === 'ValidationError') {
         return res.status(400).send(err);
-
+      }
       return res.status(500).send(err);
     });
   },
 
   delete(req, res) {
-    Item.findByIdAndRemove(req.params.item_id)
-    .then(item => {
-      if (!item)
+    Model.findByIdAndRemove(req.params.model_id)
+    .then(model => {
+      if (!model)
         return res.status(404).end();
 
       fs.unlinkSync(path.join(req.app.locals.config.root,
-      `/uploads${item.url.split('uploads')[1]}`));
+      `/uploads${model.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })
@@ -119,4 +119,4 @@ const ItemController = {
   },
 };
 
-export default ItemController;
+export default ModelController;
