@@ -48,7 +48,7 @@ VoteSchema.pre('save', function (next) {
   .then(design => {
     Campaign.findActive({
       _id: design.campaign,
-      'design.stickers': { $all: this.stickers },
+      'dyg.stickers': { $all: this.stickers },
     })
     .then(campaign => {
       if (!campaign)

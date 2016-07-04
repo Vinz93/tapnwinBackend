@@ -54,8 +54,8 @@ DesignSchema.pre('save', function (next) {
   Campaign.findActive({
     _id: this.campaign,
     $and: [
-      { 'design.models': this.model },
-      { 'design.categories.items': { $all: [
+      { 'dyg.models': this.model },
+      { 'dyg.categories.items': { $all: [
         this.botItem,
         this.midItem,
         this.topItem,
