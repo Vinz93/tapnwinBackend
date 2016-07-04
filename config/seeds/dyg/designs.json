@@ -1,0 +1,35 @@
+{
+  "designs": {
+    "_model": "Design",
+    "_require": [
+      "Player",
+      "Campaign",
+      "Item",
+      "Model"
+    ],
+    "design1": {
+      "player": "->players.andres",
+      "campaign": "->campaigns.campaign1",
+      "model": "->models.model1",
+      "topItem": "->items.top2",
+      "midItem": "->items.pant2",
+      "botItem": "->items.shoes6"
+    },
+    "design2": {
+      "player": "->players.andres",
+      "campaign": "->campaigns.campaign1",
+      "model": "->models.model1",
+      "topItem": "->items.top3",
+      "midItem": "->items.pant1",
+      "botItem": "->items.shoes2"
+    },
+    "design3": {
+      "player": "->players.juan",
+      "campaign": "->campaigns.campaign1",
+      "model": "->models.model1",
+      "topItem": "->items.top5",
+      "midItem": "->items.pant4",
+      "botItem": "->items.shoes1"
+    }
+  }
+}

@@ -8,51 +8,41 @@ import Mission from '../../models/common/mission';
 
 const MissionController = {
 
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
 
-    const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
 
-    Mission.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Mission.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(missions => res.json(missions))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  create(req, res) {
+  create(req, res, next) {
     Mission.create(req.body)
     .then(mission => res.status(201).json(mission))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err).end();
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  read(req, res) {
+  read(req, res, next) {
     Mission.findById(req.params.mission_id)
     .then(mission => {
       if (!mission)
         return res.status(404).end();
       res.json(mission);
     })
-    .catch(err => {
-      if (err.name === 'CastError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  update(req, res) {
+  update(req, res, next) {
     Mission.findByIdAndUpdate(req.params.mission_id, req.body, {
       runValidators: true,
       context: 'query',
@@ -62,15 +52,10 @@ const MissionController = {
         return res.status(404).end();
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  delete(req, res) {
+  delete(req, res, next) {
     Mission.findByIdAndRemove(req.params.mission_id)
     .then(mission => {
       if (!mission)
@@ -78,12 +63,7 @@ const MissionController = {
 
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 };
 

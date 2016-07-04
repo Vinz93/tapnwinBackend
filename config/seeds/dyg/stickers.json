@@ -1,0 +1,46 @@
+{
+  "stickers": {
+    "_model": "Sticker",
+    "_require": ["Company"],
+    "vintage": {
+      "company": "->companies.company1",
+      "name": "Anticuado",
+      "isPositive": false,
+      "urls": {
+        "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker01.png",
+        "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerVintage.png",
+        "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerVintage_off.png"
+      }
+    },
+    "formal": {
+      "company": "->companies.company1",
+      "name": "Formal",
+      "isPositive": true,
+      "urls": {
+        "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker02.png",
+        "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerFormal.png",
+        "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerFormal_off.png"
+      }
+    },
+    "sexy": {
+      "company": "->companies.company1",
+      "name": "Sexy",
+      "isPositive": true,
+      "urls": {
+        "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker03.png",
+        "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerSexy.png",
+        "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerSexy_off.png"
+      }
+    },
+    "modern": {
+      "company": "->companies.company1",
+      "name": "Moderno",
+      "isPositive": true,
+      "urls": {
+        "animation": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSticker04.png",
+        "enable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerModern.png",
+        "disable": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprStickerModern_off.png"
+      }
+    }
+  }
+}

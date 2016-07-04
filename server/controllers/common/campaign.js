@@ -7,16 +7,16 @@
 import Campaign from '../../models/common/campaign';
 
 const CampaignController = {
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = req.query.criteria || {};
 
-    Campaign.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Campaign.paginate(find, {
+      sort,
       offset,
       limit,
       populate: [
@@ -30,25 +30,20 @@ const CampaignController = {
       ],
     })
     .then(campaigns => res.json(campaigns))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  createByCompany(req, res) {
+  createByCompany(req, res, next) {
     const criteria = Object.assign(req.body, {
       company: req.params.company_id,
     });
 
     Campaign.create(criteria)
     .then(campaign => res.status(201).json(campaign))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err).end();
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  readAllByCompany(req, res) {
+  readAllByCompany(req, res, next) {
     const locals = req.app.locals;
 
     if (req.query.active === 'true') {
@@ -66,19 +61,16 @@ const CampaignController = {
 
         res.json(campaign);
       })
-      .catch(err => {
-        if (err.name === 'CastError')
-          return res.status(400).send(err);
-
-        return res.status(500).send(err);
-      });
+      .catch(next);
     } else {
       const company = req.params.company_id;
       const offset = locals.config.paginate.offset(req.query.offset);
       const limit = locals.config.paginate.limit(req.query.limit);
 
+      const sort = req.query.sort || { createdAt: 1 };
+
       Campaign.paginate({ company }, {
-        sort: { createdAt: 1 },
+        sort,
         offset,
         limit,
         populate: [
@@ -92,11 +84,11 @@ const CampaignController = {
         ],
       })
       .then(campaigns => res.json(campaigns))
-      .catch(err => res.status(500).send(err));
+      .catch(next);
     }
   },
 
-  read(req, res) {
+  read(req, res, next) {
     Campaign.findById(req.params.campaign_id)
     .populate('company')
     // Design game
@@ -110,15 +102,10 @@ const CampaignController = {
         return res.status(404).end();
       res.json(campaign);
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  update(req, res) {
+  update(req, res, next) {
     Campaign.findByIdAndUpdate(req.params.campaign_id, req.body, {
       runValidators: true,
       context: 'query',
@@ -128,15 +115,10 @@ const CampaignController = {
         return res.status(404).end();
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  delete(req, res) {
+  delete(req, res, next) {
     Campaign.findOneAndRemove(req.params.campaign_id)
     .then(campaign => {
       if (!campaign)
@@ -144,12 +126,7 @@ const CampaignController = {
 
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
   validate(req, res, next) {
@@ -171,29 +148,29 @@ const CampaignController = {
   },
 
   designActive(req, res, next) {
-    if (!res.locals.campaign.design.active)
-      return res.status(409).json('Design game is not active');
+    if (!res.locals.campaign.dyg.active)
+      return res.status(409).json('DYG game is not active');
 
     next();
   },
 
   voiceActive(req, res, next) {
-    if (!res.locals.campaign.voice.active)
-      return res.status(409).json('Voice game is not active');
+    if (!res.locals.campaign.vdlg.active)
+      return res.status(409).json('VDLG game is not active');
 
     next();
   },
 
   match3Active(req, res, next) {
-    if (!res.locals.campaign.match3.active)
-      return res.status(409).json('Match3 game is not active');
+    if (!res.locals.campaign.m3.active)
+      return res.status(409).json('M3 game is not active');
 
     next();
   },
 
   ownerActive(req, res, next) {
-    if (!res.locals.campaign.owner.active)
-      return res.status(409).json('Owner game is not active');
+    if (!res.locals.campaign.ddt.active)
+      return res.status(409).json('DDT game is not active');
 
     next();
   },

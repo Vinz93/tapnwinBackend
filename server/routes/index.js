@@ -1,7 +1,7 @@
 import express from 'express';
 import commonRoutes from './common';
-import designRoutes from './design';
-import voiceRoutes from './voice';
+import dygRoutes from './dyg';
+import vdlgRoutes from './vdlg';
 
 const router = express.Router();  // eslint-disable-line new-cap
 
@@ -10,7 +10,7 @@ router.get('/health_check', (req, res) =>
 );
 
 router.use(commonRoutes);
-router.use(designRoutes);
-router.use(voiceRoutes);
+router.use(dygRoutes);
+router.use(vdlgRoutes);
 
 export default router;

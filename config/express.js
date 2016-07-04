@@ -9,7 +9,7 @@ import path from 'path';
 import config from './env';
 import routes from '../server/routes';
 
-import cronJob from '../server/helpers/cron'; // eslint-disable-line no-unused-vars
+// import cronJob from '../server/helpers/cron'; // eslint-disable-line no-unused-vars
 
 const app = express();
 
@@ -30,6 +30,13 @@ app.use(cors());
 
 app.use('/api/v1', routes);
 app.use('/api/v1/uploads', express.static(path.join(config.root, 'uploads')));
+
+app.use((err, req, res, next) => { // eslint-disable-line
+  if (err.name === 'ValidationError' || err.name === 'CastError' || err.code === 11000)
+    return res.status(400).json(err).end();
+  console.error(err.stack);
+  res.status(500).send(err);
+});
 
 app.locals.config = config;
 app.locals.mailer = nodemailer.createTransport(config.mailer);

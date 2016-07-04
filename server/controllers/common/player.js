@@ -7,34 +7,32 @@
 import Player from '../../models/common/player';
 
 const PlayerController = {
-  readAll(req, res) {
+
+  readAll(req, res, next) {
     const locals = req.app.locals;
 
-    const criteria = req.query.criteria || {};
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
 
-    Player.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Player.paginate(find, {
+      sort,
       offset,
       limit,
     })
     .then(player => res.json(player))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
-  create(req, res) {
+
+  create(req, res, next) {
     Player.create(req.body)
     .then(player => res.status(201).json(player))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err);
-
-      res.status(500).send(err);
-    });
+    .catch(next);
   },
-  update(req, res) {
+
+  update(req, res, next) {
     Player.findByIdAndUpdate(req.params.player_id, req.body, {
       runValidators: true,
       context: 'query',
@@ -44,12 +42,8 @@ const PlayerController = {
         return res.status(404).end();
 
       res.status(204).end();
-    }).catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      res.status(500).send(err);
-    });
+    })
+    .catch(next);
   },
 };
 

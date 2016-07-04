@@ -1,0 +1,48 @@
+{
+  "updatedAt": "2016-06-28T18:02:49.352Z",
+  "createdAt": "2016-06-28T18:02:49.352Z",
+  "player": "5772bbc93d43bec00e1e0219",
+  "campaign": "5772bbc93d43bec00e1e0214",
+  "model": {
+    "updatedAt": "2016-06-28T18:02:49.077Z",
+    "createdAt": "2016-06-28T18:02:49.077Z",
+    "company": "5772bbc93d43bec00e1e01ec",
+    "name": "Modelo 1",
+    "media": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprModel01.png",
+    "id": "5772bbc93d43bec00e1e01f2"
+  },
+  "topItem": {
+    "updatedAt": "2016-06-28T18:02:49.244Z",
+    "createdAt": "2016-06-28T18:02:49.244Z",
+    "company": "5772bbc93d43bec00e1e01ec",
+    "name": "Top 5",
+    "media": {
+      "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemTop05.png",
+      "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTop05.png"
+    },
+    "id": "5772bbc93d43bec00e1e0210"
+  },
+  "midItem": {
+    "updatedAt": "2016-06-28T18:02:49.190Z",
+    "createdAt": "2016-06-28T18:02:49.190Z",
+    "company": "5772bbc93d43bec00e1e01ec",
+    "name": "Pantalón 4",
+    "media": {
+      "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemPants04.png",
+      "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPants04.png"
+    },
+    "id": "5772bbc93d43bec00e1e0204"
+  },
+  "botItem": {
+    "updatedAt": "2016-06-28T18:02:49.144Z",
+    "createdAt": "2016-06-28T18:02:49.144Z",
+    "company": "5772bbc93d43bec00e1e01ec",
+    "name": "Zapatos 1",
+    "media": {
+      "small": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprItemShoes01.png",
+      "large": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoes01.png"
+    },
+    "id": "5772bbc93d43bec00e1e01fb"
+  },
+  "id": "5772bbc93d43bec00e1e021c"
+}
