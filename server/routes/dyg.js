@@ -26,9 +26,8 @@ router.post('/dyg/media', (req, res) => {
   });
 });
 
-router.get('/models', Model.readAll);
-
-router.route('/companies/:company_id/models')
+router.route('/models')
+.get(Model.readAll)
 .post(Model.create);
 
 router.route('/models/:model_id')
@@ -36,10 +35,8 @@ router.route('/models/:model_id')
 .put(Model.update)
 .delete(Asset.delete);
 
-router.get('/items', Item.readAll);
-
-router.route('/companies/:company_id/items')
-.get(Item.readAllByCompany)
+router.route('/items')
+.get(Item.readAll)
 .post(Item.create);
 
 router.route('/items/:item_id')
@@ -47,10 +44,8 @@ router.route('/items/:item_id')
 .put(Item.update)
 .delete(Item.delete);
 
-router.get('/categories', Category.readAll);
-
-router.route('/companies/:company_id/categories')
-.get(Category.readAllByCompany)
+router.route('/categories')
+.get(Category.readAll)
 .post(Category.create);
 
 router.route('/categories/:category_id')
@@ -61,14 +56,10 @@ router.route('/categories/:category_id')
 router.route('/designs')
 .get(Design.readAll);
 
-router.route('/campaigns/:campaign_id/designs')
-.all(Campaign.validate, Campaign.designActive)
-.get(Design.readAllByCampaign);
-
-router.route('/players/me/campaigns/:campaign_id/designs')
-.all(Session.validate, User.isPlayer, Campaign.validate, Campaign.designActive)
-.get(Design.readAllByMeCampaign)
-.post(Design.createByMeCampaign);
+router.route('/players/me/designs')
+.all(Session.validate, User.isPlayer)
+.get(Design.readAllByMe)
+.post(Design.createByMe);
 
 router.route('/designs/:design_id')
 .get(Design.read);
@@ -76,26 +67,23 @@ router.route('/designs/:design_id')
 router.route('/votes')
 .get(Vote.readAll);
 
-router.route('/designs/:design_id/votes')
-.get(Vote.readAllByDesign);
+router.route('/players/me/votes')
+.all(Session.validate, User.isPlayer)
+.post(Design.doesntBelongToMe, Vote.createByMe);
 
 router.route('/players/me/designs/:design_id/votes')
 .all(Session.validate, User.isPlayer)
-.get(Vote.readByMeDesign)
-.post(Design.doesntBelongToMe, Vote.createByMeDesign);
+.get(Vote.readByMeDesign);
 
 router.route('/designs/:design_id/votes/statistics')
 .get(Vote.readStatisticByDesign);
 
 router.route('/votes/:vote_id')
 .get(Vote.read)
-.patch(Session.validate, Vote.update);
+.patch(Session.validate, User.isPlayer, Vote.update);
 
 router.route('/stickers')
-.get(Sticker.readAll);
-
-router.route('/companies/:company_id/stickers')
-.get(Sticker.readAllByCompany)
+.get(Sticker.readAll)
 .post(Sticker.create);
 
 router.route('/stickers/:sticker_id')

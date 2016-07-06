@@ -61,11 +61,8 @@ router.route('/companies/:company_id')
 .delete(Company.delete);
 
 router.route('/campaigns')
-.get(Campaign.readAll);
-
-router.route('/companies/:company_id/campaigns')
-.get(Campaign.readAllByCompany)
-.post(Campaign.createByCompany);
+.get(Campaign.readAll)
+.post(Campaign.create);
 
 router.route('/campaigns/:campaign_id')
 .get(Campaign.read)
@@ -81,16 +78,16 @@ router.route('/missions/:mission_id')
 .patch(Mission.update)
 .delete(Mission.delete);
 
-router.route('/players/me/campaigns/:campaign_id/campaignStatus')
+router.route('/players/me/campaigns/:campaign_id/campaign_status')
 .all(Session.validate, User.isPlayer, Campaign.validate)
 .get(CampaignStatus.readByMe)
 .patch(CampaignStatus.updateByMe);
 
-router.route('/players/me/campaigns/:campaign_id/missionStatuses')
+router.route('/players/me/campaigns/:campaign_id/mission_statuses')
 .all(Session.validate, User.isPlayer, Campaign.validate)
 .get(MissionStatus.readAllByMe);
 
-router.route('/players/me/missionStatuses/:missionStatus_id')
+router.route('/players/me/mission_statuses/:mission_status_id')
 .all(Session.validate, User.isPlayer)
 .patch(MissionStatus.updateByMe);
 
