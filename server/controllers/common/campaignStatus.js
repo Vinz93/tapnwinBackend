@@ -7,7 +7,6 @@
 import CampaignStatus from '../../models/common/campaignStatus';
 
 const StatusController = {
-
   readByMe(req, res, next) {
     const criteria = {
       player: res.locals.user.id,

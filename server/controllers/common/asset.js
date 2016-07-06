@@ -10,75 +10,42 @@ import path from 'path';
 import Asset from '../../models/common/asset';
 
 const AssetController = {
-  readAll(req, res) {
+  readAll(req, res, next) {
     const locals = req.app.locals;
+
     const offset = locals.config.paginate.offset(req.query.offset);
     const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = req.query.criteria || {};
 
-    Asset.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
+
+    Asset.paginate(find, {
+      sort,
       offset,
       limit,
-      populate: ['company'],
     })
     .then(assets => res.json(assets))
-    .catch(err => res.status(500).send(err));
+    .catch(next);
   },
 
-  readAllByCompany(req, res) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
-    const criteria = Object.assign(req.query.criteria || {}, {
-      company: req.params.company_id,
-    });
-
-    Asset.paginate(criteria, {
-      sort: {
-        createdAt: 1,
-      },
-      offset,
-      limit,
-      populate: ['company'],
-    })
-    .then(assets => res.json(assets))
-    .catch(err => res.status(500).send(err));
-  },
-
-  create(req, res) {
-    const data = Object.assign(req.body, {
-      company: req.params.company_id,
-    });
-
-    Asset.create(data)
+  create(req, res, next) {
+    Asset.create(req.body)
     .then(asset => res.status(201).json(asset))
-    .catch(err => {
-      if (err.name === 'ValidationError')
-        return res.status(400).json(err).end();
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  read(req, res) {
+  read(req, res, next) {
     Asset.findById(req.params.asset_id)
     .then(asset => {
       if (!asset)
         return res.status(404).end();
+
       res.json(asset);
     })
-    .catch(err => {
-      if (err.name === 'CastError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  update(req, res) {
+  update(req, res, next) {
     Asset.findByIdAndUpdate(req.params.asset_id, req.body, {
       runValidators: true,
       context: 'query',
@@ -92,15 +59,10 @@ const AssetController = {
 
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
-        return res.status(400).send(err);
-      }
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 
-  delete(req, res) {
+  delete(req, res, next) {
     Asset.findByIdAndRemove(req.params.asset_id)
     .then(asset => {
       if (!asset)
@@ -111,12 +73,7 @@ const AssetController = {
 
       res.status(204).end();
     })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
+    .catch(next);
   },
 };
 

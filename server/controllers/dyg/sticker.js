@@ -28,31 +28,8 @@ const StickerController = {
     .catch(next);
   },
 
-  readAllByCompany(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
-
-    const find = Object.assign(req.query.find || {}, {
-      company: req.params.company_id,
-    });
-    const sort = req.query.sort || { createdAt: 1 };
-
-    Sticker.paginate(find, {
-      sort,
-      offset,
-      limit,
-    })
-    .then(stickers => res.json(stickers))
-    .catch(next);
-  },
-
   create(req, res, next) {
-    const data = Object.assign(req.body, {
-      company: req.params.company_id,
-    });
-
-    Sticker.create(data)
+    Sticker.create(req.body)
     .then(sticker => res.status(201).json(sticker))
     .catch(next);
   },

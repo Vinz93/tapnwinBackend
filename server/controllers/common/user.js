@@ -14,7 +14,6 @@ import Administrator from '../../models/common/administrator';
 const EmailTemplate = templates.EmailTemplate;
 
 const UserController = {
-
   read(req, res, next) {
     User.findById(req.params.user_id)
     .then(user => {

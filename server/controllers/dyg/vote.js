@@ -4,7 +4,9 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import waterfall from 'async/waterfall';
 import Promise from 'bluebird';
+
 import Design from '../../models/dyg/design';
 import Vote from '../../models/dyg/vote';
 
@@ -26,28 +28,8 @@ const VoteController = {
     .catch(next);
   },
 
-  readAllByDesign(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
-
-    const find = Object.assign(req.query.find || {}, {
-      design: req.params.design_id,
-    });
-    const sort = req.query.sort || { createdAt: 1 };
-
-    Vote.paginate(find, {
-      sort,
-      offset,
-      limit,
-    })
-    .then(votes => res.json(votes))
-    .catch(next);
-  },
-
-  createByMeDesign(req, res, next) {
+  createByMe(req, res, next) {
     const data = Object.assign(req.body, {
-      design: req.params.design_id,
       player: res.locals.user._id,
     });
 
@@ -61,6 +43,7 @@ const VoteController = {
     .then(vote => {
       if (!vote)
         return res.status(404).end();
+
       res.json(vote);
     })
     .catch(next);
@@ -76,19 +59,43 @@ const VoteController = {
     .then(vote => {
       if (!vote)
         return res.status(404).end();
+
       res.json(vote);
     })
     .catch(next);
   },
 
   readStatisticByDesign(req, res, next) {
+    /* waterfall([
+      cb => {
+        Design.findById(req.params.design_id)
+        .populate('campaign')
+        .then(design => cb(null, design))
+        .catch(cb);
+      },
+      (design, cb) => {
+        if (!design)
+          return res.status(404).end();
+
+        Promise.map(design.campaign.dyg.stickers, sticker => Vote.count({
+          design: design._id,
+          stickers: sticker,
+        })
+        .then(count => {
+          sticker,
+          count,
+        }))
+        .then(data => cb(null, data));
+      },
+    ]);*/
+
     Design.findById(req.params.design_id)
     .populate('campaign')
     .then(design => {
       if (!design)
         return res.status(404).end();
 
-      Promise.map(design.campaign.design.stickers, sticker => {
+      Promise.map(design.campaign.dyg.stickers, sticker => {
         const criteria = {
           design: design._id,
           stickers: sticker,
@@ -122,6 +129,7 @@ const VoteController = {
     .then(vote => {
       if (!vote)
         return res.status(404).end();
+
       res.status(204).end();
     })
     .catch(next);

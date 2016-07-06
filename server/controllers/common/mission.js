@@ -7,7 +7,6 @@
 import Mission from '../../models/common/mission';
 
 const MissionController = {
-
   readAll(req, res, next) {
     const locals = req.app.locals;
 

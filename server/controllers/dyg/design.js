@@ -25,27 +25,7 @@ const DesignController = {
     .catch(next);
   },
 
-  readAllByCampaign(req, res, next) {
-    const locals = req.app.locals;
-    const limit = locals.config.paginate.limit(req.query.limit);
-    const offset = locals.config.paginate.offset(req.query.offset);
-
-    const find = Object.assign(req.query.find || {}, {
-      campaign: req.params.campaign_id,
-    });
-    const sort = req.query.sort || { createdAt: 1 };
-
-    Design.paginate(find, {
-      sort,
-      offset,
-      limit,
-      populate: ['topItem', 'midItem', 'botItem', 'model'],
-    })
-    .then(designs => res.json(designs))
-    .catch(next);
-  },
-
-  readAllByMeCampaign(req, res, next) {
+  readAllByMe(req, res, next) {
     const locals = req.app.locals;
     const limit = locals.config.paginate.limit(req.query.limit);
     const player = (req.query.exclusive === undefined ||
@@ -54,13 +34,12 @@ const DesignController = {
       };
 
     const find = Object.assign(req.query.find || {}, {
-      campaign: req.params.campaign_id,
       player,
     });
     const sort = req.query.sort || { createdAt: 1 };
 
     if (req.query.random === 'true') {
-      Design.findRandom().limit(limit)
+      Design.findRandom(find).limit(limit).sort(sort)
       .then(designs => res.json(designs))
       .catch(next);
     } else {
@@ -77,9 +56,8 @@ const DesignController = {
     }
   },
 
-  createByMeCampaign(req, res, next) {
+  createByMe(req, res, next) {
     const data = Object.assign(req.body, {
-      campaign: req.params.campaign_id,
       player: res.locals.user._id,
     });
 
@@ -101,7 +79,7 @@ const DesignController = {
 
   doesntBelongToMe(req, res, next) {
     const criteria = {
-      _id: req.params.design_id,
+      _id: req.params.design_id || req.body.design_id,
       player: res.locals.user._id,
     };
 

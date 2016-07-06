@@ -7,7 +7,6 @@
 import Player from '../../models/common/player';
 
 const PlayerController = {
-
   readAll(req, res, next) {
     const locals = req.app.locals;
 

@@ -25,34 +25,8 @@ const CategoryController = {
     .catch(next);
   },
 
-  readAllByCompany(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
-
-    const find = Object.assign(req.query.find || {}, {
-      company: req.params.company_id,
-    });
-    const sort = req.query.sort || { createdAt: 1 };
-
-    console.log(find);
-
-    Category.paginate(find, {
-      sort,
-      offset,
-      limit,
-      populate: ['company'],
-    })
-    .then(categories => res.json(categories))
-    .catch(next);
-  },
-
   create(req, res, next) {
-    const data = Object.assign(req.body, {
-      company: req.params.company_id,
-    });
-
-    Category.create(data)
+    Category.create(req.body)
     .then(category => res.status(201).json(category))
     .catch(next);
   },

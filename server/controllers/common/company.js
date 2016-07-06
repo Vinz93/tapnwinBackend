@@ -7,7 +7,6 @@
 import Company from '../../models/common/company';
 
 const CompanyController = {
-
   readAll(req, res, next) {
     const locals = req.app.locals;
 
@@ -37,6 +36,7 @@ const CompanyController = {
     .then(company => {
       if (!company)
         return res.status(404).end();
+
       res.json(company);
     })
     .catch(next);
@@ -50,6 +50,7 @@ const CompanyController = {
     .then(company => {
       if (!company)
         return res.status(404).end();
+
       res.status(204).end();
     })
     .catch(next);

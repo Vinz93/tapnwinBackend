@@ -4,20 +4,19 @@
  * @lastModifiedBy Juan Sanchez
  */
 
+import mongoose from 'mongoose';
+import mongooseTransaction from 'mongoose-transaction';
+import waterfall from 'async/waterfall';
+import Promise from 'bluebird';
+
 import MissionStatus from '../../models/common/missionStatus';
 import MissionCampaign from '../../models/common/missionCampaign';
 import CampaignStatus from '../../models/common/campaignStatus';
 import config from '../../../config/env';
 
-import waterfall from 'async/waterfall';
-import Promise from 'bluebird';
-import mongoose from 'mongoose';
-import mongooseTransaction from 'mongoose-transaction';
-
 const Transaction = mongooseTransaction(mongoose);
 
 const MissionStatusController = {
-
   readAllByMe(req, res, next) {
     MissionCampaign.find({ campaign: req.params.campaign_id })
     .then(missionCampaign => {
@@ -53,7 +52,7 @@ const MissionStatusController = {
       cb => {
         MissionStatus.findOne({
           player: res.locals.user.id,
-          _id: req.params.missionStatus_id,
+          _id: req.params.mission_status_id,
         })
         .populate('missionCampaign')
         .then(status => {

@@ -9,7 +9,6 @@ import Player from '../../models/common/player';
 import Administrator from '../../models/common/administrator';
 
 const SessionController = {
-
   create(req, res, next) {
     const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
 

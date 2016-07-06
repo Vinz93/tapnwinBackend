@@ -8,53 +8,13 @@ import Campaign from '../../models/common/campaign';
 
 const CampaignController = {
   readAll(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
-
-    const find = req.query.find || {};
-    const sort = req.query.sort || { createdAt: 1 };
-
-    Campaign.paginate(find, {
-      sort,
-      offset,
-      limit,
-      populate: [
-        'company',
-        // Design game
-        'design.models',
-        'design.stickers',
-        'design.categories.category',
-        'design.categories.items',
-        // Voice game
-      ],
-    })
-    .then(campaigns => res.json(campaigns))
-    .catch(next);
-  },
-
-  createByCompany(req, res, next) {
-    const criteria = Object.assign(req.body, {
-      company: req.params.company_id,
-    });
-
-    Campaign.create(criteria)
-    .then(campaign => res.status(201).json(campaign))
-    .catch(next);
-  },
-
-  readAllByCompany(req, res, next) {
-    const locals = req.app.locals;
-
     if (req.query.active === 'true') {
       Campaign.findActive()
       .populate('company')
-      // Design game
-      .populate('design.models')
-      .populate('design.stickers')
-      .populate('design.categories.category')
-      .populate('design.categories.items')
-      // Voice game
+      .populate('dyg.models')
+      .populate('dyg.stickers')
+      .populate('dyg.categories.category')
+      .populate('dyg.categories.items')
       .then(campaign => {
         if (!campaign)
           return res.status(404).end();
@@ -63,24 +23,24 @@ const CampaignController = {
       })
       .catch(next);
     } else {
-      const company = req.params.company_id;
+      const locals = req.app.locals;
+
       const offset = locals.config.paginate.offset(req.query.offset);
       const limit = locals.config.paginate.limit(req.query.limit);
 
+      const find = req.query.find || {};
       const sort = req.query.sort || { createdAt: 1 };
 
-      Campaign.paginate({ company }, {
+      Campaign.paginate(find, {
         sort,
         offset,
         limit,
         populate: [
           'company',
-          // Design game
-          'design.models',
-          'design.stickers',
-          'design.categories.category',
-          'design.categories.items',
-          // Voice game
+          'dyg.models',
+          'dyg.stickers',
+          'dyg.categories.category',
+          'dyg.categories.items',
         ],
       })
       .then(campaigns => res.json(campaigns))
@@ -88,18 +48,23 @@ const CampaignController = {
     }
   },
 
+  create(req, res, next) {
+    Campaign.create(req.body)
+    .then(campaign => res.status(201).json(campaign))
+    .catch(next);
+  },
+
   read(req, res, next) {
     Campaign.findById(req.params.campaign_id)
     .populate('company')
-    // Design game
-    .populate('design.models')
-    .populate('design.stickers')
-    .populate('design.categories.category')
-    .populate('design.categories.items')
-    // Voice game
+    .populate('dyg.models')
+    .populate('dyg.stickers')
+    .populate('dyg.categories.category')
+    .populate('dyg.categories.items')
     .then(campaign => {
       if (!campaign)
         return res.status(404).end();
+
       res.json(campaign);
     })
     .catch(next);
@@ -113,6 +78,7 @@ const CampaignController = {
     .then(campaign => {
       if (!campaign)
         return res.status(404).end();
+
       res.status(204).end();
     })
     .catch(next);

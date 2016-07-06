@@ -7,10 +7,8 @@
 import StringQuestion from '../../models/vdlg/stringQuestion';
 
 const StringQuestionController = {
-  createByCampaign(req, res, next) {
-    const data = Object.assign(req.body, { campaign: req.params.campaign_id });
-
-    StringQuestion.create(data)
+  create(req, res, next) {
+    StringQuestion.create(req.body)
     .then(stringQuestion => res.status(201).json(stringQuestion))
     .catch(next);
   },
