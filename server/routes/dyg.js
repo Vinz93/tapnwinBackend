@@ -2,7 +2,6 @@ import express from 'express';
 
 import User from '../controllers/common/user';
 import Session from '../controllers/common/session';
-import Campaign from '../controllers/common/campaign';
 import Asset from '../controllers/common/asset';
 import Category from '../controllers/dyg/category';
 import Design from '../controllers/dyg/design';
@@ -69,7 +68,7 @@ router.route('/votes')
 
 router.route('/players/me/votes')
 .all(Session.validate, User.isPlayer)
-.post(Design.doesntBelongToMe, Vote.createByMe);
+.post(Vote.createByMe);
 
 router.route('/players/me/designs/:design_id/votes')
 .all(Session.validate, User.isPlayer)

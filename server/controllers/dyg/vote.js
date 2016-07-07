@@ -66,7 +66,7 @@ const VoteController = {
   },
 
   readStatisticByDesign(req, res, next) {
-    /* waterfall([
+    waterfall([
       cb => {
         Design.findById(req.params.design_id)
         .populate('campaign')
@@ -82,38 +82,21 @@ const VoteController = {
           stickers: sticker,
         })
         .then(count => {
-          sticker,
-          count,
+          const data = {
+            sticker,
+            count,
+          };
+
+          return data;
         }))
         .then(data => cb(null, data));
       },
-    ]);*/
+    ], (err, data) => {
+      if (err)
+        next(err);
 
-    Design.findById(req.params.design_id)
-    .populate('campaign')
-    .then(design => {
-      if (!design)
-        return res.status(404).end();
-
-      Promise.map(design.campaign.dyg.stickers, sticker => {
-        const criteria = {
-          design: design._id,
-          stickers: sticker,
-        };
-
-        return Vote.count(criteria)
-          .then(count => {
-            const data = {
-              sticker,
-              count,
-            };
-
-            return data;
-          });
-      })
-      .then(data => res.send(data));
-    })
-    .catch(next);
+      res.send(data);
+    });
   },
 
   update(req, res, next) {

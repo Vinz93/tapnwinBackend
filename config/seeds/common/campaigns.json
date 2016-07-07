@@ -98,6 +98,7 @@
         ]
       },
       "vdlg": {
+        "active": true,
         "canBeBlocked": true
       },
       "m3": {

@@ -9,6 +9,9 @@ import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
+import ValidationError from '../../helpers/validationError';
+import Campaign from '../common/campaign';
+
 const Schema = mongoose.Schema;
 
 const QuestionSchema = new Schema({
@@ -35,6 +38,36 @@ const QuestionSchema = new Schema({
   },
 }, {
   timestamps: true,
+});
+
+QuestionSchema.pre('save', function (next) {
+  if (this.startAt > this.finishAt)
+    return next(new ValidationError('Question validation failed'), {
+      startAt: this.startAt,
+      finishAt: this.finishAt,
+    });
+
+  next();
+});
+
+QuestionSchema.pre('save', function (next) {
+  Campaign.findActive({
+    _id: this.campaign,
+    'vdlg.active': true,
+  })
+  .then(campaign => {
+    if (!campaign)
+      return next(new ValidationError('Question validation failed', { campaign: this.campaign }));
+
+    if (campaign.startAt > this.startAt || campaign.finishAt < this.finishAt)
+      return next(new ValidationError('Question validation failed', {
+        startAt: this.startAt,
+        finishAt: this.finishAt,
+      }));
+
+    next();
+  })
+  .catch(next);
 });
 
 QuestionSchema.plugin(mongoosePaginate);
