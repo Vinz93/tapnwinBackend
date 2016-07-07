@@ -1,7 +1,7 @@
-## Mission Status [/players/me/missionStatuses/{missionStatus_id}]
+## Mission Status [/players/me/mission_statuses/{mission_status_id}]
 
 + Parameters
-    + missionStatus_id: `57336abfc4711310edbb28b9` (string, required) - ObjectId
+    + mission_status_id: `57336abfc4711310edbb28b9` (string, required) - ObjectId
 
 ### Update [PATCH]
 

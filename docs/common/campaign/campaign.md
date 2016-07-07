@@ -1,7 +1,6 @@
-## Campaign [/companies/{company_id}/campaigns/{campaign_id}]
+## Campaign [/campaigns/{campaign_id}]
 
 + Parameters
-    + company_id: `507f191e810c19729de860ea` (string, required) -  ObjectId
     + campaign_id: `507f191e810c19729de860ea` (string, required) - ObjectId
 
 ### Read [GET]

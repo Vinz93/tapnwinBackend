@@ -1,4 +1,4 @@
-## Campaign Status [/players/me/campaigns/{campaign_id}/campaignStatus]
+## Campaign Status [/players/me/campaigns/{campaign_id}/campaign_status]
 
 + Parameters
     + campaign_id: `57336aaf646a1de8c24efdda` (string, required) - ObjectId

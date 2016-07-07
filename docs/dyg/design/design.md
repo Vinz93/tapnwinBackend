@@ -14,25 +14,3 @@
 + Response 200 (application/json)
 
         :[](design.json)
-
-### Update [PATCH]
-
-+ Request (application/json)
-
-    + Headers
-
-            sessionToken: 5734ed0a1dd3b2b88b35ece3
-
-+ Response 200 (application/json)
-
-        :[](design.json)
-
-### Delete [DELETE]
-
-+ Request (application/json)
-
-    + Headers
-
-            sessionToken: 5734ed0a1dd3b2b88b35ece3
-
-+ Response 200 (application/json)

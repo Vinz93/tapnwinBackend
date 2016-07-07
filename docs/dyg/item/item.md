@@ -16,7 +16,7 @@
 
         :[](item.json)
 
-### Update [PUT]
+### Update [PATCH]
 
 + Request (application/json)
 

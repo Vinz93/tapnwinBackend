@@ -1,7 +1,6 @@
-## Category [/companies/{company_id}/categories/{category_id}]
+## Category [/categories/{category_id}]
 
 + Parameters
-    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
     + category_id: `507f191e810c19729de860eb` (string, required) - ObjectId
 
 ### Read [GET]
@@ -16,7 +15,7 @@
 
         :[](category.json)
 
-### Update [PUT]
+### Update [PATCH]
 
 + Request (application/json)
 
