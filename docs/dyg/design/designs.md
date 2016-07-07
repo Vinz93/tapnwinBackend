@@ -16,10 +16,9 @@
 
         :[](designs.json)
 
-### Read all designs of a campaign  [GET /campaigns/{campaign_id}/designs{?limit,offset}]
+### Read all my designs [GET /players/me/designs{?limit,offset}]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (required, string) - ObjectId
     + limit: `20` (number, optional)
     + offset: `0` (number, optional)
 
@@ -33,24 +32,7 @@
 
         :[](designs.json)
 
-### Read all my designs of a campaign [GET /players/me/campaigns/{campaign_id}/designs{?limit,offset}]
-
-+ Parameters
-    + campaign_id: `507f191e810c19729de860ea` (required, string) - ObjectId
-    + limit: `20` (number, optional)
-    + offset: `0` (number, optional)
-
-+ Request (application/json)
-
-    + Headers
-
-            sessionToken: 5734ed0a1dd3b2b88b35ece3
-
-+ Response 200 (application/json)
-
-        :[](designs.json)
-
-### Create [POST /users/me/designs]
+### Create [POST /players/me/designs]
 
 + Request (application/json)
 

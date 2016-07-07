@@ -16,10 +16,7 @@
 
         :[](campaigns.json)
 
-### Create Campaign of a Company [POST /companies/{company_id}/campaigns]
-
-+ Parameters
-    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
+### Create Campaign [POST /campaigns]
 
 + Request (application/json)
 
@@ -126,33 +123,5 @@
               }
 
 + Response 201 (application/json)
-
-        :[](campaign.json)
-
-### Read Campaigns of a Company [GET /companies/{company_id}/campaigns{?active,limit,offset}]
-
-+ Parameters
-    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId.
-    + active: `true` (boolean, optional) - If true, retrieves the active campaign.
-    + limit: `20` (number, optional)
-    + offset: `0` (number, optional)
-
-+ Request (application/json)
-
-    + Headers
-
-            sessionToken: 5734ed0a1dd3b2b88b35ece3
-
-+ Response 200 (application/json)
-
-        :[](campaigns.json)
-
-+ Request Active = true (application/json)
-
-    + Headers
-
-            sessionToken: 5734ed0a1dd3b2b88b35ece3
-
-+ Response 200 (application/json)
 
         :[](campaign.json)

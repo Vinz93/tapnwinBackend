@@ -1,7 +1,6 @@
-## Sticker [/companies/{company_id}/stickers/{sticker_id}]
+## Sticker [/stickers/{sticker_id}]
 
 + Parameters
-    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
     + sticker_id: `507f191e810c19729de860eb` (string, required) - ObjectId
 
 ### Read [GET]

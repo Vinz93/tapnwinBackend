@@ -1,7 +1,6 @@
-## Model [/companies/{company_id}/models/{model_id}]
+## Model [/models/{model_id}]
 
 + Parameters
-    + company_id: `507f191e810c19729de860ea` (string, required) - ObjectId
     + model_id: `507f191e810c19729de860eb` (string, required) - ObjectId
 
 ### Read [GET]
@@ -16,7 +15,7 @@
 
         :[](model.json)
 
-### Update [PUT]
+### Update [PATCH]
 
 + Request (application/json)
 

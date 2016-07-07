@@ -16,23 +16,6 @@
 
         :[](users.json)
 
-### Create [POST]
-
-+ Request (application/json)
-
-        {
-            "firstName": "Joao",
-            "lastName": "Sanchez",
-            "gender": "male",
-            "age": 23,
-            "email": "joao@ludopia.net",
-            "password": "123456"
-        }
-
-+ Response 201 (application/json)
-
-        :[](user.json)
-
 ### Create user's recovery token [POST /users/recovery_token]
 
 + Request (application/json)

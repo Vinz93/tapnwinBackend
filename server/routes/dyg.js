@@ -2,7 +2,7 @@ import express from 'express';
 
 import User from '../controllers/common/user';
 import Session from '../controllers/common/session';
-import Campaign from '../controllers/common/campaign';
+// import Campaign from '../controllers/common/campaign';
 import Asset from '../controllers/common/asset';
 import Category from '../controllers/dyg/category';
 import Design from '../controllers/dyg/design';
@@ -32,7 +32,7 @@ router.route('/models')
 
 router.route('/models/:model_id')
 .get(Asset.read)
-.put(Model.update)
+.patch(Model.update)
 .delete(Asset.delete);
 
 router.route('/items')
@@ -41,7 +41,7 @@ router.route('/items')
 
 router.route('/items/:item_id')
 .get(Item.read)
-.put(Item.update)
+.patch(Item.update)
 .delete(Item.delete);
 
 router.route('/categories')

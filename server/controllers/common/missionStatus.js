@@ -17,32 +17,45 @@ import config from '../../../config/env';
 const Transaction = mongooseTransaction(mongoose);
 
 const MissionStatusController = {
-  readAllByMe(req, res, next) {
-    MissionCampaign.find({ campaign: req.params.campaign_id })
-    .then(missionCampaign => {
-      if (missionCampaign.length === 0)
-        return res.json([]);
 
-      Promise.map(missionCampaign, mission =>
-        MissionStatus.findOne({
-          player: res.locals.user.id,
-          missionCampaign: mission.id,
+  readAllByMe(req, res, next) {
+    waterfall([
+      cb => {
+        MissionCampaign.find({ campaign: req.params.campaign_id })
+        .then(missionCampaign => {
+          if (missionCampaign.length === 0)
+            cb({ done: true }, []);
+
+          cb(null, missionCampaign);
         })
-        .populate('missionCampaign')
-        .then(status => {
-          if (!status)
-            return MissionStatus.create({
-              player: res.locals.user.id,
-              missionCampaign: mission.id,
-            })
-            .then(newStatus => newStatus);
-          return status;
-        })
-      )
-      .then(statuses => res.json(statuses))
-      .catch(next);
-    })
-    .catch(next);
+        .catch(cb);
+      },
+      (missionCampaign, cb) => {
+        Promise.map(missionCampaign, mission =>
+          MissionStatus.findOne({
+            player: res.locals.user.id,
+            missionCampaign: mission.id,
+          })
+          .populate('missionCampaign')
+          .then(status => {
+            if (!status)
+              return MissionStatus.create({
+                player: res.locals.user.id,
+                missionCampaign: mission.id,
+              })
+              .then(newStatus => newStatus);
+            return status;
+          })
+        )
+        .then(statuses => cb(null, statuses))
+        .catch(cb);
+      },
+    ], (err, statuses) => {
+      if (err && !err.done) {
+        next(err);
+      }
+      res.json(statuses);
+    });
   },
 
   updateByMe(req, res, next) {
