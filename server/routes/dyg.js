@@ -79,7 +79,9 @@ router.route('/designs/:design_id/votes/statistics')
 .get(Vote.readStatisticByDesign);
 
 router.route('/votes/:vote_id')
-.get(Vote.read)
+.get(Vote.read);
+
+router.route('players/me/votes/:vote_id')
 .patch(Session.validate, User.isPlayer, Vote.update);
 
 router.route('/stickers')
