@@ -105,7 +105,7 @@ const VoteController = {
       player: res.locals.user._id,
     };
 
-    Vote.findAndUpdate(criteria, req.body, {
+    Vote.findOneAndUpdate(criteria, req.body, {
       runValidators: true,
       context: 'query',
     })
