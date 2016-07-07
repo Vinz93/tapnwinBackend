@@ -15,7 +15,7 @@
 
         :[](answer.json)
 
-### Update by player [PATCH /players/me/answers/{answer_id}]
+### Update by Player [PATCH /players/me/answers/{answer_id}]
 
 + Parameters
     + answer_id: `507f191e810c19729de860ea` (required, string) - ObjectId
