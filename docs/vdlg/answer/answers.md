@@ -16,10 +16,9 @@
 
         :[](answers.json)
 
-### Read all by Player and Campaign [GET /players/me/campaigns/{campaign_id}/answers{?limit,offset}]
+### Read all by Player [GET /players/me/answers{?limit,offset}]
 
 + Parameters
-    + campaign_id: `507f191e810c19729de860ea` (required, string) - ObjectId
     + limit: `20` (number, optional)
     + offset: `0` (number, optional)
 
@@ -33,10 +32,7 @@
 
         :[](answers.json)
 
-### Read statistics by Player and Campaign [GET /players/me/campaigns/{campaign_id}/answers/statistics]
-
-+ Parameters
-    + campaign_id: `507f191e810c19729de860ea` (required, string) - ObjectId
+### Read statistics by Player [GET /players/me/answers/statistics]
 
 + Request (application/json)
 
@@ -52,14 +48,12 @@
             "percent": 50
         }
 
-### Create by Player and Question [POST /players/me/questions/{question_id}/answers]
-
-+ Parameters
-    + question_id: `507f191e810c19729de860ea` (required, string) - ObjectId
+### Create by Player [POST /players/me/answers]
 
 + Request (application/json)
 
         {
+          "question": "507f191e810c19729de860ea",
           "personal": 1,
           "popular": 2
         }

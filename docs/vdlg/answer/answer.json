@@ -1,56 +1,24 @@
 {
-  "docs": [
-    {
-      "updatedAt": "2016-06-28T17:03:42.385Z",
-      "createdAt": "2016-06-28T17:03:42.385Z",
-      "question": {
-        "updatedAt": "2016-06-28T17:03:42.377Z",
-        "createdAt": "2016-06-28T17:03:42.377Z",
-        "campaign": "5772adeeedd6168b0e8d35eb",
-        "personal": "Personal 1",
-        "popular": "Popular 1",
-        "startAt": "2016-01-01T17:39:22.939Z",
-        "finishAt": "2016-12-01T17:39:22.939Z",
-        "__t": "StringQuestion",
-        "answers": [
-          "Respuesta 1a",
-          "Respuesta 1b"
-        ],
-        "id": "5772adeeedd6168b0e8d35f5"
-      },
-      "player": "5772adeeedd6168b0e8d35ef",
-      "personal": 1,
-      "popular": 0,
-      "seen": false,
-      "id": "5772adeeedd6168b0e8d35f8"
-    },
-    {
-      "updatedAt": "2016-06-28T17:03:42.389Z",
-      "createdAt": "2016-06-28T17:03:42.389Z",
-      "question": {
-        "updatedAt": "2016-06-28T17:03:42.381Z",
-        "createdAt": "2016-06-28T17:03:42.381Z",
-        "campaign": "5772adeeedd6168b0e8d35eb",
-        "personal": "Personal 2",
-        "popular": "Popular 2",
-        "startAt": "2016-02-01T17:39:22.939Z",
-        "finishAt": "2016-12-01T17:39:22.939Z",
-        "__t": "StringQuestion",
-        "answers": [
-          "Respuesta 2a",
-          "Respuesta 2b",
-          "Respuesta 2c"
-        ],
-        "id": "5772adeeedd6168b0e8d35f6"
-      },
-      "player": "5772adeeedd6168b0e8d35ef",
-      "personal": 1,
-      "popular": 1,
-      "seen": false,
-      "id": "5772adeeedd6168b0e8d35f9"
-    }
-  ],
-  "total": 2,
-  "limit": 20,
-  "offset": 0
+  "updatedAt": "2016-06-28T17:03:42.385Z",
+  "createdAt": "2016-06-28T17:03:42.385Z",
+  "question": {
+    "updatedAt": "2016-06-28T17:03:42.377Z",
+    "createdAt": "2016-06-28T17:03:42.377Z",
+    "campaign": "5772adeeedd6168b0e8d35eb",
+    "personal": "Personal 1",
+    "popular": "Popular 1",
+    "startAt": "2016-01-01T17:39:22.939Z",
+    "finishAt": "2016-12-01T17:39:22.939Z",
+    "__t": "StringQuestion",
+    "answers": [
+      "Respuesta 1a",
+      "Respuesta 1b"
+    ],
+    "id": "5772adeeedd6168b0e8d35f5"
+  },
+  "player": "5772adeeedd6168b0e8d35ef",
+  "personal": 1,
+  "popular": 0,
+  "seen": false,
+  "id": "5772adeeedd6168b0e8d35f8"
 }

@@ -151,9 +151,20 @@ CampaignSchema.pre('save', function (next) {
   if (!(this.isModified('startAt') || this.isModified('finishAt')))
     return next();
   Campaign.find({ // eslint-disable-line no-use-before-define
-    $or: [{ startAt: { $lte: this.startAt }, finishAt: { $gte: this.startAt } },
-    { startAt: { $lte: this.finishAt }, finishAt: { $gte: this.finishAt } },
-    { startAt: { $gte: this.startAt }, finishAt: { $lte: this.finishAt } }],
+    $or: [
+      {
+        startAt: { $lte: this.startAt },
+        finishAt: { $gte: this.startAt },
+      },
+      {
+        startAt: { $lte: this.finishAt },
+        finishAt: { $gte: this.finishAt },
+      },
+      {
+        startAt: { $gte: this.startAt },
+        finishAt: { $lte: this.finishAt },
+      },
+    ],
     company: this.company,
   })
   .then(campaigns => {

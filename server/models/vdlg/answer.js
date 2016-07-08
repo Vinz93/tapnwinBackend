@@ -8,6 +8,11 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import waterfall from 'async/waterfall';
+
+import ValidationError from '../../helpers/validationError';
+import Campaign from '../common/campaign';
+import Question from './question';
 
 const Schema = mongoose.Schema;
 
@@ -40,6 +45,54 @@ const AnswerSchema = new Schema({
   },
 }, {
   timestamps: true,
+});
+
+AnswerSchema.index({
+  player: 1,
+  question: 1,
+}, {
+  unique: true,
+});
+
+AnswerSchema.pre('save', function (next) {
+  waterfall([
+    cb => {
+      Question.findById(this.question)
+      .then(question => cb(null, question))
+      .catch(cb);
+    },
+    (question, cb) => {
+      const n = question.possibilities.length;
+      const now = new Date();
+
+      if (this.personal > n)
+        return next(new ValidationError('Answer validation failed', { personal: this.personal }));
+
+      if (this.popular > n)
+        return next(new ValidationError('Answer validation failed', { popular: this.popular }));
+
+      if (question.startAt > now || question.finishAt < now)
+        return next(new ValidationError('Answer validation failed', {
+          startAt: this.startAt,
+          finishAt: this.finishAt,
+        }));
+
+      Campaign.findActive({
+        _id: question.campaign,
+        'vdlg.active': true,
+      })
+      .then(campaign => cb(null, campaign))
+      .catch(cb);
+    },
+  ], (err, campaign) => {
+    if (err)
+      next(err);
+
+    if (!campaign)
+      return next(new ValidationError('Answer validation failed', { campaign }));
+
+    next();
+  });
 });
 
 AnswerSchema.plugin(mongoosePaginate);

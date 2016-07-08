@@ -76,21 +76,6 @@ const DesignController = {
     })
     .catch(next);
   },
-
-  doesntBelongToMe(req, res, next) {
-    const criteria = {
-      _id: req.params.design_id || req.body.design_id,
-      player: res.locals.user._id,
-    };
-
-    Design.findOne(criteria).then(design => {
-      if (!design)
-        return next();
-
-      res.status(400).send();
-    })
-    .catch(next);
-  },
 };
 
 export default DesignController;

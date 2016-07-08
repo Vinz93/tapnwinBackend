@@ -54,6 +54,7 @@ DesignSchema.pre('save', function (next) {
   Campaign.findActive({
     _id: this.campaign,
     $and: [
+      { 'dyg.active': true },
       { 'dyg.models': this.model },
       { 'dyg.categories.items': { $all: [
         this.botItem,
@@ -64,7 +65,9 @@ DesignSchema.pre('save', function (next) {
   })
   .then(campaign => {
     if (!campaign)
-      return next(new ValidationError('Design validation failed'));
+      return next(new ValidationError('Design validation failed', {
+        campaign: this.campaign,
+      }));
 
     next();
   })
