@@ -5,6 +5,8 @@
  */
 
 import Promise from 'bluebird';
+import each from 'async/each';
+import parallel from 'async/parallel';
 import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
@@ -13,7 +15,12 @@ import fieldRemover from 'mongoose-field-remover';
 
 import ValidationError from '../../helpers/validationError';
 import MissionCampaign from './missionCampaign';
+
 import Design from '../dyg/design';
+import Model from '../dyg/model';
+import Sticker from '../dyg/sticker';
+import Category from '../dyg/category';
+import Item from '../dyg/item';
 
 const Schema = mongoose.Schema;
 
@@ -132,7 +139,7 @@ CampaignSchema.pre('remove', function (next) {
 
 CampaignSchema.pre('save', function (next) {
   if (this.finishAt <= this.startAt) {
-    return next(new ValidationError('InvalidDateRange', {
+    return next(new ValidationError('Campaign validation failed', {
       startAt: this.startAt,
       finishAt: this.finishAt,
     }));
@@ -141,6 +148,8 @@ CampaignSchema.pre('save', function (next) {
 });
 
 CampaignSchema.pre('save', function (next) {
+  if (!(this.isModified('startAt') || this.isModified('finishAt')))
+    return next();
   Campaign.find({ // eslint-disable-line no-use-before-define
     $or: [{ startAt: { $lte: this.startAt }, finishAt: { $gte: this.startAt } },
     { startAt: { $lte: this.finishAt }, finishAt: { $gte: this.finishAt } },
@@ -149,7 +158,7 @@ CampaignSchema.pre('save', function (next) {
   })
   .then(campaigns => {
     if (campaigns.length > 0) {
-      return next(new ValidationError('InvalidDateRange', {
+      return next(new ValidationError('Campaign validation failed', {
         startAt: this.startAt,
         finishAt: this.finishAt,
       }));
@@ -157,6 +166,43 @@ CampaignSchema.pre('save', function (next) {
     next();
   })
   .catch(next);
+});
+
+CampaignSchema.pre('save', function (next) {
+  if (!this.isModified('dyg'))
+    return next();
+
+  const company = this.company;
+
+  const eachWrapper = (model, modelName, array, id, callback) => {
+    each(array, (doc, cb) => {
+      model.findOne({
+        _id: id ? doc[id] : doc,
+        company,
+      })
+      .then(model => {
+        if (!model)
+          return cb(new ValidationError('Campaign validation failed', {
+            model: modelName,
+            id: id ? doc[id] : doc,
+          }));
+        cb(null);
+      })
+      .catch(cb);
+    }, callback);
+  };
+
+  parallel([
+    cb => eachWrapper(Model, 'Model', this.dyg.models, null, cb),
+    cb => eachWrapper(Sticker, 'Sticker', this.dyg.stickers, null, cb),
+    cb => eachWrapper(Category, 'Category', this.dyg.categories, 'category', cb),
+  ], err => {
+    if (err)
+      next(err);
+    each(this.dyg.categories, (category, cb) => {
+      eachWrapper(Item, 'Item', category.items, null, cb);
+    }, next);
+  });
 });
 
 CampaignSchema.plugin(mongoosePaginate);
