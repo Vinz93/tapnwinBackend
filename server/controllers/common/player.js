@@ -7,6 +7,38 @@
 import Player from '../../models/common/player';
 
 const PlayerController = {
+  /**
+ * @swagger
+ * /api/v1/players:
+ *   post:
+ *     tags:
+ *       - Players
+ *     description: Creates a player
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: player
+ *         description: Player object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Player'
+ *              - properties:
+ *                  password:
+ *                    type: string
+ *                required:
+ *                  - password
+ *     responses:
+ *       200:
+ *         description: Successfully created
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Player'
+ *              - properties:
+ *                  balance:
+ *                    type: integer
+ */
   create(req, res, next) {
     Player.create(req.body)
     .then(player => res.status(201).json(player))

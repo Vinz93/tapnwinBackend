@@ -6,7 +6,6 @@
   "scripts": {
     "start": "grunt",
     "build": "grunt build",
-    "doc": "hercule docs/main.apib -o dist/output.md",
     "seed": "node --harmony_proxies ./dist/config/seeds"
   },
   "repository": {
@@ -45,7 +44,9 @@
     "multer": "^1.1.0",
     "node-uuid": "^1.4.7",
     "nodemailer": "^2.4.1",
-    "rand-token": "^0.2.1"
+    "rand-token": "^0.2.1",
+    "swagger-jsdoc": "^1.3.1",
+    "swagger-tools": "^0.10.1"
   },
   "devDependencies": {
     "babel-eslint": "^6.0.4",
@@ -63,7 +64,6 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-mkdir": "^1.0.0",
     "grunt-nodemon": "^0.4.2",
-    "hercule": "^3.0.2",
     "load-grunt-tasks": "^3.5.0",
     "mongoose-seeder": "^1.2.1",
     "nodemon": "^1.9.1",

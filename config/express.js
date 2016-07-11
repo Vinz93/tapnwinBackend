@@ -5,13 +5,25 @@ import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import nodemailer from 'nodemailer';
 import path from 'path';
+import swaggerDoc from 'swagger-jsdoc';
+import swaggerTools from 'swagger-tools';
 
 import config from './env';
 import routes from '../server/routes';
 
 // import cronJob from '../server/helpers/cron'; // eslint-disable-line no-unused-vars
 
+const prefix = '/api/v1';
 const app = express();
+const spec = swaggerDoc({
+  swaggerDefinition: {
+    info: {
+      title: 'Tapnwin',
+      version: '1.0.0',
+    },
+  },
+  apis: ['./server/models/**/*.js', './server/controllers/**/*.js'],
+});
 
 app.disable('x-powered-by');
 
@@ -25,18 +37,24 @@ if (config.env === 'development') {
 }
 
 app.use(bodyParser.json());
-
 app.use(cors());
 
-app.use('/api/v1', routes);
-app.use('/api/v1/uploads', express.static(path.join(config.root, 'uploads')));
+app.use(prefix, routes);
+app.use(`${prefix}/uploads`, express.static(path.join(config.root, 'uploads')));
 
 app.use((err, req, res, next) => { // eslint-disable-line
   if (err.name === 'ValidationError' || err.name === 'CastError' || err.code === 11000)
     return res.status(400).json(err).end();
+
   console.error(err.stack);
+
   res.status(500).send(err);
 });
+
+swaggerTools.initializeMiddleware(spec, (middleware) => app.use(middleware.swaggerUi({
+  apiDocs: `${prefix}/docs.json`,
+  swaggerUi: `${prefix}/docs`,
+})));
 
 app.locals.config = config;
 app.locals.mailer = nodemailer.createTransport(config.mailer);

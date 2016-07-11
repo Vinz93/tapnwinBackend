@@ -14,6 +14,16 @@ import randtoken from 'rand-token';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   User:
+ *     properties:
+ *       email:
+ *         type: string
+ *     required:
+ *       - email
+ */
 const UserSchema = new Schema({
   email: {
     type: String,

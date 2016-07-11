@@ -3,19 +3,13 @@ module.exports = function(grunt) {
 
   var path = require('path');
 
-  var games = {
-    design: 'design',
-    voice: 'voice',
-    match3: 'match3',
-    owner: 'owner',
-  };
-
   var paths = {
     src: {
       main: 'index.js',
       all: ['server/**/*.js', 'config/**/*.js'],
       no: ['server/**/*', 'config/**/*', '!server/**/*.js', '!config/**/*.js']
     },
+    docs: ['docs/main.apib'],
     dist: 'dist/',
   };
 
@@ -37,9 +31,7 @@ module.exports = function(grunt) {
     mkdir: {
       dist: {
         options: {
-          create: [games.design, games.voice, games.match3, games.owner].map(function(str) {
-            return path.join(paths.dist, 'uploads', str);
-          })
+          create: [path.join(paths.dist, 'uploads')]
         },
       },
     },

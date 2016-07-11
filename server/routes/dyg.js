@@ -11,20 +11,7 @@ import Model from '../controllers/dyg/model';
 import Vote from '../controllers/dyg/vote';
 import Sticker from '../controllers/dyg/sticker';
 
-import uploader from '../helpers/uploader';
-
 const router = express.Router(); // eslint-disable-line new-cap
-
-router.post('/dyg/media', (req, res) => {
-  const asset = 'dyg';
-
-  uploader(asset, 'file')(req, res, err => {
-    if (err)
-      return res.status(400).send(err);
-
-    res.json({ url: `${req.app.locals.config.host}uploads/${asset}/${req.file.filename}` });
-  });
-});
 
 router.route('/models')
 .get(Model.readAll)

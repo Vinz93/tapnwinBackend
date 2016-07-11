@@ -12,7 +12,7 @@ function listen() {
 
   app.listen(config.port);
 
-  console.log(`TapNWin API started on port ${config.port}`);
+  console.log(`Tapnwin API started on port ${config.port}`);
 }
 
 function connect() {

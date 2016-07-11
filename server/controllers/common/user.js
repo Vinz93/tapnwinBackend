@@ -14,6 +14,33 @@ import Administrator from '../../models/common/administrator';
 const EmailTemplate = templates.EmailTemplate;
 
 const UserController = {
+/**
+ * @swagger
+ * /api/v1/users:
+ *   get:
+ *     tags:
+ *       - Users
+ *       - Players
+ *       - Administrators
+ *     description: Returns all users
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: find[]
+ *         description: Find query
+ *         in: query
+ *         type: array
+ *         items:
+ *           type: string
+ *         collectionFormat: multi
+ *     responses:
+ *       200:
+ *         description: An array of users
+ *         schema:
+ *           type: array
+ *           items:
+ *             $ref: '#/definitions/User'
+ */
   read(req, res, next) {
     User.findById(req.params.user_id)
     .then(user => {
@@ -25,6 +52,23 @@ const UserController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/users/me:
+ *   get:
+ *     tags:
+ *       - Users
+ *       - Players
+ *       - Administrators
+ *     description: Returns me
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: A user
+ *         schema:
+ *           $ref: '#/definitions/User'
+ */
   readByMe(req, res) {
     res.json(res.locals.user);
   },

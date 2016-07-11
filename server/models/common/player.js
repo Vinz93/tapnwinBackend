@@ -9,6 +9,27 @@ import User from './user';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   Player:
+ *     allOf:
+ *       - $ref: '#/definitions/User'
+ *       - properties:
+ *           firstName:
+ *             type: string
+ *           lastName:
+ *             type: string
+ *           gender:
+ *             type: string
+ *           age:
+ *             type: integer
+ *         required:
+ *           - firstName
+ *           - lastName
+ *           - gender
+ *           - age
+ */
 const PlayerSchema = new Schema({
   firstName: {
     type: String,
