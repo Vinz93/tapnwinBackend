@@ -13,11 +13,9 @@ router.route('/questions')
 .get(Question.readAll);
 
 router.route('/string_questions')
-.get(StringQuestion.readAll)
 .post(StringQuestion.create);
 
 router.route('/asset_questions')
-.get(AssetQuestion.readAll)
 .post(AssetQuestion.create);
 
 router.route('/players/me/questions')

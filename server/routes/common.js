@@ -17,14 +17,12 @@ router.get('/time', (req, res) => {
 });
 
 router.route('/administrators')
-.get(Administrator.readAll)
 .post(Administrator.create);
 
 router.route('/administrators/:administrator_id')
 .patch(Administrator.update);
 
 router.route('/players')
-.get(Player.readAll)
 .post(Player.create);
 
 router.route('/players/:player_id')
