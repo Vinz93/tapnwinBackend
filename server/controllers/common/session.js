@@ -44,8 +44,13 @@ const SessionController = {
   },
 
   validate(req, res, next) {
+    const sessionToken = req.get('sessionToken');
+
+    if (!sessionToken)
+      return res.status(401).end();
+
     User.findOne({
-      sessionToken: req.get('sessionToken'),
+      sessionToken,
     })
     .then(user => {
       if (!user)

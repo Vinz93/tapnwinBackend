@@ -20,59 +20,29 @@ const UserController = {
  *   get:
  *     tags:
  *       - Users
- *       - Players
- *       - Administrators
  *     description: Returns all users
  *     produces:
  *       - application/json
- *     parameters:
- *       - name: find[]
- *         description: Find query
- *         in: query
- *         type: array
- *         items:
- *           type: string
- *         collectionFormat: multi
  *     responses:
  *       200:
  *         description: An array of users
  *         schema:
- *           type: array
- *           items:
- *             $ref: '#/definitions/User'
+ *           properties:
+ *             docs:
+ *               type: array
+ *               items:
+ *                 allOf:
+ *                   - $ref: '#/definitions/User'
+ *                   - properties:
+ *                       id:
+ *                         type: string
+ *             total:
+ *               type: integer
+ *             limit:
+ *               type: integer
+ *             offset:
+ *               type: integer
  */
-  read(req, res, next) {
-    User.findById(req.params.user_id)
-    .then(user => {
-      if (!user)
-        return res.status(404).end();
-
-      res.json(user);
-    })
-    .catch(next);
-  },
-
-/**
- * @swagger
- * /api/v1/users/me:
- *   get:
- *     tags:
- *       - Users
- *       - Players
- *       - Administrators
- *     description: Returns me
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: A user
- *         schema:
- *           $ref: '#/definitions/User'
- */
-  readByMe(req, res) {
-    res.json(res.locals.user);
-  },
-
   readAll(req, res, next) {
     const locals = req.app.locals;
 
@@ -91,6 +61,30 @@ const UserController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/users/recovery_token:
+ *   post:
+ *     tags:
+ *       - Users
+ *     description: Creates a recovery token
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: player
+ *         description: Player object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           properties:
+ *             email:
+ *               type: string
+ *           required:
+ *             - email
+ *     responses:
+ *       201:
+ *         description: Successfully created
+ */
   createRecoveryToken(req, res, next) {
     const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
 
@@ -126,6 +120,60 @@ const UserController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/users/me:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: Returns me
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: User's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A user
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/User'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ */
+  readByMe(req, res) {
+    res.json(res.locals.user);
+  },
+
+/**
+ * @swagger
+ * /api/v1/users/me:
+ *   patch:
+ *     tags:
+ *       - Users
+ *     description: Creates a recovery token
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: User's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *       - name: user
+ *         description: User object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
   updateByMe(req, res, next) {
     const user = res.locals.user;
 
@@ -136,6 +184,35 @@ const UserController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/users/password:
+ *   patch:
+ *     tags:
+ *       - Users
+ *     description: Updates password
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: recovery_token
+ *         description: User's recovery token
+ *         in: query
+ *         required: true
+ *         type: string
+ *       - name: user
+ *         description: User object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           properties:
+ *             email:
+ *               type: string
+ *           required:
+ *             - email
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
   updatePassword(req, res, next) {
     User.findOne({
       recoveryToken: req.query.recovery_token,
@@ -157,6 +234,61 @@ const UserController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *   get:
+ *     tags:
+ *       - Users
+ *     description: Returns a single user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: User's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A user
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/User'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ */
+  read(req, res, next) {
+    User.findById(req.params.user_id)
+      .then(user => {
+        if (!user)
+          return res.status(404).end();
+
+        res.json(user);
+      })
+      .catch(next);
+  },
+
+  /**
+   * @swagger
+   * /api/v1/users/{id}:
+   *   delete:
+   *     tags:
+   *       - Users
+   *     description: Deletes a single user
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: id
+   *         description: User's id
+   *         in: path
+   *         required: true
+   *         type: string
+   *     responses:
+   *       204:
+   *         description: Successfully deleted
+   */
   delete(req, res, next) {
     User.findByIdAndRemove(req.params.user_id)
     .then(user => {
