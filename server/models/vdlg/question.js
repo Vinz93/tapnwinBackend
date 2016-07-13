@@ -14,6 +14,30 @@ import Campaign from '../common/campaign';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   Question:
+ *     properties:
+ *       campaign:
+ *         type: string
+ *       personal:
+ *         type: string
+ *       popular:
+ *         type: string
+ *       startAt:
+ *         type: string
+ *         format: date-time
+ *       finishAt:
+ *         type: string
+ *         format: date-time
+ *     required:
+ *       - campaign
+ *       - personal
+ *       - popular
+ *       - startAt
+ *       - finishAt
+ */
 const QuestionSchema = new Schema({
   campaign: {
     type: Schema.Types.ObjectId,

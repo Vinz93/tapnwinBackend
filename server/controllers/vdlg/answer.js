@@ -11,17 +11,43 @@ import Answer from '../../models/vdlg/answer';
 import Question from '../../models/vdlg/question';
 
 const AnswerController = {
-  read(req, res, next) {
-    Answer.findById(req.params.answer_id)
-    .then(answer => {
-      if (!answer)
-        return res.status(404).end();
-
-      res.json(answer);
-    })
-    .catch(next);
-  },
-
+/**
+ * @swagger
+ * /api/v1/answers:
+ *   get:
+ *     tags:
+ *       - Answers
+ *     description: Returns all answers
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of answers
+ *         schema:
+ *           properties:
+ *             docs:
+ *               type: array
+ *               items:
+ *                 allOf:
+ *                   - $ref: '#/definitions/Answer'
+ *                   - properties:
+ *                       id:
+ *                         type: string
+ *                       seen:
+ *                         type: boolean
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *             total:
+ *               type: integer
+ *             limit:
+ *               type: integer
+ *             offset:
+ *               type: integer
+ */
   readAll(req, res, next) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
@@ -38,7 +64,49 @@ const AnswerController = {
     .then(answers => res.json(answers))
     .catch(next);
   },
-
+/**
+ * @swagger
+ * /api/v1/players/me/answers:
+ *   get:
+ *     tags:
+ *       - Answers
+ *     description: Returns all my answers
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: An array of answers
+ *         schema:
+ *           properties:
+ *             docs:
+ *               type: array
+ *               items:
+ *                 allOf:
+ *                   - $ref: '#/definitions/Answer'
+ *                   - properties:
+ *                       id:
+ *                         type: string
+ *                       seen:
+ *                         type: boolean
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *             total:
+ *               type: integer
+ *             limit:
+ *               type: integer
+ *             offset:
+ *               type: integer
+ */
   readAllByMe(req, res, next) {
     const locals = req.app.locals;
 
@@ -86,6 +154,78 @@ const AnswerController = {
     });
   },
 
+/**
+ * @swagger
+ * /api/v1/answers/{answer_id}:
+ *   get:
+ *     tags:
+ *       - Answers
+ *     description: Returns an answer
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: answer_id
+ *         description: Answer's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A answer
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Answer'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  seen:
+ *                    type: boolean
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ */
+  read(req, res, next) {
+    Answer.findById(req.params.answer_id)
+    .then(answer => {
+      if (!answer)
+        return res.status(404).end();
+
+      res.json(answer);
+    })
+    .catch(next);
+  },
+
+/**
+ * @swagger
+ * /api/v1/players/me/answers/statistics:
+ *   get:
+ *     tags:
+ *       - Answers
+ *     description: Returns the statistics of my answers
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A statistic
+ *         schema:
+ *           properties:
+ *             correct:
+ *               type: integer
+ *             percent:
+ *               type: number
+ *               format: float
+ *             total:
+ *               type: integer
+ */
   readStatisticByMe(req, res, next) {
     req.query.find = req.query.find || {};
 
@@ -146,6 +286,45 @@ const AnswerController = {
     });
   },
 
+/**
+ * @swagger
+ * /api/v1/players/me/answers:
+ *   post:
+ *     tags:
+ *       - Answers
+ *     description: Creates an answer
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *       - name: answer
+ *         description: Answer object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/Answer'
+ *     responses:
+ *       200:
+ *         description: Successfully created
+ *         schema:
+ *           allOf:
+ *             - $ref: '#/definitions/Answer'
+ *             - properties:
+ *                 id:
+ *                   type: string
+ *                 seen:
+ *                   type: boolean
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
+ */
   createByMe(req, res, next) {
     const data = Object.assign(req.body, {
       player: res.locals.user._id,
@@ -156,6 +335,38 @@ const AnswerController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/players/me/answers/{answer_id}:
+ *   patch:
+ *     tags:
+ *       - Answers
+ *     description: Creates an answer
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *       - name: answer_id
+ *         description: Answer's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: answer
+ *         description: Answer object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           properties:
+ *             seen:
+ *               type: boolean
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
   updateByMe(req, res, next) {
     const criteria = {
       _id: req.params.answer_id,

@@ -16,6 +16,25 @@ import Question from './question';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   Answer:
+ *     properties:
+ *       player:
+ *         type: string
+ *       question:
+ *         type: string
+ *       personal:
+ *         type: integer
+ *       popular:
+ *         type: integer
+ *     required:
+ *       - player
+ *       - question
+ *       - personal
+ *       - popular
+ */
 const AnswerSchema = new Schema({
   player: {
     type: Schema.Types.ObjectId,

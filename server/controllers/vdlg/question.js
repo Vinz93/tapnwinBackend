@@ -11,6 +11,41 @@ import Question from '../../models/vdlg/question';
 import Answer from '../../models/vdlg/answer';
 
 const QuestionController = {
+/**
+ * @swagger
+ * /api/v1/questions:
+ *   get:
+ *     tags:
+ *       - Questions
+ *     description: Returns all questions
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of questions
+ *         schema:
+ *           properties:
+ *             docs:
+ *               type: array
+ *               items:
+ *                 allOf:
+ *                   - $ref: '#/definitions/Question'
+ *                   - properties:
+ *                       id:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *             total:
+ *               type: integer
+ *             limit:
+ *               type: integer
+ *             offset:
+ *               type: integer
+ */
   readAll(req, res, next) {
     const locals = req.app.locals;
 
@@ -29,6 +64,47 @@ const QuestionController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/players/me/questions:
+ *   get:
+ *     tags:
+ *       - Questions
+ *     description: Returns all my questions
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: An array of questions
+ *         schema:
+ *           properties:
+ *             docs:
+ *               type: array
+ *               items:
+ *                 allOf:
+ *                   - $ref: '#/definitions/Question'
+ *                   - properties:
+ *                       id:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *             total:
+ *               type: integer
+ *             limit:
+ *               type: integer
+ *             offset:
+ *               type: integer
+ */
   readAllByMe(req, res, next) {
     const locals = req.app.locals;
 
@@ -64,6 +140,37 @@ const QuestionController = {
     });
   },
 
+/**
+ * @swagger
+ * /api/v1/questions/{question_id}:
+ *   get:
+ *     tags:
+ *       - Questions
+ *     description: Returns an question
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: question_id
+ *         description: Question's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A question
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Question'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ */
   read(req, res, next) {
     Question.findById(req.params.question_id)
     .then(question => {
@@ -75,6 +182,35 @@ const QuestionController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/questions/{question_id}/statistics:
+ *   get:
+ *     tags:
+ *       - Questions
+ *     description: Returns the statistics of a question
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: question_id
+ *         description: Question's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A question
+ *         schema:
+ *           properties:
+ *             counts:
+ *               type: array
+ *               items:
+ *                 type: number
+ *             percents:
+ *               type: string
+ *             total:
+ *               type: string
+ */
   readStatistic(req, res, next) {
     waterfall([
       cb => {
