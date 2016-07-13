@@ -21,12 +21,6 @@ const Schema = mongoose.Schema;
  *     properties:
  *       email:
  *         type: string
- *       createdAt:
- *         type: string
- *         format: date-time
- *       updatedAt:
- *         type: string
- *         format: date-time
  *     required:
  *       - email
  */

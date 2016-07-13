@@ -36,8 +36,16 @@ const PlayerController = {
  *           allOf:
  *              - $ref: '#/definitions/Player'
  *              - properties:
+ *                  id:
+ *                    type: string
  *                  balance:
  *                    type: integer
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
  */
   create(req, res, next) {
     Player.create(req.body)

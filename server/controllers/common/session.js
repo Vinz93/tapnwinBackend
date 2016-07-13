@@ -9,6 +9,36 @@ import Player from '../../models/common/player';
 import Administrator from '../../models/common/administrator';
 
 const SessionController = {
+/**
+ * @swagger
+ * /api/v1/sessions:
+ *   post:
+ *     tags:
+ *       - Sessions
+ *     description: Creates a player
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user
+ *         description: User object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/User'
+ *              - properties:
+ *                  password:
+ *                    type: string
+ *                required:
+ *                  - password
+ *     responses:
+ *       200:
+ *         description: Successfully created
+ *         schema:
+ *           properties:
+ *             sessionToken:
+ *               type: string
+ */
   create(req, res, next) {
     const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
 
@@ -33,6 +63,25 @@ const SessionController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/sessions:
+ *   delete:
+ *     tags:
+ *       - Sessions
+ *     description: Deletes a session
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: User's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *     responses:
+ *       204:
+ *         description: Successfully deleted
+ */
   delete(req, res, next) {
     const user = res.locals.user;
 

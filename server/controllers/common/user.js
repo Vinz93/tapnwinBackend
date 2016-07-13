@@ -36,6 +36,12 @@ const UserController = {
  *                   - properties:
  *                       id:
  *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
  *             total:
  *               type: integer
  *             limit:
@@ -144,6 +150,12 @@ const UserController = {
  *              - properties:
  *                  id:
  *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
  */
   readByMe(req, res) {
     res.json(res.locals.user);
@@ -258,6 +270,12 @@ const UserController = {
  *              - properties:
  *                  id:
  *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
  */
   read(req, res, next) {
     User.findById(req.params.user_id)
@@ -270,25 +288,25 @@ const UserController = {
       .catch(next);
   },
 
-  /**
-   * @swagger
-   * /api/v1/users/{id}:
-   *   delete:
-   *     tags:
-   *       - Users
-   *     description: Deletes a single user
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: id
-   *         description: User's id
-   *         in: path
-   *         required: true
-   *         type: string
-   *     responses:
-   *       204:
-   *         description: Successfully deleted
-   */
+/**
+ * @swagger
+ * /api/v1/users/{id}:
+ *   delete:
+ *     tags:
+ *       - Users
+ *     description: Deletes a single user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: User's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       204:
+ *         description: Successfully deleted
+ */
   delete(req, res, next) {
     User.findByIdAndRemove(req.params.user_id)
     .then(user => {

@@ -4,6 +4,13 @@
  * @lastModifiedBy Juan Sanchez
  */
 
+ /**
+  * @swagger
+  * definition:
+  *   Administrator:
+  *     allOf:
+  *       - $ref: '#/definitions/User'
+  */
 import mongoose from 'mongoose';
 
 import User from './user';
