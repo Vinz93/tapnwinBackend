@@ -14,6 +14,30 @@ import Campaign from './campaign';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   CampaignStatus:
+ *     properties:
+ *       player:
+ *         type: string
+ *       campaign:
+ *         type: string
+ *       balance:
+ *         type: number
+ *         format: float
+ *       dyg:
+ *         type: boolean
+ *       vdlg:
+ *         type: boolean
+ *       m3:
+ *         type: boolean
+ *       ddt:
+ *         type: boolean
+ *     required:
+ *       - player
+ *       - campaign
+ */
 const CampaignStatusSchema = new Schema({
   player: {
     type: Schema.Types.ObjectId,

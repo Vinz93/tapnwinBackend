@@ -12,6 +12,23 @@ import findOrCreate from 'mongoose-findorcreate';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   MissionStatus:
+ *     properties:
+ *       player:
+ *         type: string
+ *       missionCampaign:
+ *         type: string
+ *       value:
+ *         type: integer
+ *       isDone:
+ *         type: boolean
+ *     required:
+ *       - player
+ *       - missionCampaign
+ */
 const MissionStatusSchema = new Schema({
   player: {
     type: Schema.Types.ObjectId,

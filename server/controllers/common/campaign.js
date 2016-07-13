@@ -7,6 +7,47 @@
 import Campaign from '../../models/common/campaign';
 
 const CampaignController = {
+/**
+ * @swagger
+ * /api/v1/campaigns:
+ *   get:
+ *     tags:
+ *       - Campaigns
+ *     description: Returns all missions
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: active
+ *         description: Filter by active campaign
+ *         in: query
+ *         required: true
+ *         type: boolean
+ *     responses:
+ *       200:
+ *         description: An array of campaigns
+ *         schema:
+ *           properties:
+ *             docs:
+ *               type: array
+ *               items:
+ *                 allOf:
+ *                   - $ref: '#/definitions/Campaign'
+ *                   - properties:
+ *                       id:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *             total:
+ *               type: integer
+ *             limit:
+ *               type: integer
+ *             offset:
+ *               type: integer
+ */
   readAll(req, res, next) {
     if (req.query.active === 'true') {
       Campaign.findActive()
@@ -48,12 +89,75 @@ const CampaignController = {
     }
   },
 
+/**
+ * @swagger
+ * /api/v1/campaigns:
+ *   post:
+ *     tags:
+ *       - Campaigns
+ *     description: Creates a campaign
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: campaign
+ *         description: Campaign object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/Campaign'
+ *     responses:
+ *       200:
+ *         description: Successfully created
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Campaign'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ */
   create(req, res, next) {
     Campaign.create(req.body)
     .then(campaign => res.status(201).json(campaign))
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/campaigns/{id}:
+ *   get:
+ *     tags:
+ *       - Campaigns
+ *     description: Returns a campaign
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: Campaign's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A campaign
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Campaign'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ */
   read(req, res, next) {
     Campaign.findById(req.params.campaign_id)
     .populate('company')
@@ -70,6 +174,31 @@ const CampaignController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/campaigns/{id}:
+ *   patch:
+ *     tags:
+ *       - Campaigns
+ *     description: Updates a campaign
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: Campaign's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: campaign
+ *         description: Campaign object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/Campaign'
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
   update(req, res, next) {
     Campaign.findByIdAndUpdate(req.params.campaign_id, req.body, {
       runValidators: true,
@@ -84,6 +213,25 @@ const CampaignController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/campaigns/{id}:
+ *   delete:
+ *     tags:
+ *       - Campaigns
+ *     description: Deletes a campaign
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: id
+ *         description: Campaign's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       204:
+ *         description: Successfully deleted
+ */
   delete(req, res, next) {
     Campaign.findOneAndRemove(req.params.campaign_id)
     .then(campaign => {

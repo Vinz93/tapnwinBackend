@@ -9,15 +9,52 @@ import mongooseTransaction from 'mongoose-transaction';
 import waterfall from 'async/waterfall';
 import Promise from 'bluebird';
 
-import MissionStatus from '../../models/common/missionStatus';
-import MissionCampaign from '../../models/common/missionCampaign';
-import CampaignStatus from '../../models/common/campaignStatus';
+import MissionStatus from '../../models/common/mission_status';
+import MissionCampaign from '../../models/common/mission_campaign';
+import CampaignStatus from '../../models/common/campaign_status';
 import config from '../../../config/env';
 
 const Transaction = mongooseTransaction(mongoose);
 
 const MissionStatusController = {
-
+/**
+ * @swagger
+ * /api/v1/players/me/campaigns/{campaign_id}/mission_statuses:
+ *   get:
+ *     tags:
+ *       - MissionsStatuses
+ *     description: Returns all missionsStatuses of a campaign
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *       - name: campaign_id
+ *         description: Campaign's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: An array of missionsStatuses
+ *         schema:
+ *           type: array
+ *           items:
+ *             allOf:
+ *               - $ref: '#/definitions/MissionStatus'
+ *               - properties:
+ *                   id:
+ *                     type: string
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                   updatedAt:
+ *                     type: string
+ *                     format: date-time
+ */
   readAllByMe(req, res, next) {
     waterfall([
       cb => {
@@ -58,6 +95,36 @@ const MissionStatusController = {
     });
   },
 
+/**
+ * @swagger
+ * /api/v1/players/me/mission_statuses/{mission_status_id}:
+ *   patch:
+ *     tags:
+ *       - MissionsStatuses
+ *     description: Updates a missionStatus of mine
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: Session-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *       - name: mission_status_id
+ *         description: missionStatus's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: missionStatus
+ *         description: missionStatus object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/MissionStatus'
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
   updateByMe(req, res, next) {
     const transaction = new Transaction();
 

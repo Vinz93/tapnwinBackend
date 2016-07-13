@@ -167,7 +167,7 @@ const UserController = {
  *   patch:
  *     tags:
  *       - Users
- *     description: Creates a recovery token
+ *     description: Updates me
  *     produces:
  *       - application/json
  *     parameters:
@@ -252,7 +252,7 @@ const UserController = {
  *   get:
  *     tags:
  *       - Users
- *     description: Returns a single user
+ *     description: Returns a user
  *     produces:
  *       - application/json
  *     parameters:
@@ -294,7 +294,7 @@ const UserController = {
  *   delete:
  *     tags:
  *       - Users
- *     description: Deletes a single user
+ *     description: Deletes a user
  *     produces:
  *       - application/json
  *     parameters:

@@ -14,7 +14,7 @@ import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-va
 import fieldRemover from 'mongoose-field-remover';
 
 import ValidationError from '../../helpers/validationError';
-import MissionCampaign from './missionCampaign';
+import MissionCampaign from './mission_campaign';
 
 import Design from '../dyg/design';
 import Model from '../dyg/model';
@@ -69,6 +69,30 @@ const M3Schema = GameSchema.extend({});
 
 const DDTSchema = GameSchema.extend({});
 
+/**
+ * @swagger
+ * definition:
+ *   Campaign:
+ *     properties:
+ *       company:
+ *         type: string
+ *       name:
+ *         type: string
+ *       banner:
+ *         type: string
+ *       startAt:
+ *         type: string
+ *         format: date-time
+ *       finishAt:
+ *         type: string
+ *         format: date-time
+ *     required:
+ *       - company
+ *       - name
+ *       - banner
+ *       - startAt
+ *       - finishAt
+ */
 const CampaignSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,

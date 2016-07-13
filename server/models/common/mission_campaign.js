@@ -9,10 +9,33 @@ import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
-import MissionStatus from './missionStatus';
+import MissionStatus from './mission_status';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   MissionCampaign:
+ *     properties:
+ *       mission:
+ *         type: string
+ *       campaign:
+ *         type: string
+ *       isRequired:
+ *         type: string
+ *       isBlocking:
+ *         type: string
+ *       blockedTime:
+ *         type: number
+ *       balance:
+ *         type: number
+ *       max:
+ *         type: integer
+ *     required:
+ *       - mission
+ *       - campaign
+ */
 const MissionCampaignSchema = new Schema({
   mission: {
     type: Schema.Types.ObjectId,

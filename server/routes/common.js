@@ -6,8 +6,9 @@ import Administrator from '../controllers/common/administrator';
 import Player from '../controllers/common/player';
 import Session from '../controllers/common/session';
 import Mission from '../controllers/common/mission';
-import MissionStatus from '../controllers/common/missionStatus';
-import CampaignStatus from '../controllers/common/campaignStatus';
+import MissionCampaign from '../controllers/common/mission_campaign';
+import MissionStatus from '../controllers/common/mission_status';
+import CampaignStatus from '../controllers/common/campaign_status';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -70,6 +71,15 @@ router.route('/missions/:mission_id')
 .get(Mission.read)
 .patch(Mission.update)
 .delete(Mission.delete);
+
+router.route('/missions_campaigns')
+.get(MissionCampaign.readAll)
+.post(MissionCampaign.create);
+
+router.route('/missions/:mission_campaign_id')
+.get(MissionCampaign.read)
+.patch(MissionCampaign.update)
+.delete(MissionCampaign.delete);
 
 router.route('/players/me/campaigns/:campaign_id/campaign_status')
 .all(Session.validate, User.isPlayer, Campaign.validate)

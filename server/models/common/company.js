@@ -8,11 +8,9 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import uniqueValidator from 'mongoose-unique-validator';
 import fieldRemover from 'mongoose-field-remover';
-
 import Promise from 'bluebird';
 
 import Campaign from './campaign';
-
 import Model from '../dyg/model';
 import Category from '../dyg/category';
 import Item from '../dyg/item';
@@ -20,6 +18,16 @@ import Sticker from '../dyg/sticker';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   Company:
+ *     properties:
+ *       name:
+ *         type: string
+ *     required:
+ *       - name
+ */
 const CompanySchema = new Schema({
   name: {
     type: String,

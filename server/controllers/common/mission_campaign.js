@@ -1,31 +1,31 @@
 /**
  * @author Juan Sanchez
- * @description Company controller definition
+ * @description Mission-Campaign controller definition
  * @lastModifiedBy Juan Sanchez
  */
 
-import Company from '../../models/common/company';
+import MissionCampaign from '../../models/common/mission_campaign';
 
-const CompanyController = {
+const MissionCampaignController = {
 /**
  * @swagger
- * /api/v1/companies:
+ * /api/v1/missions_campaigns:
  *   get:
  *     tags:
- *       - Companies
- *     description: Returns all companies
+ *       - MissionsCampaigns
+ *     description: Returns all missionsCampaings
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: An array of companies
+ *         description: An array of missionsCampaings
  *         schema:
  *           properties:
  *             docs:
  *               type: array
  *               items:
  *                 allOf:
- *                   - $ref: '#/definitions/Company'
+ *                   - $ref: '#/definitions/MissionCampaign'
  *                   - properties:
  *                       id:
  *                         type: string
@@ -51,37 +51,37 @@ const CompanyController = {
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
 
-    Company.paginate(find, {
+    MissionCampaign.paginate(find, {
       sort,
       offset,
       limit,
     })
-    .then(companies => res.json(companies))
+    .then(missions => res.json(missions))
     .catch(next);
   },
 
 /**
  * @swagger
- * /api/v1/companies:
+ * /api/v1/missions_campaigns:
  *   post:
  *     tags:
- *       - Companies
- *     description: Creates a company
+ *       - MissionsCampaigns
+ *     description: Creates a missionCampaign
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: company
- *         description: Company object
+ *       - name: missionCampaign
+ *         description: missionCampaign object
  *         in: body
  *         required: true
  *         schema:
- *           $ref: '#/definitions/Company'
+ *           $ref: '#/definitions/MissionCampaign'
  *     responses:
  *       200:
  *         description: Successfully created
  *         schema:
  *           allOf:
- *              - $ref: '#/definitions/Company'
+ *              - $ref: '#/definitions/MissionCampaign'
  *              - properties:
  *                  id:
  *                    type: string
@@ -93,32 +93,32 @@ const CompanyController = {
  *                    format: date-time
  */
   create(req, res, next) {
-    Company.create(req.body)
+    MissionCampaign.create(req.body)
     .then(mission => res.status(201).json(mission))
     .catch(next);
   },
 
 /**
  * @swagger
- * /api/v1/companies/{id}:
+ * /api/v1/missions_campaigns/{id}:
  *   get:
  *     tags:
- *       - Companies
- *     description: Returns a company
+ *       - MissionsCampaigns
+ *     description: Returns a mission campaign
  *     produces:
  *       - application/json
  *     parameters:
  *       - name: id
- *         description: Company's id
+ *         description: MissionCampaign's id
  *         in: path
  *         required: true
  *         type: string
  *     responses:
  *       200:
- *         description: A company
+ *         description: A missionCampaign
  *         schema:
  *           allOf:
- *              - $ref: '#/definitions/Company'
+ *              - $ref: '#/definitions/MissionCampaign'
  *              - properties:
  *                  id:
  *                    type: string
@@ -130,50 +130,48 @@ const CompanyController = {
  *                    format: date-time
  */
   read(req, res, next) {
-    Company.findById(req.params.company_id)
-    .then(company => {
-      if (!company)
+    MissionCampaign.findById(req.params.mission_campaign_id)
+    .then(mission => {
+      if (!mission)
         return res.status(404).end();
-
-      res.json(company);
+      res.json(mission);
     })
     .catch(next);
   },
 
 /**
  * @swagger
- * /api/v1/companies/{id}:
+ * /api/v1/missions_campaigns/{id}:
  *   patch:
  *     tags:
- *       - Companies
- *     description: Updates a company
+ *       - MissionsCampaigns
+ *     description: Updates a missionCampaign
  *     produces:
  *       - application/json
  *     parameters:
  *       - name: id
- *         description: Company's id
+ *         description: missionCampaign's id
  *         in: path
  *         required: true
  *         type: string
- *       - name: company
- *         description: Company object
+ *       - name: missionCampaign
+ *         description: MissionCampaign object
  *         in: body
  *         required: true
  *         schema:
- *           $ref: '#/definitions/Company'
+ *           $ref: '#/definitions/MissionCampaign'
  *     responses:
  *       201:
  *         description: Successfully updated
  */
   update(req, res, next) {
-    Company.findByIdAndUpdate(req.params.company_id, req.body, {
+    MissionCampaign.findByIdAndUpdate(req.params.mission_campaign_id, req.body, {
       runValidators: true,
       context: 'query',
     })
-    .then(company => {
-      if (!company)
+    .then(mission => {
+      if (!mission)
         return res.status(404).end();
-
       res.status(204).end();
     })
     .catch(next);
@@ -181,16 +179,16 @@ const CompanyController = {
 
 /**
  * @swagger
- * /api/v1/companies/{id}:
+ * /api/v1/missions_campaigns/{id}:
  *   delete:
  *     tags:
- *       - Companies
- *     description: Deletes a company
+ *       - MissionsCampaigns
+ *     description: Deletes a missionCampaign
  *     produces:
  *       - application/json
  *     parameters:
  *       - name: id
- *         description: Company's id
+ *         description: MissionCampaign's id
  *         in: path
  *         required: true
  *         type: string
@@ -199,7 +197,7 @@ const CompanyController = {
  *         description: Successfully deleted
  */
   delete(req, res, next) {
-    Company.findByIdAndRemove(req.params.company_id)
+    MissionCampaign.findByIdAndRemove(req.params.mission_campaign_id)
     .then(mission => {
       if (!mission)
         return res.status(404).end();
@@ -208,17 +206,6 @@ const CompanyController = {
     })
     .catch(next);
   },
-
-  validate(req, res, next) {
-    Company.findById(req.params.company_id)
-    .then(company => {
-      if (!company)
-        return res.status(404).json('Company not found');
-
-      next();
-    })
-    .catch(next);
-  },
 };
 
-export default CompanyController;
+export default MissionCampaignController;
