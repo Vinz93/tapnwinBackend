@@ -10,6 +10,41 @@ import path from 'path';
 import Item from '../../models/dyg/item';
 
 const ItemController = {
+/**
+ * @swagger
+ * /api/v1/items:
+ *   get:
+ *     tags:
+ *       - Items
+ *     description: Returns all items
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of items
+ *         schema:
+ *           properties:
+ *             docs:
+ *               type: array
+ *               items:
+ *                 allOf:
+ *                   - $ref: '#/definitions/Item'
+ *                   - properties:
+ *                       id:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *             total:
+ *               type: integer
+ *             limit:
+ *               type: integer
+ *             offset:
+ *               type: integer
+ */
   readAll(req, res, next) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
@@ -28,12 +63,75 @@ const ItemController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/items:
+ *   post:
+ *     tags:
+ *       - Items
+ *     description: Creates an item
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: item
+ *         description: Item object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/Item'
+ *     responses:
+ *       200:
+ *         description: Successfully created
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Item'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ */
   create(req, res, next) {
     Item.create(req.body)
     .then(item => res.status(201).json(item))
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/items/{item_id}:
+ *   get:
+ *     tags:
+ *       - Items
+ *     description: Returns an item
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: item_id
+ *         description: Item's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: An item
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Item'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ */
   read(req, res, next) {
     Item.findById(req.params.item_id)
     .then(item => {
@@ -45,6 +143,31 @@ const ItemController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/items/{item_id}:
+ *   patch:
+ *     tags:
+ *       - Items
+ *     description: Updates an item
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: item_id
+ *         description: Item's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: item
+ *         description: Item object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/Item'
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
   update(req, res, next) {
     Item.findByIdAndUpdate(req.params.item_id, req.body, {
       runValidators: true,
@@ -62,6 +185,25 @@ const ItemController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/items/{item_id}:
+ *   delete:
+ *     tags:
+ *       - Items
+ *     description: Deletes an item
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: item_id
+ *         description: Item's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       204:
+ *         description: Successfully deleted
+ */
   delete(req, res, next) {
     Item.findByIdAndRemove(req.params.item_id)
     .then(item => {

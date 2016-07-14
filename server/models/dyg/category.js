@@ -17,6 +17,31 @@ const isURL = validate({
   message: 'not a valid url',
 });
 
+/**
+ * @swagger
+ * definition:
+ *   Category:
+ *     properties:
+ *       company:
+ *         type: string
+ *       name:
+ *         type: string
+ *       zone:
+ *         type: integer
+ *       urls:
+ *         properties:
+ *           selected:
+ *             type: string
+ *           unselected:
+ *             type: string
+ *         required:
+ *           - selected
+ *           - unselected
+ *     required:
+ *       - company
+ *       - name
+ *       - zone
+ */
 const CategorySchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,

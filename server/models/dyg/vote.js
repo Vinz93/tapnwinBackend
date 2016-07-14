@@ -16,6 +16,27 @@ import Design from '../dyg/design';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   Vote:
+ *     properties:
+ *       player:
+ *         type: string
+ *       design:
+ *         type: string
+ *       stickers:
+ *         type: array
+ *         items:
+ *           $ref: '#/definitions/Sticker'
+ *         required:
+ *           - animation
+ *           - enable
+ *           - disable
+ *     required:
+ *       - player
+ *       - design
+ */
 const VoteSchema = new Schema({
   player: {
     type: Schema.Types.ObjectId,

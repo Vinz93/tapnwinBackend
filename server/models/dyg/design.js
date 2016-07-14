@@ -15,6 +15,31 @@ import Campaign from '../common/campaign';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   Design:
+ *     properties:
+ *       player:
+ *         type: string
+ *       campaign:
+ *         type: string
+ *       model:
+ *         type: string
+ *       topItem:
+ *         type: string
+ *       midItem:
+ *         type: string
+ *       botItem:
+ *         type: string
+ *     required:
+ *       - player
+ *       - campaign
+ *       - model
+ *       - topItem
+ *       - midItem
+ *       - botItem
+ */
 const DesignSchema = new Schema({
   player: {
     type: Schema.Types.ObjectId,

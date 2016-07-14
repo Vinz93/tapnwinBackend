@@ -10,6 +10,18 @@ import Question from './question';
 
 const Schema = mongoose.Schema;
 
+/**
+ * @swagger
+ * definition:
+ *   StringQuestion:
+ *     allOf:
+ *       - $ref: '#/definitions/Question'
+ *       - properties:
+ *           possibilities:
+ *             type: array
+ *             items:
+ *               type: string
+ */
 const StringQuestionSchema = new Schema({
   possibilities: {
     type: [String],

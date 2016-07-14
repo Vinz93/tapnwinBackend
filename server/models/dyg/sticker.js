@@ -17,6 +17,34 @@ const isURL = validate({
   message: 'not a valid url',
 });
 
+/**
+ * @swagger
+ * definition:
+ *   Sticker:
+ *     properties:
+ *       company:
+ *         type: string
+ *       name:
+ *         type: string
+ *       isPositive:
+ *         type: boolean
+ *       urls:
+ *         properties:
+ *           animation:
+ *             type: string
+ *           enable:
+ *             type: string
+ *           disable:
+ *             type: string
+ *         required:
+ *           - animation
+ *           - enable
+ *           - disable
+ *     required:
+ *       - company
+ *       - name
+ *       - isPositive
+ */
 const StickerSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,

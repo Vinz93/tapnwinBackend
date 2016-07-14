@@ -7,6 +7,41 @@
 import Category from '../../models/dyg/category';
 
 const CategoryController = {
+/**
+ * @swagger
+ * /api/v1/categories:
+ *   get:
+ *     tags:
+ *       - Categories
+ *     description: Returns all categories
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: An array of categories
+ *         schema:
+ *           properties:
+ *             docs:
+ *               type: array
+ *               items:
+ *                 allOf:
+ *                   - $ref: '#/definitions/Category'
+ *                   - properties:
+ *                       id:
+ *                         type: string
+ *                       createdAt:
+ *                         type: string
+ *                         format: date-time
+ *                       updatedAt:
+ *                         type: string
+ *                         format: date-time
+ *             total:
+ *               type: integer
+ *             limit:
+ *               type: integer
+ *             offset:
+ *               type: integer
+ */
   readAll(req, res, next) {
     const locals = req.app.locals;
     const offset = locals.config.paginate.offset(req.query.offset);
@@ -25,12 +60,75 @@ const CategoryController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/categories:
+ *   post:
+ *     tags:
+ *       - Categories
+ *     description: Creates a category
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: category
+ *         description: Category object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/Category'
+ *     responses:
+ *       200:
+ *         description: Successfully created
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Category'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ */
   create(req, res, next) {
     Category.create(req.body)
     .then(category => res.status(201).json(category))
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/category/{category_id}:
+ *   get:
+ *     tags:
+ *       - Categories
+ *     description: Returns a category
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: category_id
+ *         description: Category's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: A category
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Category'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ */
   read(req, res, next) {
     Category.findById(req.params.category_id)
     .populate('company')
@@ -42,6 +140,31 @@ const CategoryController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/categories/{category_id}:
+ *   patch:
+ *     tags:
+ *       - Categories
+ *     description: Updates a category
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: category_id
+ *         description: Category's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: category
+ *         description: Category object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/Category'
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
   update(req, res, next) {
     Category.findByIdAndUpdate(req.params.category_id, req.body, {
       runValidators: true,
@@ -55,6 +178,25 @@ const CategoryController = {
     .catch(next);
   },
 
+/**
+ * @swagger
+ * /api/v1/categories/{category_id}:
+ *   delete:
+ *     tags:
+ *       - Categories
+ *     description: Deletes a category
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: category_id
+ *         description: Category's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       204:
+ *         description: Successfully deleted
+ */
   delete(req, res, next) {
     Category.findByIdAndRemove(req.params.category_id)
     .then(category => {
