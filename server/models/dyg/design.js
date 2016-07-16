@@ -53,7 +53,7 @@ const DesignSchema = new Schema({
   },
   model: {
     type: Schema.Types.ObjectId,
-    ref: 'Model',
+    ref: 'ModelAsset',
     required: true,
   },
   topItem: {

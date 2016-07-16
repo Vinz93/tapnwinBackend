@@ -16,6 +16,17 @@ const CompanyController = {
  *     description: Returns all companies
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: limit
+ *         description: Return limit
+ *         in: query
+ *         required: false
+ *         type: integer
+ *       - name: offset
+ *         description: Return offset
+ *         in: query
+ *         required: false
+ *         type: integer
  *     responses:
  *       200:
  *         description: An array of companies
@@ -100,7 +111,7 @@ const CompanyController = {
 
 /**
  * @swagger
- * /api/v1/companies/{id}:
+ * /api/v1/companies/{company_id}:
  *   get:
  *     tags:
  *       - Companies
@@ -108,7 +119,7 @@ const CompanyController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: company_id
  *         description: Company's id
  *         in: path
  *         required: true
@@ -142,7 +153,7 @@ const CompanyController = {
 
 /**
  * @swagger
- * /api/v1/companies/{id}:
+ * /api/v1/companies/{company_id}:
  *   patch:
  *     tags:
  *       - Companies
@@ -150,7 +161,7 @@ const CompanyController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: company_id
  *         description: Company's id
  *         in: path
  *         required: true
@@ -181,7 +192,7 @@ const CompanyController = {
 
 /**
  * @swagger
- * /api/v1/companies/{id}:
+ * /api/v1/companies/{company_id}:
  *   delete:
  *     tags:
  *       - Companies
@@ -189,7 +200,7 @@ const CompanyController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: company_id
  *         description: Company's id
  *         in: path
  *         required: true

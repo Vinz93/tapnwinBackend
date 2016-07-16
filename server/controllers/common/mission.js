@@ -16,6 +16,17 @@ const MissionController = {
  *     description: Returns all missions
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: limit
+ *         description: Return limit
+ *         in: query
+ *         required: false
+ *         type: integer
+ *       - name: offset
+ *         description: Return offset
+ *         in: query
+ *         required: false
+ *         type: integer
  *     responses:
  *       200:
  *         description: An array of missions
@@ -100,7 +111,7 @@ const MissionController = {
 
 /**
  * @swagger
- * /api/v1/missions/{id}:
+ * /api/v1/missions/{mission_id}:
  *   get:
  *     tags:
  *       - Missions
@@ -108,7 +119,7 @@ const MissionController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: mission_id
  *         description: Missions's id
  *         in: path
  *         required: true
@@ -141,7 +152,7 @@ const MissionController = {
 
 /**
  * @swagger
- * /api/v1/missions/{id}:
+ * /api/v1/missions/{mission_id}:
  *   patch:
  *     tags:
  *       - Missions
@@ -149,7 +160,7 @@ const MissionController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: mission_id
  *         description: Mission's id
  *         in: path
  *         required: true
@@ -179,7 +190,7 @@ const MissionController = {
 
 /**
  * @swagger
- * /api/v1/missions/{id}:
+ * /api/v1/missions/{mission_id}:
  *   delete:
  *     tags:
  *       - Missions
@@ -187,7 +198,7 @@ const MissionController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: mission_id
  *         description: Mission's id
  *         in: path
  *         required: true

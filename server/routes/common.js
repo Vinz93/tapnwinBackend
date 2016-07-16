@@ -1,10 +1,13 @@
 import express from 'express';
-import Company from '../controllers/common/company';
-import Campaign from '../controllers/common/campaign';
+
 import User from '../controllers/common/user';
 import Administrator from '../controllers/common/administrator';
 import Player from '../controllers/common/player';
 import Session from '../controllers/common/session';
+import Company from '../controllers/common/company';
+import Asset from '../controllers/common/asset';
+import GameAsset from '../controllers/common/game_asset';
+import Campaign from '../controllers/common/campaign';
 import Mission from '../controllers/common/mission';
 import MissionCampaign from '../controllers/common/mission_campaign';
 import MissionStatus from '../controllers/common/mission_status';
@@ -15,14 +18,8 @@ const router = express.Router(); // eslint-disable-line new-cap
 router.route('/administrators')
 .post(Administrator.create);
 
-router.route('/administrators/:administrator_id')
-.patch(Administrator.update);
-
 router.route('/players')
 .post(Player.create);
-
-router.route('/players/:player_id')
-.patch(Player.update);
 
 router.route('/users/recovery_token')
 .post(User.createRecoveryToken);
@@ -54,6 +51,17 @@ router.route('/companies/:company_id')
 .patch(Company.update)
 .delete(Company.delete);
 
+router.route('/assets')
+.get(Asset.readAll);
+
+router.route('/assets/:asset_id')
+.get(Asset.read)
+.patch(Asset.update)
+.delete(Asset.delete);
+
+router.route('/game_assets')
+.get(GameAsset.create);
+
 router.route('/campaigns')
 .get(Campaign.readAll)
 .post(Campaign.create);
@@ -72,11 +80,11 @@ router.route('/missions/:mission_id')
 .patch(Mission.update)
 .delete(Mission.delete);
 
-router.route('/missions_campaigns')
+router.route('/mission_campaigns')
 .get(MissionCampaign.readAll)
 .post(MissionCampaign.create);
 
-router.route('/missions/:mission_campaign_id')
+router.route('/mission_campaigns/:mission_campaign_id')
 .get(MissionCampaign.read)
 .patch(MissionCampaign.update)
 .delete(MissionCampaign.delete);

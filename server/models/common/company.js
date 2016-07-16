@@ -11,7 +11,7 @@ import fieldRemover from 'mongoose-field-remover';
 import Promise from 'bluebird';
 
 import Campaign from './campaign';
-import Model from '../dyg/model';
+import ModelAsset from '../dyg/model_asset';
 import Category from '../dyg/category';
 import Item from '../dyg/item';
 import Sticker from '../dyg/sticker';
@@ -42,7 +42,7 @@ const CompanySchema = new Schema({
 CompanySchema.pre('remove', next => {
   Promise.all([
     Campaign.remove({ company: this.id }),
-    Model.remove({ company: this.id }),
+    ModelAsset.remove({ company: this.id }),
     Category.remove({ company: this.id }),
     Item.remove({ company: this.id }),
     Sticker.remove({ company: this.id }),

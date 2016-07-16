@@ -1,45 +1,37 @@
 /**
  * @author Andres Alvarez
- * @description Company controller definition
+ * @description PossibilityAsset controller definition
  * @lastModifiedBy Juan Sanchez
  */
 
-import Player from '../../models/common/player';
+import PossibilityAsset from '../../models/vdlg/possibility_asset';
 
-const PlayerController = {
+const PossibilityAssetController = {
 /**
  * @swagger
- * /api/v1/players:
+ * /api/v1/possibility_assets:
  *   post:
  *     tags:
- *       - Players
- *     description: Creates a player
+ *       - PossibilityAssets
+ *     description: Creates a possibilityAssets
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: player
- *         description: Player object
+ *       - name: possibilityAsset
+ *         description: PossibilityAsset object
  *         in: body
  *         required: true
  *         schema:
- *           allOf:
- *              - $ref: '#/definitions/Player'
- *              - properties:
- *                  password:
- *                    type: string
- *                required:
- *                  - password
+ *           $ref: '#/definitions/PossibilityAsset'
  *     responses:
  *       200:
  *         description: Successfully created
  *         schema:
  *           allOf:
- *              - $ref: '#/definitions/Player'
+ *              - $ref: '#/definitions/PossibilityAsset'
  *              - properties:
  *                  id:
  *                    type: string
- *                  balance:
- *                    type: integer
  *                  createdAt:
  *                    type: string
  *                    format: date-time
@@ -48,10 +40,10 @@ const PlayerController = {
  *                    format: date-time
  */
   create(req, res, next) {
-    Player.create(req.body)
-    .then(player => res.status(201).json(player))
+    PossibilityAsset.create(req.body)
+    .then(possibilityAsset => res.status(201).json(possibilityAsset))
     .catch(next);
   },
 };
 
-export default PlayerController;
+export default PossibilityAssetController;

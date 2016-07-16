@@ -22,8 +22,8 @@ const MissionStatusController = {
  * /api/v1/players/me/campaigns/{campaign_id}/mission_statuses:
  *   get:
  *     tags:
- *       - MissionsStatuses
- *     description: Returns all missionsStatuses of a campaign
+ *       - MissionStatuses
+ *     description: Returns all campaign's missionStatuses
  *     produces:
  *       - application/json
  *     parameters:
@@ -39,7 +39,7 @@ const MissionStatusController = {
  *         type: string
  *     responses:
  *       200:
- *         description: An array of missionsStatuses
+ *         description: An array of missionStatuses
  *         schema:
  *           type: array
  *           items:
@@ -100,8 +100,8 @@ const MissionStatusController = {
  * /api/v1/players/me/mission_statuses/{mission_status_id}:
  *   patch:
  *     tags:
- *       - MissionsStatuses
- *     description: Updates a missionStatus of mine
+ *       - MissionStatuses
+ *     description: Updates a player's missionStatus
  *     produces:
  *       - application/json
  *     parameters:

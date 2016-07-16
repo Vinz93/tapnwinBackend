@@ -15,7 +15,7 @@ const SessionController = {
  *   post:
  *     tags:
  *       - Sessions
- *     description: Creates a player
+ *     description: Creates a user's session
  *     produces:
  *       - application/json
  *     parameters:
@@ -69,7 +69,7 @@ const SessionController = {
  *   delete:
  *     tags:
  *       - Sessions
- *     description: Deletes a session
+ *     description: Deletes a user's session
  *     produces:
  *       - application/json
  *     parameters:

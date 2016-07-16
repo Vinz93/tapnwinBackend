@@ -1,5 +1,5 @@
 {
-  "missions_campaigns": {
+  "mission_campaigns": {
     "_model": "MissionCampaign",
     "_require": [
       "Campaign",

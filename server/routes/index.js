@@ -8,12 +8,54 @@ import vdlg from './vdlg';
 
 const router = express.Router();  // eslint-disable-line new-cap
 
+/**
+ * @swagger
+ * /api/v1/time:
+ *   get:
+ *     tags:
+ *       - Times
+ *     description: Returns current time
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Current time
+ *         schema:
+ *           properties:
+ *             time:
+ *               type: string
+ *               format: date-time
+ */
 router.get('/time', (req, res) => {
   const time = new Date();
+
   res.json({ time });
 });
 
-router.post('/media', (req, res) => {
+/**
+ * @swagger
+ * /api/v1/files:
+ *   post:
+ *     tags:
+ *       - Files
+ *     description: Uploads a file
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: file
+ *         description: File object
+ *         in: formData
+ *         required: true
+ *         type: file
+ *     responses:
+ *       200:
+ *         description: Successfully created
+ *         schema:
+ *           properties:
+ *             url:
+ *               type: string
+ */
+router.post('/files', (req, res) => {
   uploader('file')(req, res, err => {
     if (err)
       return res.status(400).send(err);

@@ -17,8 +17,18 @@ const CampaignController = {
  *     produces:
  *       - application/json
  *     parameters:
+ *       - name: limit
+ *         description: Return limit
+ *         in: query
+ *         required: false
+ *         type: integer
+ *       - name: offset
+ *         description: Return offset
+ *         in: query
+ *         required: false
+ *         type: integer
  *       - name: active
- *         description: Filter by active campaign
+ *         description: True for filter by active campaign and false otherwise
  *         in: query
  *         required: true
  *         type: boolean
@@ -129,7 +139,7 @@ const CampaignController = {
 
 /**
  * @swagger
- * /api/v1/campaigns/{id}:
+ * /api/v1/campaigns/{campaign_id}:
  *   get:
  *     tags:
  *       - Campaigns
@@ -137,7 +147,7 @@ const CampaignController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: campaign_id
  *         description: Campaign's id
  *         in: path
  *         required: true
@@ -176,7 +186,7 @@ const CampaignController = {
 
 /**
  * @swagger
- * /api/v1/campaigns/{id}:
+ * /api/v1/campaigns/{campaign_id}:
  *   patch:
  *     tags:
  *       - Campaigns
@@ -184,7 +194,7 @@ const CampaignController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: campaign_id
  *         description: Campaign's id
  *         in: path
  *         required: true
@@ -215,7 +225,7 @@ const CampaignController = {
 
 /**
  * @swagger
- * /api/v1/campaigns/{id}:
+ * /api/v1/campaigns/{campaign_id}:
  *   delete:
  *     tags:
  *       - Campaigns
@@ -223,7 +233,7 @@ const CampaignController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: campaign_id
  *         description: Campaign's id
  *         in: path
  *         required: true

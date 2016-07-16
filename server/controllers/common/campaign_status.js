@@ -12,7 +12,7 @@ const StatusController = {
  * /api/v1/players/me/campaigns/{campaign_id}/campaign_status:
  *   get:
  *     tags:
- *       - CampaignsStatuses
+ *       - CampaignStatuses
  *     description: Returns a campaignStatus
  *     produces:
  *       - application/json
@@ -65,7 +65,7 @@ const StatusController = {
  * /api/v1/players/me/campaign_status/{campaign_status_id}:
  *   patch:
  *     tags:
- *       - CampaignsStatuses
+ *       - CampaignStatuses
  *     description: Updates me
  *     produces:
  *       - application/json

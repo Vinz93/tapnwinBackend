@@ -10,6 +10,12 @@ import Asset from '../common/asset';
 
 const Schema = mongoose.Schema;
 
-const PossibilitySchema = new Schema({});
+/**
+ * @swagger
+ * definition:
+ *   PossibilityAsset:
+ *     $ref: '#/definitions/Asset'
+ */
+const PossibilityAssetSchema = new Schema({});
 
-export default Asset.discriminator('Possibility', PossibilitySchema);
+export default Asset.discriminator('PossibilityAsset', PossibilityAssetSchema);

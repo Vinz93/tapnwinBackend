@@ -17,7 +17,7 @@ import ValidationError from '../../helpers/validationError';
 import MissionCampaign from './mission_campaign';
 
 import Design from '../dyg/design';
-import Model from '../dyg/model';
+import ModelAsset from '../dyg/model_asset';
 import Sticker from '../dyg/sticker';
 import Category from '../dyg/category';
 import Item from '../dyg/item';
@@ -53,7 +53,7 @@ const DYGSchema = GameSchema.extend({
   models: [{
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Model',
+    ref: 'ModelAsset',
   }],
   stickers: [{
     type: Schema.Types.ObjectId,
@@ -228,7 +228,7 @@ CampaignSchema.pre('save', function (next) {
   };
 
   parallel([
-    cb => eachWrapper(Model, 'Model', this.dyg.models, null, cb),
+    cb => eachWrapper(ModelAsset, 'ModelAsset', this.dyg.models, null, cb),
     cb => eachWrapper(Sticker, 'Sticker', this.dyg.stickers, null, cb),
     cb => eachWrapper(Category, 'Category', this.dyg.categories, 'category', cb),
   ], err => {

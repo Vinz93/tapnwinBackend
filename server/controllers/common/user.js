@@ -23,6 +23,17 @@ const UserController = {
  *     description: Returns all users
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: limit
+ *         description: Return limit
+ *         in: query
+ *         required: false
+ *         type: integer
+ *       - name: offset
+ *         description: Return offset
+ *         in: query
+ *         required: false
+ *         type: integer
  *     responses:
  *       200:
  *         description: An array of users
@@ -132,7 +143,7 @@ const UserController = {
  *   get:
  *     tags:
  *       - Users
- *     description: Returns me
+ *     description: Returns a user
  *     produces:
  *       - application/json
  *     parameters:
@@ -167,7 +178,7 @@ const UserController = {
  *   patch:
  *     tags:
  *       - Users
- *     description: Updates me
+ *     description: Updates a user
  *     produces:
  *       - application/json
  *     parameters:
@@ -202,7 +213,7 @@ const UserController = {
  *   patch:
  *     tags:
  *       - Users
- *     description: Updates password
+ *     description: Updates user's password
  *     produces:
  *       - application/json
  *     parameters:
@@ -279,13 +290,52 @@ const UserController = {
  */
   read(req, res, next) {
     User.findById(req.params.user_id)
-      .then(user => {
-        if (!user)
-          return res.status(404).end();
+    .then(user => {
+      if (!user)
+        return res.status(404).end();
 
-        res.json(user);
-      })
+      res.json(user);
+    })
+    .catch(next);
+  },
+
+/**
+ * @swagger
+ * /api/v1/user/{user_id}:
+ *   patch:
+ *     tags:
+ *       - Users
+ *     description: Updates a user
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: user_id
+ *         description: User's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: User
+ *         description: User object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
+  update(req, res, next) {
+    User.findById(req.params.user_id)
+    .then(user => {
+      if (!user)
+        return res.status(404).end();
+
+      Object.assign(user, req.body);
+
+      user.save()
+      .then(() => res.status(204).end())
       .catch(next);
+    });
   },
 
 /**

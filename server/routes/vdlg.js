@@ -1,11 +1,12 @@
 import express from 'express';
 
-import Session from '../controllers/common/session';
 import User from '../controllers/common/user';
+import Session from '../controllers/common/session';
 import Question from '../controllers/vdlg/question';
 import StringQuestion from '../controllers/vdlg/string_question';
 import AssetQuestion from '../controllers/vdlg/asset_question';
 import Answer from '../controllers/vdlg/answer';
+import PossibilityAsset from '../controllers/vdlg/possibility_asset';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
@@ -17,6 +18,9 @@ router.route('/string_questions')
 
 router.route('/asset_questions')
 .post(AssetQuestion.create);
+
+router.route('/possibility_assets')
+.post(PossibilityAsset.create);
 
 router.route('/players/me/questions')
 .all(Session.validate, User.isPlayer)

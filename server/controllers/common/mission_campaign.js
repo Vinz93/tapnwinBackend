@@ -9,16 +9,27 @@ import MissionCampaign from '../../models/common/mission_campaign';
 const MissionCampaignController = {
 /**
  * @swagger
- * /api/v1/missions_campaigns:
+ * /api/v1/mission_campaigns:
  *   get:
  *     tags:
- *       - MissionsCampaigns
- *     description: Returns all missionsCampaings
+ *       - MissionCampaigns
+ *     description: Returns all missionCampaings
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: limit
+ *         description: Return limit
+ *         in: query
+ *         required: false
+ *         type: integer
+ *       - name: offset
+ *         description: Return offset
+ *         in: query
+ *         required: false
+ *         type: integer
  *     responses:
  *       200:
- *         description: An array of missionsCampaings
+ *         description: An array of missionCampaings
  *         schema:
  *           properties:
  *             docs:
@@ -62,10 +73,10 @@ const MissionCampaignController = {
 
 /**
  * @swagger
- * /api/v1/missions_campaigns:
+ * /api/v1/mission_campaigns:
  *   post:
  *     tags:
- *       - MissionsCampaigns
+ *       - MissionCampaigns
  *     description: Creates a missionCampaign
  *     produces:
  *       - application/json
@@ -100,15 +111,15 @@ const MissionCampaignController = {
 
 /**
  * @swagger
- * /api/v1/missions_campaigns/{id}:
+ * /api/v1/mission_campaigns/{mission_campaign_id}:
  *   get:
  *     tags:
- *       - MissionsCampaigns
+ *       - MissionCampaigns
  *     description: Returns a mission campaign
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: mission_campaign_id
  *         description: MissionCampaign's id
  *         in: path
  *         required: true
@@ -141,15 +152,15 @@ const MissionCampaignController = {
 
 /**
  * @swagger
- * /api/v1/missions_campaigns/{id}:
+ * /api/v1/mission_campaigns/{mission_campaign_id}:
  *   patch:
  *     tags:
- *       - MissionsCampaigns
+ *       - MissionCampaigns
  *     description: Updates a missionCampaign
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: mission_campaign_id
  *         description: missionCampaign's id
  *         in: path
  *         required: true
@@ -179,15 +190,15 @@ const MissionCampaignController = {
 
 /**
  * @swagger
- * /api/v1/missions_campaigns/{id}:
+ * /api/v1/mission_campaigns/{mission_campaign_id}:
  *   delete:
  *     tags:
- *       - MissionsCampaigns
+ *       - MissionCampaigns
  *     description: Deletes a missionCampaign
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: id
+ *       - name: mission_campaign_id
  *         description: MissionCampaign's id
  *         in: path
  *         required: true

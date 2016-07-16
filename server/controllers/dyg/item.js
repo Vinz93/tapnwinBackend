@@ -19,6 +19,17 @@ const ItemController = {
  *     description: Returns all items
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - name: limit
+ *         description: Return limit
+ *         in: query
+ *         required: false
+ *         type: integer
+ *       - name: offset
+ *         description: Return offset
+ *         in: query
+ *         required: false
+ *         type: integer
  *     responses:
  *       200:
  *         description: An array of items

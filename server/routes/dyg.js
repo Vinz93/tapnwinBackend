@@ -2,25 +2,17 @@ import express from 'express';
 
 import User from '../controllers/common/user';
 import Session from '../controllers/common/session';
-
-import Asset from '../controllers/common/asset';
+import ModelAsset from '../controllers/dyg/model_asset';
 import Category from '../controllers/dyg/category';
 import Design from '../controllers/dyg/design';
 import Item from '../controllers/dyg/item';
-import Model from '../controllers/dyg/model';
 import Vote from '../controllers/dyg/vote';
 import Sticker from '../controllers/dyg/sticker';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route('/models')
-.get(Model.readAll)
-.post(Model.create);
-
-router.route('/models/:model_id')
-.get(Asset.read)
-.patch(Model.update)
-.delete(Asset.delete);
+router.route('/model_assets')
+.post(ModelAsset.create);
 
 router.route('/items')
 .get(Item.readAll)
@@ -58,7 +50,7 @@ router.route('/players/me/votes')
 .all(Session.validate, User.isPlayer)
 .post(Vote.createByMe);
 
-router.route('/players/me/designs/:design_id/votes')
+router.route('/players/me/designs/:design_id/vote')
 .all(Session.validate, User.isPlayer)
 .get(Vote.readByMeDesign);
 
@@ -69,7 +61,7 @@ router.route('/votes/:vote_id')
 .get(Vote.read);
 
 router.route('players/me/votes/:vote_id')
-.patch(Session.validate, User.isPlayer, Vote.update);
+.patch(Session.validate, User.isPlayer, Vote.updateByMe);
 
 router.route('/stickers')
 .get(Sticker.readAll)

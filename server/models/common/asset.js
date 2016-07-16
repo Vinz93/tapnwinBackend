@@ -17,6 +17,22 @@ const isURL = validate({
   message: 'not a valid url',
 });
 
+/**
+ * @swagger
+ * definition:
+ *   Asset:
+ *     properties:
+ *       company:
+ *         type: string
+ *       name:
+ *         type: string
+ *       url:
+ *         type: string
+ *     required:
+ *       - company
+ *       - name
+ *       - url
+ */
 const AssetSchema = new Schema({
   company: {
     type: Schema.Types.ObjectId,

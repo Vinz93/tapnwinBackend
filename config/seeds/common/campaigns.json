@@ -4,7 +4,7 @@
     "_require": [
       "Company",
       "Mission",
-      "Model",
+      "ModelAsset",
       "Sticker",
       "Category",
       "Item"
@@ -41,7 +41,7 @@
           }
         ],
         "models": [
-          "->models.model1"
+          "->model_assets.model1"
         ],
         "stickers": [
           "->stickers.vintage",

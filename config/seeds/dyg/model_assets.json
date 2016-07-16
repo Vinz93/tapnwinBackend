@@ -1,6 +1,6 @@
 {
-  "models": {
-    "_model": "Model",
+  "model_assets": {
+    "_model": "ModelAsset",
     "_require": ["Company"],
     "model1": {
       "company": "->companies.company1",

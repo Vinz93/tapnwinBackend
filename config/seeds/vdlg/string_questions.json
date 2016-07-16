@@ -1,5 +1,5 @@
 {
-  "stringQuestions": {
+  "string_questions": {
     "_model": "StringQuestion",
     "_require": ["Campaign"],
     "stringQuestion1": {

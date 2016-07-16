@@ -22,7 +22,7 @@ const spec = swaggerDoc({
       version: '1.0.0',
     },
   },
-  apis: ['./server/models/**/*.js', './server/controllers/**/*.js'],
+  apis: ['./server/routes/**/*.js', './server/models/**/*.js', './server/controllers/**/*.js'],
 });
 
 app.disable('x-powered-by');
