@@ -42,6 +42,7 @@ grunt mocha
 
 ## Style guide
 JavaScript code linting is done using [ESLint](http://eslint.org/), which is a pluggable linter tool for identifying and reporting on patterns. Uses ESLint with `eslint-config-airbnb`, which tries to follow the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript). You must follow that guide strictly and this common conventions:
+
 * The file and directory names are in `snake_case`
 * Code documentation is in [Swagger jsdoc](https://www.npmjs.com/package/swagger-jsdoc)
 
