@@ -4,12 +4,15 @@ module.exports = function(grunt) {
   var path = require('path');
 
   var paths = {
+    pkg: 'package.json',
     src: {
       main: 'index.js',
-      all: ['server/**/*.js', 'config/**/*.js'],
-      no: ['server/**/*', 'config/**/*', '!server/**/*.js', '!config/**/*.js']
+      js: [
+        'server/**/*.js',
+        'config/**/*.js'
+      ],
     },
-    docs: ['docs/main.apib'],
+    seeds: 'config/seeds/**/*.json',
     dist: 'dist/',
   };
 
@@ -20,10 +23,16 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-      srcno: {
+      seeds: {
         files: [{
           expand: true,
-          src: paths.src.no,
+          src: paths.seeds,
+          dest: paths.dist
+        }],
+      },
+      pkg: {
+        files: [{
+          src: paths.pkg,
           dest: paths.dist
         }],
       },
@@ -43,7 +52,10 @@ module.exports = function(grunt) {
       src: {
         files: [{
           expand: true,
-          src: [paths.src.main, paths.src.all],
+          src: [
+            paths.src.main,
+            paths.src.js
+          ],
           dest: paths.dist,
           ext: '.js',
         }],
@@ -51,15 +63,18 @@ module.exports = function(grunt) {
     },
     watch: {
       src: {
-        files: [paths.src.main, paths.src.all],
+        files: [
+          paths.src.main,
+          paths.src.js
+        ],
         tasks: ['changed:babel'],
         options: {
           spawn: false,
         },
       },
-      srcno: {
-        files: paths.src.no,
-        tasks: ['changed:copy'],
+      seeds: {
+        files: paths.seeds,
+        tasks: ['changed:copy:seeds'],
         options: {
           spawn: false,
         },
@@ -75,8 +90,12 @@ module.exports = function(grunt) {
       },
     },
     concurrent: {
-      all: {
-        tasks: ['nodemon', 'watch:src', 'watch:srcno'],
+      js: {
+        tasks: [
+          'nodemon',
+          'watch:src',
+          'watch:seeds'
+        ],
         options: {
           logConcurrentOutput: true,
           limit: 3
@@ -85,7 +104,20 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('build', ['clean', 'changed:babel', 'changed:copy', 'mkdir']);
-  grunt.registerTask('serve', ['build', 'concurrent']);
+  grunt.registerTask('build', [
+    'clean',
+    'babel',
+    'copy:pkg',
+    'mkdir'
+  ]);
+
+  grunt.registerTask('serve', [
+    'clean',
+    'changed:babel',
+    'changed:copy:seeds',
+    'mkdir',
+    'concurrent'
+  ]);
+
   grunt.registerTask('default', 'serve');
 };
