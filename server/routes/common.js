@@ -90,12 +90,15 @@ router.route('/mission_campaigns/:mission_campaign_id')
 .delete(MissionCampaign.delete);
 
 router.route('/players/me/campaigns/:campaign_id/campaign_status')
-.all(Session.validate, User.isPlayer, Campaign.validate)
-.get(CampaignStatus.readByMe)
+.all(Session.validate, User.isPlayer)
+.get(CampaignStatus.readByMe);
+
+router.route('/players/me/campaign_status/:campaign_status_id')
+.all(Session.validate, User.isPlayer)
 .patch(CampaignStatus.updateByMe);
 
 router.route('/players/me/campaigns/:campaign_id/mission_statuses')
-.all(Session.validate, User.isPlayer, Campaign.validate)
+.all(Session.validate, User.isPlayer)
 .get(MissionStatus.readAllByMe);
 
 router.route('/players/me/mission_statuses/:mission_status_id')

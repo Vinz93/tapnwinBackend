@@ -219,17 +219,6 @@ const CompanyController = {
     })
     .catch(next);
   },
-
-  validate(req, res, next) {
-    Company.findById(req.params.company_id)
-    .then(company => {
-      if (!company)
-        return res.status(404).json('Company not found');
-
-      next();
-    })
-    .catch(next);
-  },
 };
 
 export default CompanyController;

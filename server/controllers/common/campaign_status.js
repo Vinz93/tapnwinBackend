@@ -92,8 +92,8 @@ const StatusController = {
  */
   updateByMe(req, res, next) {
     const criteria = {
+      _id: req.params.campaign_status_id,
       player: res.locals.user.id,
-      campaign: req.params.campaign_id,
     };
 
     CampaignStatus.findOneAndUpdate(criteria, req.body, {

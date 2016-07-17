@@ -252,52 +252,6 @@ const CampaignController = {
     })
     .catch(next);
   },
-
-  validate(req, res, next) {
-    Campaign.findById(req.params.campaign_id)
-    .then(campaign => {
-      if (!campaign)
-        return res.status(404).json('Campaign not found');
-
-      res.locals.campaign = campaign;
-
-      next();
-    })
-    .catch(err => {
-      if (err.name === 'CastError')
-        return res.status(400).send(err);
-
-      return res.status(500).send(err);
-    });
-  },
-
-  designActive(req, res, next) {
-    if (!res.locals.campaign.dyg.active)
-      return res.status(409).json('DYG game is not active');
-
-    next();
-  },
-
-  voiceActive(req, res, next) {
-    if (!res.locals.campaign.vdlg.active)
-      return res.status(409).json('VDLG game is not active');
-
-    next();
-  },
-
-  match3Active(req, res, next) {
-    if (!res.locals.campaign.m3.active)
-      return res.status(409).json('M3 game is not active');
-
-    next();
-  },
-
-  ownerActive(req, res, next) {
-    if (!res.locals.campaign.ddt.active)
-      return res.status(409).json('DDT game is not active');
-
-    next();
-  },
 };
 
 export default CampaignController;
