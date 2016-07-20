@@ -218,7 +218,7 @@ const MissionStatusController = {
           const data = {};
 
           data.isBlocked = true;
-          data.unblockAt = new Date() + status.missionCampaign.blockTime;
+          data.unblockAt = Date.now() + status.missionCampaign.blockTime;
           data.m3 = {
             isBlocked: true,
             unblockAt: data.unblockAt,

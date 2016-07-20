@@ -26,14 +26,19 @@ const Schema = mongoose.Schema;
  *       balance:
  *         type: number
  *         format: float
- *       dyg:
+ *       isBlocked:
  *         type: boolean
- *       vdlg:
- *         type: boolean
+ *       unblockAt:
+ *         type: string
+ *         format: date-time
  *       m3:
- *         type: boolean
- *       ddt:
- *         type: boolean
+ *         properties:
+ *           isBlocked:
+ *             type: boolean
+ *           score:
+ *             type: number
+ *           move:
+ *             type: number
  *     required:
  *       - player
  *       - campaign
@@ -76,13 +81,13 @@ CampaignStatusSchema.post('findOne', function (campaignStatus, next) {
   if (campaignStatus) {
     let changed = false;
 
-    if (campaignStatus.unblockAt && campaignStatus.unblockAt <= new Date()) {
+    if (campaignStatus.unblockAt && campaignStatus.unblockAt <= Date.now()) {
       changed = true;
       campaignStatus.isBlocked = false;
       campaignStatus.unblockAt = undefined;
     }
 
-    if (campaignStatus.m3.unblockAt && campaignStatus.m3.unblockAt <= new Date()) {
+    if (campaignStatus.m3.unblockAt && campaignStatus.m3.unblockAt <= Date.now()) {
       changed = true;
       campaignStatus.m3.isBlocked = false;
       campaignStatus.m3.unblockAt = undefined;
@@ -111,14 +116,13 @@ CampaignStatusSchema.pre('save', function (next) {
         campaign: this.campaign,
       }));
 
-    if (this.m3.initialMoves === undefined && campaign.m3.active) {
+    if (this.m3.moves === undefined && campaign.m3.active) {
       this.m3.isBlocked = false;
       this.m3.moves = campaign.m3.initialMoves;
       this.m3.score = 0;
     } else if (this.m3.moves <= 0) {
-      console.log('xd');
       this.m3.isBlocked = true;
-      this.m3.unblockAt = new Date() + campaign.m3.blockedTime;
+      this.m3.unblockAt = Date.now() + campaign.m3.blockTime;
       this.m3.moves = campaign.m3.initialMoves;
     }
 

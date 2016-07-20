@@ -44,12 +44,10 @@ const StatusController = {
  *                    format: date-time
  */
   readByMe(req, res, next) {
-    const criteria = {
-      player: res.locals.user.id,
+    CampaignStatus.findOne({
+      player: res.locals.user._id,
       campaign: req.params.campaign_id,
-    };
-
-    CampaignStatus.findOne(criteria)
+    })
     .then(status => {
       res.json(status);
     })
@@ -91,20 +89,22 @@ const StatusController = {
  *         description: Successfully updated
  */
   updateByMe(req, res, next) {
-    const criteria = {
+    CampaignStatus.findOne({
       _id: req.params.campaign_status_id,
-      player: res.locals.user.id,
-    };
-
-    CampaignStatus.findOneAndUpdate(criteria, req.body, {
-      runValidators: true,
-      context: 'query',
+      player: res.locals.user._id,
     })
-    .then(status => {
-      if (!status)
+    .then(campaignStatus => {
+      if (!campaignStatus)
         return res.status(404).end();
 
-      res.status(204).end();
+      Object.assign(campaignStatus.m3, req.body.m3);
+      delete req.body.m3;
+
+      Object.assign(campaignStatus, req.body);
+
+      campaignStatus.save()
+      .then(() => res.status(204).end())
+      .catch(next);
     })
     .catch(next);
   },

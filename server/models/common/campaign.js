@@ -68,7 +68,7 @@ const VDLGSchema = GameSchema.extend({});
 const M3Schema = GameSchema.extend({
   blockTime: {
     type: Number,
-    default: 0,
+    default: 60000,
   },
   initialMoves: {
     type: Number,
