@@ -99,10 +99,11 @@
       },
       "vdlg": {
         "active": true,
-        "canBeBlocked": true
+        "blockable": true
       },
       "m3": {
-        "canBeBlocked": true
+        "active": true,
+        "blockable": true
       }
     }
   }

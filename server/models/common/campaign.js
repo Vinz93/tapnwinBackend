@@ -14,8 +14,8 @@ import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-va
 import fieldRemover from 'mongoose-field-remover';
 
 import ValidationError from '../../helpers/validationError';
-import MissionCampaign from './mission_campaign';
 
+import MissionCampaign from './mission_campaign';
 import Design from '../dyg/design';
 import ModelAsset from '../dyg/model_asset';
 import Sticker from '../dyg/sticker';
@@ -29,7 +29,7 @@ const GameSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  canBeBlocked: {
+  blockable: {
     type: Boolean,
     default: false,
   },
@@ -65,7 +65,16 @@ const DYGSchema = GameSchema.extend({
 
 const VDLGSchema = GameSchema.extend({});
 
-const M3Schema = GameSchema.extend({});
+const M3Schema = GameSchema.extend({
+  blockTime: {
+    type: Number,
+    default: 0,
+  },
+  initialMoves: {
+    type: Number,
+    default: 30,
+  },
+});
 
 const DDTSchema = GameSchema.extend({});
 
@@ -174,6 +183,7 @@ CampaignSchema.pre('save', function (next) {
 CampaignSchema.pre('save', function (next) {
   if (!(this.isModified('startAt') || this.isModified('finishAt')))
     return next();
+
   Campaign.find({ // eslint-disable-line no-use-before-define
     $or: [
       {

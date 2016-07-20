@@ -55,7 +55,7 @@ const MissionCampaignSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  blockedTime: {
+  blockTime: {
     type: Number,
     default: 0,
   },

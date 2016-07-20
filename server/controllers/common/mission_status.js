@@ -12,7 +12,6 @@ import Promise from 'bluebird';
 import MissionStatus from '../../models/common/mission_status';
 import MissionCampaign from '../../models/common/mission_campaign';
 import CampaignStatus from '../../models/common/campaign_status';
-import config from '../../../config/env';
 
 const Transaction = mongooseTransaction(mongoose);
 
@@ -88,9 +87,9 @@ const MissionStatusController = {
         .catch(cb);
       },
     ], (err, statuses) => {
-      if (err && !err.done) {
-        next(err);
-      }
+      if (err && !err.done)
+        return next(err);
+
       res.json(statuses);
     });
   },
@@ -143,6 +142,7 @@ const MissionStatusController = {
             return res.status(409).end();
 
           transaction.update('Status', status.id, { value: status.value + 1 });
+
           cb(null, status);
         })
         .catch(cb);
@@ -150,10 +150,10 @@ const MissionStatusController = {
       (status, cb) => {
         if (status.value + 1 === status.missionCampaign.max) {
           transaction.update('Status', status.id, { isDone: true });
+
           cb(null, status);
-        } else {
+        } else
           cb({ done: true });
-        }
       },
       (status, cb) => {
         MissionCampaign.find({
@@ -174,6 +174,7 @@ const MissionStatusController = {
             else
               return cb(err);
           }
+
           cb(null, status, missions, campaignStatus);
         });
       },
@@ -188,12 +189,13 @@ const MissionStatusController = {
       },
       (status, missions, campaignStatus, statuses, cb) => {
         if (statuses.reduce((prev, curr) => {
-          if (!curr.missionCampaign.isRequired || curr.id === status.id) {
+          if (!curr.missionCampaign.isRequired || curr.id === status.id)
             return prev && true;
-          }
+
           return curr.isDone && prev;
         }, true)) {
           let balance;
+
           if (status.missionCampaign.isRequired) {
             balance = missions[0].campaign.balance;
 
@@ -201,30 +203,36 @@ const MissionStatusController = {
               if (status.isDone && !status.missionCampaign.isRequired)
                 balance += status.missionCampaign.balance;
             });
-          } else {
+          } else
             balance = status.missionCampaign.balance;
-          }
-          transaction.update('Player', res.locals.user.id,
-          { balance: res.locals.user.balance + balance });
+
+          transaction.update('Player', res.locals.user.id, {
+            balance: res.locals.user.balance + balance,
+          });
         }
+
         cb(null, status, missions, campaignStatus, statuses);
       },
       (status, missions, campaignStatus, statuses, cb) => {
         if (status.missionCampaign.isBlocking) {
-          const block = {};
-          config.games.forEach(game => {
-            if (missions[0].campaign[game.name].canBeBlocked)
-              block[game.name] = false;
-          });
+          const data = {};
 
-          transaction.update('CampaignStatus', campaignStatus.id, block);
+          data.isBlocked = true;
+          data.unblockAt = new Date() + status.missionCampaign.blockTime;
+          data.m3 = {
+            isBlocked: true,
+            unblockAt: data.unblockAt,
+          };
+
+          transaction.update('CampaignStatus', campaignStatus.id, data);
         }
+
         cb(null);
       },
     ], (err) => {
-      if (err && !err.done) {
-        next(err);
-      }
+      if (err && !err.done)
+        return next(err);
+
       transaction.run(err => {
         if (err)
           return next(err);

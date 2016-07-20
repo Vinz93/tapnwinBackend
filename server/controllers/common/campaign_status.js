@@ -103,6 +103,7 @@ const StatusController = {
     .then(status => {
       if (!status)
         return res.status(404).end();
+
       res.status(204).end();
     })
     .catch(next);

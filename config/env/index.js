@@ -13,19 +13,12 @@ const defaults = {
       return !isNaN(offset) ? parseInt(offset, 10) : value || 0;
     },
   },
-  games: [{
-    name: 'dyg', // dyg = Diseña Y Gana
-    id: '0001',
-  }, {
-    name: 'vdlg', // vdlg = Voz De La Gente
-    id: '0002',
-  }, {
-    name: 'm3', // m3 = Match3
-    id: '0003',
-  }, {
-    name: 'ddt', // ddt = Dueño De Tienda
-    id: '0004',
-  }],
+  games: [
+    'dyg',
+    'vdlg',
+    'm3',
+    'ddt',
+  ],
 };
 
 const config = {

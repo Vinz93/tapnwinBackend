@@ -9,7 +9,7 @@ import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
-import config from '../../../config/env';
+import ValidationError from '../../helpers/validationError';
 import Campaign from './campaign';
 
 const Schema = mongoose.Schema;
@@ -51,12 +51,19 @@ const CampaignStatusSchema = new Schema({
   },
   balance: {
     type: Number,
-    default: 0.0,
+    default: 0,
   },
-  design: Boolean,
-  voice: Boolean,
-  match3: Boolean,
-  owner: Boolean,
+  m3: {
+    score: Number,
+    moves: Number,
+    isBlocked: Boolean,
+    unblockAt: Date,
+  },
+  isBlocked: {
+    type: Boolean,
+    default: false,
+  },
+  unblockAt: Date,
 }, {
   timestamps: true,
 });
@@ -65,23 +72,57 @@ CampaignStatusSchema.plugin(mongoosePaginate);
 CampaignStatusSchema.plugin(idValidator);
 CampaignStatusSchema.plugin(fieldRemover);
 
-CampaignStatusSchema.post('findOne', function (result, next) {
-  if (result)
-    return next();
+CampaignStatusSchema.post('findOne', function (campaignStatus, next) {
+  if (campaignStatus) {
+    let changed = false;
 
-  const body = this.getQuery();
+    if (campaignStatus.unblockAt && campaignStatus.unblockAt <= new Date()) {
+      changed = true;
+      campaignStatus.isBlocked = false;
+      campaignStatus.unblockAt = undefined;
+    }
 
-  Campaign.findById(body.campaign)
-  .then(campaign => {
-    config.games.map(game => {
-      if (campaign[game.name].active)
-        body[game.name] = true;
-      return body;
-    });
+    if (campaignStatus.m3.unblockAt && campaignStatus.m3.unblockAt <= new Date()) {
+      changed = true;
+      campaignStatus.m3.isBlocked = false;
+      campaignStatus.m3.unblockAt = undefined;
+    }
 
-    CampaignStatus.create(body) // eslint-disable-line no-use-before-define
+    if (changed)
+      campaignStatus.save()
+      .then(next)
+      .catch(next);
+    else
+      next();
+  } else {
+    CampaignStatus.create(this.getQuery()) // eslint-disable-line no-use-before-define
     .then(next)
     .catch(next);
+  }
+});
+
+CampaignStatusSchema.pre('save', function (next) {
+  Campaign.findActive({
+    _id: this.campaign,
+  })
+  .then(campaign => {
+    if (!campaign)
+      return next(new ValidationError('CampaignStatus validation failed', {
+        campaign: this.campaign,
+      }));
+
+    if (this.m3.initialMoves === undefined && campaign.m3.active) {
+      this.m3.isBlocked = false;
+      this.m3.moves = campaign.m3.initialMoves;
+      this.m3.score = 0;
+    } else if (this.m3.moves <= 0) {
+      console.log('xd');
+      this.m3.isBlocked = true;
+      this.m3.unblockAt = new Date() + campaign.m3.blockedTime;
+      this.m3.moves = campaign.m3.initialMoves;
+    }
+
+    next();
   })
   .catch(next);
 });
