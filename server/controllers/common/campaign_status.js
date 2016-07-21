@@ -3,6 +3,7 @@
  * @description Status controller definition
  * @lastModifiedBy Juan Sanchez
  */
+import assignment from 'assignment';
 
 import CampaignStatus from '../../models/common/campaign_status';
 
@@ -54,6 +55,7 @@ const StatusController = {
     .catch(err => {
       if (err.id)
         return res.json(err);
+
       next(err);
     });
   },
@@ -97,14 +99,10 @@ const StatusController = {
       if (!campaignStatus)
         return res.status(404).end();
 
-      Object.assign(campaignStatus.m3, req.body.m3);
-      delete req.body.m3;
-
-      Object.assign(campaignStatus, req.body);
+      assignment(campaignStatus, req.body);
 
       campaignStatus.save()
-      .then(() => res.status(204).end())
-      .catch(next);
+      .then(() => res.status(204).end());
     })
     .catch(next);
   },

@@ -28,9 +28,6 @@ const Schema = mongoose.Schema;
  *         format: float
  *       isBlocked:
  *         type: boolean
- *       unblockAt:
- *         type: string
- *         format: date-time
  *       m3:
  *         properties:
  *           isBlocked:
@@ -58,19 +55,26 @@ const CampaignStatusSchema = new Schema({
     type: Number,
     default: 0,
   },
+  isBlocked: {
+    type: Boolean,
+    default: false,
+  },
+  unblockAt: Date,
   m3: {
     score: Number,
     moves: Number,
     isBlocked: Boolean,
     unblockAt: Date,
   },
-  isBlocked: {
-    type: Boolean,
-    default: false,
-  },
-  unblockAt: Date,
 }, {
   timestamps: true,
+});
+
+CampaignStatusSchema.index({
+  player: 1,
+  campaign: 1,
+}, {
+  unique: true,
 });
 
 CampaignStatusSchema.plugin(mongoosePaginate);
@@ -107,7 +111,7 @@ CampaignStatusSchema.post('findOne', function (campaignStatus, next) {
 });
 
 CampaignStatusSchema.pre('save', function (next) {
-  Campaign.findActive({
+  Campaign.findOneActive({
     _id: this.campaign,
   })
   .then(campaign => {

@@ -2,7 +2,7 @@
   "name": "tapnwin-backend",
   "version": "0.0.1",
   "description": "Tap&Win's games backend",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
     "start": "grunt",
     "build": "grunt build",
@@ -19,6 +19,7 @@
   "license": "SEE LICENSE IN LICENSE FILE",
   "homepage": "https://bitbucket.org/ludopia/tapnwin-backend#readme",
   "dependencies": {
+    "assignment": "^2.2.0",
     "async": "^2.0.0-rc.6",
     "bluebird": "^3.4.0",
     "body-parser": "^1.15.0",

@@ -75,7 +75,7 @@ QuestionSchema.pre('save', function (next) {
 });
 
 QuestionSchema.pre('save', function (next) {
-  Campaign.findActive({
+  Campaign.findOneActive({
     _id: this.campaign,
     'vdlg.active': true,
   })

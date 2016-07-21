@@ -95,6 +95,23 @@
               "->items.top8"
             ]
           }
+        ],
+        "zones": [
+          {
+            "categories": ["->categories.tops"],
+            "isRequired": true
+          },
+          {
+            "categories": [
+              "->categories.pants",
+              "->categories.skirts"
+            ],
+            "isRequired": true
+          },
+          {
+            "categories": ["->categories.shoes"],
+            "isRequired": false
+          }
         ]
       },
       "vdlg": {

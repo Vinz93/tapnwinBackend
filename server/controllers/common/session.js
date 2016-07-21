@@ -19,6 +19,11 @@ const SessionController = {
  *     produces:
  *       - application/json
  *     parameters:
+ *       - name: type
+ *         description: User's type
+ *         in: query
+ *         required: true
+ *         type: string
  *       - name: user
  *         description: User object
  *         in: body
@@ -40,11 +45,9 @@ const SessionController = {
  *               type: string
  */
   create(req, res, next) {
-    const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
+    const UserType = (req.query.type === 'Administrator') ? Administrator : Player;
 
-    UserAbs.findOne({
-      email: req.body.email,
-    })
+    UserType.findOne({ email: req.body.email })
     .then(user => {
       if (!user)
         return res.status(404).end();
@@ -55,9 +58,7 @@ const SessionController = {
       user.createSessionToken();
 
       user.save()
-      .then(() => res.status(201).json({
-        sessionToken: user.sessionToken,
-      }))
+      .then(() => res.status(201).json({ sessionToken: user.sessionToken }))
       .catch(next);
     })
     .catch(next);
@@ -98,9 +99,7 @@ const SessionController = {
     if (!sessionToken)
       return res.status(401).end();
 
-    User.findOne({
-      sessionToken,
-    })
+    User.findOne({ sessionToken })
     .then(user => {
       if (!user)
         return res.status(401).end();

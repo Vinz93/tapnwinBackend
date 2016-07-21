@@ -68,8 +68,11 @@ router.route('/campaigns')
 
 router.route('/campaigns/:campaign_id')
 .get(Campaign.read)
-.put(Campaign.update)
+.patch(Campaign.update)
 .delete(Campaign.delete);
+
+router.route('/companies/:company_id/campaign')
+.get(Campaign.readByCompany);
 
 router.route('/missions')
 .get(Mission.readAll)

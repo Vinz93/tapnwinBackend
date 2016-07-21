@@ -81,7 +81,7 @@ VoteSchema.pre('save', function (next) {
           design: this.design,
         }));
 
-      Campaign.findActive({
+      Campaign.findOneActive({
         _id: design.campaign,
         'dyg.active': true,
         'dyg.stickers': { $all: this.stickers },

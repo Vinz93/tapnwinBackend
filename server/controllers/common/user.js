@@ -253,7 +253,6 @@ const UserController = {
       .then(() => res.status(204).end())
       .catch(next);
     })
-
     .catch(next);
   },
 
@@ -333,8 +332,7 @@ const UserController = {
       Object.assign(user, req.body);
 
       user.save()
-      .then(() => res.status(204).end())
-      .catch(next);
+      .then(() => res.status(204).end());
     })
     .catch(next);
   },

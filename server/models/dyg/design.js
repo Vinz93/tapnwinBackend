@@ -26,19 +26,14 @@ const Schema = mongoose.Schema;
  *         type: string
  *       model:
  *         type: string
- *       topItem:
- *         type: string
- *       midItem:
- *         type: string
- *       botItem:
- *         type: string
+ *       items:
+ *         type: array
+ *         items:
+ *           type: string
  *     required:
  *       - player
  *       - campaign
  *       - model
- *       - topItem
- *       - midItem
- *       - botItem
  */
 const DesignSchema = new Schema({
   player: {
@@ -56,36 +51,21 @@ const DesignSchema = new Schema({
     ref: 'ModelAsset',
     required: true,
   },
-  topItem: {
+  items: [{
     type: Schema.Types.ObjectId,
     ref: 'Item',
     required: true,
-  },
-  midItem: {
-    type: Schema.Types.ObjectId,
-    ref: 'Item',
-    required: true,
-  },
-  botItem: {
-    type: Schema.Types.ObjectId,
-    ref: 'Item',
-    required: true,
-  },
+  }],
 }, {
   timestamps: true,
 });
 
 DesignSchema.pre('save', function (next) {
-  Campaign.findActive({
+  Campaign.findOneActive({
     _id: this.campaign,
     $and: [
       { 'dyg.active': true },
       { 'dyg.models': this.model },
-      { 'dyg.categories.items': { $all: [
-        this.botItem,
-        this.midItem,
-        this.topItem,
-      ] } },
     ],
   })
   .then(campaign => {
@@ -93,7 +73,37 @@ DesignSchema.pre('save', function (next) {
       return next(new ValidationError('Design validation failed', {
         campaign: this.campaign,
       }));
+    /*
+    const items = this.items;
+    const dyg = campaign.dyg;
 
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const categories = dyg.zones[i].categories;
+      let found = false;
+
+      for (let j = 0; j < categories.length; j++) {
+        const category = categories[j];
+
+        for (let w = 0; w < dyg.categories.length; w++) {
+          const object = dyg.categories[w];
+
+          if (category === object.category && object.items.includes(item)) {
+            found = true;
+            break;
+          }
+        }
+
+        if (!found)
+          break;
+      }
+
+      if (!found)
+        return next(new ValidationError('Design validation failed', {
+          campaign: this.campaign,
+        }));
+    }
+    */
     next();
   })
   .catch(next);

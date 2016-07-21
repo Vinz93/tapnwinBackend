@@ -3,7 +3,9 @@
  * @description Company controller definition
  * @lastModifiedBy Juan Sanchez
  */
+import assignment from 'assignment';
 
+import config from '../../../config/env';
 import Campaign from '../../models/common/campaign';
 
 const CampaignController = {
@@ -27,11 +29,6 @@ const CampaignController = {
  *         in: query
  *         required: false
  *         type: integer
- *       - name: active
- *         description: True for filter by active campaign and false otherwise
- *         in: query
- *         required: true
- *         type: boolean
  *     responses:
  *       200:
  *         description: An array of campaigns
@@ -59,44 +56,26 @@ const CampaignController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    if (req.query.active === 'true') {
-      Campaign.findActive()
-      .populate('company')
-      .populate('dyg.models')
-      .populate('dyg.stickers')
-      .populate('dyg.categories.category')
-      .populate('dyg.categories.items')
-      .then(campaign => {
-        if (!campaign)
-          return res.status(404).end();
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
-        res.json(campaign);
-      })
-      .catch(next);
-    } else {
-      const locals = req.app.locals;
+    const find = req.query.find || {};
+    const sort = req.query.sort || { createdAt: 1 };
 
-      const offset = locals.config.paginate.offset(req.query.offset);
-      const limit = locals.config.paginate.limit(req.query.limit);
-
-      const find = req.query.find || {};
-      const sort = req.query.sort || { createdAt: 1 };
-
-      Campaign.paginate(find, {
-        sort,
-        offset,
-        limit,
-        populate: [
-          'company',
-          'dyg.models',
-          'dyg.stickers',
-          'dyg.categories.category',
-          'dyg.categories.items',
-        ],
-      })
-      .then(campaigns => res.json(campaigns))
-      .catch(next);
-    }
+    Campaign.paginate(find, {
+      sort,
+      offset,
+      limit,
+      populate: [
+        'company',
+        'dyg.models',
+        'dyg.stickers',
+        'dyg.categories.category',
+        'dyg.categories.items',
+      ],
+    })
+    .then(campaigns => res.json(campaigns))
+    .catch(next);
   },
 
 /**
@@ -184,6 +163,52 @@ const CampaignController = {
     .catch(next);
   },
 
+  /**
+   * @swagger
+   * /api/v1/companies/{company_id}/campaign:
+   *   get:
+   *     tags:
+   *       - Campaigns
+   *     description: Returns the active campaign of a company
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: company_id
+   *         description: Company's id
+   *         in: path
+   *         required: true
+   *         type: string
+   *     responses:
+   *       200:
+   *         description: A campaign
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Campaign'
+   *              - properties:
+   *                  id:
+   *                    type: string
+   *                  createdAt:
+   *                    type: string
+   *                    format: date-time
+   *                  updatedAt:
+   *                    type: string
+   *                    format: date-time
+   */
+  readByCompany(req, res, next) {
+    Campaign.findOneActive({ company: req.params.company_id })
+    .populate('dyg.models')
+    .populate('dyg.stickers')
+    .populate('dyg.categories.category')
+    .populate('dyg.categories.items')
+    .then(campaign => {
+      if (!campaign)
+        return res.status(404).end();
+
+      res.json(campaign);
+    })
+    .catch(next);
+  },
+
 /**
  * @swagger
  * /api/v1/campaigns/{campaign_id}:
@@ -210,15 +235,18 @@ const CampaignController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
-    Campaign.findByIdAndUpdate(req.params.campaign_id, req.body, {
-      runValidators: true,
-      context: 'query',
+    Campaign.findOneActive({
+      _id: req.params.campaign_id,
     })
     .then(campaign => {
       if (!campaign)
         return res.status(404).end();
 
-      res.status(204).end();
+      assignment(campaign, req.body);
+
+      campaign.save()
+      .then(() => res.status(204).end())
+      .catch(next);
     })
     .catch(next);
   },

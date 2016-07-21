@@ -96,7 +96,7 @@ AnswerSchema.pre('save', function (next) {
           finishAt: this.finishAt,
         }));
 
-      Campaign.findActive({
+      Campaign.findOneActive({
         _id: question.campaign,
         'vdlg.active': true,
       })
