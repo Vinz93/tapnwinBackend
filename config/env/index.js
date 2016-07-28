@@ -13,12 +13,6 @@ const defaults = {
       return !isNaN(offset) ? parseInt(offset, 10) : value || 0;
     },
   },
-  games: [
-    'dyg',
-    'vdlg',
-    'm3',
-    'ddt',
-  ],
 };
 
 const config = {
