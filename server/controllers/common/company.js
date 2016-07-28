@@ -54,10 +54,10 @@ const CompanyController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
+    const config = req.app.locals.config;
 
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };

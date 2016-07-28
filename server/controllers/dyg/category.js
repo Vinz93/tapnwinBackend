@@ -54,9 +54,10 @@ const CategoryController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const config = req.app.locals.config;
+
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -146,6 +147,7 @@ const CategoryController = {
     .then(category => {
       if (!category)
         return res.status(404).end();
+
       res.json(category);
     })
     .catch(next);
@@ -184,6 +186,7 @@ const CategoryController = {
     .then(category => {
       if (!category)
         return res.status(404).end();
+
       res.status(204).end();
     })
     .catch(next);

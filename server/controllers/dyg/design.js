@@ -54,9 +54,10 @@ const DesignController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const config = req.app.locals.config;
+
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -65,7 +66,7 @@ const DesignController = {
       sort,
       offset,
       limit,
-      populate: ['player', 'topItem', 'midItem', 'botItem', 'model'],
+      populate: ['player'],
     })
     .then(designs => res.json(designs))
     .catch(next);
@@ -133,8 +134,9 @@ const DesignController = {
  *               type: integer
  */
   readAllByMe(req, res, next) {
-    const locals = req.app.locals;
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const config = req.app.locals.config;
+
+    const limit = config.paginate.limit(req.query.limit);
     const player = (req.query.exclusive === undefined ||
       req.query.exclusive === 'false') ? res.locals.user._id : {
         $ne: res.locals.user._id,
@@ -150,13 +152,12 @@ const DesignController = {
       .then(designs => res.json(designs))
       .catch(next);
     } else {
-      const offset = locals.config.paginate.offset(req.query.offset);
+      const offset = config.paginate.offset(req.query.offset);
 
       Design.paginate(find, {
         sort,
         offset,
         limit,
-        populate: ['topItem', 'midItem', 'botItem', 'model'],
       })
       .then(designs => res.json(designs))
       .catch(next);

@@ -57,10 +57,9 @@ const SessionController = {
 
       user.createSessionToken();
 
-      user.save()
-      .then(() => res.status(201).json({ sessionToken: user.sessionToken }))
-      .catch(next);
+      return user.save();
     })
+    .then((user) => res.status(201).json({ sessionToken: user.sessionToken }))
     .catch(next);
   },
 

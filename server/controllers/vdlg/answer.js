@@ -3,8 +3,6 @@
  * @description Answer controller definition
  * @lastModifiedBy Andres Alvarez
  */
-
-import waterfall from 'async/waterfall';
 import Promise from 'bluebird';
 
 import Answer from '../../models/vdlg/answer';
@@ -60,9 +58,10 @@ const AnswerController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const config = req.app.locals.config;
+
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -129,10 +128,10 @@ const AnswerController = {
  *               type: integer
  */
   readAllByMe(req, res, next) {
-    const locals = req.app.locals;
+    const config = req.app.locals.config;
 
-    const limit = locals.config.paginate.limit(req.query.limit);
-    const offset = locals.config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
+    const offset = config.paginate.offset(req.query.offset);
 
     req.query.find = req.query.find || {};
 
@@ -144,35 +143,26 @@ const AnswerController = {
       delete req.query.find.campaign;
     }
 
-    waterfall([
-      cb => {
-        Question.find(find)
-        .then(questions => cb(null, questions))
-        .catch(cb);
-      },
-      (questions, cb) => {
-        const sort = req.query.sort || { createdAt: 1 };
+    Question.find(find)
+    .then(questions => {
+      const sort = req.query.sort || { createdAt: 1 };
 
-        find = Object.assign(req.query.find || {}, {
-          player: res.locals.user._id,
-          question: { $in: questions.map(question => question._id) },
-        });
+      find = Object.assign(req.query.find || {}, {
+        player: res.locals.user._id,
+        question: { $in: questions.map(question => question._id) },
+      });
 
-        Answer.paginate(find, {
-          offset,
-          limit,
-          sort,
-          populate: ['question'],
-        })
-        .then(answers => cb(null, answers))
-        .catch(cb);
-      },
-    ], (err, answers) => {
-      if (err)
-        next(err);
-
+      return Answer.paginate(find, {
+        offset,
+        limit,
+        sort,
+        populate: ['question'],
+      });
+    })
+    .then(answers => {
       res.json(answers);
-    });
+    })
+    .catch(next);
   },
 
 /**
@@ -251,51 +241,39 @@ const AnswerController = {
     req.query.find = req.query.find || {};
 
     const campaign = req.query.find.campaign;
-    let find = {};
+    const find = {};
 
     if (campaign) {
       find.campaign = campaign;
       delete req.query.find.campaign;
     }
 
-    waterfall([
-      cb => {
-        Question.find(find)
-        .then(questions => cb(null, questions))
-        .catch(cb);
-      },
-      (questions, cb) => {
-        find = Object.assign(req.query.find || {}, {
-          player: res.locals.user._id,
-          question: { $in: questions.map(question => question._id) },
-        });
+    Question.find(find)
+    .then(questions => {
+      Object.assign(req.query.find || {}, {
+        player: res.locals.user._id,
+        question: { $in: questions.map(question => question._id) },
+      });
 
-        Answer.find(find)
-        .populate('question')
-        .then(answers => cb(null, answers))
-        .catch(cb);
-      },
-      (answers, cb) => {
-        Promise.map(answers, answer => {
-          const question = answer.question;
-          const possibilities = Array.from({
-            length: answer.question.possibilities.length,
-          }, (v, k) => k);
+      return Answer.find(req.query.find)
+      .populate('question');
+    })
+    .then(answers => [
+      answers,
+      Promise.map(answers, answer => {
+        const question = answer.question;
+        const possibilities = Array.from({
+          length: answer.question.possibilities.length,
+        }, (v, k) => k);
 
-          return Promise.map(possibilities, posibility => Answer.count({
-            question: question._id,
-            personal: posibility,
-          }))
-          .then(data => data.indexOf(Math.max(...data)))
-          .catch(cb);
-        })
-        .then(data => cb(null, answers, data))
-        .catch(cb);
-      },
-    ], (err, answers, data) => {
-      if (err)
-        next(err);
-
+        return Promise.map(possibilities, posibility => Answer.count({
+          question: question._id,
+          personal: posibility,
+        }))
+        .then(data => data.indexOf(Math.max(...data)));
+      }),
+    ])
+    .spread((answers, data) => {
       const correct = answers.filter((answer, i) => answer.popular === data[i]).length;
       const total = answers.length;
 
@@ -304,7 +282,8 @@ const AnswerController = {
         percent: correct / total * 100,
         total,
       });
-    });
+    })
+    .catch(next);
   },
 
 /**

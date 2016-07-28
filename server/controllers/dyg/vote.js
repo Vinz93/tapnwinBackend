@@ -4,7 +4,6 @@
  * @lastModifiedBy Andres Alvarez
  */
 
-import waterfall from 'async/waterfall';
 import Promise from 'bluebird';
 
 import Design from '../../models/dyg/design';
@@ -58,9 +57,10 @@ const VoteController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const config = req.app.locals.config;
+
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -112,11 +112,11 @@ const VoteController = {
  *                    format: date-time
  */
   createByMe(req, res, next) {
-    const data = Object.assign(req.body, {
+    Object.assign(req.body, {
       player: res.locals.user._id,
     });
 
-    Vote.create(data)
+    Vote.create(req.body)
     .then(vote => res.status(201).json(vote))
     .catch(next);
   },
@@ -200,12 +200,10 @@ const VoteController = {
  *                    format: date-time
  */
   readByMeDesign(req, res, next) {
-    const criteria = {
+    Vote.findOne({
       design: req.params.design_id,
       player: res.locals.user._id,
-    };
-
-    Vote.findOne(criteria)
+    })
     .then(vote => {
       if (!vote)
         return res.status(404).end();
@@ -243,37 +241,29 @@ const VoteController = {
  *                 type: integer
  */
   readStatisticByDesign(req, res, next) {
-    waterfall([
-      cb => {
-        Design.findById(req.params.design_id)
-        .populate('campaign')
-        .then(design => cb(null, design))
-        .catch(cb);
-      },
-      (design, cb) => {
-        if (!design)
-          return res.status(404).end();
+    Design.findById(req.params.design_id)
+    .populate('campaign')
+    .then(design => {
+      if (!design)
+        return res.status(404).end();
 
-        Promise.map(design.campaign.dyg.stickers, sticker => Vote.count({
-          design: design._id,
-          stickers: sticker,
-        })
-        .then(count => {
-          const data = {
-            sticker,
-            count,
-          };
+      return Promise.map(design.campaign.dyg.stickers, sticker => Vote.count({
+        design: design._id,
+        stickers: sticker,
+      })
+      .then(count => {
+        const data = {
+          sticker,
+          count,
+        };
 
-          return data;
-        }))
-        .then(data => cb(null, data));
-      },
-    ], (err, data) => {
-      if (err)
-        next(err);
-
+        return data;
+      }));
+    })
+    .then(data => {
       res.send(data);
-    });
+    })
+    .catch(next);
   },
 
 /**
@@ -307,12 +297,10 @@ const VoteController = {
  *         description: Successfully updated
  */
   updateByMe(req, res, next) {
-    const criteria = {
+    Vote.findOneAndUpdate({
       _id: req.params.vote_id,
       player: res.locals.user._id,
-    };
-
-    Vote.findOneAndUpdate(criteria, req.body, {
+    }, req.body, {
       runValidators: true,
       context: 'query',
     })

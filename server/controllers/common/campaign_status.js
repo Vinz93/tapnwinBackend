@@ -52,12 +52,7 @@ const StatusController = {
     .then(status => {
       res.json(status);
     })
-    .catch(err => {
-      if (err.id)
-        return res.json(err);
-
-      next(err);
-    });
+    .catch(next);
   },
 
 /**
@@ -101,9 +96,9 @@ const StatusController = {
 
       assignment(campaignStatus, req.body);
 
-      campaignStatus.save()
-      .then(() => res.status(204).end());
+      return campaignStatus.save();
     })
+    .then(() => res.status(204).end())
     .catch(next);
   },
 };

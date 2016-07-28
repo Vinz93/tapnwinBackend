@@ -5,7 +5,6 @@
  */
 import assignment from 'assignment';
 
-import config from '../../../config/env';
 import Campaign from '../../models/common/campaign';
 
 const CampaignController = {
@@ -56,6 +55,8 @@ const CampaignController = {
  *               type: integer
  */
   readAll(req, res, next) {
+    const config = req.app.locals.config;
+
     const offset = config.paginate.offset(req.query.offset);
     const limit = config.paginate.limit(req.query.limit);
 
@@ -244,10 +245,9 @@ const CampaignController = {
 
       assignment(campaign, req.body);
 
-      campaign.save()
-      .then(() => res.status(204).end())
-      .catch(next);
+      return campaign.save();
     })
+    .then(() => res.status(204).end())
     .catch(next);
   },
 

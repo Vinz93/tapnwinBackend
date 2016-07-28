@@ -5,7 +5,7 @@
  */
 
 import mongoose from 'mongoose';
-import mongooseTransaction from 'mongoose-transaction';
+import transaction from 'mongoose-transaction';
 import waterfall from 'async/waterfall';
 import Promise from 'bluebird';
 
@@ -13,7 +13,7 @@ import MissionStatus from '../../models/common/mission_status';
 import MissionCampaign from '../../models/common/mission_campaign';
 import CampaignStatus from '../../models/common/campaign_status';
 
-const Transaction = mongooseTransaction(mongoose);
+const Transaction = transaction(mongoose);
 
 const MissionStatusController = {
 /**
@@ -55,7 +55,31 @@ const MissionStatusController = {
  *                     format: date-time
  */
   readAllByMe(req, res, next) {
-    waterfall([
+    MissionCampaign.find({ campaign: req.params.campaign_id })
+    .then(missionCampaign => {
+      if (missionCampaign.length === 0)
+        res.json([]);
+
+      return Promise.map(missionCampaign, mission => MissionStatus.findOne({
+        player: res.locals.user.id,
+        missionCampaign: mission.id,
+      })
+      .populate('missionCampaign')
+      .then(status => {
+        if (!status)
+          return MissionStatus.create({
+            player: res.locals.user.id,
+            missionCampaign: mission.id,
+          })
+          .then(newStatus => newStatus);
+
+        return status;
+      }));
+    })
+    .then(statuses => res.json(statuses))
+    .catch(next);
+
+    /* waterfall([
       cb => {
         MissionCampaign.find({ campaign: req.params.campaign_id })
         .then(missionCampaign => {
@@ -91,7 +115,7 @@ const MissionStatusController = {
         return next(err);
 
       res.json(statuses);
-    });
+    });*/
   },
 
 /**
@@ -127,6 +151,110 @@ const MissionStatusController = {
   updateByMe(req, res, next) {
     const transaction = new Transaction();
 
+    function run() {
+      transaction.run(err => {
+        if (err)
+          return next(err);
+
+        res.status(204).end();
+      });
+    }
+
+    MissionStatus.findOne({
+      player: res.locals.user.id,
+      _id: req.params.mission_status_id,
+    })
+    .populate('missionCampaign')
+    .then(status => {
+      if (!status)
+        return res.status(404).end();
+
+      if (status.value === status.missionCampaign.max)
+        return res.status(409).end();
+
+      transaction.update('Status', status.id, { value: status.value + 1 });
+
+      if (status.value + 1 === status.missionCampaign.max) {
+        transaction.update('Status', status.id, { isDone: true });
+
+        return [
+          status,
+          MissionCampaign.find({
+            campaign: status.missionCampaign.campaign,
+          })
+          .populate('campaign'),
+        ];
+      }
+
+      throw new Promise.CancellationError();
+    })
+    .spread((status, missions) => [
+      status,
+      missions,
+      CampaignStatus.findOne({
+        player: res.locals.user.id,
+        campaign: status.missionCampaign.campaign,
+      }),
+    ])
+    .spread((status, missions, campaignStatus) => [
+      status,
+      missions,
+      campaignStatus,
+      MissionStatus.find({
+        player: res.locals.user.id,
+        missionCampaign: { $in: missions.map(mission => mission.id) },
+      })
+      .populate('missionCampaign'),
+    ])
+    .spread((status, missions, campaignStatus, statuses) => {
+      console.log('xxxxxxxxxxxxxxxxx2');
+
+      if (statuses.reduce((prev, curr) => {
+        if (!curr.missionCampaign.isRequired || curr.id === status.id)
+          return prev && true;
+
+        return curr.isDone && prev;
+      }, true)) {
+        let balance;
+
+        if (status.missionCampaign.isRequired) {
+          balance = missions[0].campaign.balance;
+
+          statuses.forEach(status => {
+            if (status.isDone && !status.missionCampaign.isRequired)
+              balance += status.missionCampaign.balance;
+          });
+        } else
+          balance = status.missionCampaign.balance;
+
+        transaction.update('Player', res.locals.user.id, {
+          balance: res.locals.user.balance + balance,
+        });
+      }
+
+      if (status.missionCampaign.isBlocking) {
+        const data = {};
+
+        data.isBlocked = true;
+        data.unblockAt = Date.now() + status.missionCampaign.blockTime;
+        data.m3 = {
+          isBlocked: true,
+          unblockAt: data.unblockAt,
+        };
+
+        transaction.update('CampaignStatus', campaignStatus.id, data);
+
+        run();
+      }
+    })
+    .catch(error => {
+      if (error instanceof Promise.CancellationError)
+        return run();
+
+      next(error);
+    });
+
+/*
     waterfall([
       cb => {
         MissionStatus.findOne({
@@ -239,7 +367,7 @@ const MissionStatusController = {
 
         res.status(204).end();
       });
-    });
+    });*/
   },
 };
 

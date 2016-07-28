@@ -61,10 +61,10 @@ const UserController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
+    const config = req.app.locals.config;
 
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -112,10 +112,10 @@ const UserController = {
       if (!user)
         return res.status(404).end();
 
-      const locals = req.app.locals;
-      const config = locals.config;
+      const config = req.app.locals.config;
+
       const template = path.join(config.root, '/server/views/mail/password_recovery');
-      const send = locals.mailer.templateSender(new EmailTemplate(template));
+      const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
 
       if (!user.createRecoveryToken(config.times.recovery))
         return res.status(409).end();
@@ -249,10 +249,9 @@ const UserController = {
       if (!user.updatePassword(req.body.password, config.times.update))
         return res.status(409).end();
 
-      user.save()
-      .then(() => res.status(204).end())
-      .catch(next);
+      return user.save();
     })
+    .then(() => res.status(204).end())
     .catch(next);
   },
 
@@ -331,9 +330,9 @@ const UserController = {
 
       Object.assign(user, req.body);
 
-      user.save()
-      .then(() => res.status(204).end());
+      return user.save();
     })
+    .then(() => res.status(204).end())
     .catch(next);
   },
 

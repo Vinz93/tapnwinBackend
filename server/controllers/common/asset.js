@@ -57,10 +57,10 @@ const AssetController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
+    const config = req.app.locals.config;
 
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -149,10 +149,10 @@ const AssetController = {
 
       Object.assign(asset, req.body);
 
-      asset.save()
-      .then(() => res.status(204).end())
-      .catch(next);
-    });
+      return asset.save();
+    })
+    .then(() => res.status(204).end())
+    .catch(next);
   },
 
 /**
@@ -180,8 +180,9 @@ const AssetController = {
       if (!asset)
         return res.status(404).end();
 
-      fs.unlinkSync(path.join(req.app.locals.config.root,
-      `/uploads${asset.url.split('uploads')[1]}`));
+      const config = req.app.locals.config;
+
+      fs.unlinkSync(path.join(config.root, `/uploads${asset.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })

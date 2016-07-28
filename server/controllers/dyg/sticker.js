@@ -57,9 +57,10 @@ const StickerController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const config = req.app.locals.config;
+
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -188,8 +189,9 @@ const StickerController = {
       if (!sticker)
         return res.status(404).end();
 
-      fs.unlinkSync(path.join(req.app.locals.config.root,
-        `/uploads${sticker.url.split('uploads')[1]}`));
+      const config = req.app.locals.config;
+
+      fs.unlinkSync(path.join(config.root, `/uploads${sticker.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })
@@ -221,8 +223,9 @@ const StickerController = {
       if (!sticker)
         return res.status(404).end();
 
-      fs.unlinkSync(path.join(req.app.locals.config.root,
-        `/uploads${sticker.url.split('uploads')[1]}`));
+      const config = req.app.locals.config;
+
+      fs.unlinkSync(path.join(config.root, `/uploads${sticker.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })

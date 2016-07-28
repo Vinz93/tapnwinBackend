@@ -54,10 +54,10 @@ const MissionCampaignController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const locals = req.app.locals;
+    const config = req.app.locals.config;
 
-    const offset = locals.config.paginate.offset(req.query.offset);
-    const limit = locals.config.paginate.limit(req.query.limit);
+    const offset = config.paginate.offset(req.query.offset);
+    const limit = config.paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -145,6 +145,7 @@ const MissionCampaignController = {
     .then(mission => {
       if (!mission)
         return res.status(404).end();
+
       res.json(mission);
     })
     .catch(next);
@@ -183,6 +184,7 @@ const MissionCampaignController = {
     .then(mission => {
       if (!mission)
         return res.status(404).end();
+
       res.status(204).end();
     })
     .catch(next);
