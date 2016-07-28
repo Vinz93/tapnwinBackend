@@ -6,7 +6,6 @@
 
 import mongoose from 'mongoose';
 import transaction from 'mongoose-transaction';
-import waterfall from 'async/waterfall';
 import Promise from 'bluebird';
 
 import MissionStatus from '../../models/common/mission_status';
@@ -56,66 +55,25 @@ const MissionStatusController = {
  */
   readAllByMe(req, res, next) {
     MissionCampaign.find({ campaign: req.params.campaign_id })
-    .then(missionCampaign => {
-      if (missionCampaign.length === 0)
-        res.json([]);
-
-      return Promise.map(missionCampaign, mission => MissionStatus.findOne({
-        player: res.locals.user.id,
-        missionCampaign: mission.id,
-      })
-      .populate('missionCampaign')
-      .then(status => {
-        if (!status)
-          return MissionStatus.create({
-            player: res.locals.user.id,
-            missionCampaign: mission.id,
-          })
-          .then(newStatus => newStatus);
-
-        return status;
-      }));
+    .then(missionCampaigns => Promise.map(missionCampaigns, missionCampaign =>
+    MissionStatus.findOne({
+      player: res.locals.user.id,
+      missionCampaign: missionCampaign.id,
     })
-    .then(statuses => res.json(statuses))
-    .catch(next);
-
-    /* waterfall([
-      cb => {
-        MissionCampaign.find({ campaign: req.params.campaign_id })
-        .then(missionCampaign => {
-          if (missionCampaign.length === 0)
-            cb({ done: true }, []);
-
-          cb(null, missionCampaign);
+    .populate('missionCampaign')
+    .then(missionStatus => {
+      if (!missionStatus)
+        return MissionStatus.create({
+          player: res.locals.user.id,
+          missionCampaign: missionCampaign.id,
         })
-        .catch(cb);
-      },
-      (missionCampaign, cb) => {
-        Promise.map(missionCampaign, mission =>
-          MissionStatus.findOne({
-            player: res.locals.user.id,
-            missionCampaign: mission.id,
-          })
-          .populate('missionCampaign')
-          .then(status => {
-            if (!status)
-              return MissionStatus.create({
-                player: res.locals.user.id,
-                missionCampaign: mission.id,
-              })
-              .then(newStatus => newStatus);
-            return status;
-          })
-        )
-        .then(statuses => cb(null, statuses))
-        .catch(cb);
-      },
-    ], (err, statuses) => {
-      if (err && !err.done)
-        return next(err);
+        .then(missionStatus => MissionStatus.populate(missionStatus, 'missionCampaign'))
+        .then(missionStatus => missionStatus);
 
-      res.json(statuses);
-    });*/
+      return missionStatus;
+    })))
+    .then(missionStatuses => res.json(missionStatuses))
+    .catch(next);
   },
 
 /**
@@ -165,22 +123,25 @@ const MissionStatusController = {
       _id: req.params.mission_status_id,
     })
     .populate('missionCampaign')
-    .then(status => {
-      if (!status)
+    .then(missionStatus => {
+      if (!missionStatus)
         return res.status(404).end();
 
-      if (status.value === status.missionCampaign.max)
+      let value = (req.body.value !== undefined) ? parseInt(req.body.value, 10) : 1;
+      value += missionStatus.value;
+
+      if (value > missionStatus.missionCampaign.max)
         return res.status(409).end();
 
-      transaction.update('Status', status.id, { value: status.value + 1 });
+      transaction.update('MissionStatus', missionStatus.id, { value });
 
-      if (status.value + 1 === status.missionCampaign.max) {
-        transaction.update('Status', status.id, { isDone: true });
+      if (value === missionStatus.missionCampaign.max) {
+        transaction.update('MissionStatus', missionStatus.id, { isDone: true });
 
         return [
-          status,
+          missionStatus,
           MissionCampaign.find({
-            campaign: status.missionCampaign.campaign,
+            campaign: missionStatus.missionCampaign.campaign,
           })
           .populate('campaign'),
         ];
@@ -188,16 +149,16 @@ const MissionStatusController = {
 
       throw new Promise.CancellationError();
     })
-    .spread((status, missions) => [
-      status,
+    .spread((missionStatus, missions) => [
+      missionStatus,
       missions,
-      CampaignStatus.findOne({
+      CampaignStatus.findOrCreate({
         player: res.locals.user.id,
-        campaign: status.missionCampaign.campaign,
+        campaign: missionStatus.missionCampaign.campaign,
       }),
     ])
-    .spread((status, missions, campaignStatus) => [
-      status,
+    .spread((missionStatus, missions, campaignStatus) => [
+      missionStatus,
       missions,
       campaignStatus,
       MissionStatus.find({
@@ -206,168 +167,51 @@ const MissionStatusController = {
       })
       .populate('missionCampaign'),
     ])
-    .spread((status, missions, campaignStatus, statuses) => {
-      console.log('xxxxxxxxxxxxxxxxx2');
-
-      if (statuses.reduce((prev, curr) => {
-        if (!curr.missionCampaign.isRequired || curr.id === status.id)
+    .spread((missionStatus, missions, campaignStatus, missionStatuses) => {
+      if (missionStatuses.reduce((prev, curr) => {
+        if (!curr.missionCampaign.isRequired || curr.id === missionStatus.id)
           return prev && true;
 
         return curr.isDone && prev;
       }, true)) {
         let balance;
 
-        if (status.missionCampaign.isRequired) {
+        if (missionStatus.missionCampaign.isRequired) {
           balance = missions[0].campaign.balance;
 
-          statuses.forEach(status => {
-            if (status.isDone && !status.missionCampaign.isRequired)
-              balance += status.missionCampaign.balance;
+          missionStatuses.forEach(missionStatus => {
+            if (missionStatus.isDone && !missionStatus.missionCampaign.isRequired)
+              balance += missionStatus.missionCampaign.balance;
           });
         } else
-          balance = status.missionCampaign.balance;
+          balance = missionStatus.missionCampaign.balance;
 
         transaction.update('Player', res.locals.user.id, {
           balance: res.locals.user.balance + balance,
         });
       }
 
-      if (status.missionCampaign.isBlocking) {
+      if (missionStatus.missionCampaign.isBlocking) {
         const data = {};
 
         data.isBlocked = true;
-        data.unblockAt = Date.now() + status.missionCampaign.blockTime;
+        data.unblockAt = Date.now() + missionStatus.missionCampaign.blockTime;
         data.m3 = {
           isBlocked: true,
           unblockAt: data.unblockAt,
         };
 
         transaction.update('CampaignStatus', campaignStatus.id, data);
-
-        run();
       }
+
+      run();
     })
-    .catch(error => {
-      if (error instanceof Promise.CancellationError)
+    .catch(err => {
+      if (err instanceof Promise.CancellationError)
         return run();
 
-      next(error);
+      next(err);
     });
-
-/*
-    waterfall([
-      cb => {
-        MissionStatus.findOne({
-          player: res.locals.user.id,
-          _id: req.params.mission_status_id,
-        })
-        .populate('missionCampaign')
-        .then(status => {
-          if (!status)
-            return res.status(404).end();
-
-          if (status.value === status.missionCampaign.max)
-            return res.status(409).end();
-
-          transaction.update('Status', status.id, { value: status.value + 1 });
-
-          cb(null, status);
-        })
-        .catch(cb);
-      },
-      (status, cb) => {
-        if (status.value + 1 === status.missionCampaign.max) {
-          transaction.update('Status', status.id, { isDone: true });
-
-          cb(null, status);
-        } else
-          cb({ done: true });
-      },
-      (status, cb) => {
-        MissionCampaign.find({
-          campaign: status.missionCampaign.campaign,
-        })
-        .populate('campaign')
-        .then(missions => cb(null, status, missions))
-        .catch(cb);
-      },
-      (status, missions, cb) => {
-        CampaignStatus.findOne({
-          player: res.locals.user.id,
-          campaign: status.missionCampaign.campaign,
-        }, (err, campaignStatus) => {
-          if (err) {
-            if (err.id)
-              campaignStatus = err; // eslint-disable-line
-            else
-              return cb(err);
-          }
-
-          cb(null, status, missions, campaignStatus);
-        });
-      },
-      (status, missions, campaignStatus, cb) => {
-        MissionStatus.find({
-          player: res.locals.user.id,
-          missionCampaign: { $in: missions.map(mission => mission.id) },
-        })
-        .populate('missionCampaign')
-        .then(statuses => cb(null, status, missions, campaignStatus, statuses))
-        .catch(cb);
-      },
-      (status, missions, campaignStatus, statuses, cb) => {
-        if (statuses.reduce((prev, curr) => {
-          if (!curr.missionCampaign.isRequired || curr.id === status.id)
-            return prev && true;
-
-          return curr.isDone && prev;
-        }, true)) {
-          let balance;
-
-          if (status.missionCampaign.isRequired) {
-            balance = missions[0].campaign.balance;
-
-            statuses.forEach(status => {
-              if (status.isDone && !status.missionCampaign.isRequired)
-                balance += status.missionCampaign.balance;
-            });
-          } else
-            balance = status.missionCampaign.balance;
-
-          transaction.update('Player', res.locals.user.id, {
-            balance: res.locals.user.balance + balance,
-          });
-        }
-
-        cb(null, status, missions, campaignStatus, statuses);
-      },
-      (status, missions, campaignStatus, statuses, cb) => {
-        if (status.missionCampaign.isBlocking) {
-          const data = {};
-
-          data.isBlocked = true;
-          data.unblockAt = Date.now() + status.missionCampaign.blockTime;
-          data.m3 = {
-            isBlocked: true,
-            unblockAt: data.unblockAt,
-          };
-
-          transaction.update('CampaignStatus', campaignStatus.id, data);
-        }
-
-        cb(null);
-      },
-    ], (err) => {
-      if (err && !err.done)
-        return next(err);
-
-      transaction.run(err => {
-        if (err)
-          return next(err);
-
-        res.status(204).end();
-      });
-    });*/
   },
 };
 

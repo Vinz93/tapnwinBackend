@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import Promise from 'bluebird';
 
 import ValidationError from '../../helpers/validationError';
 import Campaign from './campaign';
@@ -75,7 +76,10 @@ const CampaignStatusSchema = new Schema({
     default: false,
   },
   unblockAt: Date,
-  m3: M3StatusSchema,
+  m3: {
+    type: M3StatusSchema,
+    default: {},
+  },
 }, {
   timestamps: true,
 });
@@ -90,7 +94,7 @@ CampaignStatusSchema.index({
 CampaignStatusSchema.plugin(paginate);
 CampaignStatusSchema.plugin(idValidator);
 CampaignStatusSchema.plugin(fieldRemover, 'unblockAt');
-
+/*
 CampaignStatusSchema.post('findOne', function (campaignStatus, next) {
   if (campaignStatus) {
     let changed = false;
@@ -115,10 +119,44 @@ CampaignStatusSchema.post('findOne', function (campaignStatus, next) {
       next();
   } else {
     CampaignStatus.create(this.getQuery()) // eslint-disable-line no-use-before-define
-    .then(next)
+    .then((campaignStatus) => {
+      console.log('1.5');
+      next('sdasdasad');
+    })
     .catch(next);
   }
 });
+*/
+
+CampaignStatusSchema.statics = {
+  findOrCreate(find) {
+    return this.findOne(find)
+    .then(campaignStatus => {
+      if (campaignStatus) {
+        let changed = false;
+
+        if (campaignStatus.unblockAt && campaignStatus.unblockAt <= Date.now()) {
+          changed = true;
+          campaignStatus.isBlocked = false;
+          campaignStatus.unblockAt = undefined;
+        }
+
+        if (campaignStatus.m3.unblockAt && campaignStatus.m3.unblockAt <= Date.now()) {
+          changed = true;
+          campaignStatus.m3.isBlocked = false;
+          campaignStatus.m3.unblockAt = undefined;
+        }
+
+        if (changed)
+          return campaignStatus.save();
+
+        return new Promise.resolve(campaignStatus);
+      }
+
+      return this.create(find);
+    });
+  },
+};
 
 CampaignStatusSchema.pre('save', function (next) {
   Campaign.findOneActive({

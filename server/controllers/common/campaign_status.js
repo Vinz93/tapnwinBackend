@@ -45,12 +45,12 @@ const StatusController = {
  *                    format: date-time
  */
   readByMe(req, res, next) {
-    CampaignStatus.findOne({
+    CampaignStatus.findOrCreate({
       player: res.locals.user._id,
       campaign: req.params.campaign_id,
     })
-    .then(status => {
-      res.json(status);
+    .then(campaignStatus => {
+      res.json(campaignStatus);
     })
     .catch(next);
   },

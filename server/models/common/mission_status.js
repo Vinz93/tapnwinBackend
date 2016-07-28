@@ -55,6 +55,6 @@ MissionStatusSchema.plugin(paginate);
 MissionStatusSchema.plugin(idValidator);
 MissionStatusSchema.plugin(fieldRemover);
 
-const MissionStatus = mongoose.model('Status', MissionStatusSchema);
+const MissionStatus = mongoose.model('MissionStatus', MissionStatusSchema);
 
 export default MissionStatus;
