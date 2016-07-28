@@ -49,7 +49,7 @@
           "->stickers.formal",
           "->stickers.modern"
         ],
-        "categories": [
+        "catalog": [
           {
             "category": "->categories.shoes",
             "items": [

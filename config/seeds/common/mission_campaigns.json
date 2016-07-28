@@ -21,7 +21,7 @@
       "isRequired": false,
       "isBlocking": false,
       "blockedTime": 0,
-      "max": 5
+      "max": 50
     },
     "missionCampaign3": {
       "campaign": "->campaigns.campaign1",

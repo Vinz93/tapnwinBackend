@@ -13,6 +13,12 @@
       "player": "->players.andres",
       "personal": 1,
       "popular": 1
+    },
+    "answer3": {
+      "question": "->string_questions.stringQuestion2",
+      "player": "->players.juan",
+      "personal": 2,
+      "popular": 1
     }
   }
 }
