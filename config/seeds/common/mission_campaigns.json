@@ -11,7 +11,7 @@
       "balance": 0.0,
       "isRequired": true,
       "isBlocking": true,
-      "blockedTime": 60,
+      "blockTime": 60000,
       "max": 3
     },
     "missionCampaign2": {
@@ -20,7 +20,7 @@
       "balance": 100.0,
       "isRequired": false,
       "isBlocking": false,
-      "blockedTime": 0,
+      "blockTime": 0,
       "max": 50
     },
     "missionCampaign3": {
@@ -29,7 +29,7 @@
       "balance": 50.0,
       "isRequired": false,
       "isBlocking": false,
-      "blockedTime": 0,
+      "blockTime": 0,
       "max": 5
     }
   }
