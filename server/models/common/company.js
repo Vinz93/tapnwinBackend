@@ -5,7 +5,7 @@
  */
 
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import uniqueValidator from 'mongoose-unique-validator';
 import fieldRemover from 'mongoose-field-remover';
 import Promise from 'bluebird';
@@ -52,7 +52,7 @@ CompanySchema.pre('remove', next => {
 });
 
 CompanySchema.plugin(uniqueValidator);
-CompanySchema.plugin(mongoosePaginate);
+CompanySchema.plugin(paginate);
 CompanySchema.plugin(fieldRemover);
 
 export default mongoose.model('Company', CompanySchema);

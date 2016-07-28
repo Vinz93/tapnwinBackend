@@ -8,7 +8,6 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
-import waterfall from 'async/waterfall';
 
 import ValidationError from '../../helpers/validationError';
 import Campaign from '../common/campaign';
@@ -66,40 +65,31 @@ VoteSchema.index({
 });
 
 VoteSchema.pre('save', function (next) {
-  waterfall([
-    cb => {
-      Design.findOne({
-        _id: this.design,
-        player: { $ne: this.player },
-      })
-      .then(design => cb(null, design))
-      .catch(cb);
-    },
-    (design, cb) => {
-      if (!design)
-        return next(new ValidationError('Vote validation failed', {
-          design: this.design,
-        }));
+  Design.findOne({
+    _id: this.design,
+    player: { $ne: this.player },
+  })
+  .then(design => {
+    if (!design)
+      return next(new ValidationError('Vote validation failed', {
+        design: this.design,
+      }));
 
-      Campaign.findOneActive({
-        _id: design.campaign,
-        'dyg.active': true,
-        'dyg.stickers': { $all: this.stickers },
-      })
-      .then(campaign => cb(null, campaign))
-      .catch(cb);
-    },
-  ], (err, campaign) => {
-    if (err)
-      return next(err);
-
+    return Campaign.findOneActive({
+      _id: design.campaign,
+      'dyg.active': true,
+      'dyg.stickers': { $all: this.stickers },
+    });
+  })
+  .then(campaign => {
     if (!campaign)
       return next(new ValidationError('Vote validation failed', {
         campaign: this.campaign,
       }));
 
     next();
-  });
+  })
+  .catch(next);
 });
 
 VoteSchema.plugin(mongoosePaginate);

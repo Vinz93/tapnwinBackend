@@ -5,10 +5,9 @@
  */
 
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
-import findOrCreate from 'mongoose-findorcreate';
 
 const Schema = mongoose.Schema;
 
@@ -52,10 +51,9 @@ const MissionStatusSchema = new Schema({
   timestamps: true,
 });
 
-MissionStatusSchema.plugin(mongoosePaginate);
+MissionStatusSchema.plugin(paginate);
 MissionStatusSchema.plugin(idValidator);
 MissionStatusSchema.plugin(fieldRemover);
-MissionStatusSchema.plugin(findOrCreate);
 
 const MissionStatus = mongoose.model('Status', MissionStatusSchema);
 

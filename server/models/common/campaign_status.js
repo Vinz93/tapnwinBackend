@@ -5,7 +5,7 @@
  */
 
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
@@ -13,6 +13,27 @@ import ValidationError from '../../helpers/validationError';
 import Campaign from './campaign';
 
 const Schema = mongoose.Schema;
+
+/**
+ * @swagger
+ * definition:
+ *   M3Status:
+ *     properties:
+ *       score:
+ *         type: string
+ *       moves:
+ *         type: string
+ *       isBlocked:
+ *         type: boolean
+ */
+const M3StatusSchema = new Schema({
+  score: Number,
+  moves: Number,
+  isBlocked: Boolean,
+  unblockAt: Date,
+}, { _id: false });
+
+M3StatusSchema.plugin(fieldRemover, 'unblockAt');
 
 /**
  * @swagger
@@ -29,13 +50,7 @@ const Schema = mongoose.Schema;
  *       isBlocked:
  *         type: boolean
  *       m3:
- *         properties:
- *           isBlocked:
- *             type: boolean
- *           score:
- *             type: number
- *           move:
- *             type: number
+ *         $ref: '#/definitions/M3Status'
  *     required:
  *       - player
  *       - campaign
@@ -60,12 +75,7 @@ const CampaignStatusSchema = new Schema({
     default: false,
   },
   unblockAt: Date,
-  m3: {
-    score: Number,
-    moves: Number,
-    isBlocked: Boolean,
-    unblockAt: Date,
-  },
+  m3: M3StatusSchema,
 }, {
   timestamps: true,
 });
@@ -77,9 +87,9 @@ CampaignStatusSchema.index({
   unique: true,
 });
 
-CampaignStatusSchema.plugin(mongoosePaginate);
+CampaignStatusSchema.plugin(paginate);
 CampaignStatusSchema.plugin(idValidator);
-CampaignStatusSchema.plugin(fieldRemover);
+CampaignStatusSchema.plugin(fieldRemover, 'unblockAt');
 
 CampaignStatusSchema.post('findOne', function (campaignStatus, next) {
   if (campaignStatus) {

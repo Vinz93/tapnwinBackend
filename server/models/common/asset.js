@@ -6,7 +6,7 @@
 
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
@@ -52,7 +52,7 @@ const AssetSchema = new Schema({
   timestamps: true,
 });
 
-AssetSchema.plugin(mongoosePaginate);
+AssetSchema.plugin(paginate);
 AssetSchema.plugin(idValidator);
 AssetSchema.plugin(fieldRemover);
 

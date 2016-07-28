@@ -69,41 +69,46 @@ DesignSchema.pre('save', function (next) {
     ],
   })
   .then(campaign => {
-    if (!campaign)
-      return next(new ValidationError('Design validation failed', {
-        campaign: this.campaign,
-      }));
-    /*
     const items = this.items;
     const dyg = campaign.dyg;
 
+    if (!campaign || items.length !== dyg.zones.length)
+      return next(new ValidationError('Design validation failed', {
+        campaign: this.campaign,
+      }));
+
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
+
+      if (item === null && !dyg.zones[i].isRequired)
+        continue;
+
       const categories = dyg.zones[i].categories;
       let found = false;
 
       for (let j = 0; j < categories.length; j++) {
         const category = categories[j];
 
-        for (let w = 0; w < dyg.categories.length; w++) {
-          const object = dyg.categories[w];
+        for (let w = 0; w < dyg.catalog.length; w++) {
+          const entry = dyg.catalog[w];
 
-          if (category === object.category && object.items.includes(item)) {
+          if (category.equals(entry.category) && entry.items.indexOf(item) >= 0) {
             found = true;
             break;
           }
         }
 
-        if (!found)
+        if (found)
           break;
       }
 
       if (!found)
         return next(new ValidationError('Design validation failed', {
           campaign: this.campaign,
+          item,
         }));
     }
-    */
+
     next();
   })
   .catch(next);

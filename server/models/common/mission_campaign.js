@@ -5,7 +5,7 @@
  */
 
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
@@ -80,7 +80,7 @@ MissionCampaignSchema.pre('remove', function (next) {
   .catch(next);
 });
 
-MissionCampaignSchema.plugin(mongoosePaginate);
+MissionCampaignSchema.plugin(paginate);
 MissionCampaignSchema.plugin(idValidator);
 MissionCampaignSchema.plugin(fieldRemover);
 

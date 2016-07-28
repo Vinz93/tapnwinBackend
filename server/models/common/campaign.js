@@ -5,8 +5,6 @@
  */
 
 import Promise from 'bluebird';
-import each from 'async/each';
-import parallel from 'async/parallel';
 import mongoose from 'mongoose';
 import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
@@ -24,7 +22,19 @@ import Item from '../dyg/item';
 
 const Schema = mongoose.Schema;
 
-const CategorySchema = new Schema({
+/**
+ * @swagger
+ * definition:
+ *   Catalog:
+ *     properties:
+ *       category:
+ *         type: string
+ *       items:
+ *         type: array
+ *         items:
+ *           type: string
+ */
+const CatalogSchema = new Schema({
   category: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -37,6 +47,16 @@ const CategorySchema = new Schema({
   }],
 }, { _id: false });
 
+/**
+ * @swagger
+ * definition:
+ *   Game:
+ *     properties:
+ *       isActive:
+ *         type: boolean
+ *       blockable:
+ *         type: boolean
+ */
 const GameSchema = new Schema({
   active: {
     type: Boolean,
@@ -48,6 +68,16 @@ const GameSchema = new Schema({
   },
 }, { _id: false });
 
+/**
+ * @swagger
+ * definition:
+ *   Zone:
+ *     properties:
+ *       categories:
+ *         type: string
+ *       isRequired:
+ *         type: boolean
+ */
 const ZoneSchema = new Schema({
   categories: [{
     type: Schema.Types.ObjectId,
@@ -60,6 +90,30 @@ const ZoneSchema = new Schema({
   },
 }, { _id: false });
 
+/**
+ * @swagger
+ * definition:
+ *   DygGame:
+ *     allOf:
+ *       - $ref: '#/definitions/Game'
+ *       - properties:
+ *           models:
+ *             type: array
+ *             items:
+ *               type: string
+ *           stickers:
+ *             type: array
+ *             items:
+ *               type: string
+ *           categories:
+ *             type: array
+ *             items:
+ *               $ref: '#/definitions/Catalog'
+ *           zones:
+ *             type: array
+ *             items:
+ *               $ref: '#/definitions/Zone'
+ */
 const DygGameSchema = GameSchema.extend({
   models: [{
     type: Schema.Types.ObjectId,
@@ -71,12 +125,30 @@ const DygGameSchema = GameSchema.extend({
     required: true,
     ref: 'Sticker',
   }],
-  categories: [CategorySchema],
+  catalog: [CatalogSchema],
   zones: [ZoneSchema],
 });
 
+/**
+ * @swagger
+ * definition:
+ *   VdlgGame:
+ *     $ref: '#/definitions/Game'
+ */
 const VdlgGameSchema = GameSchema.extend({});
 
+/**
+ * @swagger
+ * definition:
+ *   M3Game:
+ *     allOf:
+ *       - $ref: '#/definitions/Game'
+ *       - properties:
+ *           blockTime:
+ *             type: integer
+ *           initialMoves:
+ *             type: integer
+ */
 const M3GameSchema = GameSchema.extend({
   blockTime: {
     type: Number,
@@ -88,6 +160,12 @@ const M3GameSchema = GameSchema.extend({
   },
 });
 
+/**
+ * @swagger
+ * definition:
+ *   DdtGame:
+ *     $ref: '#/definitions/Game'
+ */
 const DdtGameSchema = GameSchema.extend({});
 
 /**
@@ -231,35 +309,31 @@ CampaignSchema.pre('save', function (next) {
 
   const company = this.company;
 
-  const eachWrapper = (model, modelName, array, id, callback) => {
-    each(array, (doc, cb) => {
-      model.findOne({
-        _id: id ? doc[id] : doc,
-        company,
-      })
-      .then(model => {
-        if (!model)
-          return cb(new ValidationError('Campaign validation failed', {
-            model: modelName,
-            id: id ? doc[id] : doc,
-          }));
-        cb(null);
-      })
-      .catch(cb);
-    }, callback);
-  };
-
-  parallel([
-    cb => eachWrapper(ModelAsset, 'ModelAsset', this.dyg.models, null, cb),
-    cb => eachWrapper(Sticker, 'Sticker', this.dyg.stickers, null, cb),
-    cb => eachWrapper(Category, 'Category', this.dyg.categories, 'category', cb),
-  ], err => {
-    if (err)
-      next(err);
-    each(this.dyg.categories, (category, cb) => {
-      eachWrapper(Item, 'Item', category.items, null, cb);
-    }, next);
+  const validate = (model, name, array, id) => Promise.each(array, doc => {
+    model.findOne({
+      _id: id ? doc[id] : doc,
+      company,
+    })
+    .then(model => {
+      if (!model)
+        return new ValidationError('Campaign validation failed', {
+          model: name,
+          id: id ? doc[id] : doc,
+        });
+    });
   });
+
+  Promise.all([
+    validate(ModelAsset, 'ModelAsset', this.dyg.models, null),
+    validate(Sticker, 'Sticker', this.dyg.stickers, null),
+    validate(Category, 'Category', this.dyg.catalog, 'category'),
+  ])
+  .then(() => {
+    Promise.each(this.dyg.catalog, catalog => validate(Item, 'Item', catalog.items, null))
+    .then(next)
+    .catch(next);
+  })
+  .catch(next);
 });
 
 CampaignSchema.plugin(paginate);

@@ -5,7 +5,7 @@
  */
 
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
@@ -38,7 +38,7 @@ const MissionSchema = new Schema({
   timestamps: true,
 });
 
-MissionSchema.plugin(mongoosePaginate);
+MissionSchema.plugin(paginate);
 MissionSchema.plugin(idValidator);
 MissionSchema.plugin(fieldRemover);
 
