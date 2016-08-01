@@ -4,7 +4,7 @@
  * @lastModifiedBy Andres Alvarez
  */
 
-import GameAsset from './asset';
+import GameAsset from '../../models/common/game_asset';
 
 const GameAssetController = {
 /**
