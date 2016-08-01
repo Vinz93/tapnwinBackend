@@ -67,6 +67,12 @@ AssetSchema.post('save', function () {
     console.log('modified');
 });
 
+
+AssetSchema.post('findOneAndRemove', (asset) => {
+  console.log(path.dirname(asset.url));
+});
+
+
 AssetSchema.plugin(paginate);
 AssetSchema.plugin(idValidator);
 AssetSchema.plugin(fieldRemover);
