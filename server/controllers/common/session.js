@@ -11,7 +11,7 @@ import Administrator from '../../models/common/administrator';
 const SessionController = {
 /**
  * @swagger
- * /api/v1/sessions:
+ * /sessions:
  *   post:
  *     tags:
  *       - Sessions
@@ -65,7 +65,7 @@ const SessionController = {
 
 /**
  * @swagger
- * /api/v1/sessions:
+ * /sessions:
  *   delete:
  *     tags:
  *       - Sessions

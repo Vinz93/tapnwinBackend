@@ -10,7 +10,7 @@ import Campaign from '../../models/common/campaign';
 const CampaignController = {
 /**
  * @swagger
- * /api/v1/campaigns:
+ * /campaigns:
  *   get:
  *     tags:
  *       - Campaigns
@@ -81,7 +81,7 @@ const CampaignController = {
 
 /**
  * @swagger
- * /api/v1/campaigns:
+ * /campaigns:
  *   post:
  *     tags:
  *       - Campaigns
@@ -119,7 +119,7 @@ const CampaignController = {
 
 /**
  * @swagger
- * /api/v1/campaigns/{campaign_id}:
+ * /campaigns/{campaign_id}:
  *   get:
  *     tags:
  *       - Campaigns
@@ -166,7 +166,7 @@ const CampaignController = {
 
   /**
    * @swagger
-   * /api/v1/companies/{company_id}/campaign:
+   * /companies/{company_id}/campaign:
    *   get:
    *     tags:
    *       - Campaigns
@@ -212,7 +212,7 @@ const CampaignController = {
 
 /**
  * @swagger
- * /api/v1/campaigns/{campaign_id}:
+ * /campaigns/{campaign_id}:
  *   patch:
  *     tags:
  *       - Campaigns
@@ -253,7 +253,7 @@ const CampaignController = {
 
 /**
  * @swagger
- * /api/v1/campaigns/{campaign_id}:
+ * /campaigns/{campaign_id}:
  *   delete:
  *     tags:
  *       - Campaigns

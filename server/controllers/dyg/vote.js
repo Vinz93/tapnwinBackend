@@ -12,7 +12,7 @@ import Vote from '../../models/dyg/vote';
 const VoteController = {
 /**
  * @swagger
- * /api/v1/votes:
+ * /votes:
  *   get:
  *     tags:
  *       - Votes
@@ -76,7 +76,7 @@ const VoteController = {
 
 /**
  * @swagger
- * /api/v1//players/me/votes:
+ * //players/me/votes:
  *   post:
  *     tags:
  *       - Votes
@@ -123,7 +123,7 @@ const VoteController = {
 
 /**
  * @swagger
- * /api/v1/votes/{vote_id}:
+ * /votes/{vote_id}:
  *   get:
  *     tags:
  *       - Votes
@@ -165,7 +165,7 @@ const VoteController = {
 
 /**
  * @swagger
- * /api/v1/players/me/designs/{design_id}/vote:
+ * /players/me/designs/{design_id}/vote:
  *   get:
  *     tags:
  *       - Votes
@@ -215,7 +215,7 @@ const VoteController = {
 
 /**
  * @swagger
- * /api/v1/designs/{design_id}/votes/statistics:
+ * /designs/{design_id}/votes/statistics:
  *   get:
  *     tags:
  *       - Votes
@@ -268,7 +268,7 @@ const VoteController = {
 
 /**
  * @swagger
- * /api/v1/players/me/votes/{vote_id}:
+ * /players/me/votes/{vote_id}:
  *   patch:
  *     tags:
  *       - Votes

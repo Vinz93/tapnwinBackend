@@ -12,7 +12,7 @@ import Item from '../../models/dyg/item';
 const ItemController = {
 /**
  * @swagger
- * /api/v1/items:
+ * /items:
  *   get:
  *     tags:
  *       - Items
@@ -77,7 +77,7 @@ const ItemController = {
 
 /**
  * @swagger
- * /api/v1/items:
+ * /items:
  *   post:
  *     tags:
  *       - Items
@@ -115,7 +115,7 @@ const ItemController = {
 
 /**
  * @swagger
- * /api/v1/items/{item_id}:
+ * /items/{item_id}:
  *   get:
  *     tags:
  *       - Items
@@ -157,7 +157,7 @@ const ItemController = {
 
 /**
  * @swagger
- * /api/v1/items/{item_id}:
+ * /items/{item_id}:
  *   patch:
  *     tags:
  *       - Items
@@ -200,7 +200,7 @@ const ItemController = {
 
 /**
  * @swagger
- * /api/v1/items/{item_id}:
+ * /items/{item_id}:
  *   delete:
  *     tags:
  *       - Items

@@ -9,7 +9,7 @@ import Category from '../../models/dyg/category';
 const CategoryController = {
 /**
  * @swagger
- * /api/v1/categories:
+ * /categories:
  *   get:
  *     tags:
  *       - Categories
@@ -74,7 +74,7 @@ const CategoryController = {
 
 /**
  * @swagger
- * /api/v1/categories:
+ * /categories:
  *   post:
  *     tags:
  *       - Categories
@@ -112,7 +112,7 @@ const CategoryController = {
 
 /**
  * @swagger
- * /api/v1/category/{category_id}:
+ * /category/{category_id}:
  *   get:
  *     tags:
  *       - Categories
@@ -155,7 +155,7 @@ const CategoryController = {
 
 /**
  * @swagger
- * /api/v1/categories/{category_id}:
+ * /categories/{category_id}:
  *   patch:
  *     tags:
  *       - Categories
@@ -194,7 +194,7 @@ const CategoryController = {
 
 /**
  * @swagger
- * /api/v1/categories/{category_id}:
+ * /categories/{category_id}:
  *   delete:
  *     tags:
  *       - Categories

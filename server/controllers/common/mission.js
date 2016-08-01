@@ -9,7 +9,7 @@ import Mission from '../../models/common/mission';
 const MissionController = {
 /**
  * @swagger
- * /api/v1/missions:
+ * /missions:
  *   get:
  *     tags:
  *       - Missions
@@ -73,7 +73,7 @@ const MissionController = {
 
 /**
  * @swagger
- * /api/v1/missions:
+ * /missions:
  *   post:
  *     tags:
  *       - Missions
@@ -111,7 +111,7 @@ const MissionController = {
 
 /**
  * @swagger
- * /api/v1/missions/{mission_id}:
+ * /missions/{mission_id}:
  *   get:
  *     tags:
  *       - Missions
@@ -153,7 +153,7 @@ const MissionController = {
 
 /**
  * @swagger
- * /api/v1/missions/{mission_id}:
+ * /missions/{mission_id}:
  *   patch:
  *     tags:
  *       - Missions
@@ -192,7 +192,7 @@ const MissionController = {
 
 /**
  * @swagger
- * /api/v1/missions/{mission_id}:
+ * /missions/{mission_id}:
  *   delete:
  *     tags:
  *       - Missions

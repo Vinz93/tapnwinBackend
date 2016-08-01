@@ -9,7 +9,7 @@ import GameAsset from '../../models/common/game_asset';
 const GameAssetController = {
 /**
  * @swagger
- * /api/v1/game_assets:
+ * /game_assets:
  *   post:
  *     tags:
  *       - GameAssets

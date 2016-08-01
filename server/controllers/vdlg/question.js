@@ -12,7 +12,7 @@ import Answer from '../../models/vdlg/answer';
 const QuestionController = {
 /**
  * @swagger
- * /api/v1/questions:
+ * /questions:
  *   get:
  *     tags:
  *       - Questions
@@ -76,7 +76,7 @@ const QuestionController = {
 
 /**
  * @swagger
- * /api/v1/players/me/questions:
+ * /players/me/questions:
  *   get:
  *     tags:
  *       - Questions
@@ -140,7 +140,7 @@ const QuestionController = {
 
 /**
  * @swagger
- * /api/v1/questions/{question_id}:
+ * /questions/{question_id}:
  *   get:
  *     tags:
  *       - Questions
@@ -182,7 +182,7 @@ const QuestionController = {
 
 /**
  * @swagger
- * /api/v1/questions/{question_id}/statistics:
+ * /questions/{question_id}/statistics:
  *   get:
  *     tags:
  *       - Questions

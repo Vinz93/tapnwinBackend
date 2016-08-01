@@ -9,7 +9,7 @@ import Company from '../../models/common/company';
 const CompanyController = {
 /**
  * @swagger
- * /api/v1/companies:
+ * /companies:
  *   get:
  *     tags:
  *       - Companies
@@ -73,7 +73,7 @@ const CompanyController = {
 
 /**
  * @swagger
- * /api/v1/companies:
+ * /companies:
  *   post:
  *     tags:
  *       - Companies
@@ -111,7 +111,7 @@ const CompanyController = {
 
 /**
  * @swagger
- * /api/v1/companies/{company_id}:
+ * /companies/{company_id}:
  *   get:
  *     tags:
  *       - Companies
@@ -153,7 +153,7 @@ const CompanyController = {
 
 /**
  * @swagger
- * /api/v1/companies/{company_id}:
+ * /companies/{company_id}:
  *   patch:
  *     tags:
  *       - Companies
@@ -192,7 +192,7 @@ const CompanyController = {
 
 /**
  * @swagger
- * /api/v1/companies/{company_id}:
+ * /companies/{company_id}:
  *   delete:
  *     tags:
  *       - Companies

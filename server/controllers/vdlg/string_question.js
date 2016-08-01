@@ -9,7 +9,7 @@ import StringQuestion from '../../models/vdlg/string_question';
 const StringQuestionController = {
 /**
  * @swagger
- * /api/v1/string_questions:
+ * /string_questions:
  *   post:
  *     tags:
  *       - StringQuestions

@@ -9,7 +9,7 @@ import Design from '../../models/dyg/design';
 const DesignController = {
 /**
  * @swagger
- * /api/v1/designs:
+ * /designs:
  *   get:
  *     tags:
  *       - Designs
@@ -74,7 +74,7 @@ const DesignController = {
 
 /**
  * @swagger
- * /api/v1/players/me/designs:
+ * /players/me/designs:
  *   get:
  *     tags:
  *       - Designs
@@ -166,7 +166,7 @@ const DesignController = {
 
 /**
  * @swagger
- * /api/v1/players/me/designs:
+ * /players/me/designs:
  *   post:
  *     tags:
  *       - Designs
@@ -213,7 +213,7 @@ const DesignController = {
 
 /**
  * @swagger
- * /api/v1/designs/{design_id}:
+ * /designs/{design_id}:
  *   get:
  *     tags:
  *       - Designs

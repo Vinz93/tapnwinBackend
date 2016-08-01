@@ -9,7 +9,7 @@ import AssetQuestion from '../../models/vdlg/asset_question';
 const AssetQuestionController = {
   /**
    * @swagger
-   * /api/v1/asset_questions:
+   * /asset_questions:
    *   post:
    *     tags:
    *       - AssetQuestions

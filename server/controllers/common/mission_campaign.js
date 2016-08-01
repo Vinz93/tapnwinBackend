@@ -9,7 +9,7 @@ import MissionCampaign from '../../models/common/mission_campaign';
 const MissionCampaignController = {
 /**
  * @swagger
- * /api/v1/mission_campaigns:
+ * /mission_campaigns:
  *   get:
  *     tags:
  *       - MissionCampaigns
@@ -73,7 +73,7 @@ const MissionCampaignController = {
 
 /**
  * @swagger
- * /api/v1/mission_campaigns:
+ * /mission_campaigns:
  *   post:
  *     tags:
  *       - MissionCampaigns
@@ -111,7 +111,7 @@ const MissionCampaignController = {
 
 /**
  * @swagger
- * /api/v1/mission_campaigns/{mission_campaign_id}:
+ * /mission_campaigns/{mission_campaign_id}:
  *   get:
  *     tags:
  *       - MissionCampaigns
@@ -153,7 +153,7 @@ const MissionCampaignController = {
 
 /**
  * @swagger
- * /api/v1/mission_campaigns/{mission_campaign_id}:
+ * /mission_campaigns/{mission_campaign_id}:
  *   patch:
  *     tags:
  *       - MissionCampaigns
@@ -192,7 +192,7 @@ const MissionCampaignController = {
 
 /**
  * @swagger
- * /api/v1/mission_campaigns/{mission_campaign_id}:
+ * /mission_campaigns/{mission_campaign_id}:
  *   delete:
  *     tags:
  *       - MissionCampaigns

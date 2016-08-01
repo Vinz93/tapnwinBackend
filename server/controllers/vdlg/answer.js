@@ -11,7 +11,7 @@ import Question from '../../models/vdlg/question';
 const AnswerController = {
 /**
  * @swagger
- * /api/v1/answers:
+ * /answers:
  *   get:
  *     tags:
  *       - Answers
@@ -76,7 +76,7 @@ const AnswerController = {
   },
 /**
  * @swagger
- * /api/v1/players/me/answers:
+ * /players/me/answers:
  *   get:
  *     tags:
  *       - Answers
@@ -167,7 +167,7 @@ const AnswerController = {
 
 /**
  * @swagger
- * /api/v1/answers/{answer_id}:
+ * /answers/{answer_id}:
  *   get:
  *     tags:
  *       - Answers
@@ -211,7 +211,7 @@ const AnswerController = {
 
 /**
  * @swagger
- * /api/v1/players/me/answers/statistics:
+ * /players/me/answers/statistics:
  *   get:
  *     tags:
  *       - Answers
@@ -288,7 +288,7 @@ const AnswerController = {
 
 /**
  * @swagger
- * /api/v1/players/me/answers:
+ * /players/me/answers:
  *   post:
  *     tags:
  *       - Answers
@@ -337,7 +337,7 @@ const AnswerController = {
 
 /**
  * @swagger
- * /api/v1/players/me/answers/{answer_id}:
+ * /players/me/answers/{answer_id}:
  *   patch:
  *     tags:
  *       - Answers

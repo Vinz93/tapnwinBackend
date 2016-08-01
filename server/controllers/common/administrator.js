@@ -9,7 +9,7 @@ import Administrator from '../../models/common/administrator';
 const AdminController = {
 /**
  * @swagger
- * /api/v1/administrators:
+ * /administrators:
  *   post:
  *     tags:
  *       - Administrators

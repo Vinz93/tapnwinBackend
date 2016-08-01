@@ -12,7 +12,7 @@ import Asset from '../../models/common/asset';
 const AssetController = {
 /**
  * @swagger
- * /api/v1/assets:
+ * /assets:
  *   get:
  *     tags:
  *       - Assets
@@ -76,7 +76,7 @@ const AssetController = {
 
 /**
  * @swagger
- * /api/v1/assets/{asset_id}:
+ * /assets/{asset_id}:
  *   get:
  *     tags:
  *       - Assets
@@ -118,7 +118,7 @@ const AssetController = {
 
 /**
  * @swagger
- * /api/v1/assets/{asset_id}:
+ * /assets/{asset_id}:
  *   patch:
  *     tags:
  *       - Assets
@@ -157,7 +157,7 @@ const AssetController = {
 
 /**
  * @swagger
- * /api/v1/assets/{asset_id}:
+ * /assets/{asset_id}:
  *   delete:
  *     tags:
  *       - Assets

@@ -16,7 +16,7 @@ const EmailTemplate = templates.EmailTemplate;
 const UserController = {
 /**
  * @swagger
- * /api/v1/users:
+ * /users:
  *   get:
  *     tags:
  *       - Users
@@ -80,7 +80,7 @@ const UserController = {
 
 /**
  * @swagger
- * /api/v1/users/recovery_token:
+ * /users/recovery_token:
  *   post:
  *     tags:
  *       - Users
@@ -139,7 +139,7 @@ const UserController = {
 
 /**
  * @swagger
- * /api/v1/users/me:
+ * /users/me:
  *   get:
  *     tags:
  *       - Users
@@ -174,7 +174,7 @@ const UserController = {
 
 /**
  * @swagger
- * /api/v1/users/me:
+ * /users/me:
  *   patch:
  *     tags:
  *       - Users
@@ -209,7 +209,7 @@ const UserController = {
 
 /**
  * @swagger
- * /api/v1/users/password:
+ * /users/password:
  *   patch:
  *     tags:
  *       - Users
@@ -257,7 +257,7 @@ const UserController = {
 
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /users/{id}:
  *   get:
  *     tags:
  *       - Users
@@ -299,7 +299,7 @@ const UserController = {
 
 /**
  * @swagger
- * /api/v1/user/{user_id}:
+ * /user/{user_id}:
  *   patch:
  *     tags:
  *       - Users
@@ -338,7 +338,7 @@ const UserController = {
 
 /**
  * @swagger
- * /api/v1/users/{id}:
+ * /users/{id}:
  *   delete:
  *     tags:
  *       - Users

@@ -9,7 +9,7 @@ import ModelAsset from '../../models/dyg/model_asset';
 const ModelAssetController = {
 /**
  * @swagger
- * /api/v1/model_assets:
+ * /model_assets:
  *   post:
  *     tags:
  *       - ModelAssets

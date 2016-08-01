@@ -10,7 +10,7 @@ import CampaignStatus from '../../models/common/campaign_status';
 const StatusController = {
 /**
  * @swagger
- * /api/v1/players/me/campaigns/{campaign_id}/campaign_status:
+ * /players/me/campaigns/{campaign_id}/campaign_status:
  *   get:
  *     tags:
  *       - CampaignStatuses
@@ -57,7 +57,7 @@ const StatusController = {
 
 /**
  * @swagger
- * /api/v1/players/me/campaign_status/{campaign_status_id}:
+ * /players/me/campaign_status/{campaign_status_id}:
  *   patch:
  *     tags:
  *       - CampaignStatuses

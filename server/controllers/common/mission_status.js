@@ -17,7 +17,7 @@ const Transaction = transaction(mongoose);
 const MissionStatusController = {
 /**
  * @swagger
- * /api/v1/players/me/campaigns/{campaign_id}/mission_statuses:
+ * /players/me/campaigns/{campaign_id}/mission_statuses:
  *   get:
  *     tags:
  *       - MissionStatuses
@@ -78,7 +78,7 @@ const MissionStatusController = {
 
 /**
  * @swagger
- * /api/v1/players/me/mission_statuses/{mission_status_id}:
+ * /players/me/mission_statuses/{mission_status_id}:
  *   patch:
  *     tags:
  *       - MissionStatuses

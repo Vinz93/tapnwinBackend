@@ -12,7 +12,7 @@ import Sticker from '../../models/dyg/sticker';
 const StickerController = {
 /**
  * @swagger
- * /api/v1/stickers:
+ * /stickers:
  *   get:
  *     tags:
  *       - Stickers
@@ -77,7 +77,7 @@ const StickerController = {
 
 /**
  * @swagger
- * /api/v1/stickers:
+ * /stickers:
  *   post:
  *     tags:
  *       - Stickers
@@ -115,7 +115,7 @@ const StickerController = {
 
 /**
  * @swagger
- * /api/v1/stickers/{sticker_id}:
+ * /stickers/{sticker_id}:
  *   get:
  *     tags:
  *       - Stickers
@@ -157,7 +157,7 @@ const StickerController = {
 
 /**
  * @swagger
- * /api/v1/stickers/{sticker_id}:
+ * /stickers/{sticker_id}:
  *   patch:
  *     tags:
  *       - Stickers
@@ -200,7 +200,7 @@ const StickerController = {
 
 /**
  * @swagger
- * /api/v1/stickers/{sticker_id}:
+ * /stickers/{sticker_id}:
  *   delete:
  *     tags:
  *       - Stickers

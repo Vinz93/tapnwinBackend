@@ -9,7 +9,7 @@ import Player from '../../models/common/player';
 const PlayerController = {
 /**
  * @swagger
- * /api/v1/players:
+ * /players:
  *   post:
  *     tags:
  *       - Players

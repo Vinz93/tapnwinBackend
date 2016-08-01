@@ -9,7 +9,7 @@ import PossibilityAsset from '../../models/vdlg/possibility_asset';
 const PossibilityAssetController = {
 /**
  * @swagger
- * /api/v1/possibility_assets:
+ * /possibility_assets:
  *   post:
  *     tags:
  *       - PossibilityAssets
