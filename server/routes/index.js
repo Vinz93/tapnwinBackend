@@ -10,7 +10,7 @@ const router = express.Router();  // eslint-disable-line new-cap
 
 /**
  * @swagger
- * /api/v1/time:
+ * /time:
  *   get:
  *     tags:
  *       - Times
@@ -34,7 +34,7 @@ router.get('/time', (req, res) => {
 
 /**
  * @swagger
- * /api/v1/files:
+ * /files:
  *   post:
  *     tags:
  *       - Files
@@ -60,7 +60,15 @@ router.post('/files', (req, res) => {
     if (err)
       return res.status(400).send(err);
 
-    res.json({ url: `${req.app.locals.config.host}uploads/${req.file.filename}` });
+    const config = req.app.locals.config;
+    let url = config.host;
+
+    if (config.basePort)
+      url = `${url}:${config.basePort}`;
+
+    url = `${url}/uploads/${req.file.filename}`;
+
+    res.json({ url });
   });
 });
 
