@@ -60,7 +60,7 @@ router.route('/assets/:asset_id')
 .delete(Asset.delete);
 
 router.route('/game_assets')
-.get(GameAsset.create);
+.post(GameAsset.create);
 
 router.route('/campaigns')
 .get(Campaign.readAll)
