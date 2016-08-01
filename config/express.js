@@ -11,9 +11,10 @@ import swaggerTools from 'swagger-tools';
 import config from './env';
 import routes from '../server/routes';
 
+console.log(config.host);
+
 // import cronJob from '../server/helpers/cron'; // eslint-disable-line no-unused-vars
 
-const prefix = '/api/v1';
 const app = express();
 const spec = swaggerDoc({
   swaggerDefinition: {
@@ -21,9 +22,13 @@ const spec = swaggerDoc({
       title: 'Tapnwin',
       version: '1.0.0',
     },
-    // basePath: '/tapnwin',
+    basePath: config.basePath,
   },
-  apis: ['./server/routes/**/*.js', './server/models/**/*.js', './server/controllers/**/*.js'],
+  apis: [
+    'server/routes/**/*.js',
+    'server/models/**/*.js',
+    'server/controllers/**/*.js',
+  ],
 });
 
 app.disable('x-powered-by');
@@ -40,8 +45,8 @@ if (config.env === 'development') {
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use(prefix, routes);
-app.use(`${prefix}/uploads`, express.static(path.join(config.root, 'uploads')));
+app.use(config.path, routes);
+app.use('/uploads', express.static(path.join(config.root, 'uploads')));
 
 app.use((err, req, res, next) => { // eslint-disable-line
   if (err.name === 'ValidationError' ||
@@ -57,10 +62,10 @@ app.use((err, req, res, next) => { // eslint-disable-line
 
 swaggerTools.initializeMiddleware(spec, (middleware) => {
   app.use(middleware.swaggerUi({
-    apiDocs: `${prefix}/docs.json`,
-    swaggerUi: `${prefix}/docs`,
-    // apiDocsPrefix: '/tapnwin2',
-    // swaggerUiPrefix: '/tapnwin2',
+    apiDocs: `${config.path}docs.json`,
+    swaggerUi: `${config.path}docs`,
+    apiDocsPrefix: config.basePath,
+    swaggerUiPrefix: config.basePath,
   }));
 });
 

@@ -1,13 +1,14 @@
 export default {
   env: 'production',
+  host: 'https://52.37.117.104',
+  path: '/',
+  basePath: '/tapnwin/api/v1',
   port: 3000,
-  db: process.env.TAPNWIN_PROD_URL,
+  db: process.env.TAPNWIN_PROD_DB || 'mongodb://localhost/tapnwin',
   mailer: {
-    from: 'no-reply@example.com',
     host: 'smtp.gmail.com',
-    secureConnection: true,
     port: 465,
-    transportMethod: 'SMTP',
+    secure: true,
     auth: {
       user: 'portalasig.prueba@gmail.com',
       pass: 'supersecret',

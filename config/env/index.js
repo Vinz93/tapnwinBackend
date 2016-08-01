@@ -4,7 +4,6 @@ import production from './production';
 
 const defaults = {
   root: path.join(__dirname, '../..'),
-  host: 'https://52.37.117.104/tapnwin/api/v1/',
   paginate: {
     limit(limit, value) {
       return !isNaN(limit) ? parseInt(limit, 10) : value || 20;
