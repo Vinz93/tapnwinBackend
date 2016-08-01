@@ -94,39 +94,6 @@ CampaignStatusSchema.index({
 CampaignStatusSchema.plugin(paginate);
 CampaignStatusSchema.plugin(idValidator);
 CampaignStatusSchema.plugin(fieldRemover, 'unblockAt');
-/*
-CampaignStatusSchema.post('findOne', function (campaignStatus, next) {
-  if (campaignStatus) {
-    let changed = false;
-
-    if (campaignStatus.unblockAt && campaignStatus.unblockAt <= Date.now()) {
-      changed = true;
-      campaignStatus.isBlocked = false;
-      campaignStatus.unblockAt = undefined;
-    }
-
-    if (campaignStatus.m3.unblockAt && campaignStatus.m3.unblockAt <= Date.now()) {
-      changed = true;
-      campaignStatus.m3.isBlocked = false;
-      campaignStatus.m3.unblockAt = undefined;
-    }
-
-    if (changed)
-      campaignStatus.save()
-      .then(next)
-      .catch(next);
-    else
-      next();
-  } else {
-    CampaignStatus.create(this.getQuery()) // eslint-disable-line no-use-before-define
-    .then((campaignStatus) => {
-      console.log('1.5');
-      next('sdasdasad');
-    })
-    .catch(next);
-  }
-});
-*/
 
 CampaignStatusSchema.statics = {
   findOrCreate(find) {
@@ -134,6 +101,8 @@ CampaignStatusSchema.statics = {
     .then(campaignStatus => {
       if (campaignStatus) {
         let changed = false;
+
+        console.log(campaignStatus);
 
         if (campaignStatus.unblockAt && campaignStatus.unblockAt <= Date.now()) {
           changed = true;

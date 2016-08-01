@@ -55,12 +55,14 @@ app.use((err, req, res, next) => { // eslint-disable-line
   res.status(500).send(err);
 });
 
-swaggerTools.initializeMiddleware(spec, (middleware) => app.use(middleware.swaggerUi({
-  apiDocs: `${prefix}/docs.json`,
-  swaggerUi: `${prefix}/docs`,
-  // apiDocsPrefix: '/tapnwin2',
-  // swaggerUiPrefix: '/tapnwin2',
-})));
+swaggerTools.initializeMiddleware(spec, (middleware) => {
+  app.use(middleware.swaggerUi({
+    apiDocs: `${prefix}/docs.json`,
+    swaggerUi: `${prefix}/docs`,
+    // apiDocsPrefix: '/tapnwin2',
+    // swaggerUiPrefix: '/tapnwin2',
+  }));
+});
 
 app.locals.config = config;
 app.locals.mailer = nodemailer.createTransport(config.mailer);

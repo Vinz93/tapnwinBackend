@@ -4,11 +4,15 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import fs from 'fs';
+import path from 'path';
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
 import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+
+import config from '../../../config/env';
 
 const Schema = mongoose.Schema;
 
@@ -50,6 +54,17 @@ const AssetSchema = new Schema({
   },
 }, {
   timestamps: true,
+});
+
+AssetSchema.pre('save', function (next) {
+  this.wasUrlModified = this.isModified('url');
+
+  next();
+});
+
+AssetSchema.post('save', function () {
+  if (this.wasUrlModified)
+    console.log('modified');
 });
 
 AssetSchema.plugin(paginate);

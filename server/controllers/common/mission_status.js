@@ -124,29 +124,35 @@ const MissionStatusController = {
     })
     .populate('missionCampaign')
     .then(missionStatus => {
-      if (!missionStatus)
-        return res.status(404).end();
+      if (!missionStatus) {
+        res.status(404).end();
+        throw new Promise.CancellationError();
+      }
 
+      const missionCampaign = missionStatus.missionCampaign;
       let value = (req.body.value !== undefined) ? parseInt(req.body.value, 10) : 1;
       value += missionStatus.value;
 
-      if (value > missionStatus.missionCampaign.max)
-        return res.status(409).end();
+      if (value > missionCampaign.max) {
+        res.status(409).end();
+        throw new Promise.CancellationError();
+      }
 
       transaction.update('MissionStatus', missionStatus.id, { value });
 
-      if (value === missionStatus.missionCampaign.max) {
+      if (value === missionCampaign.max) {
         transaction.update('MissionStatus', missionStatus.id, { isDone: true });
 
         return [
           missionStatus,
           MissionCampaign.find({
-            campaign: missionStatus.missionCampaign.campaign,
+            campaign: missionCampaign.campaign,
           })
           .populate('campaign'),
         ];
       }
 
+      run();
       throw new Promise.CancellationError();
     })
     .spread((missionStatus, missions) => [
@@ -168,6 +174,8 @@ const MissionStatusController = {
       .populate('missionCampaign'),
     ])
     .spread((missionStatus, missions, campaignStatus, missionStatuses) => {
+      const missionCampaign = missionStatus.missionCampaign;
+
       if (missionStatuses.reduce((prev, curr) => {
         if (!curr.missionCampaign.isRequired || curr.id === missionStatus.id)
           return prev && true;
@@ -176,29 +184,31 @@ const MissionStatusController = {
       }, true)) {
         let balance;
 
-        if (missionStatus.missionCampaign.isRequired) {
+        if (missionCampaign.isRequired) {
           balance = missions[0].campaign.balance;
 
           missionStatuses.forEach(missionStatus => {
-            if (missionStatus.isDone && !missionStatus.missionCampaign.isRequired)
-              balance += missionStatus.missionCampaign.balance;
+            if (missionStatus.isDone && !missionCampaign.isRequired)
+              balance += missionCampaign.balance;
           });
         } else
-          balance = missionStatus.missionCampaign.balance;
+          balance = missionCampaign.balance;
 
         transaction.update('Player', res.locals.user.id, {
           balance: res.locals.user.balance + balance,
         });
       }
 
-      if (missionStatus.missionCampaign.isBlocking) {
+      if (missionCampaign.isBlocking) {
         const data = {};
 
         data.isBlocked = true;
-        data.unblockAt = Date.now() + missionStatus.missionCampaign.blockTime;
+        data.unblockAt = Date.now() + missionCampaign.blockTime;
         data.m3 = {
           isBlocked: true,
           unblockAt: data.unblockAt,
+          moves: campaignStatus.m3.moves,
+          score: campaignStatus.m3.score,
         };
 
         transaction.update('CampaignStatus', campaignStatus.id, data);
@@ -208,7 +218,7 @@ const MissionStatusController = {
     })
     .catch(err => {
       if (err instanceof Promise.CancellationError)
-        return run();
+        return;
 
       next(err);
     });
