@@ -180,9 +180,9 @@ const AssetController = {
       if (!asset)
         return res.status(404).end();
 
-      const config = req.app.locals.config;
+      // const config = req.app.locals.config;
 
-      fs.unlinkSync(path.join(config.root, `/uploads${asset.url.split('uploads')[1]}`));
+      // fs.unlinkSync(path.join(config.root, `/uploads${asset.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })
