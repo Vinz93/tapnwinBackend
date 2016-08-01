@@ -1,7 +1,7 @@
 {
   "name": "tapnwin-backend",
   "version": "0.0.1",
-  "description": "Tap&Win's games backend",
+  "description": "Tapnwin's backend",
   "main": "index.js",
   "scripts": {
     "start": "grunt",
