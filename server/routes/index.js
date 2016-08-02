@@ -60,6 +60,9 @@ router.post('/files', (req, res) => {
     if (err)
       return res.status(400).send(err);
 
+    if (!req.file)
+      return res.status(400).end();
+
     const config = req.app.locals.config;
     let url = config.host;
 

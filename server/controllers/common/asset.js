@@ -4,9 +4,7 @@
  * @lastModifiedBy Andres Alvarez
  */
 
-import fs from 'fs';
-import path from 'path';
-
+import { unlinkSync } from '../../helpers/utils';
 import Asset from '../../models/common/asset';
 
 const AssetController = {
@@ -180,9 +178,7 @@ const AssetController = {
       if (!asset)
         return res.status(404).end();
 
-      // const config = req.app.locals.config;
-
-      // fs.unlinkSync(path.join(config.root, `/uploads${asset.url.split('uploads')[1]}`));
+      unlinkSync(req.app.locals.config, asset.url);
 
       res.status(204).end();
     })

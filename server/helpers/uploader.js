@@ -13,10 +13,12 @@ import config from './../../config/env';
 export default function (fileName) {
   const storage = multer.diskStorage({
     destination(req, file, cb) {
+      console.log('fdsf');
       cb(null, path.join(config.root, 'uploads'));
     },
     filename(req, file, cb) {
       const filename = `${uuid.v4()}.${mime.extension(file.mimetype)}`;
+      console.log(filename);
       cb(null, filename);
     },
   });
