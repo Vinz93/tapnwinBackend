@@ -145,6 +145,9 @@ const AssetController = {
       if (!asset)
         return res.status(404).end();
 
+      if (req.body.url && asset.url !== req.body.url)
+        unlinkSync(req.app.locals.config, asset.url);
+
       Object.assign(asset, req.body);
 
       return asset.save();

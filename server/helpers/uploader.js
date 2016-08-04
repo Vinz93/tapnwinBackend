@@ -10,18 +10,15 @@ import mime from 'mime';
 import path from 'path';
 import config from './../../config/env';
 
-export default function (fileName) {
+export default function (name) {
   const storage = multer.diskStorage({
     destination(req, file, cb) {
-      console.log('fdsf');
       cb(null, path.join(config.root, 'uploads'));
     },
     filename(req, file, cb) {
-      const filename = `${uuid.v4()}.${mime.extension(file.mimetype)}`;
-      console.log(filename);
-      cb(null, filename);
+      cb(null, `${uuid.v4()}.${mime.extension(file.mimetype)}`);
     },
   });
 
-  return multer({ storage }).single(fileName);
+  return multer({ storage }).single(name);
 }
