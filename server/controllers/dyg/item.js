@@ -3,10 +3,9 @@
  * @description Item controller definition
  * @lastModifiedBy Juan Sanchez
  */
+import assignment from 'assignment';
 
-import fs from 'fs';
-import path from 'path';
-
+import { paginate, unlinkSync } from '../../helpers/utils';
 import Item from '../../models/dyg/item';
 
 const ItemController = {
@@ -57,10 +56,8 @@ const ItemController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -181,20 +178,29 @@ const ItemController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
-    Item.findByIdAndUpdate(req.params.item_id, req.body, {
-      runValidators: true,
-      context: 'query',
-    })
+    Item.findById(req.params.item_id)
     .then(item => {
       if (!item)
         return res.status(404).end();
 
-      const config = req.app.locals.config;
+      const bodyUrls = req.body.urls;
 
-      fs.unlinkSync(path.join(config.root, `/uploads${item.url.split('uploads')[1]}`));
+      if (bodyUrls) {
+        const config = req.app.locals.config;
+        const urls = item.urls;
 
-      res.status(204).end();
+        if (bodyUrls.small && urls.small !== bodyUrls.small)
+          unlinkSync(config, urls.small);
+
+        if (bodyUrls.large && urls.large !== bodyUrls.large)
+          unlinkSync(config, urls.large);
+      }
+
+      assignment(item, req.body);
+
+      return item.save();
     })
+    .then(() => res.status(204).end())
     .catch(next);
   },
 
@@ -222,10 +228,6 @@ const ItemController = {
     .then(item => {
       if (!item)
         return res.status(404).end();
-
-      const config = req.app.locals.config;
-
-      fs.unlinkSync(path.join(config.root, `/uploads${item.url.split('uploads')[1]}`));
 
       res.status(204).end();
     })

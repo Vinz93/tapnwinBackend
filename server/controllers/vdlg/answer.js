@@ -5,6 +5,7 @@
  */
 import Promise from 'bluebird';
 
+import { paginate } from '../../helpers/utils';
 import Answer from '../../models/vdlg/answer';
 import Question from '../../models/vdlg/question';
 
@@ -58,10 +59,8 @@ const AnswerController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -128,10 +127,8 @@ const AnswerController = {
  *               type: integer
  */
   readAllByMe(req, res, next) {
-    const config = req.app.locals.config;
-
-    const limit = config.paginate.limit(req.query.limit);
-    const offset = config.paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
 
     req.query.find = req.query.find || {};
 

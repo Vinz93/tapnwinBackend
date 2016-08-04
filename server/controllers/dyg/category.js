@@ -3,7 +3,9 @@
  * @description Company controller definition
  * @lastModifiedBy Andres ALvarez
  */
+import assignment from 'assignment';
 
+import { paginate, unlinkSync } from '../../helpers/utils';
 import Category from '../../models/dyg/category';
 
 const CategoryController = {
@@ -54,10 +56,8 @@ const CategoryController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -179,16 +179,29 @@ const CategoryController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
-    Category.findByIdAndUpdate(req.params.category_id, req.body, {
-      runValidators: true,
-      context: 'query',
-    })
+    Category.findById(req.params.category_id)
     .then(category => {
       if (!category)
         return res.status(404).end();
 
-      res.status(204).end();
+      const bodyUrls = req.body.urls;
+
+      if (bodyUrls) {
+        const config = req.app.locals.config;
+        const urls = category.urls;
+
+        if (bodyUrls.selected && urls.selected !== bodyUrls.selected)
+          unlinkSync(config, urls.selected);
+
+        if (bodyUrls.unselected && urls.unselected !== bodyUrls.unselected)
+          unlinkSync(config, urls.unselected);
+      }
+
+      assignment(category, req.body);
+
+      return category.save();
     })
+    .then(() => res.status(204).end())
     .catch(next);
   },
 

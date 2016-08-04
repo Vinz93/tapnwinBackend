@@ -106,9 +106,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean',
-    'babel',
+    'changed:babel',
+    'changed:copy:seeds',
+    'mkdir',
     'copy:pkg',
-    'mkdir'
   ]);
 
   grunt.registerTask('serve', [
@@ -116,7 +117,7 @@ module.exports = function(grunt) {
     'changed:babel',
     'changed:copy:seeds',
     'mkdir',
-    'concurrent'
+    'concurrent',
   ]);
 
   grunt.registerTask('default', 'serve');

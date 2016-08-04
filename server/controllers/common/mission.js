@@ -3,6 +3,7 @@
  * @description Mission controller definition
  * @lastModifiedBy Juan Sanchez
  */
+import { paginate } from '../../helpers/utils';
 import Mission from '../../models/common/mission';
 
 const MissionController = {
@@ -53,10 +54,8 @@ const MissionController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };

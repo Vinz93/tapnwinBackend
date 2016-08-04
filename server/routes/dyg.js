@@ -69,7 +69,7 @@ router.route('/stickers')
 
 router.route('/stickers/:sticker_id')
 .get(Sticker.read)
-.put(Sticker.update)
+.patch(Sticker.update)
 .delete(Sticker.delete);
 
 export default router;

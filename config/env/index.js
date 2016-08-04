@@ -4,14 +4,6 @@ import production from './production';
 
 const defaults = {
   root: path.join(__dirname, '../..'),
-  paginate: {
-    limit(limit, value) {
-      return !isNaN(limit) ? parseInt(limit, 10) : value || 20;
-    },
-    offset(offset, value) {
-      return !isNaN(offset) ? parseInt(offset, 10) : value || 0;
-    },
-  },
 };
 
 const config = {

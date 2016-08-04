@@ -10,9 +10,6 @@ import swaggerTools from 'swagger-tools';
 
 import config from './env';
 import routes from '../server/routes';
-
-console.log(config.host);
-
 // import cronJob from '../server/helpers/cron'; // eslint-disable-line no-unused-vars
 
 const app = express();
@@ -54,8 +51,6 @@ app.use((err, req, res, next) => { // eslint-disable-line
       err.name === 'MongoError' ||
       err.code === 11000)
     return res.status(400).json(err).end();
-
-  console.error(err.stack);
 
   res.status(500).send(err);
 });

@@ -34,7 +34,7 @@ const M3StatusSchema = new Schema({
   unblockAt: Date,
 }, { _id: false });
 
-M3StatusSchema.plugin(fieldRemover, 'unblockAt');
+M3StatusSchema.plugin(fieldRemover);
 
 /**
  * @swagger
@@ -102,8 +102,6 @@ CampaignStatusSchema.statics = {
       if (campaignStatus) {
         let changed = false;
 
-        console.log(campaignStatus);
-
         if (campaignStatus.unblockAt && campaignStatus.unblockAt <= Date.now()) {
           changed = true;
           campaignStatus.isBlocked = false;
@@ -128,6 +126,7 @@ CampaignStatusSchema.statics = {
 };
 
 CampaignStatusSchema.pre('save', function (next) {
+  console.log('sdadadsasda1');
   Campaign.findOneActive({
     _id: this.campaign,
   })

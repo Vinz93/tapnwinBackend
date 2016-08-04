@@ -4,6 +4,7 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import { paginate } from '../../helpers/utils';
 import Design from '../../models/dyg/design';
 
 const DesignController = {
@@ -54,10 +55,8 @@ const DesignController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -134,9 +133,7 @@ const DesignController = {
  *               type: integer
  */
   readAllByMe(req, res, next) {
-    const config = req.app.locals.config;
-
-    const limit = config.paginate.limit(req.query.limit);
+    const limit = paginate.limit(req.query.limit);
     const player = (req.query.exclusive === undefined ||
       req.query.exclusive === 'false') ? res.locals.user._id : {
         $ne: res.locals.user._id,
@@ -152,7 +149,7 @@ const DesignController = {
       .then(designs => res.json(designs))
       .catch(next);
     } else {
-      const offset = config.paginate.offset(req.query.offset);
+      const offset = paginate.offset(req.query.offset);
 
       Design.paginate(find, {
         sort,

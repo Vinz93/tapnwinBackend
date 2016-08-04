@@ -57,11 +57,11 @@ const StatusController = {
 
 /**
  * @swagger
- * /players/me/campaign_status/{campaign_status_id}:
+ * /players/me/campaign_statuses/{campaign_status_id}:
  *   patch:
  *     tags:
  *       - CampaignStatuses
- *     description: Updates me
+ *     description: Updates my campaignStatus
  *     produces:
  *       - application/json
  *     parameters:
@@ -95,6 +95,9 @@ const StatusController = {
         return res.status(404).end();
 
       assignment(campaignStatus, req.body);
+
+      if (req.body.m3)
+        campaignStatus.markModified('m3');
 
       return campaignStatus.save();
     })

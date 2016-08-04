@@ -6,7 +6,8 @@
   "scripts": {
     "start": "grunt",
     "build": "grunt build",
-    "seed": "node --harmony_proxies ./dist/config/seeds"
+    "seed": "node --harmony_proxies ./config/seeds",
+    "seed:dist": "node --harmony_proxies ./dist/config/seeds"
   },
   "repository": {
     "type": "git",

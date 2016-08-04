@@ -3,10 +3,9 @@
  * @description Company controller definition
  * @lastModifiedBy Andres Alvarez
  */
+import assignment from 'assignment';
 
-import fs from 'fs';
-import path from 'path';
-
+import { paginate, unlinkSync } from '../../helpers/utils';
 import Sticker from '../../models/dyg/sticker';
 
 const StickerController = {
@@ -57,10 +56,8 @@ const StickerController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
@@ -181,20 +178,32 @@ const StickerController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
-    Sticker.findByIdAndUpdate(req.params.sticker_id, req.body, {
-      runValidators: true,
-      context: 'query',
-    })
+    Sticker.findById(req.params.sticker_id)
     .then(sticker => {
       if (!sticker)
         return res.status(404).end();
 
-      const config = req.app.locals.config;
+      const bodyUrls = req.body.urls;
 
-      fs.unlinkSync(path.join(config.root, `/uploads${sticker.url.split('uploads')[1]}`));
+      if (bodyUrls) {
+        const config = req.app.locals.config;
+        const urls = sticker.urls;
 
-      res.status(204).end();
+        if (bodyUrls.animation && urls.animation !== bodyUrls.animation)
+          unlinkSync(config, urls.animation);
+
+        if (bodyUrls.enable && urls.enable !== bodyUrls.enable)
+          unlinkSync(config, urls.enable);
+
+        if (bodyUrls.disable && urls.disable !== bodyUrls.disable)
+          unlinkSync(config, urls.disable);
+      }
+
+      assignment(sticker, req.body);
+
+      return sticker.save();
     })
+    .then(() => res.status(204).end())
     .catch(next);
   },
 
@@ -225,7 +234,9 @@ const StickerController = {
 
       const config = req.app.locals.config;
 
-      fs.unlinkSync(path.join(config.root, `/uploads${sticker.url.split('uploads')[1]}`));
+      unlinkSync(config, sticker.urls.animation);
+      unlinkSync(config, sticker.urls.enable);
+      unlinkSync(config, sticker.urls.disable);
 
       res.status(204).end();
     })

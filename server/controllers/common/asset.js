@@ -4,7 +4,7 @@
  * @lastModifiedBy Andres Alvarez
  */
 
-import { unlinkSync } from '../../helpers/utils';
+import { paginate, unlinkSync } from '../../helpers/utils';
 import Asset from '../../models/common/asset';
 
 const AssetController = {
@@ -55,10 +55,8 @@ const AssetController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };

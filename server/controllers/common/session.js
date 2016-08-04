@@ -93,7 +93,7 @@ const SessionController = {
   },
 
   validate(req, res, next) {
-    const sessionToken = req.get('sessionToken');
+    const sessionToken = req.get('Session-Token');
 
     if (!sessionToken)
       return res.status(401).end();

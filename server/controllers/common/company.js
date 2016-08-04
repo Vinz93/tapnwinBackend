@@ -4,6 +4,7 @@
  * @lastModifiedBy Juan Sanchez
  */
 
+import { paginate } from '../../helpers/utils';
 import Company from '../../models/common/company';
 
 const CompanyController = {
@@ -54,10 +55,8 @@ const CompanyController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };

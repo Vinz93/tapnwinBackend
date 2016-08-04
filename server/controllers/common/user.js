@@ -7,6 +7,7 @@
 import path from 'path';
 import templates from 'email-templates';
 
+import { paginate } from '../../helpers/utils';
 import User from '../../models/common/user';
 import Player from '../../models/common/player';
 import Administrator from '../../models/common/administrator';
@@ -61,10 +62,8 @@ const UserController = {
  *               type: integer
  */
   readAll(req, res, next) {
-    const config = req.app.locals.config;
-
-    const offset = config.paginate.offset(req.query.offset);
-    const limit = config.paginate.limit(req.query.limit);
+    const offset = paginate.offset(req.query.offset);
+    const limit = paginate.limit(req.query.limit);
 
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };

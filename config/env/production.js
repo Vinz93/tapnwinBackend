@@ -3,8 +3,8 @@ export default {
   host: 'https://52.37.117.104',
   path: '/',
   basePath: '/tapnwin/api/v1',
-  port: 3000,
-  db: process.env.TAPNWIN_PROD_DB || 'mongodb://localhost/tapnwin',
+  port: 8080,
+  db: 'mongodb://localhost/tapnwin',
   mailer: {
     host: 'smtp.gmail.com',
     port: 465,

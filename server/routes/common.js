@@ -96,7 +96,7 @@ router.route('/players/me/campaigns/:campaign_id/campaign_status')
 .all(Session.validate, User.isPlayer)
 .get(CampaignStatus.readByMe);
 
-router.route('/players/me/campaign_status/:campaign_status_id')
+router.route('/players/me/campaign_statuses/:campaign_status_id')
 .all(Session.validate, User.isPlayer)
 .patch(CampaignStatus.updateByMe);
 

@@ -1,7 +1,6 @@
 import express from 'express';
 
-import uploader from '../helpers/uploader';
-
+import { upload } from '../helpers/utils';
 import common from './common';
 import dyg from './dyg';
 import vdlg from './vdlg';
@@ -56,7 +55,7 @@ router.get('/time', (req, res) => {
  *               type: string
  */
 router.post('/files', (req, res) => {
-  uploader('file')(req, res, err => {
+  upload('file')(req, res, err => {
     if (err)
       return res.status(400).send(err);
 
