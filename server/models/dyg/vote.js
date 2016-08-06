@@ -8,9 +8,11 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import Promise from 'bluebird';
 
 import ValidationError from '../../helpers/validationError';
 import Campaign from '../common/campaign';
+import CampaignStatus from '../common/campaign_status';
 import Design from '../dyg/design';
 
 const Schema = mongoose.Schema;
@@ -85,6 +87,21 @@ VoteSchema.pre('save', function (next) {
     if (!campaign)
       return next(new ValidationError('Vote validation failed', {
         campaign: this.campaign,
+      }));
+
+    if (campaign.dyg.blockable)
+      return CampaignStatus.findOrCreate({
+        player: this.player,
+        campaign: campaign.id,
+      });
+
+    next();
+    throw new Promise.CancellationError();
+  })
+  .then(campaignStatus => {
+    if (campaignStatus.isBlocked)
+      return next(new ValidationError('Vote validation failed', {
+        campaignStatus: campaignStatus.id,
       }));
 
     next();

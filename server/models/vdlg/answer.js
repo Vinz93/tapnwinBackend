@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import Promise from 'bluebird';
 
 import ValidationError from '../../helpers/validationError';
 import Campaign from '../common/campaign';

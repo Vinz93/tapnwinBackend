@@ -9,9 +9,11 @@ import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 import random from 'mongoose-random';
+import Promise from 'bluebird';
 
 import ValidationError from '../../helpers/validationError';
 import Campaign from '../common/campaign';
+import CampaignStatus from '../common/campaign_status';
 
 const Schema = mongoose.Schema;
 
@@ -109,9 +111,29 @@ DesignSchema.pre('save', function (next) {
         }));
     }
 
+    if (campaign.dyg.blockable)
+      return CampaignStatus.findOrCreate({
+        player: this.player,
+        campaign: campaign.id,
+      });
+
+    next();
+    throw new Promise.CancellationError();
+  })
+  .then(campaignStatus => {
+    if (campaignStatus.isBlocked)
+      return next(new ValidationError('Answer validation failed', {
+        campaignStatus: campaignStatus.id,
+      }));
+
     next();
   })
-  .catch(next);
+  .catch(err => {
+    if (err instanceof Promise.CancellationError)
+      return;
+
+    next(err);
+  });
 });
 
 DesignSchema.plugin(mongoosePaginate);
