@@ -204,12 +204,14 @@ const MissionStatusController = {
 
         data.isBlocked = true;
         data.unblockAt = Date.now() + missionCampaign.blockTime;
-        data.m3 = {
-          isBlocked: true,
-          unblockAt: data.unblockAt,
-          moves: campaignStatus.m3.moves,
-          score: campaignStatus.m3.score,
-        };
+
+        if (this.m3.moves !== undefined)
+          data.m3 = {
+            isBlocked: true,
+            unblockAt: data.unblockAt,
+            moves: campaignStatus.m3.moves,
+            score: campaignStatus.m3.score,
+          };
 
         transaction.update('CampaignStatus', campaignStatus.id, data);
       }
