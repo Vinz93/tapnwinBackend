@@ -126,7 +126,6 @@ CampaignStatusSchema.statics = {
 };
 
 CampaignStatusSchema.pre('save', function (next) {
-  console.log('sdadadsasda1');
   Campaign.findOneActive({
     _id: this.campaign,
   })
