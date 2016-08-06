@@ -11,6 +11,7 @@ import fieldRemover from 'mongoose-field-remover';
 
 import ValidationError from '../../helpers/validationError';
 import Campaign from '../common/campaign';
+import CampaignStatus from '../common/campaign_status';
 import Question from './question';
 
 const Schema = mongoose.Schema;
@@ -97,11 +98,31 @@ AnswerSchema.pre('save', function (next) {
   })
   .then(campaign => {
     if (!campaign)
-      return next(new ValidationError('Answer validation failed', { campaign }));
+      return next(new ValidationError('Answer validation failed', { campaign: campaign.id }));
+
+    if (campaign.vdlg.blockable)
+      return CampaignStatus.findOrCreate({
+        player: this.player,
+        campaign: campaign.id,
+      });
+
+    next();
+    throw new Promise.CancellationError();
+  })
+  .then(campaignStatus => {
+    if (campaignStatus.isBlocked)
+      return next(new ValidationError('Answer validation failed', {
+        campaignStatus: campaignStatus.id,
+      }));
 
     next();
   })
-  .catch(next);
+  .catch(err => {
+    if (err instanceof Promise.CancellationError)
+      return;
+
+    next(err);
+  });
 });
 
 AnswerSchema.plugin(mongoosePaginate);
