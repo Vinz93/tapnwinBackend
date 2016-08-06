@@ -3,8 +3,6 @@
  * @description Status controller definition
  * @lastModifiedBy Juan Sanchez
  */
-import assignment from 'assignment';
-
 import CampaignStatus from '../../models/common/campaign_status';
 
 const StatusController = {
@@ -94,10 +92,7 @@ const StatusController = {
       if (!campaignStatus)
         return res.status(404).end();
 
-      assignment(campaignStatus, req.body);
-
-      if (req.body.m3)
-        campaignStatus.markModified('m3');
+      campaignStatus.set(req.body);
 
       return campaignStatus.save();
     })
