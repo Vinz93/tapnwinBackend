@@ -51,6 +51,13 @@ const MissionStatusSchema = new Schema({
   timestamps: true,
 });
 
+MissionStatusSchema.index({
+  player: 1,
+  missionCampaign: 1,
+}, {
+  unique: true,
+});
+
 MissionStatusSchema.plugin(paginate);
 MissionStatusSchema.plugin(idValidator);
 MissionStatusSchema.plugin(fieldRemover);
