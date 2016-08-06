@@ -18,7 +18,7 @@ const StatusController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: Session-Token
+ *       - name: X-Auth-Token
  *         description: Player's session token
  *         in: header
  *         required: true
@@ -65,7 +65,7 @@ const StatusController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: Session-Token
+ *       - name: X-Auth-Token
  *         description: Player's session token
  *         in: header
  *         required: true

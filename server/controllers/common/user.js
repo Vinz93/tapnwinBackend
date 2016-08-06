@@ -146,7 +146,7 @@ const UserController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: Session-Token
+ *       - name: X-Auth-Token
  *         description: User's session token
  *         in: header
  *         required: true
@@ -181,7 +181,7 @@ const UserController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: Session-Token
+ *       - name: X-Auth-Token
  *         description: User's session token
  *         in: header
  *         required: true

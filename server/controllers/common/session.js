@@ -73,7 +73,7 @@ const SessionController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: Session-Token
+ *       - name: X-Auth-Token
  *         description: User's session token
  *         in: header
  *         required: true
@@ -93,7 +93,7 @@ const SessionController = {
   },
 
   validate(req, res, next) {
-    const sessionToken = req.get('Session-Token');
+    const sessionToken = req.get('X-Auth-Token');
 
     if (!sessionToken)
       return res.status(401).end();

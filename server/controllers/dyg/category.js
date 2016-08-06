@@ -3,7 +3,6 @@
  * @description Company controller definition
  * @lastModifiedBy Andres ALvarez
  */
-import assignment from 'assignment';
 
 import { paginate, unlinkSync } from '../../helpers/utils';
 import Category from '../../models/dyg/category';
@@ -179,29 +178,30 @@ const CategoryController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
+    let urls;
+
     Category.findById(req.params.category_id)
     .then(category => {
       if (!category)
         return res.status(404).end();
 
-      const bodyUrls = req.body.urls;
+      urls = category.toJSON().urls;
 
-      if (bodyUrls) {
-        const config = req.app.locals.config;
-        const urls = category.urls;
-
-        if (bodyUrls.selected && urls.selected !== bodyUrls.selected)
-          unlinkSync(config, urls.selected);
-
-        if (bodyUrls.unselected && urls.unselected !== bodyUrls.unselected)
-          unlinkSync(config, urls.unselected);
-      }
-
-      assignment(category, req.body);
+      category.set(req.body);
 
       return category.save();
     })
-    .then(() => res.status(204).end())
+    .then((category) => {
+      const config = req.app.locals.config;
+
+      if (urls.animation !== category.urls.selected)
+        unlinkSync(config, urls.selected);
+
+      if (urls.enable !== category.urls.unselected)
+        unlinkSync(config, urls.unselected);
+
+      res.status(204).end();
+    })
     .catch(next);
   },
 

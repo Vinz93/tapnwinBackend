@@ -81,7 +81,7 @@ const DesignController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: Session-Token
+ *       - name: X-Auth-Token
  *         description: Player's session token
  *         in: header
  *         required: true
@@ -133,15 +133,13 @@ const DesignController = {
  *               type: integer
  */
   readAllByMe(req, res, next) {
-    const limit = paginate.limit(req.query.limit);
-    const player = (req.query.exclusive === undefined ||
-      req.query.exclusive === 'false') ? res.locals.user._id : {
-        $ne: res.locals.user._id,
-      };
+    const player = (req.query.exclusive === 'true') ? {
+      $ne: res.locals.user._id,
+    } : res.locals.user._id;
 
-    const find = Object.assign(req.query.find || {}, {
-      player,
-    });
+    const limit = paginate.limit(req.query.limit);
+
+    const find = Object.assign(req.query.find || {}, { player });
     const sort = req.query.sort || { createdAt: 1 };
 
     if (req.query.random === 'true') {
@@ -171,7 +169,7 @@ const DesignController = {
  *     produces:
  *       - application/json
  *     parameters:
- *       - name: Session-Token
+ *       - name: X-Auth-Token
  *         description: Player's session token
  *         in: header
  *         required: true

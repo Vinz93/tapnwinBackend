@@ -138,19 +138,25 @@ const AssetController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
+    let url;
+
     Asset.findById(req.params.asset_id)
     .then(asset => {
       if (!asset)
         return res.status(404).end();
 
-      if (req.body.url && asset.url !== req.body.url)
-        unlinkSync(req.app.locals.config, asset.url);
+      url = asset.url;
 
-      Object.assign(asset, req.body);
+      asset.set(req.body);
 
       return asset.save();
     })
-    .then(() => res.status(204).end())
+    .then((asset) => {
+      if (url !== asset.url)
+        unlinkSync(req.app.locals.config, url);
+
+      res.status(204).end();
+    })
     .catch(next);
   },
 

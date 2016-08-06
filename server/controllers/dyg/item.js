@@ -178,29 +178,30 @@ const ItemController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
+    let urls;
+
     Item.findById(req.params.item_id)
     .then(item => {
       if (!item)
         return res.status(404).end();
 
-      const bodyUrls = req.body.urls;
+      urls = item.toJSON().urls;
 
-      if (bodyUrls) {
-        const config = req.app.locals.config;
-        const urls = item.urls;
-
-        if (bodyUrls.small && urls.small !== bodyUrls.small)
-          unlinkSync(config, urls.small);
-
-        if (bodyUrls.large && urls.large !== bodyUrls.large)
-          unlinkSync(config, urls.large);
-      }
-
-      assignment(item, req.body);
+      item.set(req.body);
 
       return item.save();
     })
-    .then(() => res.status(204).end())
+    .then((item) => {
+      const config = req.app.locals.config;
+
+      if (urls.animation !== item.urls.small)
+        unlinkSync(config, urls.small);
+
+      if (urls.enable !== item.urls.large)
+        unlinkSync(config, urls.large);
+
+      res.status(204).end();
+    })
     .catch(next);
   },
 

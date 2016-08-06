@@ -3,7 +3,6 @@
  * @description Company controller definition
  * @lastModifiedBy Andres Alvarez
  */
-import assignment from 'assignment';
 
 import { paginate, unlinkSync } from '../../helpers/utils';
 import Sticker from '../../models/dyg/sticker';
@@ -178,32 +177,33 @@ const StickerController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
+    let urls;
+
     Sticker.findById(req.params.sticker_id)
     .then(sticker => {
       if (!sticker)
         return res.status(404).end();
 
-      const bodyUrls = req.body.urls;
+      urls = sticker.toJSON().urls;
 
-      if (bodyUrls) {
-        const config = req.app.locals.config;
-        const urls = sticker.urls;
-
-        if (bodyUrls.animation && urls.animation !== bodyUrls.animation)
-          unlinkSync(config, urls.animation);
-
-        if (bodyUrls.enable && urls.enable !== bodyUrls.enable)
-          unlinkSync(config, urls.enable);
-
-        if (bodyUrls.disable && urls.disable !== bodyUrls.disable)
-          unlinkSync(config, urls.disable);
-      }
-
-      assignment(sticker, req.body);
+      sticker.set(req.body);
 
       return sticker.save();
     })
-    .then(() => res.status(204).end())
+    .then((sticker) => {
+      const config = req.app.locals.config;
+
+      if (urls.animation !== sticker.urls.animation)
+        unlinkSync(config, urls.animation);
+
+      if (urls.enable !== sticker.urls.enable)
+        unlinkSync(config, urls.enable);
+
+      if (urls.disable !== sticker.urls.disable)
+        unlinkSync(config, urls.disable);
+
+      res.status(204).end();
+    })
     .catch(next);
   },
 
