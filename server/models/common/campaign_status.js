@@ -8,9 +8,10 @@ import mongoose from 'mongoose';
 import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import ValidationError from '../../helpers/validationError';
+import APIError from '../../helpers/api_error';
 import Campaign from './campaign';
 
 const Schema = mongoose.Schema;
@@ -117,7 +118,7 @@ CampaignStatusSchema.statics = {
         if (changed)
           return campaignStatus.save();
 
-        return new Promise.resolve(campaignStatus);
+        return new Promise.resolve(campaignStatus); // eslint-disable-line new-cap
       }
 
       return this.create(find);
@@ -131,18 +132,21 @@ CampaignStatusSchema.pre('save', function (next) {
   })
   .then(campaign => {
     if (!campaign)
-      return next(new ValidationError('CampaignStatus validation failed', {
-        campaign: this.campaign,
-      }));
+      return Promise.reject(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
 
     if (this.m3.moves === undefined && campaign.m3.active) {
       this.m3.isBlocked = false;
       this.m3.moves = campaign.m3.initialMoves;
       this.m3.score = 0;
-    } else if (this.m3.moves <= 0) {
-      this.m3.isBlocked = true;
-      this.m3.unblockAt = Date.now() + campaign.m3.blockTime;
-      this.m3.moves = campaign.m3.initialMoves;
+    } else if (this.isModified('m3')) {
+      if (!campaign.m3.active)
+        return Promise.reject(new APIError('Inactive m3', httpStatus.BAD_REQUEST));
+
+      if (this.m3.moves <= 0) {
+        this.m3.isBlocked = true;
+        this.m3.unblockAt = Date.now() + campaign.m3.blockTime;
+        this.m3.moves = campaign.m3.initialMoves;
+      }
     }
 
     next();

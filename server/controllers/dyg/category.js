@@ -4,7 +4,11 @@
  * @lastModifiedBy Andres ALvarez
  */
 
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
+
 import { paginate, unlinkSync } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Category from '../../models/dyg/category';
 
 const CategoryController = {
@@ -105,7 +109,7 @@ const CategoryController = {
  */
   create(req, res, next) {
     Category.create(req.body)
-    .then(category => res.status(201).json(category))
+    .then(category => res.status(httpStatus.CREATED).json(category))
     .catch(next);
   },
 
@@ -145,7 +149,7 @@ const CategoryController = {
     .populate('company')
     .then(category => {
       if (!category)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Category not found', httpStatus.NOT_FOUND));
 
       res.json(category);
     })
@@ -183,7 +187,7 @@ const CategoryController = {
     Category.findById(req.params.category_id)
     .then(category => {
       if (!category)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Category not found', httpStatus.NOT_FOUND));
 
       urls = category.toJSON().urls;
 
@@ -200,7 +204,7 @@ const CategoryController = {
       if (urls.enable !== category.urls.unselected)
         unlinkSync(config, urls.unselected);
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },
@@ -228,9 +232,9 @@ const CategoryController = {
     Category.findByIdAndRemove(req.params.category_id)
     .then(category => {
       if (!category)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Category not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

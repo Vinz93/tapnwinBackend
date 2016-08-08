@@ -73,9 +73,7 @@ const MissionCampaignSchema = new Schema({
 });
 
 MissionCampaignSchema.pre('remove', function (next) {
-  Promise.all([
-    MissionStatus.remove({ missionCampaign: this.id }),
-  ])
+  MissionStatus.remove({ missionCampaign: this.id })
   .then(next)
   .catch(next);
 });

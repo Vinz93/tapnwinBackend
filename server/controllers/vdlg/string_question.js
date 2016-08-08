@@ -4,6 +4,8 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
+
 import StringQuestion from '../../models/vdlg/string_question';
 
 const StringQuestionController = {
@@ -41,7 +43,7 @@ const StringQuestionController = {
  */
   create(req, res, next) {
     StringQuestion.create(req.body)
-    .then(stringQuestion => res.status(201).json(stringQuestion))
+    .then(stringQuestion => res.status(httpStatus.CREATED).json(stringQuestion))
     .catch(next);
   },
 };

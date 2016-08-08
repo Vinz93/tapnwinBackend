@@ -1,5 +1,7 @@
 import express from 'express';
+import validate from 'express-validation';
 
+import paramValidation from '../../config/param_validation';
 import User from '../controllers/common/user';
 import Administrator from '../controllers/common/administrator';
 import Player from '../controllers/common/player';
@@ -14,6 +16,10 @@ import MissionStatus from '../controllers/common/mission_status';
 import CampaignStatus from '../controllers/common/campaign_status';
 
 const router = express.Router(); // eslint-disable-line new-cap
+
+validate.options({
+  allowUnknownBody: false,
+});
 
 router.route('/administrators')
 .post(Administrator.create);
@@ -40,6 +46,7 @@ router.route('/users/me')
 
 router.route('/users/:user_id')
 .get(User.read)
+.patch(validate(paramValidation.updateUser), User.update)
 .delete(User.delete);
 
 router.route('/companies')

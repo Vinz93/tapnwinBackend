@@ -40,7 +40,7 @@ tree.resolve().forEach(name => {
 mongoose.connect(config.db).connection.once('open', () => {
   seeder.seed(seeds, {}, (err) => {
     if (err)
-      console.log(err);
+      console.log(err.message);
 
     mongoose.connection.close();
   });

@@ -3,7 +3,12 @@
  * @description Mission controller definition
  * @lastModifiedBy Juan Sanchez
  */
+
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
+
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Mission from '../../models/common/mission';
 
 const MissionController = {
@@ -103,7 +108,7 @@ const MissionController = {
  */
   create(req, res, next) {
     Mission.create(req.body)
-    .then(mission => res.status(201).json(mission))
+    .then(mission => res.status(httpStatus.CREATED).json(mission))
     .catch(next);
   },
 
@@ -142,7 +147,7 @@ const MissionController = {
     Mission.findById(req.params.mission_id)
     .then(mission => {
       if (!mission)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Mission not found', httpStatus.NOT_FOUND));
 
       res.json(mission);
     })
@@ -181,9 +186,9 @@ const MissionController = {
     })
     .then(mission => {
       if (!mission)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Mission not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },
@@ -211,9 +216,9 @@ const MissionController = {
     Mission.findByIdAndRemove(req.params.mission_id)
     .then(mission => {
       if (!mission)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Mission not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

@@ -4,6 +4,8 @@
  * @lastModifiedBy Juan Sanchez
  */
 
+import httpStatus from 'http-status';
+
 import Player from '../../models/common/player';
 
 const PlayerController = {
@@ -49,7 +51,7 @@ const PlayerController = {
  */
   create(req, res, next) {
     Player.create(req.body)
-    .then(player => res.status(201).json(player))
+    .then(player => res.status(httpStatus.CREATED).json(player))
     .catch(next);
   },
 };

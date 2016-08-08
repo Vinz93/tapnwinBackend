@@ -4,21 +4,23 @@
  * @lastModifiedBy Juan Sanchez
  */
 
-import Promise from 'bluebird';
 import mongoose from 'mongoose';
 import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-vars
 import assignment from 'assignment';
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
 
-import ValidationError from '../../helpers/validationError';
+import APIError from '../../helpers/api_error';
 import MissionCampaign from './mission_campaign';
 import Design from '../dyg/design';
 import ModelAsset from '../dyg/model_asset';
 import Sticker from '../dyg/sticker';
 import Category from '../dyg/category';
 import Item from '../dyg/item';
+import Question from '../vdlg/question';
 
 const Schema = mongoose.Schema;
 
@@ -254,6 +256,7 @@ CampaignSchema.statics = {
 CampaignSchema.pre('remove', function (next) {
   Promise.all([
     Design.remove({ campaign: this.id }),
+    Question.remove({ campaign: this.id }),
     MissionCampaign.remove({ campaign: this.id }),
   ])
   .then(next)
@@ -262,10 +265,7 @@ CampaignSchema.pre('remove', function (next) {
 
 CampaignSchema.pre('save', function (next) {
   if (this.finishAt <= this.startAt)
-    return next(new ValidationError('Campaign validation failed', {
-      startAt: this.startAt,
-      finishAt: this.finishAt,
-    }));
+    return next(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
 
   next();
 });
@@ -293,10 +293,7 @@ CampaignSchema.pre('save', function (next) {
   })
   .then(campaigns => {
     if (campaigns.length > 0)
-      return next(new ValidationError('Campaign validation failed', {
-        startAt: this.startAt,
-        finishAt: this.finishAt,
-      }));
+      return Promise.reject(new APIError('Overlapping active time range', httpStatus.BAD_REQUEST));
 
     next();
   })
@@ -316,20 +313,17 @@ CampaignSchema.pre('save', function (next) {
     })
     .then(model => {
       if (!model)
-        return new ValidationError('Campaign validation failed', {
-          model: name,
-          id: id ? doc[id] : doc,
-        });
+        return new APIError(`Invalid ${name}`, httpStatus.BAD_REQUEST);
     });
   });
 
   Promise.all([
-    validate(ModelAsset, 'ModelAsset', this.dyg.models, null),
-    validate(Sticker, 'Sticker', this.dyg.stickers, null),
-    validate(Category, 'Category', this.dyg.catalog, 'category'),
+    validate(ModelAsset, 'modelAsset', this.dyg.models, null),
+    validate(Sticker, 'sticker', this.dyg.stickers, null),
+    validate(Category, 'category', this.dyg.catalog, 'category'),
   ])
   .then(() => {
-    Promise.each(this.dyg.catalog, catalog => validate(Item, 'Item', catalog.items, null))
+    Promise.each(this.dyg.catalog, catalog => validate(Item, 'item', catalog.items, null))
     .then(next)
     .catch(next);
   })

@@ -4,9 +4,11 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Question from '../../models/vdlg/question';
 import Answer from '../../models/vdlg/answer';
 
@@ -170,7 +172,7 @@ const QuestionController = {
     Question.findById(req.params.question_id)
     .then(question => {
       if (!question)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Question not found', httpStatus.NOT_FOUND));
 
       res.json(question);
     })

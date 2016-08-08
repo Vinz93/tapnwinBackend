@@ -4,6 +4,10 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
+
+import APIError from '../../helpers/api_error';
 import User from '../../models/common/user';
 import Player from '../../models/common/player';
 import Administrator from '../../models/common/administrator';
@@ -45,21 +49,21 @@ const SessionController = {
  *               type: string
  */
   create(req, res, next) {
-    const UserType = (req.query.type === 'Administrator') ? Administrator : Player;
+    const UserChild = (req.query.type === 'Administrator') ? Administrator : Player;
 
-    UserType.findOne({ email: req.body.email })
+    UserChild.findOne({ email: req.body.email })
     .then(user => {
       if (!user)
-        return res.status(404).end();
+        return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
       if (!user.authenticate(req.body.password))
-        return res.status(400).end();
+        return Promise.reject(new APIError('Invalid password', httpStatus.BAD_REQUEST));
 
       user.createSessionToken();
 
       return user.save();
     })
-    .then((user) => res.status(201).json({ sessionToken: user.sessionToken }))
+    .then((user) => res.status(httpStatus.CREATED).json({ token: user.sessionToken }))
     .catch(next);
   },
 
@@ -88,7 +92,7 @@ const SessionController = {
     user.sessionToken = undefined;
 
     user.save()
-    .then(() => res.status(204).end())
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 
@@ -96,12 +100,12 @@ const SessionController = {
     const sessionToken = req.get('X-Auth-Token');
 
     if (!sessionToken)
-      return res.status(401).end();
+      return Promise.reject(new APIError('Missing X-Auth-Token header', httpStatus.UNAUTHORIZED));
 
     User.findOne({ sessionToken })
     .then(user => {
       if (!user)
-        return res.status(401).end();
+        return Promise.reject(new APIError('User not found', httpStatus.UNAUTHORIZED));
 
       res.locals.user = user;
 

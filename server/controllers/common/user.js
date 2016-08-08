@@ -6,8 +6,11 @@
 
 import path from 'path';
 import templates from 'email-templates';
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
 
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import User from '../../models/common/user';
 import Player from '../../models/common/player';
 import Administrator from '../../models/common/administrator';
@@ -102,14 +105,14 @@ const UserController = {
  *         description: Successfully created
  */
   createRecoveryToken(req, res, next) {
-    const UserAbs = (req.query.type === 'Administrator') ? Administrator : Player;
+    const UserChild = (req.query.type === 'Administrator') ? Administrator : Player;
 
-    UserAbs.findOne({
+    UserChild.findOne({
       email: req.body.email,
     })
     .then(user => {
       if (!user)
-        return res.status(404).end();
+        return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
       const config = req.app.locals.config;
 
@@ -117,7 +120,7 @@ const UserController = {
       const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
 
       if (!user.createRecoveryToken(config.times.recovery))
-        return res.status(409).end();
+        return Promise.reject(new APIError('Recovery email already sent', httpStatus.CONFLICT));
 
       send({
         to: user.email,
@@ -126,7 +129,7 @@ const UserController = {
         user,
       }, err => {
         if (err)
-          return res.status(500).send(err);
+          return next(err);
 
         user.save()
         .then(() => res.status(201).end())
@@ -199,10 +202,10 @@ const UserController = {
   updateByMe(req, res, next) {
     const user = res.locals.user;
 
-    Object.assign(user, req.body);
+    user.set(req.body);
 
     user.save()
-    .then(() => res.status(204).end())
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 
@@ -241,16 +244,16 @@ const UserController = {
     })
     .then(user => {
       if (!user)
-        return res.status(401).end();
+        return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
       const config = req.app.locals.config;
 
       if (!user.updatePassword(req.body.password, config.times.update))
-        return res.status(409).end();
+        return Promise.reject(new APIError('Recovery token expired', httpStatus.CONFLICT));
 
       return user.save();
     })
-    .then(() => res.status(204).end())
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 
@@ -289,7 +292,7 @@ const UserController = {
     User.findById(req.params.user_id)
     .then(user => {
       if (!user)
-        return res.status(404).end();
+        return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
       res.json(user);
     })
@@ -325,13 +328,13 @@ const UserController = {
     User.findById(req.params.user_id)
     .then(user => {
       if (!user)
-        return res.status(404).end();
+        return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
-      Object.assign(user, req.body);
+      user.set(req.body);
 
       return user.save();
     })
-    .then(() => res.status(204).end())
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 
@@ -358,23 +361,23 @@ const UserController = {
     User.findByIdAndRemove(req.params.user_id)
     .then(user => {
       if (!user)
-        return res.status(404).end();
+        return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },
 
   isAdministrator(req, res, next) {
     if (res.locals.user.__t !== 'Administrator')
-      return res.status(403).end();
+      return Promise.reject(new APIError('Invalid user type', httpStatus.UNAUTHORIZED));
 
     next();
   },
 
   isPlayer(req, res, next) {
     if (res.locals.user.__t !== 'Player')
-      return res.status(403).end();
+      return Promise.reject(new APIError('Invalid user type', httpStatus.UNAUTHORIZED));
 
     next();
   },

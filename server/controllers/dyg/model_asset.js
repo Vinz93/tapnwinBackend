@@ -4,6 +4,8 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
+
 import ModelAsset from '../../models/dyg/model_asset';
 
 const ModelAssetController = {
@@ -41,7 +43,7 @@ const ModelAssetController = {
  */
   create(req, res, next) {
     ModelAsset.create(req.body)
-    .then(modelAsset => res.status(201).json(modelAsset))
+    .then(modelAsset => res.status(httpStatus.CREATED).json(modelAsset))
     .catch(next);
   },
 };

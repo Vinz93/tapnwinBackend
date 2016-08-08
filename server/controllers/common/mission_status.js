@@ -6,8 +6,10 @@
 
 import mongoose from 'mongoose';
 import transaction from 'mongoose-transaction';
+import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
+import APIError from '../../helpers/api_error';
 import MissionStatus from '../../models/common/mission_status';
 import MissionCampaign from '../../models/common/mission_campaign';
 import CampaignStatus from '../../models/common/campaign_status';
@@ -114,7 +116,7 @@ const MissionStatusController = {
         if (err)
           return next(err);
 
-        res.status(204).end();
+        res.status(httpStatus.NO_CONTENT).end();
       });
     }
 
@@ -124,10 +126,8 @@ const MissionStatusController = {
     })
     .populate('missionCampaign')
     .then(missionStatus => {
-      if (!missionStatus) {
-        res.status(404).end();
-        throw new Promise.CancellationError();
-      }
+      if (!missionStatus)
+        return Promise.reject(new APIError('MissionStatus not found', httpStatus.NOT_FOUND));
 
       const missionCampaign = missionStatus.missionCampaign;
       let value = (req.body.value !== undefined) ? parseInt(req.body.value, 10) : 1;

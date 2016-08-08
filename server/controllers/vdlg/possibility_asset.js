@@ -4,6 +4,8 @@
  * @lastModifiedBy Juan Sanchez
  */
 
+import httpStatus from 'http-status';
+
 import PossibilityAsset from '../../models/vdlg/possibility_asset';
 
 const PossibilityAssetController = {
@@ -41,7 +43,7 @@ const PossibilityAssetController = {
  */
   create(req, res, next) {
     PossibilityAsset.create(req.body)
-    .then(possibilityAsset => res.status(201).json(possibilityAsset))
+    .then(possibilityAsset => res.status(httpStatus.CREATED).json(possibilityAsset))
     .catch(next);
   },
 };

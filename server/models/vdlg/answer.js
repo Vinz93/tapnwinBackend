@@ -8,9 +8,10 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import ValidationError from '../../helpers/validationError';
+import APIError from '../../helpers/api_error';
 import Campaign from '../common/campaign';
 import CampaignStatus from '../common/campaign_status';
 import Question from './question';
@@ -81,16 +82,13 @@ AnswerSchema.pre('save', function (next) {
     const now = new Date();
 
     if (this.personal > n)
-      return next(new ValidationError('Answer validation failed', { personal: this.personal }));
+      return Promise.reject(new APIError('Invalid personal value', httpStatus.BAD_REQUEST));
 
     if (this.popular > n)
-      return next(new ValidationError('Answer validation failed', { popular: this.popular }));
+      return Promise.reject(new APIError('Invalid popular value', httpStatus.BAD_REQUEST));
 
     if (question.startAt > now || question.finishAt < now)
-      return next(new ValidationError('Answer validation failed', {
-        startAt: this.startAt,
-        finishAt: this.finishAt,
-      }));
+      return Promise.reject(new APIError('Inactive question', httpStatus.BAD_REQUEST));
 
     return Campaign.findOneActive({
       _id: question.campaign,
@@ -99,7 +97,7 @@ AnswerSchema.pre('save', function (next) {
   })
   .then(campaign => {
     if (!campaign)
-      return next(new ValidationError('Answer validation failed', { campaign: campaign.id }));
+      return Promise.reject(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
 
     if (campaign.vdlg.blockable)
       return CampaignStatus.findOrCreate({
@@ -112,9 +110,7 @@ AnswerSchema.pre('save', function (next) {
   })
   .then(campaignStatus => {
     if (campaignStatus.isBlocked)
-      return next(new ValidationError('Answer validation failed', {
-        campaignStatus: campaignStatus.id,
-      }));
+      return Promise.reject(new APIError('Blocked game', httpStatus.BAD_REQUEST));
 
     next();
   })

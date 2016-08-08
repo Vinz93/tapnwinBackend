@@ -4,7 +4,11 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
+
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Design from '../../models/dyg/design';
 
 const DesignController = {
@@ -197,11 +201,11 @@ const DesignController = {
  *                    format: date-time
  */
   createByMe(req, res, next) {
-    const data = Object.assign(req.body, {
+    Object.assign(req.body, {
       player: res.locals.user._id,
     });
 
-    Design.create(data)
+    Design.create(req.body)
     .then(design => res.status(201).json(design))
     .catch(next);
   },
@@ -241,7 +245,7 @@ const DesignController = {
     Design.findById(req.params.design_id)
     .then(design => {
       if (!design)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Design not found', httpStatus.NOT_FOUND));
 
       res.json(design);
     })

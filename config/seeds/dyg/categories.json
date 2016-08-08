@@ -4,7 +4,6 @@
     "_require": ["Company"],
     "shoes": {
       "name": "Zapatos",
-      "zone": "bot",
       "company": "->companies.company1",
       "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOff.png",
@@ -13,7 +12,6 @@
     },
     "pants": {
       "name": "Pantalones",
-      "zone": "mid",
       "company": "->companies.company1",
       "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOff.png",
@@ -22,7 +20,6 @@
     },
     "skirts": {
       "name": "Faldas",
-      "zone": "mid",
       "company": "->companies.company1",
       "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOff.png",
@@ -31,7 +28,6 @@
     },
     "tops": {
       "name": "Tops",
-      "zone": "top",
       "company": "->companies.company1",
       "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOff.png",

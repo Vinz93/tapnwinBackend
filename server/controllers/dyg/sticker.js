@@ -4,7 +4,11 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
+
 import { paginate, unlinkSync } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Sticker from '../../models/dyg/sticker';
 
 const StickerController = {
@@ -105,7 +109,7 @@ const StickerController = {
  */
   create(req, res, next) {
     Sticker.create(req.body)
-    .then(sticker => res.status(201).json(sticker))
+    .then(sticker => res.status(httpStatus.CREATED).json(sticker))
     .catch(next);
   },
 
@@ -144,7 +148,7 @@ const StickerController = {
     Sticker.findById(req.params.sticker_id)
     .then(sticker => {
       if (!sticker)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Sticker not found', httpStatus.NOT_FOUND));
 
       res.json(sticker);
     })
@@ -182,7 +186,7 @@ const StickerController = {
     Sticker.findById(req.params.sticker_id)
     .then(sticker => {
       if (!sticker)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Sticker not found', httpStatus.NOT_FOUND));
 
       urls = sticker.toJSON().urls;
 
@@ -202,7 +206,7 @@ const StickerController = {
       if (urls.disable !== sticker.urls.disable)
         unlinkSync(config, urls.disable);
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },
@@ -230,7 +234,7 @@ const StickerController = {
     Sticker.findByIdAndRemove(req.params.sticker_id)
     .then(sticker => {
       if (!sticker)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Sticker not found', httpStatus.NOT_FOUND));
 
       const config = req.app.locals.config;
 
@@ -238,7 +242,7 @@ const StickerController = {
       unlinkSync(config, sticker.urls.enable);
       unlinkSync(config, sticker.urls.disable);
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

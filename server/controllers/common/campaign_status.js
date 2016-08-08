@@ -3,6 +3,11 @@
  * @description Status controller definition
  * @lastModifiedBy Juan Sanchez
  */
+
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
+
+import APIError from '../../helpers/api_error';
 import CampaignStatus from '../../models/common/campaign_status';
 
 const StatusController = {
@@ -90,13 +95,13 @@ const StatusController = {
     })
     .then(campaignStatus => {
       if (!campaignStatus)
-        return res.status(404).end();
+        return Promise.reject(new APIError('CampaignStatus not found', httpStatus.NOT_FOUND));
 
       campaignStatus.set(req.body);
 
       return campaignStatus.save();
     })
-    .then(() => res.status(204).end())
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 };

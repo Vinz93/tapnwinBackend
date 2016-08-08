@@ -4,6 +4,8 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
+
 import GameAsset from '../../models/common/game_asset';
 
 const GameAssetController = {
@@ -41,7 +43,7 @@ const GameAssetController = {
  */
   create(req, res, next) {
     GameAsset.create(req.body)
-    .then(gameAsset => res.status(201).json(gameAsset))
+    .then(gameAsset => res.status(httpStatus.CREATED).json(gameAsset))
     .catch(next);
   },
 };

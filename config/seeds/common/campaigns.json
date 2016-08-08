@@ -115,7 +115,7 @@
         ]
       },
       "vdlg": {
-        "active": true,
+        "active": false,
         "blockable": true
       },
       "m3": {

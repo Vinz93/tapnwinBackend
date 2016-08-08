@@ -3,8 +3,11 @@
  * @description Company controller definition
  * @lastModifiedBy Juan Sanchez
  */
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
 
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Company from '../../models/common/company';
 
 const CompanyController = {
@@ -143,7 +146,7 @@ const CompanyController = {
     Company.findById(req.params.company_id)
     .then(company => {
       if (!company)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Company not found', httpStatus.NOT_FOUND));
 
       res.json(company);
     })
@@ -182,9 +185,9 @@ const CompanyController = {
     })
     .then(company => {
       if (!company)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Company not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },
@@ -212,9 +215,9 @@ const CompanyController = {
     Company.findByIdAndRemove(req.params.company_id)
     .then(mission => {
       if (!mission)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Company not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

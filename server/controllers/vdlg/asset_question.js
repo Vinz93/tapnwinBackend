@@ -4,6 +4,8 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
+
 import AssetQuestion from '../../models/vdlg/asset_question';
 
 const AssetQuestionController = {
@@ -41,7 +43,7 @@ const AssetQuestionController = {
    */
   create(req, res, next) {
     AssetQuestion.create(req.body)
-    .then(assetQuestion => res.status(201).json(assetQuestion))
+    .then(assetQuestion => res.status(httpStatus.CREATED).json(assetQuestion))
     .catch(next);
   },
 };

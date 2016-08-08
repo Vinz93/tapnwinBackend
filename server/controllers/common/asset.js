@@ -4,7 +4,11 @@
  * @lastModifiedBy Andres Alvarez
  */
 
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
+
 import { paginate, unlinkSync } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Asset from '../../models/common/asset';
 
 const AssetController = {
@@ -105,7 +109,7 @@ const AssetController = {
     Asset.findById(req.params.asset_id)
     .then(asset => {
       if (!asset)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Asset not found', httpStatus.NOT_FOUND));
 
       res.json(asset);
     })
@@ -143,7 +147,7 @@ const AssetController = {
     Asset.findById(req.params.asset_id)
     .then(asset => {
       if (!asset)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Asset not found', httpStatus.NOT_FOUND));
 
       url = asset.url;
 
@@ -155,7 +159,7 @@ const AssetController = {
       if (url !== asset.url)
         unlinkSync(req.app.locals.config, url);
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },
@@ -183,11 +187,11 @@ const AssetController = {
     Asset.findByIdAndRemove(req.params.asset_id)
     .then(asset => {
       if (!asset)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Asset not found', httpStatus.NOT_FOUND));
 
       unlinkSync(req.app.locals.config, asset.url);
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

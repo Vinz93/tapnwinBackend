@@ -9,9 +9,10 @@ import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 import random from 'mongoose-random';
+import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import ValidationError from '../../helpers/validationError';
+import APIError from '../../helpers/api_error';
 import Campaign from '../common/campaign';
 import CampaignStatus from '../common/campaign_status';
 
@@ -72,12 +73,11 @@ DesignSchema.pre('save', function (next) {
   })
   .then(campaign => {
     const items = this.items;
-    const dyg = campaign.dyg;
 
-    if (!campaign || items.length !== dyg.zones.length)
-      return next(new ValidationError('Design validation failed', {
-        campaign: this.campaign,
-      }));
+    if (!campaign || items.length !== campaign.dyg.zones.length)
+      return Promise.reject(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
+
+    const dyg = campaign.dyg;
 
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
@@ -105,10 +105,7 @@ DesignSchema.pre('save', function (next) {
       }
 
       if (!found)
-        return next(new ValidationError('Design validation failed', {
-          campaign: this.campaign,
-          item,
-        }));
+        return Promise.reject(new APIError('Invalid zone', httpStatus.BAD_REQUEST));
     }
 
     if (campaign.dyg.blockable)
@@ -122,9 +119,7 @@ DesignSchema.pre('save', function (next) {
   })
   .then(campaignStatus => {
     if (campaignStatus.isBlocked)
-      return next(new ValidationError('Answer validation failed', {
-        campaignStatus: campaignStatus.id,
-      }));
+      return Promise.reject(new APIError('Blocked game', httpStatus.BAD_REQUEST));
 
     next();
   })

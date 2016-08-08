@@ -8,9 +8,10 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import ValidationError from '../../helpers/validationError';
+import APIError from '../../helpers/api_error';
 import Campaign from '../common/campaign';
 import CampaignStatus from '../common/campaign_status';
 import Design from '../dyg/design';
@@ -73,9 +74,7 @@ VoteSchema.pre('save', function (next) {
   })
   .then(design => {
     if (!design)
-      return next(new ValidationError('Vote validation failed', {
-        design: this.design,
-      }));
+      return Promise.reject(new APIError('Invalid design', httpStatus.BAD_REQUEST));
 
     return Campaign.findOneActive({
       _id: design.campaign,
@@ -85,9 +84,7 @@ VoteSchema.pre('save', function (next) {
   })
   .then(campaign => {
     if (!campaign)
-      return next(new ValidationError('Vote validation failed', {
-        campaign: this.campaign,
-      }));
+      return Promise.reject(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
 
     if (campaign.dyg.blockable)
       return CampaignStatus.findOrCreate({
@@ -100,9 +97,7 @@ VoteSchema.pre('save', function (next) {
   })
   .then(campaignStatus => {
     if (campaignStatus.isBlocked)
-      return next(new ValidationError('Vote validation failed', {
-        campaignStatus: campaignStatus.id,
-      }));
+      return Promise.reject(new APIError('Blocked game', httpStatus.BAD_REQUEST));
 
     next();
   })

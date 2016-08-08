@@ -3,6 +3,7 @@
  * @description Company controller definition
  * @lastModifiedBy Juan Sanchez
  */
+import httpStatus from 'http-status';
 
 import Administrator from '../../models/common/administrator';
 
@@ -47,7 +48,7 @@ const AdminController = {
  */
   create(req, res, next) {
     Administrator.create(req.body)
-    .then(administrator => res.status(201).json(administrator))
+    .then(administrator => res.status(httpStatus.CREATED).json(administrator))
     .catch(next);
   },
 };

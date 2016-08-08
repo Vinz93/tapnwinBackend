@@ -3,9 +3,11 @@
  * @description Answer controller definition
  * @lastModifiedBy Andres Alvarez
  */
+import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Answer from '../../models/vdlg/answer';
 import Question from '../../models/vdlg/question';
 
@@ -199,7 +201,7 @@ const AnswerController = {
     Answer.findById(req.params.answer_id)
     .then(answer => {
       if (!answer)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Answer not found', httpStatus.NOT_FOUND));
 
       res.json(answer);
     })
@@ -305,7 +307,7 @@ const AnswerController = {
  *         schema:
  *           $ref: '#/definitions/Answer'
  *     responses:
- *       200:
+ *       201:
  *         description: Successfully created
  *         schema:
  *           allOf:
@@ -323,12 +325,12 @@ const AnswerController = {
  *                   format: date-time
  */
   createByMe(req, res, next) {
-    const data = Object.assign(req.body, {
+    Object.assign(req.body, {
       player: res.locals.user._id,
     });
 
-    Answer.create(data)
-    .then(answer => res.status(201).json(answer))
+    Answer.create(req.body)
+    .then(answer => res.status(httpStatus.CREATED).json(answer))
     .catch(next);
   },
 
@@ -365,20 +367,18 @@ const AnswerController = {
  *         description: Successfully updated
  */
   updateByMe(req, res, next) {
-    const criteria = {
+    Answer.findOneAndUpdate({
       _id: req.params.answer_id,
       player: res.locals.user._id,
-    };
-
-    Answer.findOneAndUpdate(criteria, req.body, {
+    }, req.body, {
       runValidators: true,
       context: 'query',
     })
     .then(answer => {
       if (!answer)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Answer not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

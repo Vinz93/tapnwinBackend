@@ -8,9 +8,12 @@ import mongoose from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
 
-import ValidationError from '../../helpers/validationError';
+import APIError from '../../helpers/api_error';
 import Campaign from '../common/campaign';
+import Answer from './answer';
 
 const Schema = mongoose.Schema;
 
@@ -66,10 +69,7 @@ const QuestionSchema = new Schema({
 
 QuestionSchema.pre('save', function (next) {
   if (this.startAt > this.finishAt)
-    return next(new ValidationError('Question validation failed'), {
-      startAt: this.startAt,
-      finishAt: this.finishAt,
-    });
+    return next(new APIError('Invalid time range', httpStatus.BAD_REQUEST));
 
   next();
 });
@@ -81,16 +81,19 @@ QuestionSchema.pre('save', function (next) {
   })
   .then(campaign => {
     if (!campaign)
-      return next(new ValidationError('Question validation failed', { campaign: this.campaign }));
+      return Promise.reject(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
 
     if (campaign.startAt > this.startAt || campaign.finishAt < this.finishAt)
-      return next(new ValidationError('Question validation failed', {
-        startAt: this.startAt,
-        finishAt: this.finishAt,
-      }));
+      return Promise.reject(new APIError('Invalid time range', httpStatus.BAD_REQUEST));
 
     next();
   })
+  .catch(next);
+});
+
+QuestionSchema.pre('remove', function (next) {
+  Answer.remove({ campaign: this.id })
+  .then(next)
   .catch(next);
 });
 

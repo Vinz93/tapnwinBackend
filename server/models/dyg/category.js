@@ -52,13 +52,6 @@ const CategorySchema = new Schema({
     type: String,
     required: true,
   },
-  zone: {
-    type: String,
-    enum: {
-      values: 'top mid bot'.split(' '),
-      message: '`{VALUE}` is not a valid zone',
-    },
-  },
   urls: {
     selected: {
       type: String,

@@ -3,10 +3,11 @@
  * @description Company controller definition
  * @lastModifiedBy Andres Alvarez
  */
-
+import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Design from '../../models/dyg/design';
 import Vote from '../../models/dyg/vote';
 
@@ -116,7 +117,7 @@ const VoteController = {
     });
 
     Vote.create(req.body)
-    .then(vote => res.status(201).json(vote))
+    .then(vote => res.status(httpStatus.CREATED).json(vote))
     .catch(next);
   },
 
@@ -155,7 +156,7 @@ const VoteController = {
     Vote.findById(req.params.vote_id)
     .then(vote => {
       if (!vote)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Vote not found', httpStatus.NOT_FOUND));
 
       res.json(vote);
     })
@@ -205,7 +206,7 @@ const VoteController = {
     })
     .then(vote => {
       if (!vote)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Vote not found', httpStatus.NOT_FOUND));
 
       res.json(vote);
     })
@@ -244,7 +245,7 @@ const VoteController = {
     .populate('campaign')
     .then(design => {
       if (!design)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Design not found', httpStatus.NOT_FOUND));
 
       return Promise.map(design.campaign.dyg.stickers, sticker => Vote.count({
         design: design._id,
@@ -259,9 +260,7 @@ const VoteController = {
         return data;
       }));
     })
-    .then(data => {
-      res.send(data);
-    })
+    .then(data => res.send(data))
     .catch(next);
   },
 
@@ -305,9 +304,9 @@ const VoteController = {
     })
     .then(vote => {
       if (!vote)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Vote not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

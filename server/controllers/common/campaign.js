@@ -3,9 +3,11 @@
  * @description Company controller definition
  * @lastModifiedBy Juan Sanchez
  */
-import assignment from 'assignment';
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
 
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Campaign from '../../models/common/campaign';
 
 const CampaignController = {
@@ -112,7 +114,7 @@ const CampaignController = {
  */
   create(req, res, next) {
     Campaign.create(req.body)
-    .then(campaign => res.status(201).json(campaign))
+    .then(campaign => res.status(httpStatus.CREATED).json(campaign))
     .catch(next);
   },
 
@@ -156,7 +158,7 @@ const CampaignController = {
     .populate('dyg.categories.items')
     .then(campaign => {
       if (!campaign)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
 
       res.json(campaign);
     })
@@ -202,7 +204,7 @@ const CampaignController = {
     .populate('dyg.categories.items')
     .then(campaign => {
       if (!campaign)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
 
       res.json(campaign);
     })
@@ -240,13 +242,13 @@ const CampaignController = {
     })
     .then(campaign => {
       if (!campaign)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
 
-      assignment(campaign, req.body);
+      campaign.set(req.body);
 
       return campaign.save();
     })
-    .then(() => res.status(204).end())
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 
@@ -273,9 +275,9 @@ const CampaignController = {
     Campaign.findOneAndRemove(req.params.campaign_id)
     .then(campaign => {
       if (!campaign)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

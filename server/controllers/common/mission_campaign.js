@@ -3,8 +3,11 @@
  * @description Mission-Campaign controller definition
  * @lastModifiedBy Juan Sanchez
  */
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
 
 import { paginate } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import MissionCampaign from '../../models/common/mission_campaign';
 
 const MissionCampaignController = {
@@ -104,7 +107,7 @@ const MissionCampaignController = {
  */
   create(req, res, next) {
     MissionCampaign.create(req.body)
-    .then(mission => res.status(201).json(mission))
+    .then(mission => res.status(httpStatus.CREATED).json(mission))
     .catch(next);
   },
 
@@ -143,7 +146,7 @@ const MissionCampaignController = {
     MissionCampaign.findById(req.params.mission_campaign_id)
     .then(mission => {
       if (!mission)
-        return res.status(404).end();
+        return Promise.reject(new APIError('MissionCampaign not found', httpStatus.NOT_FOUND));
 
       res.json(mission);
     })
@@ -182,9 +185,9 @@ const MissionCampaignController = {
     })
     .then(mission => {
       if (!mission)
-        return res.status(404).end();
+        return Promise.reject(new APIError('MissionCampaign not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },
@@ -212,9 +215,9 @@ const MissionCampaignController = {
     MissionCampaign.findByIdAndRemove(req.params.mission_campaign_id)
     .then(mission => {
       if (!mission)
-        return res.status(404).end();
+        return Promise.reject(new APIError('MissionCampaign not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

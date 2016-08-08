@@ -3,9 +3,12 @@
  * @description Item controller definition
  * @lastModifiedBy Juan Sanchez
  */
-import assignment from 'assignment';
+
+import httpStatus from 'http-status';
+import Promise from 'bluebird';
 
 import { paginate, unlinkSync } from '../../helpers/utils';
+import APIError from '../../helpers/api_error';
 import Item from '../../models/dyg/item';
 
 const ItemController = {
@@ -106,7 +109,7 @@ const ItemController = {
  */
   create(req, res, next) {
     Item.create(req.body)
-    .then(item => res.status(201).json(item))
+    .then(item => res.status(httpStatus.CREATED).json(item))
     .catch(next);
   },
 
@@ -145,7 +148,7 @@ const ItemController = {
     Item.findById(req.params.item_id)
     .then(item => {
       if (!item)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Item not found', httpStatus.NOT_FOUND));
 
       res.json(item);
     })
@@ -183,7 +186,7 @@ const ItemController = {
     Item.findById(req.params.item_id)
     .then(item => {
       if (!item)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Item not found', httpStatus.NOT_FOUND));
 
       urls = item.toJSON().urls;
 
@@ -200,7 +203,7 @@ const ItemController = {
       if (urls.enable !== item.urls.large)
         unlinkSync(config, urls.large);
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },
@@ -228,9 +231,9 @@ const ItemController = {
     Item.findByIdAndRemove(req.params.item_id)
     .then(item => {
       if (!item)
-        return res.status(404).end();
+        return Promise.reject(new APIError('Item not found', httpStatus.NOT_FOUND));
 
-      res.status(204).end();
+      res.status(httpStatus.NO_CONTENT).end();
     })
     .catch(next);
   },

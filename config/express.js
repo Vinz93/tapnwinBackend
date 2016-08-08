@@ -1,4 +1,6 @@
 import express from 'express';
+import validation from 'express-validation';
+import httpStatus from 'http-status';
 import morgan from 'morgan';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -7,6 +9,7 @@ import nodemailer from 'nodemailer';
 import path from 'path';
 import swaggerDoc from 'swagger-jsdoc';
 import swaggerTools from 'swagger-tools';
+import APIError from '../server/helpers/api_error';
 
 import config from './env';
 import routes from '../server/routes';
@@ -45,7 +48,7 @@ app.use(cors());
 app.use(config.path, routes);
 app.use('/uploads', express.static(path.join(config.root, 'uploads')));
 
-app.use((err, req, res, next) => { // eslint-disable-line
+/* app.use((err, req, res, next) => { // eslint-disable-line
   if (err.name === 'ValidationError' ||
       err.name === 'CastError' ||
       err.name === 'MongoError' ||
@@ -53,6 +56,27 @@ app.use((err, req, res, next) => { // eslint-disable-line
     return res.status(400).json(err).end();
 
   res.status(500).send(err);
+});*/
+
+app.use((err, req, res, next) => {
+  if (err instanceof validation.ValidationError) {
+    const unifiedErrorMessage = err.errors.map(error => error.messages.join('. ')).join(' and ');
+    const error = new APIError(unifiedErrorMessage, err.status);
+
+    return next(error);
+  } else if (!(err instanceof APIError))
+    return next(new APIError(err.message, err.status, err.isPublic));
+
+  return next(err);
+});
+
+app.use((req, res, next) => next(new APIError('Endpoint not found', httpStatus.NOT_FOUND)));
+
+app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+  res.status(err.status).json({
+    message: err.isPublic ? err.message : httpStatus[err.status],
+    stack: config.env === 'development' ? err.stack : {},
+  });
 });
 
 swaggerTools.initializeMiddleware(spec, (middleware) => {
