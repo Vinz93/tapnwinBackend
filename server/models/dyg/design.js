@@ -5,14 +5,13 @@
  */
 
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 import random from 'mongoose-random';
-import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import APIError from '../../helpers/api_error';
+import ValidationError from '../../helpers/validation_error';
 import Campaign from '../common/campaign';
 import CampaignStatus from '../common/campaign_status';
 
@@ -64,20 +63,25 @@ const DesignSchema = new Schema({
 });
 
 DesignSchema.pre('save', function (next) {
-  Campaign.findOneActive({
+  Campaign.findOne({
     _id: this.campaign,
-    $and: [
-      { 'dyg.active': true },
-      { 'dyg.models': this.model },
-    ],
+    'dyg.models': this.model,
   })
   .then(campaign => {
+    if (!campaign)
+      return Promise.reject(new ValidationError('Invalid model'));
+
+    if (!campaign.isActive())
+      return Promise.reject(new ValidationError('Inactive campaign'));
+
+    if (!campaign.dyg.active)
+      return Promise.reject(new ValidationError('Inactive dyg'));
+
     const items = this.items;
-
-    if (!campaign || items.length !== campaign.dyg.zones.length)
-      return Promise.reject(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
-
     const dyg = campaign.dyg;
+
+    if (items.length !== campaign.dyg.zones.length)
+      return Promise.reject(new ValidationError('Invalid item combination'));
 
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
@@ -105,7 +109,7 @@ DesignSchema.pre('save', function (next) {
       }
 
       if (!found)
-        return Promise.reject(new APIError('Invalid zone', httpStatus.BAD_REQUEST));
+        return Promise.reject(new ValidationError('Invalid item combination'));
     }
 
     if (campaign.dyg.blockable)
@@ -119,7 +123,7 @@ DesignSchema.pre('save', function (next) {
   })
   .then(campaignStatus => {
     if (campaignStatus.isBlocked)
-      return Promise.reject(new APIError('Blocked game', httpStatus.BAD_REQUEST));
+      return Promise.reject(new ValidationError('Blocked game'));
 
     next();
   })
@@ -131,7 +135,7 @@ DesignSchema.pre('save', function (next) {
   });
 });
 
-DesignSchema.plugin(mongoosePaginate);
+DesignSchema.plugin(paginate);
 DesignSchema.plugin(idValidator);
 DesignSchema.plugin(fieldRemover, 'random');
 DesignSchema.plugin(random);

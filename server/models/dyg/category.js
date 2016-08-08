@@ -6,7 +6,7 @@
 
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
@@ -68,7 +68,7 @@ const CategorySchema = new Schema({
   timestamps: true,
 });
 
-CategorySchema.plugin(mongoosePaginate);
+CategorySchema.plugin(paginate);
 CategorySchema.plugin(idValidator);
 CategorySchema.plugin(fieldRemover);
 

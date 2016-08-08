@@ -11,6 +11,7 @@ import uniqueValidator from 'mongoose-unique-validator';
 import fieldRemover from 'mongoose-field-remover';
 import crypto from 'crypto';
 import randtoken from 'rand-token';
+import timeUnit from 'time-unit';
 
 const Schema = mongoose.Schema;
 
@@ -69,7 +70,9 @@ UserSchema.methods = {
   },
 
   createRecoveryToken(time) {
-    if (this.recoveredAt && ((Date.now() - this.recoveredAt.getTime()) <= time))
+    const ms = timeUnit.hours.toMillis(time);
+
+    if (this.recoveredAt && (Date.now() - this.recoveredAt.getTime() <= ms))
       return false;
 
     this.recoveryToken = this.generateToken();
@@ -79,7 +82,9 @@ UserSchema.methods = {
   },
 
   updatePassword(password, time) {
-    if (Date.now() - this.recoveredAt.getTime() > time)
+    const ms = timeUnit.hours.toMillis(time);
+
+    if (Date.now() - this.recoveredAt.getTime() > ms)
       return false;
 
     this.password = password;

@@ -120,7 +120,7 @@ const UserController = {
       const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
 
       if (!user.createRecoveryToken(config.times.recovery))
-        return Promise.reject(new APIError('Recovery email already sent', httpStatus.CONFLICT));
+        return Promise.reject(new APIError('Recovery email already sent', httpStatus.BAD_REQUEST));
 
       send({
         to: user.email,
@@ -249,7 +249,7 @@ const UserController = {
       const config = req.app.locals.config;
 
       if (!user.updatePassword(req.body.password, config.times.update))
-        return Promise.reject(new APIError('Recovery token expired', httpStatus.CONFLICT));
+        return Promise.reject(new APIError('Recovery token expired', httpStatus.BAD_REQUEST));
 
       return user.save();
     })

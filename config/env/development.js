@@ -16,7 +16,7 @@ export default {
     },
   },
   times: {
-    recovery: 1800000,
-    update: 1800000,
+    recovery: 0.5,
+    update: 0.5,
   },
 };

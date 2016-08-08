@@ -237,12 +237,13 @@ const CampaignController = {
  *         description: Successfully updated
  */
   update(req, res, next) {
-    Campaign.findOneActive({
-      _id: req.params.campaign_id,
-    })
+    Campaign.findById(req.params.campaign_id)
     .then(campaign => {
       if (!campaign)
         return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
+
+      if (campaign.isActive())
+        return Promise.reject(new APIError('Active campaign', httpStatus.BAD_REQUEST));
 
       campaign.set(req.body);
 

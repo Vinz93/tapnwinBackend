@@ -6,7 +6,7 @@
 
 import mongoose from 'mongoose';
 import validate from 'mongoose-validator';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
@@ -80,7 +80,7 @@ const StickerSchema = new Schema({
   timestamps: true,
 });
 
-StickerSchema.plugin(mongoosePaginate);
+StickerSchema.plugin(paginate);
 StickerSchema.plugin(idValidator);
 StickerSchema.plugin(fieldRemover);
 

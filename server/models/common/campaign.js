@@ -9,11 +9,9 @@ import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-vars
-import assignment from 'assignment';
-import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import APIError from '../../helpers/api_error';
+import ValidationError from '../../helpers/validation_error';
 import MissionCampaign from './mission_campaign';
 import Design from '../dyg/design';
 import ModelAsset from '../dyg/model_asset';
@@ -154,7 +152,7 @@ const VdlgGameSchema = GameSchema.extend({});
 const M3GameSchema = GameSchema.extend({
   blockTime: {
     type: Number,
-    default: 60000,
+    default: 0.1,
   },
   initialMoves: {
     type: Number,
@@ -241,38 +239,31 @@ const CampaignSchema = new Schema({
 });
 
 CampaignSchema.statics = {
-  findOneActive(find) {
-    const today = new Date();
-
-    assignment(find || {}, {
-      startAt: { $lt: today },
-      finishAt: { $gte: today },
+  findOneActive(criteria) {
+    const now = new Date();
+    const find = Object.assign(criteria || {}, {
+      startAt: { $lt: now },
+      finishAt: { $gte: now },
     });
 
     return this.findOne(find);
   },
 };
 
-CampaignSchema.pre('remove', function (next) {
-  Promise.all([
-    Design.remove({ campaign: this.id }),
-    Question.remove({ campaign: this.id }),
-    MissionCampaign.remove({ campaign: this.id }),
-  ])
-  .then(next)
-  .catch(next);
-});
+CampaignSchema.methods = {
+  isActive() {
+    const now = new Date();
 
-CampaignSchema.pre('save', function (next) {
-  if (this.finishAt <= this.startAt)
-    return next(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
-
-  next();
-});
+    return this.startAt < now && this.finishAt >= now;
+  },
+};
 
 CampaignSchema.pre('save', function (next) {
   if (!this.isModified('startAt') && !this.isModified('finishAt'))
     return next();
+
+  if (this.finishAt <= this.startAt)
+    return next(new ValidationError('Invalid active time range'));
 
   Campaign.find({ // eslint-disable-line no-use-before-define
     $or: [
@@ -293,7 +284,7 @@ CampaignSchema.pre('save', function (next) {
   })
   .then(campaigns => {
     if (campaigns.length > 0)
-      return Promise.reject(new APIError('Overlapping active time range', httpStatus.BAD_REQUEST));
+      return Promise.reject(new ValidationError('Overlapping active time range'));
 
     next();
   })
@@ -305,7 +296,6 @@ CampaignSchema.pre('save', function (next) {
     return next();
 
   const company = this.company;
-
   const validate = (model, name, array, id) => Promise.each(array, doc => {
     model.findOne({
       _id: id ? doc[id] : doc,
@@ -313,7 +303,7 @@ CampaignSchema.pre('save', function (next) {
     })
     .then(model => {
       if (!model)
-        return new APIError(`Invalid ${name}`, httpStatus.BAD_REQUEST);
+        return new ValidationError(`Invalid ${name}`);
     });
   });
 
@@ -327,6 +317,16 @@ CampaignSchema.pre('save', function (next) {
     .then(next)
     .catch(next);
   })
+  .catch(next);
+});
+
+CampaignSchema.pre('remove', function (next) {
+  Promise.all([
+    Design.remove({ campaign: this.id }),
+    Question.remove({ campaign: this.id }),
+    MissionCampaign.remove({ campaign: this.id }),
+  ])
+  .then(next)
   .catch(next);
 });
 

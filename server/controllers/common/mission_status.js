@@ -6,6 +6,7 @@
 
 import mongoose from 'mongoose';
 import transaction from 'mongoose-transaction';
+import timeUnit from 'time-unit';
 import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
@@ -203,7 +204,7 @@ const MissionStatusController = {
         const data = {};
 
         data.isBlocked = true;
-        data.unblockAt = Date.now() + missionCampaign.blockTime;
+        data.unblockAt = Date.now() + timeUnit.hours.toMillis(missionCampaign.blockTime);
 
         if (this.m3.moves !== undefined)
           data.m3 = {

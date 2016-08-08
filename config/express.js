@@ -1,18 +1,20 @@
+import path from 'path';
 import express from 'express';
 import validation from 'express-validation';
+import mongoose from 'mongoose';
 import httpStatus from 'http-status';
 import morgan from 'morgan';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
 import nodemailer from 'nodemailer';
-import path from 'path';
 import swaggerDoc from 'swagger-jsdoc';
 import swaggerTools from 'swagger-tools';
-import APIError from '../server/helpers/api_error';
 
 import config from './env';
 import routes from '../server/routes';
+import APIError from '../server/helpers/api_error';
+import ValidationError from '../server/helpers/validation_error';
 // import cronJob from '../server/helpers/cron'; // eslint-disable-line no-unused-vars
 
 const app = express();
@@ -48,35 +50,23 @@ app.use(cors());
 app.use(config.path, routes);
 app.use('/uploads', express.static(path.join(config.root, 'uploads')));
 
-/* app.use((err, req, res, next) => { // eslint-disable-line
-  if (err.name === 'ValidationError' ||
-      err.name === 'CastError' ||
-      err.name === 'MongoError' ||
-      err.code === 11000)
-    return res.status(400).json(err).end();
-
-  res.status(500).send(err);
-});*/
-
 app.use((err, req, res, next) => {
-  if (err instanceof validation.ValidationError) {
-    const unifiedErrorMessage = err.errors.map(error => error.messages.join('. ')).join(' and ');
-    const error = new APIError(unifiedErrorMessage, err.status);
+  let message;
 
-    return next(error);
+  if (err instanceof ValidationError)
+    return next(err.toAPIError());
+  else if (err instanceof mongoose.Error.ValidationError) {
+    message = Object.keys(err.errors).map(key => err.errors[key].message).join(' and ');
+
+    return next(new APIError(message, httpStatus.BAD_REQUEST));
+  } else if (err instanceof validation.ValidationError) {
+    message = err.errors.map(error => error.messages.join('. ')).join(' and ');
+
+    return next(new APIError(message, err.status));
   } else if (!(err instanceof APIError))
     return next(new APIError(err.message, err.status, err.isPublic));
 
   return next(err);
-});
-
-app.use((req, res, next) => next(new APIError('Endpoint not found', httpStatus.NOT_FOUND)));
-
-app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
-  res.status(err.status).json({
-    message: err.isPublic ? err.message : httpStatus[err.status],
-    stack: config.env === 'development' ? err.stack : {},
-  });
 });
 
 swaggerTools.initializeMiddleware(spec, (middleware) => {
@@ -86,6 +76,15 @@ swaggerTools.initializeMiddleware(spec, (middleware) => {
     apiDocsPrefix: config.basePath,
     swaggerUiPrefix: config.basePath,
   }));
+
+  app.use((req, res, next) => next(new APIError('Endpoint not found', httpStatus.NOT_FOUND)));
+
+  app.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+    res.status(err.status).json({
+      message: err.isPublic ? err.message : httpStatus[err.status],
+      stack: config.env === 'development' ? err.stack : {},
+    });
+  });
 });
 
 app.locals.config = config;

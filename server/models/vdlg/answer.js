@@ -5,13 +5,12 @@
  */
 
 import mongoose from 'mongoose';
-import mongoosePaginate from 'mongoose-paginate';
+import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
-import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import APIError from '../../helpers/api_error';
+import ValidationError from '../../helpers/validation_error';
 import Campaign from '../common/campaign';
 import CampaignStatus from '../common/campaign_status';
 import Question from './question';
@@ -82,22 +81,22 @@ AnswerSchema.pre('save', function (next) {
     const now = new Date();
 
     if (this.personal > n)
-      return Promise.reject(new APIError('Invalid personal value', httpStatus.BAD_REQUEST));
+      return Promise.reject(new ValidationError('Invalid personal value'));
 
     if (this.popular > n)
-      return Promise.reject(new APIError('Invalid popular value', httpStatus.BAD_REQUEST));
+      return Promise.reject(new ValidationError('Invalid popular value'));
 
     if (question.startAt > now || question.finishAt < now)
-      return Promise.reject(new APIError('Inactive question', httpStatus.BAD_REQUEST));
+      return Promise.reject(new ValidationError('Inactive question'));
 
-    return Campaign.findOneActive({
-      _id: question.campaign,
-      'vdlg.active': true,
-    });
+    return Campaign.findById(question.campaign);
   })
   .then(campaign => {
-    if (!campaign)
-      return Promise.reject(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
+    if (!campaign.isActive())
+      return Promise.reject(new ValidationError('Inactive campaign'));
+
+    if (!campaign.vdlg.active)
+      return Promise.reject(new ValidationError('Inactive vdlg'));
 
     if (campaign.vdlg.blockable)
       return CampaignStatus.findOrCreate({
@@ -110,7 +109,7 @@ AnswerSchema.pre('save', function (next) {
   })
   .then(campaignStatus => {
     if (campaignStatus.isBlocked)
-      return Promise.reject(new APIError('Blocked game', httpStatus.BAD_REQUEST));
+      return Promise.reject(new ValidationError('Blocked vdlg'));
 
     next();
   })
@@ -122,7 +121,7 @@ AnswerSchema.pre('save', function (next) {
   });
 });
 
-AnswerSchema.plugin(mongoosePaginate);
+AnswerSchema.plugin(paginate);
 AnswerSchema.plugin(idValidator);
 AnswerSchema.plugin(fieldRemover);
 

@@ -20,7 +20,6 @@
   "license": "SEE LICENSE IN LICENSE FILE",
   "homepage": "https://bitbucket.org/ludopia/tapnwin-backend#readme",
   "dependencies": {
-    "assignment": "^2.2.0",
     "bluebird": "^3.4.0",
     "body-parser": "^1.15.0",
     "cors": "^2.7.1",
@@ -52,6 +51,7 @@
     "rand-token": "^0.2.1",
     "swagger-jsdoc": "^1.3.1",
     "swagger-tools": "^0.10.1",
+    "time-unit": "^1.1.0",
     "walk-sync": "^0.2.6"
   },
   "devDependencies": {

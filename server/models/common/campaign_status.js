@@ -8,10 +8,10 @@ import mongoose from 'mongoose';
 import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
-import httpStatus from 'http-status';
+import timeUnit from 'time-unit';
 import Promise from 'bluebird';
 
-import APIError from '../../helpers/api_error';
+import ValidationError from '../../helpers/validation_error';
 import Campaign from './campaign';
 
 const Schema = mongoose.Schema;
@@ -127,12 +127,10 @@ CampaignStatusSchema.statics = {
 };
 
 CampaignStatusSchema.pre('save', function (next) {
-  Campaign.findOneActive({
-    _id: this.campaign,
-  })
+  Campaign.findById(this.campaign)
   .then(campaign => {
-    if (!campaign)
-      return Promise.reject(new APIError('Invalid campaign', httpStatus.BAD_REQUEST));
+    if (!campaign.isActive())
+      return Promise.reject(new ValidationError('Inactive campaign'));
 
     if (this.m3.moves === undefined && campaign.m3.active) {
       this.m3.isBlocked = false;
@@ -140,11 +138,11 @@ CampaignStatusSchema.pre('save', function (next) {
       this.m3.score = 0;
     } else if (this.isModified('m3')) {
       if (!campaign.m3.active)
-        return Promise.reject(new APIError('Inactive m3', httpStatus.BAD_REQUEST));
+        return Promise.reject(new ValidationError('Inactive m3'));
 
       if (this.m3.moves <= 0) {
         this.m3.isBlocked = true;
-        this.m3.unblockAt = Date.now() + campaign.m3.blockTime;
+        this.m3.unblockAt = Date.now() + timeUnit.hours.toMillis(campaign.m3.blockTime);
         this.m3.moves = campaign.m3.initialMoves;
       }
     }

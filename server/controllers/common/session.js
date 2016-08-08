@@ -45,7 +45,7 @@ const SessionController = {
  *         description: Successfully created
  *         schema:
  *           properties:
- *             sessionToken:
+ *             token:
  *               type: string
  */
   create(req, res, next) {
