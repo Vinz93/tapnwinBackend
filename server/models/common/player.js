@@ -5,7 +5,13 @@
  */
 
 import mongoose from 'mongoose';
+
+import { removeIterative } from '../../helpers/utils';
 import User from './user';
+import CampaignStatus from './campaign_status';
+import MissionStatus from './mission_status';
+import Design from '../dyg/design';
+import Answer from '../vdlg/answer';
 
 const Schema = mongoose.Schema;
 
@@ -54,6 +60,19 @@ const PlayerSchema = new Schema({
     type: Number,
     default: 0,
   },
+});
+
+PlayerSchema.post('remove', function (next) {
+  const player = this.id;
+
+  Promise.all([
+    Design.find({ player }).then(designs => removeIterative(designs)),
+    Answer.remove({ player }),
+    CampaignStatus.remove({ player }),
+    MissionStatus.remove({ player }),
+  ])
+  .then(next)
+  .catch(next);
 });
 
 export default User.discriminator('Player', PlayerSchema);

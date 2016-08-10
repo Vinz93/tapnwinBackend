@@ -54,6 +54,10 @@ const QuestionSchema = new Schema({
     type: String,
     required: true,
   },
+  inbox: {
+    type: String,
+    required: true,
+  },
   startAt: {
     type: Date,
     required: true,
@@ -84,8 +88,8 @@ QuestionSchema.pre('save', function (next) {
   .catch(next);
 });
 
-QuestionSchema.pre('remove', function (next) {
-  Answer.remove({ campaign: this.id })
+QuestionSchema.post('remove', function (next) {
+  Answer.remove({ question: this.id })
   .then(next)
   .catch(next);
 });

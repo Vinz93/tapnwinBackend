@@ -14,6 +14,7 @@ import Promise from 'bluebird';
 import ValidationError from '../../helpers/validation_error';
 import Campaign from '../common/campaign';
 import CampaignStatus from '../common/campaign_status';
+import Vote from './vote';
 
 const Schema = mongoose.Schema;
 
@@ -133,6 +134,12 @@ DesignSchema.pre('save', function (next) {
 
     next(err);
   });
+});
+
+DesignSchema.post('remove', function (next) {
+  Vote.remove({ design: this.id })
+  .then(next)
+  .catch(next);
 });
 
 DesignSchema.plugin(paginate);

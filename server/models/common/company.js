@@ -10,6 +10,7 @@ import uniqueValidator from 'mongoose-unique-validator';
 import fieldRemover from 'mongoose-field-remover';
 import Promise from 'bluebird';
 
+import { removeIterative } from '../../helpers/utils';
 import Campaign from './campaign';
 import Asset from './asset';
 import Category from '../dyg/category';
@@ -39,13 +40,15 @@ const CompanySchema = new Schema({
   timestamps: true,
 });
 
-CompanySchema.pre('remove', next => {
+CompanySchema.post('remove', next => {
+  const company = this.id;
+
   Promise.all([
-    Campaign.remove({ company: this.id }),
-    Asset.remove({ company: this.id }),
-    Category.remove({ company: this.id }),
-    Item.remove({ company: this.id }),
-    Sticker.remove({ company: this.id }),
+    Campaign.remove({ company }).then(campaigns => removeIterative(campaigns)),
+    Asset.remove({ company }),
+    Category.remove({ company }),
+    Item.remove({ company }),
+    Sticker.remove({ company }),
   ])
   .then(next)
   .catch(next);

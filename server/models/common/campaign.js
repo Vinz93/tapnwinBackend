@@ -331,12 +331,12 @@ CampaignSchema.pre('save', function (next) {
   .catch(next);
 });
 
-CampaignSchema.pre('remove', function (next) {
+CampaignSchema.post('remove', function (next) {
   const campaign = this.id;
 
   Promise.all([
     Design.find({ campaign }).then(designs => removeIterative(designs)),
-    Question.remove({ campaign }),
+    Question.find({ campaign }).then(questions => removeIterative(questions)),
     MissionCampaign.find({ campaign }).then(missionCampaign => removeIterative(missionCampaign)),
   ])
   .then(next)

@@ -72,7 +72,7 @@ const MissionCampaignSchema = new Schema({
   timestamps: true,
 });
 
-MissionCampaignSchema.pre('remove', function (next) {
+MissionCampaignSchema.post('remove', function (next) {
   MissionStatus.remove({ missionCampaign: this.id })
   .then(next)
   .catch(next);

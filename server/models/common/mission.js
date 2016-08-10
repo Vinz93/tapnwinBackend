@@ -9,6 +9,9 @@ import paginate from 'mongoose-paginate';
 import idValidator from 'mongoose-id-validator';
 import fieldRemover from 'mongoose-field-remover';
 
+import { removeIterative } from '../../helpers/utils';
+import MissionCampaign from './mission_campaign';
+
 const Schema = mongoose.Schema;
 
 /**
@@ -36,6 +39,12 @@ const MissionSchema = new Schema({
   },
 }, {
   timestamps: true,
+});
+
+MissionSchema.post('remove', function (next) {
+  MissionCampaign.find({ mission: this.id })
+  .then(missionCampaign => removeIterative(missionCampaign))
+  .catch(next);
 });
 
 MissionSchema.plugin(paginate);

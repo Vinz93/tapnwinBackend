@@ -57,7 +57,7 @@ const StickerSchema = new Schema({
   },
   isPositive: {
     type: Boolean,
-    required: true,
+    default: true,
   },
   urls: {
     animation: {
