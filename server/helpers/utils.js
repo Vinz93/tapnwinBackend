@@ -3,6 +3,7 @@ import path from 'path';
 import multer from 'multer';
 import uuid from 'node-uuid';
 import mime from 'mime';
+import Promise from 'bluebird';
 
 export const paginate = {
   limit(limit, value) {
@@ -40,4 +41,8 @@ export function upload(name) {
   });
 
   return multer({ storage }).single(name);
+}
+
+export function removeIterative(docs) {
+  return Promise.all(docs.map(doc => doc.remove()));
 }
