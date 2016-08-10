@@ -212,7 +212,7 @@ const UserController = {
 /**
  * @swagger
  * /users/password:
- *   patch:
+ *   put:
  *     tags:
  *       - Users
  *     description: Updates user's password
@@ -230,7 +230,7 @@ const UserController = {
  *         required: true
  *         schema:
  *           properties:
- *             email:
+ *             password:
  *               type: string
  *           required:
  *             - email
