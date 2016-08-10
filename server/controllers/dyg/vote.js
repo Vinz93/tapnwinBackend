@@ -295,19 +295,19 @@ const VoteController = {
  *         description: Successfully updated
  */
   updateByMe(req, res, next) {
-    Vote.findOneAndUpdate({
+    Vote.findOne({
       _id: req.params.vote_id,
       player: res.locals.user._id,
-    }, req.body, {
-      runValidators: true,
-      context: 'query',
     })
     .then(vote => {
       if (!vote)
         return Promise.reject(new APIError('Vote not found', httpStatus.NOT_FOUND));
 
-      res.status(httpStatus.NO_CONTENT).end();
+      vote.set(req.body);
+
+      return vote.save();
     })
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 };
