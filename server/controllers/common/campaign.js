@@ -72,8 +72,8 @@ const CampaignController = {
         'company',
         'dyg.models',
         'dyg.stickers',
-        'dyg.categories.category',
-        'dyg.categories.items',
+        'dyg.catalog.category',
+        'dyg.catalog.items',
       ],
     })
     .then(campaigns => res.json(campaigns))
@@ -154,8 +154,8 @@ const CampaignController = {
     .populate('company')
     .populate('dyg.models')
     .populate('dyg.stickers')
-    .populate('dyg.categories.category')
-    .populate('dyg.categories.items')
+    .populate('dyg.catalog.category')
+    .populate('dyg.catalog.items')
     .then(campaign => {
       if (!campaign)
         return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
@@ -200,8 +200,8 @@ const CampaignController = {
     Campaign.findOneActive({ company: req.params.company_id })
     .populate('dyg.models')
     .populate('dyg.stickers')
-    .populate('dyg.categories.category')
-    .populate('dyg.categories.items')
+    .populate('dyg.catalog.category')
+    .populate('dyg.catalog.items')
     .then(campaign => {
       if (!campaign)
         return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
@@ -277,9 +277,6 @@ const CampaignController = {
     .then(campaign => {
       if (!campaign)
         return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
-
-      // if (campaign.isActive())
-      //  return Promise.reject(new APIError('Active campaign', httpStatus.BAD_REQUEST));
 
       return campaign.remove();
     })
