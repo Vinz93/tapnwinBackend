@@ -8,9 +8,13 @@ module.exports = function(grunt) {
     src: {
       main: 'index.js',
       js: [
-        'server/**/*.js',
+        'server/controllers/**/*.js',
+        'server/models/**/*.js',
+        'server/routes/**/*.js',
+        'server/helpers/**/*.js',
         'config/**/*.js'
       ],
+      views: 'server/views/**/*',
     },
     seeds: 'config/seeds/**/*.json',
     dist: 'dist/',
@@ -23,10 +27,13 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-      seeds: {
+      statics: {
         files: [{
           expand: true,
-          src: paths.seeds,
+          src: [
+            paths.seeds,
+            paths.src.views,
+          ],
           dest: paths.dist
         }],
       },
@@ -72,9 +79,12 @@ module.exports = function(grunt) {
           spawn: false,
         },
       },
-      seeds: {
-        files: paths.seeds,
-        tasks: ['changed:copy:seeds'],
+      statics: {
+        files: [
+          paths.seeds,
+          paths.src.views,
+        ],
+        tasks: ['changed:copy:statics'],
         options: {
           spawn: false,
         },
@@ -94,7 +104,7 @@ module.exports = function(grunt) {
         tasks: [
           'nodemon',
           'watch:src',
-          'watch:seeds'
+          'watch:statics'
         ],
         options: {
           logConcurrentOutput: true,
@@ -107,7 +117,7 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'clean',
     'changed:babel',
-    'changed:copy:seeds',
+    'changed:copy:statics',
     'mkdir',
     'copy:pkg',
   ]);
@@ -115,7 +125,7 @@ module.exports = function(grunt) {
   grunt.registerTask('serve', [
     'clean',
     'changed:babel',
-    'changed:copy:seeds',
+    'changed:copy:statics',
     'mkdir',
     'concurrent',
   ]);
