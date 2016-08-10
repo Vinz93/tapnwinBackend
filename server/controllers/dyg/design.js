@@ -137,7 +137,7 @@ const DesignController = {
  *               type: integer
  */
   readAllByMe(req, res, next) {
-    const player = (req.query.exclusive === 'true') ? {
+    const player = (req.query.exclusive) ? {
       $ne: res.locals.user._id,
     } : res.locals.user._id;
 
@@ -146,7 +146,7 @@ const DesignController = {
     const find = Object.assign(req.query.find || {}, { player });
     const sort = req.query.sort || { createdAt: 1 };
 
-    if (req.query.random === 'true') {
+    if (req.query.random) {
       Design.findRandom(find).limit(limit).sort(sort)
       .then(designs => res.json(designs))
       .catch(next);
