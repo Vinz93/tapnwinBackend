@@ -99,9 +99,6 @@ const SessionController = {
   validate(req, res, next) {
     const sessionToken = req.get('X-Auth-Token');
 
-    if (!sessionToken)
-      return Promise.reject(new APIError('Missing X-Auth-Token header', httpStatus.UNAUTHORIZED));
-
     User.findOne({ sessionToken })
     .then(user => {
       if (!user)
