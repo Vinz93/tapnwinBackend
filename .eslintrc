@@ -7,12 +7,19 @@
     "consistent-return": 0,
     "curly": 0,
     "no-shadow": 0,
-    "no-underscore-dangle": [2, {
-      "allow": ["_id", "__v", "__t", "_require", "_model"]
-    }],
-    "no-param-reassign": [2, {
-      "props": false
-    }],
+    "no-underscore-dangle": [
+      2,
+      {
+        "allow": [
+          "_id",
+          "__v",
+          "__t",
+          "_require",
+          "_model"
+        ]
+      }
+    ],
+    "no-param-reassign": [2, { "props": false }],
     "import/no-unresolved": 0
   },
   "env": {
