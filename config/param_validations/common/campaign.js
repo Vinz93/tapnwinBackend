@@ -4,6 +4,13 @@ import Joi from 'joi';
 Joi.objectId = objectId(Joi);
 
 export default {
+  readAll: {
+    query: {
+      offset: Joi.number().integer(),
+      limit: Joi.number().integer(),
+    },
+  },
+
   create: {
     body: {
       company: Joi.objectId().required(),

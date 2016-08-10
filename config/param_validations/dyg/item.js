@@ -13,28 +13,38 @@ export default {
 
   create: {
     body: {
+      company: Joi.objectId().required(),
       name: Joi.string().required(),
+      urls: {
+        small: Joi.string().uri().required(),
+        large: Joi.string().uri().required(),
+      },
     },
   },
 
   read: {
     params: {
-      company_id: Joi.objectId().required(),
+      item_id: Joi.objectId().required(),
     },
   },
 
   update: {
     params: {
-      company_id: Joi.objectId().required(),
+      item_id: Joi.objectId().required(),
     },
     body: {
-      name: Joi.string().email(),
+      company: Joi.objectId(),
+      name: Joi.string(),
+      urls: {
+        small: Joi.string().uri(),
+        large: Joi.string().uri(),
+      },
     },
   },
 
   delete: {
     params: {
-      company_id: Joi.objectId().required(),
+      item_id: Joi.objectId().required(),
     },
   },
 };

@@ -33,7 +33,7 @@ validate.options({
 });
 
 router.route('/users')
-.get(User.readAll);
+.get(validate(userValidator.readAll), User.readAll);
 
 router.route('/users/recovery_token')
 .post(validate(userValidator.createRecoveryToken), User.createRecoveryToken);
@@ -61,7 +61,7 @@ router.route('/sessions')
 .delete(validate(sessionValidator.delete), Session.validate, Session.delete);
 
 router.route('/companies')
-.get(Company.readAll)
+.get(validate(companyValidator.create), Company.readAll)
 .post(validate(companyValidator.create), Company.create);
 
 router.route('/companies/:company_id')
@@ -70,7 +70,7 @@ router.route('/companies/:company_id')
 .delete(validate(companyValidator.delete), Company.delete);
 
 router.route('/assets')
-.get(Asset.readAll);
+.get(validate(assetValidator.readAll), Asset.readAll);
 
 router.route('/assets/:asset_id')
 .get(validate(assetValidator.read), Asset.read)
@@ -81,7 +81,7 @@ router.route('/game_assets')
 .post(validate(gameAssetValidator.create), GameAsset.create);
 
 router.route('/campaigns')
-.get(Campaign.readAll)
+.get(validate(campaignValidator.readAll), Campaign.readAll)
 .post(validate(campaignValidator.create), Campaign.create);
 
 router.route('/campaigns/:campaign_id')
@@ -93,7 +93,7 @@ router.route('/companies/:company_id/campaign')
 .get(validate(campaignValidator.readByCompany), Campaign.readByCompany);
 
 router.route('/missions')
-.get(Mission.readAll)
+.get(validate(missionValidator.readAll), Mission.readAll)
 .post(validate(missionValidator.create), Mission.create);
 
 router.route('/missions/:mission_id')
@@ -102,7 +102,7 @@ router.route('/missions/:mission_id')
 .delete(validate(missionValidator.delete), Mission.delete);
 
 router.route('/mission_campaigns')
-.get(MissionCampaign.readAll)
+.get(validate(missionCampaignValidator.readAll), MissionCampaign.readAll)
 .post(validate(missionCampaignValidator.create), MissionCampaign.create);
 
 router.route('/mission_campaigns/:mission_campaign_id')

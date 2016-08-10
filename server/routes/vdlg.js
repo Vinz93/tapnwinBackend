@@ -1,5 +1,11 @@
 import express from 'express';
+import validate from 'express-validation';
 
+import questionValidator from '../../config/param_validations/vdlg/question';
+import stringQuestionValidator from '../../config/param_validations/vdlg/string_question';
+import assetQuestionValidator from '../../config/param_validations/vdlg/asset_question';
+import answerValidator from '../../config/param_validations/vdlg/answer';
+import possibilityAssetValidator from '../../config/param_validations/vdlg/possibility_asset';
 import User from '../controllers/common/user';
 import Session from '../controllers/common/session';
 import Question from '../controllers/vdlg/question';
@@ -10,43 +16,47 @@ import PossibilityAsset from '../controllers/vdlg/possibility_asset';
 
 const router = express.Router(); // eslint-disable-line new-cap
 
+validate.options({
+  allowUnknownBody: false,
+});
+
 router.route('/questions')
-.get(Question.readAll);
+.get(validate(questionValidator.readAll), Question.readAll);
 
 router.route('/string_questions')
-.post(StringQuestion.create);
+.post(validate(stringQuestionValidator.create), StringQuestion.create);
 
 router.route('/asset_questions')
-.post(AssetQuestion.create);
+.post(validate(assetQuestionValidator.create), AssetQuestion.create);
 
 router.route('/possibility_assets')
-.post(PossibilityAsset.create);
+.post(validate(possibilityAssetValidator.create), PossibilityAsset.create);
 
 router.route('/players/me/questions')
-.all(Session.validate, User.isPlayer)
-.get(Question.readAllByMe);
+.get(validate(questionValidator.readAllByMe), Session.validate, User.isPlayer,
+Question.readAllByMe);
 
 router.route('/questions/:question_id')
-.get(Question.read);
+.get(validate(questionValidator.read), Question.read);
 
 router.route('/questions/:question_id/statistics')
-.get(Question.readStatistic);
+.get(validate(questionValidator.readStatistic), Question.readStatistic);
 
-router.get('/answers', Answer.readAll);
+router.route('/answers')
+.get(validate(questionValidator.readAll), Answer.readAll);
 
 router.route('/players/me/answers')
-.all(Session.validate, User.isPlayer)
-.get(Answer.readAllByMe)
-.post(Answer.createByMe);
+.get(validate(answerValidator.readAllByMe), Session.validate, User.isPlayer, Answer.readAllByMe)
+.post(validate(answerValidator.createByMe), Session.validate, User.isPlayer, Answer.createByMe);
 
 router.route('/players/me/answers/statistics')
-.all(Session.validate, User.isPlayer)
-.get(Answer.readStatisticByMe);
+.get(validate(answerValidator.readStatisticByMe), Session.validate, User.isPlayer,
+Answer.readStatisticByMe);
 
 router.route('/answers/:answer_id')
-.get(Answer.read);
+.get(validate(answerValidator.read), Answer.read);
 
 router.route('/players/me/answers/:answer_id')
-.patch(Session.validate, User.isPlayer, Answer.updateByMe);
+.patch(validate(answerValidator.updateByMe), Session.validate, User.isPlayer, Answer.updateByMe);
 
 export default router;
