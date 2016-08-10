@@ -11,6 +11,7 @@ import fieldRemover from 'mongoose-field-remover';
 import extend from 'mongoose-schema-extend'; // eslint-disable-line no-unused-vars
 import Promise from 'bluebird';
 
+import { removeIterative } from '../../helpers/utils';
 import ValidationError from '../../helpers/validation_error';
 import MissionCampaign from './mission_campaign';
 import Design from '../dyg/design';
@@ -58,7 +59,7 @@ const CatalogSchema = new Schema({
  *         type: boolean
  */
 const GameSchema = new Schema({
-  active: {
+  isActive: {
     type: Boolean,
     default: false,
   },
@@ -74,7 +75,9 @@ const GameSchema = new Schema({
  *   Zone:
  *     properties:
  *       categories:
- *         type: string
+ *         type: array
+ *         items:
+ *           type: string
  *       isRequired:
  *         type: boolean
  */
@@ -105,7 +108,7 @@ const ZoneSchema = new Schema({
  *             type: array
  *             items:
  *               type: string
- *           categories:
+ *           catalog:
  *             type: array
  *             items:
  *               $ref: '#/definitions/Catalog'
@@ -185,6 +188,14 @@ const DdtGameSchema = GameSchema.extend({});
  *       finishAt:
  *         type: string
  *         format: date-time
+ *       dyg:
+ *         $ref: '#/definitions/DygGame'
+ *       vdlg:
+ *         $ref: '#/definitions/VdlgGame'
+ *       m3:
+ *         $ref: '#/definitions/M3Game'
+ *       ddt:
+ *         $ref: '#/definitions/DdtGame'
  *     required:
  *       - company
  *       - name
@@ -321,10 +332,12 @@ CampaignSchema.pre('save', function (next) {
 });
 
 CampaignSchema.pre('remove', function (next) {
+  const campaign = this.id;
+
   Promise.all([
-    Design.remove({ campaign: this.id }),
-    Question.remove({ campaign: this.id }),
-    MissionCampaign.remove({ campaign: this.id }),
+    Design.find({ campaign }).then(designs => removeIterative(designs)),
+    Question.remove({ campaign }),
+    MissionCampaign.find({ campaign }).then(missionCampaign => removeIterative(missionCampaign)),
   ])
   .then(next)
   .catch(next);

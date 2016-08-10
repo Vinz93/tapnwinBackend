@@ -95,7 +95,7 @@ AnswerSchema.pre('save', function (next) {
     if (!campaign.isActive())
       return Promise.reject(new ValidationError('Inactive campaign'));
 
-    if (!campaign.vdlg.active)
+    if (!campaign.vdlg.isActive)
       return Promise.reject(new ValidationError('Inactive vdlg'));
 
     if (campaign.vdlg.blockable)

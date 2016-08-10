@@ -23,9 +23,9 @@ const Schema = mongoose.Schema;
  *       campaign:
  *         type: string
  *       isRequired:
- *         type: string
+ *         type: boolean
  *       isBlocking:
- *         type: string
+ *         type: boolean
  *       blockedTime:
  *         type: number
  *       balance:

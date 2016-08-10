@@ -76,9 +76,6 @@ QuestionSchema.pre('save', function (next) {
 QuestionSchema.pre('save', function (next) {
   Campaign.findById(this.campaign)
   .then(campaign => {
-    if (!campaign.vdlg.active)
-      return Promise.reject(new ValidationError('Inactive vdlg'));
-
     if (campaign.startAt > this.startAt || campaign.finishAt < this.finishAt)
       return Promise.reject(new ValidationError('Invalid time range'));
 

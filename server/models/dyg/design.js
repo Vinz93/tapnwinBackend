@@ -74,7 +74,7 @@ DesignSchema.pre('save', function (next) {
     if (!campaign.isActive())
       return Promise.reject(new ValidationError('Inactive campaign'));
 
-    if (!campaign.dyg.active)
+    if (!campaign.dyg.isActive)
       return Promise.reject(new ValidationError('Inactive dyg'));
 
     const items = this.items;
