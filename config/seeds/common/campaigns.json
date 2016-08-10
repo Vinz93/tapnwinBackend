@@ -16,7 +16,7 @@
       "finishAt": "2016-12-01T17:39:22.939Z",
       "company": "->companies.company1",
       "dyg": {
-        "active": true,
+        "isActive": true,
         "missions": [
           {
             "mission": "->missions.mission1",
@@ -115,11 +115,11 @@
         ]
       },
       "vdlg": {
-        "active": true,
+        "isActive": true,
         "blockable": true
       },
       "m3": {
-        "active": true,
+        "isActive": true,
         "blockable": true
       }
     }
