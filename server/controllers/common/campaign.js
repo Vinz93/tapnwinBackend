@@ -273,13 +273,17 @@ const CampaignController = {
  *         description: Successfully deleted
  */
   delete(req, res, next) {
-    Campaign.findOneAndRemove(req.params.campaign_id)
+    Campaign.findById(req.params.campaign_id)
     .then(campaign => {
       if (!campaign)
         return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
 
-      res.status(httpStatus.NO_CONTENT).end();
+      // if (campaign.isActive())
+      //  return Promise.reject(new APIError('Active campaign', httpStatus.BAD_REQUEST));
+
+      return campaign.remove();
     })
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 };
