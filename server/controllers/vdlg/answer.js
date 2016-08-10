@@ -367,19 +367,19 @@ const AnswerController = {
  *         description: Successfully updated
  */
   updateByMe(req, res, next) {
-    Answer.findOneAndUpdate({
+    Answer.findOne({
       _id: req.params.answer_id,
       player: res.locals.user._id,
-    }, req.body, {
-      runValidators: true,
-      context: 'query',
     })
     .then(answer => {
       if (!answer)
         return Promise.reject(new APIError('Answer not found', httpStatus.NOT_FOUND));
 
-      res.status(httpStatus.NO_CONTENT).end();
+      answer.set(req.body);
+
+      return answer.save();
     })
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 };
