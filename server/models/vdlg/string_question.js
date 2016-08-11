@@ -23,7 +23,7 @@ const Schema = mongoose.Schema;
  *               type: string
  */
 const StringQuestionSchema = new Schema({
-  possibilities: {
+  possibilityStrings: {
     type: [String],
   },
 });

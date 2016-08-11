@@ -77,16 +77,21 @@ AnswerSchema.index({
 AnswerSchema.pre('save', function (next) {
   Question.findById(this.question)
   .then(question => {
-    const n = question.possibilities.length;
-    const now = new Date();
+    const now = Date.now();
+    let length;
 
-    if (this.personal > n)
+    if (question.__t === 'StringQuestion')
+      length = question.possibilityStrings.length - 1;
+    else
+      length = question.possibilityAssets.length - 1;
+
+    if (this.personal > length)
       return Promise.reject(new ValidationError('Invalid personal value'));
 
-    if (this.popular > n)
+    if (this.popular > length)
       return Promise.reject(new ValidationError('Invalid popular value'));
 
-    if (question.startAt > now || question.finishAt < now)
+    if (question.startAt.getTime() > now || question.finishAt.getTime() < now)
       return Promise.reject(new ValidationError('Inactive question'));
 
     return Campaign.findById(question.campaign);

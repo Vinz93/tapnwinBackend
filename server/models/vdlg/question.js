@@ -27,6 +27,8 @@ const Schema = mongoose.Schema;
  *         type: string
  *       popular:
  *         type: string
+ *       inbox:
+ *         type: string
  *       startAt:
  *         type: string
  *         format: date-time
@@ -71,16 +73,18 @@ const QuestionSchema = new Schema({
 });
 
 QuestionSchema.pre('save', function (next) {
-  if (this.startAt > this.finishAt)
+  if (!this.isModified('startAt') && !this.isModified('finishAt'))
+    return next();
+
+  const startAt = this.startAt.getTime();
+  const finishAt = this.finishAt.getTime();
+
+  if (startAt > finishAt)
     return next(new ValidationError('Invalid time range'));
 
-  next();
-});
-
-QuestionSchema.pre('save', function (next) {
   Campaign.findById(this.campaign)
   .then(campaign => {
-    if (campaign.startAt > this.startAt || campaign.finishAt < this.finishAt)
+    if (campaign.startAt.getTime() > startAt || campaign.finishAt.getTime() < finishAt)
       return Promise.reject(new ValidationError('Invalid time range'));
 
     next();

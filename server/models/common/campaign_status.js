@@ -101,15 +101,16 @@ CampaignStatusSchema.statics = {
     return this.findOne(find)
     .then(campaignStatus => {
       if (campaignStatus) {
+        const now = Date.now();
         let changed = false;
 
-        if (campaignStatus.unblockAt && campaignStatus.unblockAt <= Date.now()) {
+        if (campaignStatus.unblockAt && campaignStatus.unblockAt.getTime() <= now) {
           changed = true;
           campaignStatus.isBlocked = false;
           campaignStatus.unblockAt = undefined;
         }
 
-        if (campaignStatus.m3.unblockAt && campaignStatus.m3.unblockAt <= Date.now()) {
+        if (campaignStatus.m3.unblockAt && campaignStatus.m3.unblockAt.getTime() <= now) {
           changed = true;
           campaignStatus.m3.isBlocked = false;
           campaignStatus.m3.unblockAt = undefined;
@@ -142,7 +143,7 @@ CampaignStatusSchema.pre('save', function (next) {
 
       if (this.m3.moves <= 0) {
         this.m3.isBlocked = true;
-        this.m3.unblockAt = Date.now() + timeUnit.hours.toMillis(campaign.m3.blockTime);
+        this.m3.unblockAt = new Date(Date.now() + timeUnit.hours.toMillis(campaign.m3.blockTime));
         this.m3.moves = campaign.m3.initialMoves;
       }
     }

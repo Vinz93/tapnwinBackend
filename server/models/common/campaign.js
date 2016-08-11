@@ -13,6 +13,7 @@ import Promise from 'bluebird';
 
 import { removeIterative } from '../../helpers/utils';
 import ValidationError from '../../helpers/validation_error';
+import CampaignStatus from './campaign_status';
 import MissionCampaign from './mission_campaign';
 import Design from '../dyg/design';
 import ModelAsset from '../dyg/model_asset';
@@ -263,9 +264,9 @@ CampaignSchema.statics = {
 
 CampaignSchema.methods = {
   isActive() {
-    const now = new Date();
+    const now = Date.now();
 
-    return this.startAt < now && this.finishAt >= now;
+    return this.startAt.getTime() < now && this.finishAt.getTime() >= now;
   },
 };
 
@@ -338,6 +339,7 @@ CampaignSchema.post('remove', function (next) {
     Design.find({ campaign }).then(designs => removeIterative(designs)),
     Question.find({ campaign }).then(questions => removeIterative(questions)),
     MissionCampaign.find({ campaign }).then(missionCampaign => removeIterative(missionCampaign)),
+    CampaignStatus.remove({ campaign }),
   ])
   .then(next)
   .catch(next);

@@ -23,10 +23,10 @@ const Schema = mongoose.Schema;
  *               type: string
  */
 const AssetQuestionSchema = new Schema({
-  possibilities: {
+  possibilityAssets: {
     type: [{
       type: Schema.Types.ObjectId,
-      ref: 'Possibility',
+      ref: 'PossibilityAsset',
     }],
   },
 });
