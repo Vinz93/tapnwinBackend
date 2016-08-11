@@ -68,7 +68,7 @@ router.route('/designs/:design_id/votes/statistics')
 router.route('/votes/:vote_id')
 .get(validate(voteValidator.read), Vote.read);
 
-router.route('players/me/votes/:vote_id')
+router.route('/players/me/votes/:vote_id')
 .patch(validate(voteValidator.updateByMe), Session.validate, User.isPlayer, Vote.updateByMe);
 
 router.route('/stickers')
