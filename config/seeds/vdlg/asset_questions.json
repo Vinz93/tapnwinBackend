@@ -1,0 +1,24 @@
+{
+  "asset_questions": {
+    "_model": "AssetQuestion",
+    "_require": [
+      "Campaign",
+      "PossibilityAsset"
+    ],
+    "stringQuestion1": {
+      "campaign": "->campaigns.campaign1",
+      "personal": "¿Cuáles jeans de esta marca siempre te quedan bien?",
+      "popular": "¿Cuáles jeans, en tu opinión, de las siguientes marcas siempre quedan bien?",
+      "inbox": "Los jeans de esta marca siempre quedan bien:",
+      "startAt": "2016-01-01T17:39:22.939Z",
+      "finishAt": "2016-12-01T17:39:22.939Z",
+      "possibilityAssets": [
+        "->possibility_assets.levis",
+        "->possibility_assets.guess",
+        "->possibility_assets.gap",
+        "->possibility_assets.calvin",
+        "->possibility_assets.wrangler"
+      ]
+    }
+  }
+}

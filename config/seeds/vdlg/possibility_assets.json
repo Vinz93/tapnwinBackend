@@ -1,0 +1,31 @@
+{
+  "possibility_assets": {
+    "_model": "PossibilityAsset",
+    "_require": ["Company"],
+    "levis": {
+      "company": "->companies.company1",
+      "name": "Levis",
+      "url": "https://52.37.117.104/tapnwin/api/v1/uploads/wqe342d.png"
+    },
+    "guess": {
+      "company": "->companies.company1",
+      "name": "Guess",
+      "url": "https://52.37.117.104/tapnwin/api/v1/uploads/wqe342d.png"
+    },
+    "gap": {
+      "company": "->companies.company1",
+      "name": "Gap",
+      "url": "https://52.37.117.104/tapnwin/api/v1/uploads/wqe342d.png"
+    },
+    "calvin": {
+      "company": "->companies.company1",
+      "name": "Calvin Klein",
+      "url": "https://52.37.117.104/tapnwin/api/v1/uploads/wqe342d.png"
+    },
+    "wrangler": {
+      "company": "->companies.company1",
+      "name": "Wrangler",
+      "url": "https://52.37.117.104/tapnwin/api/v1/uploads/wqe342d.png"
+    }
+  }
+}

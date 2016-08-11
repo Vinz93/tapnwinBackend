@@ -17,29 +17,6 @@
       "company": "->companies.company1",
       "dyg": {
         "isActive": true,
-        "missions": [
-          {
-            "mission": "->missions.mission1",
-            "isRequired": true,
-            "isBlocking": false,
-            "blockedTime": 20,
-            "max": 1
-          },
-          {
-            "mission": "->missions.mission2",
-            "isRequired": true,
-            "isBlocking": false,
-            "blockedTime": 20,
-            "max": 1
-          },
-          {
-            "mission": "->missions.mission3",
-            "isRequired": true,
-            "isBlocking": false,
-            "blockedTime": 20,
-            "max": 10
-          }
-        ],
         "models": [
           "->model_assets.model1"
         ],

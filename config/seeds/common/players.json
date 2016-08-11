@@ -16,6 +16,14 @@
       "password": "secret",
       "age": 22,
       "gender": "male"
+    },
+    "david": {
+      "firstName": "David",
+      "lastName": "Marul",
+      "email": "david.marull@gmail.com",
+      "password": "secret",
+      "age": 28,
+      "gender": "male"
     }
   }
 }

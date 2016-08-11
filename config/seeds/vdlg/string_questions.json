@@ -4,55 +4,31 @@
     "_require": ["Campaign"],
     "stringQuestion1": {
       "campaign": "->campaigns.campaign1",
-      "personal": "Personal 1",
-      "popular": "Popular 1",
-      "inbox": "Inbox 1",
+      "personal": "Cuando tienes una cena importante, ¿Qué es en lo primero que piensas para decidir qué ponerte?",
+      "popular": "Cuando se tiene una cena importante, ¿Qué crees que es es en lo primero que piensan las personas para decidir qué ponerse?",
+      "inbox": "Cuando tengo una cena importante, en lo primero que pienso para decidir qué ponerme es:",
       "startAt": "2016-01-01T17:39:22.939Z",
       "finishAt": "2016-12-01T17:39:22.939Z",
-      "possibilities": [
-        "Respuesta 1a",
-        "Respuesta 1b"
+      "possibilityStrings": [
+        "Camisa/Top",
+        "Cinturón",
+        "Pantalones/Falda",
+        "Zapatos",
+        "Reloj"
       ]
     },
     "stringQuestion2": {
       "campaign": "->campaigns.campaign1",
-      "personal": "Personal 2",
-      "popular": "Popular 2",
-      "inbox": "Inbox 2",
+      "personal": "En tu opinión, Tap&Win sería aún mejor si:",
+      "popular": "¿Cuál crees que será la opción con más votos para que Tap&Win sea mejor?",
+      "inbox": "Tap&Win sería aún mejor si:",
       "startAt": "2016-02-01T17:39:22.939Z",
       "finishAt": "2016-12-01T17:39:22.939Z",
-      "possibilities": [
-        "Respuesta 2a",
-        "Respuesta 2b",
-        "Respuesta 2c"
-      ]
-    },
-    "stringQuestion3": {
-      "campaign": "->campaigns.campaign1",
-      "personal": "Personal 3",
-      "popular": "Popular 3",
-      "inbox": "Inbox 3",
-      "startAt": "2016-03-01T17:39:22.939Z",
-      "finishAt": "2016-12-01T17:39:22.939Z",
-      "possibilities": [
-        "Respuesta 3a",
-        "Respuesta 3b",
-        "Respuesta 3c",
-        "Respuesta 3d"
-      ]
-    },
-    "stringQuestion4": {
-      "campaign": "->campaigns.campaign1",
-      "personal": "Personal 4",
-      "popular": "Popular 4",
-      "inbox": "Inbox 4",
-      "startAt": "2016-04-01T17:39:22.939Z",
-      "finishAt": "2016-12-01T17:39:22.939Z",
-      "possibilities": [
-        "Respuesta 4a",
-        "Respuesta 4b",
-        "Respuesta 4c",
-        "Respuesta 4d"
+      "possibilityStrings": [
+        "Ofreciera compras por internet",
+        "Tuviese más personal para asesorarme",
+        "El proceso de pago fuese más rápido",
+        "No conozco esa tienda"
       ]
     }
   }

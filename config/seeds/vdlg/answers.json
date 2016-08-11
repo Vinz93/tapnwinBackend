@@ -18,7 +18,13 @@
       "question": "->string_questions.stringQuestion2",
       "player": "->players.juan",
       "personal": 2,
-      "popular": 1
+      "popular": 2
+    },
+    "answer4": {
+      "question": "->string_questions.stringQuestion2",
+      "player": "->players.david",
+      "personal": 2,
+      "popular": 3
     }
   }
 }
