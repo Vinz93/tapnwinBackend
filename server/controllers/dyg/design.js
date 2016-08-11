@@ -137,9 +137,13 @@ const DesignController = {
  *               type: integer
  */
   readAllByMe(req, res, next) {
-    const player = (req.query.exclusive) ? {
-      $ne: res.locals.user._id,
-    } : res.locals.user._id;
+    let player = res.locals.user._id;
+    let populate = '';
+
+    if (req.query.exclusive) {
+      player = { $ne: res.locals.user._id };
+      populate = 'player';
+    }
 
     const limit = paginate.limit(req.query.limit);
 
@@ -147,7 +151,10 @@ const DesignController = {
     const sort = req.query.sort || { createdAt: 1 };
 
     if (req.query.random) {
-      Design.findRandom(find).limit(limit).sort(sort)
+      Design.findRandom(find)
+      .limit(limit)
+      .sort(sort)
+      .populate(populate)
       .then(designs => res.json(designs))
       .catch(next);
     } else {
@@ -157,6 +164,7 @@ const DesignController = {
         sort,
         offset,
         limit,
+        populate: [populate],
       })
       .then(designs => res.json(designs))
       .catch(next);
@@ -201,9 +209,7 @@ const DesignController = {
  *                    format: date-time
  */
   createByMe(req, res, next) {
-    Object.assign(req.body, {
-      player: res.locals.user._id,
-    });
+    req.body.player = res.locals.user._id;
 
     Design.create(req.body)
     .then(design => res.status(201).json(design))
@@ -243,6 +249,7 @@ const DesignController = {
  */
   read(req, res, next) {
     Design.findById(req.params.design_id)
+    .populate('player')
     .then(design => {
       if (!design)
         return Promise.reject(new APIError('Design not found', httpStatus.NOT_FOUND));

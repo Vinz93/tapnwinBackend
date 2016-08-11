@@ -213,13 +213,14 @@ const MissionController = {
  *         description: Successfully deleted
  */
   delete(req, res, next) {
-    Mission.findByIdAndRemove(req.params.mission_id)
+    Mission.findById(req.params.mission_id)
     .then(mission => {
       if (!mission)
         return Promise.reject(new APIError('Mission not found', httpStatus.NOT_FOUND));
 
-      res.status(httpStatus.NO_CONTENT).end();
+      return mission.remove();
     })
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 };

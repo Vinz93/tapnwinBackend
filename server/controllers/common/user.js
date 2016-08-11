@@ -358,13 +358,14 @@ const UserController = {
  *         description: Successfully deleted
  */
   delete(req, res, next) {
-    User.findByIdAndRemove(req.params.user_id)
+    User.findById(req.params.user_id)
     .then(user => {
       if (!user)
         return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
-      res.status(httpStatus.NO_CONTENT).end();
+      return user.remove();
     })
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 

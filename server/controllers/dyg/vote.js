@@ -76,7 +76,7 @@ const VoteController = {
 
 /**
  * @swagger
- * //players/me/votes:
+ * /players/me/votes:
  *   post:
  *     tags:
  *       - Votes
@@ -112,9 +112,7 @@ const VoteController = {
  *                    format: date-time
  */
   createByMe(req, res, next) {
-    Object.assign(req.body, {
-      player: res.locals.user._id,
-    });
+    req.body.player = res.locals.user._id;
 
     Vote.create(req.body)
     .then(vote => res.status(httpStatus.CREATED).json(vote))

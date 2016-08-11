@@ -212,13 +212,14 @@ const CompanyController = {
  *         description: Successfully deleted
  */
   delete(req, res, next) {
-    Company.findByIdAndRemove(req.params.company_id)
-    .then(mission => {
-      if (!mission)
+    Company.findById(req.params.company_id)
+    .then(company => {
+      if (!company)
         return Promise.reject(new APIError('Company not found', httpStatus.NOT_FOUND));
 
-      res.status(httpStatus.NO_CONTENT).end();
+      return company.remove();
     })
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 };

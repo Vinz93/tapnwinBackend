@@ -212,13 +212,14 @@ const MissionCampaignController = {
  *         description: Successfully deleted
  */
   delete(req, res, next) {
-    MissionCampaign.findByIdAndRemove(req.params.mission_campaign_id)
-    .then(mission => {
-      if (!mission)
+    MissionCampaign.findById(req.params.mission_campaign_id)
+    .then(missionCampaign => {
+      if (!missionCampaign)
         return Promise.reject(new APIError('MissionCampaign not found', httpStatus.NOT_FOUND));
 
-      res.status(httpStatus.NO_CONTENT).end();
+      return missionCampaign.remove();
     })
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
 };

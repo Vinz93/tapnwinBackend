@@ -204,7 +204,7 @@ const MissionStatusController = {
         const data = {};
 
         data.isBlocked = true;
-        data.unblockAt = Date.now() + timeUnit.hours.toMillis(missionCampaign.blockTime);
+        data.unblockAt = new Date(Date.now() + timeUnit.hours.toMillis(missionCampaign.blockTime));
 
         if (this.m3.moves !== undefined)
           data.m3 = {

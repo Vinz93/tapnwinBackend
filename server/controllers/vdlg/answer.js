@@ -261,9 +261,14 @@ const AnswerController = {
       answers,
       Promise.map(answers, answer => {
         const question = answer.question;
-        const possibilities = Array.from({
-          length: answer.question.possibilities.length,
-        }, (v, k) => k);
+        let length;
+
+        if (question.__t === 'StringQuestion')
+          length = question.possibilityStrings.length;
+        else
+          length = question.possibilityAssets.length;
+
+        const possibilities = Array.from({ length }, (v, k) => k);
 
         return Promise.map(possibilities, posibility => Answer.count({
           question: question._id,
@@ -325,9 +330,7 @@ const AnswerController = {
  *                   format: date-time
  */
   createByMe(req, res, next) {
-    Object.assign(req.body, {
-      player: res.locals.user._id,
-    });
+    req.body.player = res.locals.user._id;
 
     Answer.create(req.body)
     .then(answer => res.status(httpStatus.CREATED).json(answer))

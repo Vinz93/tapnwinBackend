@@ -70,6 +70,7 @@ const QuestionController = {
       sort,
       offset,
       limit,
+      populate: ['possibilityAssets'],
     })
     .then(questions => res.json(questions))
     .catch(next);
@@ -123,7 +124,9 @@ const QuestionController = {
     const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
 
-    Question.find(find).sort(sort)
+    Question.find(find)
+    .sort(sort)
+    .populate('possibilityAssets')
     .then(questions => Promise.filter(questions, question => Answer.findOne({
       player: res.locals.user,
       question: question._id,
@@ -211,7 +214,14 @@ const QuestionController = {
   readStatistic(req, res, next) {
     Question.findById(req.params.question_id)
     .then(question => {
-      const possibilities = Array.from({ length: question.possibilities.length }, (v, k) => k);
+      let length;
+
+      if (question.__t === 'StringQuestion')
+        length = question.possibilityStrings.length;
+      else
+        length = question.possibilityAssets.length;
+
+      const possibilities = Array.from({ length }, (v, k) => k);
 
       return Promise.map(possibilities, possibility => Answer.count({
         question: req.params.question_id,
@@ -228,6 +238,80 @@ const QuestionController = {
       });
     })
     .catch(next);
+  },
+
+  /**
+   * @swagger
+   * /questions/{question_id}:
+   *   patch:
+   *     tags:
+   *       - Questions
+   *     description: Updates a question
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: question_id
+   *         description: Question's id
+   *         in: path
+   *         required: true
+   *         type: string
+   *       - name: campaign
+   *         description: Question object
+   *         in: body
+   *         required: true
+   *         schema:
+   *           $ref: '#/definitions/Question'
+   *     responses:
+   *       201:
+   *         description: Successfully updated
+   */
+  update(req, res, next) {
+    Question.findById(req.params.question_id)
+      .populate('campaign')
+      .then(question => {
+        if (!question)
+          return Promise.reject(new APIError('Campaign not found', httpStatus.NOT_FOUND));
+
+        if (question.campaign.isActive())
+          return Promise.reject(new APIError('Active campaign', httpStatus.BAD_REQUEST));
+
+        question.set(req.body);
+
+        return question.save();
+      })
+      .then(() => res.status(httpStatus.NO_CONTENT).end())
+      .catch(next);
+  },
+
+  /**
+   * @swagger
+   * /questions/{question_id}:
+   *   delete:
+   *     tags:
+   *       - Questions
+   *     description: Deletes a question
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: question_id
+   *         description: Question's id
+   *         in: path
+   *         required: true
+   *         type: string
+   *     responses:
+   *       204:
+   *         description: Successfully deleted
+   */
+  delete(req, res, next) {
+    Question.findById(req.params.campaign_id)
+      .then(question => {
+        if (!question)
+          return Promise.reject(new APIError('Question not found', httpStatus.NOT_FOUND));
+
+        return question.remove();
+      })
+      .then(() => res.status(httpStatus.NO_CONTENT).end())
+      .catch(next);
   },
 };
 
