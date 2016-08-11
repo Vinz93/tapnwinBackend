@@ -7,10 +7,10 @@ import Promise from 'bluebird';
 
 export const paginate = {
   limit(limit, value) {
-    return !isNaN(limit) ? parseInt(limit, 10) : value || 20;
+    return limit !== undefined ? limit : value || 20;
   },
   offset(offset, value) {
-    return !isNaN(offset) ? parseInt(offset, 10) : value || 0;
+    return offset !== undefined ? offset : value || 0;
   },
 };
 
