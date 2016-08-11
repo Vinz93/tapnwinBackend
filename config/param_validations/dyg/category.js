@@ -35,10 +35,8 @@ export default {
     body: {
       company: Joi.objectId(),
       name: Joi.string(),
-      urls: {
-        selected: Joi.string().uri(),
-        unselected: Joi.string().uri(),
-      },
+      'urls.selected': Joi.string().uri(),
+      'urls.unselected': Joi.string().uri(),
     },
   },
 

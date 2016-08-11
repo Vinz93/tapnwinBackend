@@ -38,11 +38,9 @@ export default {
       company: Joi.objectId(),
       name: Joi.string(),
       isPositive: Joi.boolean(),
-      urls: {
-        animation: Joi.string().uri(),
-        enable: Joi.string().uri(),
-        disable: Joi.string().uri(),
-      },
+      'urls.animation': Joi.string().uri(),
+      'urls.enable': Joi.string().uri(),
+      'urls.disable': Joi.string().uri(),
     },
   },
 
