@@ -42,6 +42,8 @@ const PlayerController = {
  *                    type: string
  *                  balance:
  *                    type: integer
+ *                  age:
+ *                    type: integer
  *                  createdAt:
  *                    type: string
  *                    format: date-time

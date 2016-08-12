@@ -18,6 +18,7 @@ export default {
       urls: {
         selected: Joi.string().uri().required(),
         unselected: Joi.string().uri().required(),
+        empty: Joi.string().uri().required(),
       },
     },
   },
@@ -37,6 +38,7 @@ export default {
       name: Joi.string(),
       'urls.selected': Joi.string().uri(),
       'urls.unselected': Joi.string().uri(),
+      'urls.empty': Joi.string().uri(),
     },
   },
 

@@ -7,7 +7,8 @@
       "company": "->companies.company1",
       "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOff.png",
-        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOn.png"
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOn.png",
+        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/design/empty.png"
       }
     },
     "pants": {
@@ -15,7 +16,8 @@
       "company": "->companies.company1",
       "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOff.png",
-        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOn.png"
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOn.png",
+        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/design/empty.png"
       }
     },
     "skirts": {
@@ -23,7 +25,8 @@
       "company": "->companies.company1",
       "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOff.png",
-        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOn.png"
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOn.png",
+        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/design/empty.png"
       }
     },
     "tops": {
@@ -31,7 +34,8 @@
       "company": "->companies.company1",
       "urls": {
         "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOff.png",
-        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOn.png"
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOn.png",
+        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/design/empty.png"
       }
     }
   }

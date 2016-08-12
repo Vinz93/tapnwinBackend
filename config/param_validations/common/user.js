@@ -36,7 +36,7 @@ export default {
       firstName: Joi.string(),
       lastName: Joi.string(),
       gender: Joi.string(),
-      age: Joi.number().integer(),
+      bornAt: Joi.string().isoDate().required(),
     },
   },
 
@@ -65,7 +65,7 @@ export default {
       firstName: Joi.string(),
       lastName: Joi.string(),
       gender: Joi.string(),
-      age: Joi.number().integer(),
+      bornAt: Joi.string().isoDate(),
     },
   },
 

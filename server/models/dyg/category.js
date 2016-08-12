@@ -63,6 +63,11 @@ const CategorySchema = new Schema({
       required: true,
       validate: isURL,
     },
+    empty: {
+      type: String,
+      required: true,
+      validate: isURL,
+    },
   },
 }, {
   timestamps: true,

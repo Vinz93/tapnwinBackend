@@ -8,7 +8,7 @@ export default {
       firstName: Joi.string().required(),
       lastName: Joi.string().required(),
       gender: Joi.string().required(),
-      age: Joi.number().integer().required(),
+      bornAt: Joi.string().isoDate().required(),
     },
   },
 };

@@ -6,7 +6,7 @@
       "lastName": "Alvarez",
       "email": "a.alvarez.sor@gmail.com",
       "password": "secret",
-      "age": 23,
+      "bornAt": "1992-08-18T17:39:22.939Z",
       "gender": "male"
     },
     "juan": {
@@ -14,7 +14,7 @@
       "lastName": "Sanchez",
       "email": "juans@ludopia.net",
       "password": "secret",
-      "age": 22,
+      "bornAt": "1991-12-01T17:39:22.939Z",
       "gender": "male"
     },
     "david": {
@@ -22,7 +22,7 @@
       "lastName": "Marul",
       "email": "david.marull@gmail.com",
       "password": "secret",
-      "age": 28,
+      "bornAt": "1988-12-01T17:39:22.939Z",
       "gender": "male"
     }
   }

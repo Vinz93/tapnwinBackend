@@ -28,13 +28,14 @@ const Schema = mongoose.Schema;
  *             type: string
  *           gender:
  *             type: string
- *           age:
- *             type: integer
+ *           bornAt:
+ *             type: string
+ *             format: date-time
  *         required:
  *           - firstName
  *           - lastName
  *           - gender
- *           - age
+ *           - bornAt
  */
 const PlayerSchema = new Schema({
   firstName: {
@@ -52,14 +53,29 @@ const PlayerSchema = new Schema({
       message: '`{VALUE}` is not a valid gender',
     },
   },
-  age: {
-    type: Number,
-    min: [0, '`{VALUE}` is not a valid age'],
+  bornAt: {
+    type: Date,
+    required: true,
   },
   balance: {
     type: Number,
     default: 0,
   },
+}, {
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true },
+});
+
+PlayerSchema.virtual('age').get(function () {
+  const today = new Date();
+  const bornAt = this.bornAt;
+  const m = today.getMonth() - bornAt.getMonth();
+  let age = today.getFullYear() - bornAt.getFullYear();
+
+  if (m < 0 || (m === 0 && today.getDate() < bornAt.getDate()))
+    age--;
+
+  return age;
 });
 
 PlayerSchema.post('remove', function (next) {
