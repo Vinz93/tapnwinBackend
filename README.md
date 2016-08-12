@@ -4,7 +4,7 @@
 
 You need to have installed preferably [Node.js](https://github.com/creationix/nvm) `v4.4.5` and [Mongo](https://docs.mongodb.com/v2.4/tutorial/install-mongodb-on-ubuntu/) `v2.4.9`.
 
-We recommend to install [Grunt-CLI](http://gruntjs.com/) globally:
+If you want to, you can install [Grunt-CLI](http://gruntjs.com/) globally:
 
 ```bash
 npm install -g grunt-cli
@@ -25,12 +25,15 @@ Start development server:
 ```sh
 npm start
 # or
-grunt serve
+grunt
 ```
 
 You can run all seeds in `json` format located inside `config/seeds` as follows:
 ```sh
-npm run seeds
+# development
+npm run seed:dist
+# deployment
+npm run seed
 ```
 
 Execute tests:
@@ -45,6 +48,7 @@ JavaScript code linting is done using [ESLint](http://eslint.org/), which is a p
 
 * The file and directory names are in `snake_case`
 * Code documentation is in [Swagger jsdoc](https://www.npmjs.com/package/swagger-jsdoc)
+* Every time field should be expresed in hours
 
 ## Deployment
 
