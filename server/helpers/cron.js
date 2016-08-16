@@ -36,7 +36,7 @@ import Category from '../models/design/category';
 new CronJob('5 0 * * *', () => { // eslint-disable-line no-new
   fs.readdir(path.join(config.root, 'uploads', 'design'), (err, dir) => {
     dir.map(fileName => {
-      const url = `${config.host}uploads/design/${fileName}`;
+      const url = `${config.host}uploads/${fileName}`;
       return Promise.all([
         Item.findOne({ $or: [
           { 'media.small': url },
@@ -58,7 +58,7 @@ new CronJob('5 0 * * *', () => { // eslint-disable-line no-new
           if (array[i])
             return;
         fs.unlinkSync(path.join(config.root,
-        `/uploads/design/${fileName}`));
+        `/uploads/${fileName}`));
       })
       .catch(err => {
         console.log(err);

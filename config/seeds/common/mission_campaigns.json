@@ -11,7 +11,7 @@
       "balance": 0.0,
       "isRequired": true,
       "isBlocking": true,
-      "blockTime": 60000,
+      "blockTime": 0.2,
       "max": 3
     },
     "missionCampaign2": {

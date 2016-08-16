@@ -6,36 +6,36 @@
       "name": "Zapatos",
       "company": "->companies.company1",
       "urls": {
-        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOff.png",
-        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprShoesOn.png",
-        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/design/empty.png"
+        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/sprShoesOff.png",
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/sprShoesOn.png",
+        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/empty.png"
       }
     },
     "pants": {
       "name": "Pantalones",
       "company": "->companies.company1",
       "urls": {
-        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOff.png",
-        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprPantsOn.png",
-        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/design/empty.png"
+        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/sprPantsOff.png",
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/sprPantsOn.png",
+        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/empty.png"
       }
     },
     "skirts": {
       "name": "Faldas",
       "company": "->companies.company1",
       "urls": {
-        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOff.png",
-        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprSkirtOn.png",
-        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/design/empty.png"
+        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/sprSkirtOff.png",
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/sprSkirtOn.png",
+        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/empty.png"
       }
     },
     "tops": {
       "name": "Tops",
       "company": "->companies.company1",
       "urls": {
-        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOff.png",
-        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/design/sprTopOn.png",
-        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/design/empty.png"
+        "selected": "https://52.37.117.104/tapnwin/api/v1/uploads/sprTopOff.png",
+        "unselected": "https://52.37.117.104/tapnwin/api/v1/uploads/sprTopOn.png",
+        "empty": "https://52.37.117.104/tapnwin/api/v1/uploads/empty.png"
       }
     }
   }
