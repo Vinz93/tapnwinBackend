@@ -2,7 +2,7 @@ export default {
   env: 'production',
   host: 'https://52.37.117.104',
   path: '/',
-  basePath: '/tapnwin/api/v1',
+  basePath: '/tapnwin/api/v2',
   port: 8080,
   db: 'mongodb://localhost/tapnwin',
   mailer: {
