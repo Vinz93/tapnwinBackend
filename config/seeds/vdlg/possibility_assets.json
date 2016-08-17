@@ -5,27 +5,27 @@
     "levis": {
       "company": "->companies.company1",
       "name": "Levis",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/wqe342d.png"
+      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/levis.png"
     },
     "guess": {
       "company": "->companies.company1",
       "name": "Guess",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/wqe342d.png"
+      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/guess.png"
     },
     "gap": {
       "company": "->companies.company1",
       "name": "Gap",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/wqe342d.png"
+      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/gap.png"
     },
     "calvin": {
       "company": "->companies.company1",
       "name": "Calvin Klein",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/wqe342d.png"
+      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/calvin.png"
     },
     "wrangler": {
       "company": "->companies.company1",
       "name": "Wrangler",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/wqe342d.png"
+      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/wrangler.png"
     }
   }
 }
