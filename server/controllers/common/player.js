@@ -56,10 +56,61 @@ const PlayerController = {
     .then(player =>{
         player.createSessionToken();
         player.save();
+        console.log('player token', player.sessionToken);
+        console.log('player',player );
        res.status(httpStatus.CREATED).json(player);
      })
     .catch(next);
   },
+
+// agregar documentacion swagger despues
+
+  facebook(req, res, next) {
+    Player.findOne({
+        facebookId: req.body.facebookId
+    }).then(user => {
+        if (!user) {
+            Player.create(req.body)
+                .then(player => {
+                    player.createSessionToken();
+                    res.status(201).json(player);
+                })
+                .catch(err => res.json(err));
+        } else {
+            user.createSessionToken();
+            user.save();
+            res.status(201).json(user)
+        }
+    })
+},
+
+
+
+
+
+
+twitter(req, res, next) {
+    Player.findOne({
+            twitterId: req.body.twitterId
+        }).then(user => {
+            if (!user) {
+                Player.create(req.body)
+                    .then(player => {
+                        player.createSessionToken();
+                        res.status(201).json(player);
+                    })
+                    .catch(err => res.json(err));
+            } else {
+                user.createSessionToken();
+                user.save();
+                res.status(200).json(user)
+            }
+        })
+        .catch(err => res.json(err));
+}
+
+
+
 };
 
 export default PlayerController;
