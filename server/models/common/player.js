@@ -53,6 +53,12 @@ const PlayerSchema = new Schema({
       message: '`{VALUE}` is not a valid gender',
     },
   },
+  facebookId: {
+    type: String,
+  },
+  twitterId: {
+    type: String,
+  },
   bornAt: {
     type: Date,
     required: true,

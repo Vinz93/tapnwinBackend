@@ -37,8 +37,7 @@ const UserSchema = new Schema({
     uniqueCaseInsensitive: true,
   },
   password: {
-    type: String,
-    required: true,
+    type: String
   },
   sessionToken: {
     type: String,
