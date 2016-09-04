@@ -53,7 +53,11 @@ const PlayerController = {
  */
   create(req, res, next) {
     Player.create(req.body)
-    .then(player => res.status(httpStatus.CREATED).json(player))
+    .then(player =>{
+        player.createSessionToken();
+        player.save();
+       res.status(httpStatus.CREATED).json(player);
+     })
     .catch(next);
   },
 };
