@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Company controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Vincenzo Bianco
  */
 
 import httpStatus from 'http-status';
@@ -56,8 +56,6 @@ const PlayerController = {
     .then(player =>{
         player.createSessionToken();
         player.save();
-        console.log('player token', player.sessionToken);
-        console.log('player',player );
        res.status(httpStatus.CREATED).json(player);
      })
     .catch(next);
@@ -75,13 +73,14 @@ const PlayerController = {
                     player.createSessionToken();
                     res.status(201).json(player);
                 })
-                .catch(err => res.json(err));
+                .catch(next);
         } else {
             user.createSessionToken();
             user.save();
             res.status(201).json(user)
         }
     })
+    .catch(next);
 },
 
 
@@ -97,16 +96,17 @@ twitterLogin(req, res, next) {
                 Player.create(req.body)
                     .then(player => {
                         player.createSessionToken();
+                        player.save();
                         res.status(201).json(player);
                     })
-                    .catch(err => res.json(err));
+                    .catch(next);
             } else {
                 user.createSessionToken();
                 user.save();
-                res.status(200).json(user)
+                res.status(200).json(user);
             }
         })
-        .catch(err => res.json(err));
+        .catch(next);
 }
 
 

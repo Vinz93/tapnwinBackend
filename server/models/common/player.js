@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Company model definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Vincenzo Bianco
  */
 
 import mongoose from 'mongoose';
