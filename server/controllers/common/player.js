@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Company controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Vincenzo Bianco
  */
 
 import httpStatus from 'http-status';
@@ -53,9 +53,64 @@ const PlayerController = {
  */
   create(req, res, next) {
     Player.create(req.body)
-    .then(player => res.status(httpStatus.CREATED).json(player))
+    .then(player =>{
+        player.createSessionToken();
+        player.save();
+       res.status(httpStatus.CREATED).json(player);
+     })
     .catch(next);
   },
+
+// agregar documentacion swagger despuesLogin
+
+  facebookLogin(req, res, next) {
+    Player.findOne({
+        facebookId: req.body.facebookId
+    }).then(user => {
+        if (!user) {
+            Player.create(req.body)
+                .then(player => {
+                    player.createSessionToken();
+                    res.status(201).json(player);
+                })
+                .catch(next);
+        } else {
+            user.createSessionToken();
+            user.save();
+            res.status(201).json(user)
+        }
+    })
+    .catch(next);
+},
+
+
+
+
+
+
+twitterLogin(req, res, next) {
+    Player.findOne({
+            twitterId: req.body.twitterId
+        }).then(user => {
+            if (!user) {
+                Player.create(req.body)
+                    .then(player => {
+                        player.createSessionToken();
+                        player.save();
+                        res.status(201).json(player);
+                    })
+                    .catch(next);
+            } else {
+                user.createSessionToken();
+                user.save();
+                res.status(200).json(user);
+            }
+        })
+        .catch(next);
+}
+
+
+
 };
 
 export default PlayerController;

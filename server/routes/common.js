@@ -56,6 +56,12 @@ router.route('/administrators')
 router.route('/players')
 .post(validate(playerValidator.create), Player.create);
 
+router.route('/players/facebook')
+.post(validate(playerValidator.facebookLogin), Player.facebookLogin);
+
+router.route('/players/twitter')
+.post(validate(playerValidator.twitterLogin), Player.twitterLogin);
+
 router.route('/sessions')
 .post(validate(sessionValidator.create), Session.create)
 .delete(validate(sessionValidator.delete), Session.validate, Session.delete);

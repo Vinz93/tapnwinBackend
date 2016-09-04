@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Company model definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Vincenzo Bianco
  */
 
 import mongoose from 'mongoose';
@@ -52,6 +52,12 @@ const PlayerSchema = new Schema({
       values: 'male female'.split(' '),
       message: '`{VALUE}` is not a valid gender',
     },
+  },
+  facebookId: {
+    type: String,
+  },
+  twitterId: {
+    type: String,
   },
   bornAt: {
     type: Date,

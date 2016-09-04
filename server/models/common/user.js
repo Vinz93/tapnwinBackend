@@ -37,8 +37,7 @@ const UserSchema = new Schema({
     uniqueCaseInsensitive: true,
   },
   password: {
-    type: String,
-    required: true,
+    type: String
   },
   sessionToken: {
     type: String,
@@ -104,7 +103,7 @@ UserSchema.pre('save', function (next) {
   next();
 });
 
-UserSchema.plugin(fieldRemover, 'password sessionToken recoveryToken recoveredAt');
+UserSchema.plugin(fieldRemover, 'password recoveryToken recoveredAt');
 UserSchema.plugin(uniqueValidator);
 UserSchema.plugin(paginate);
 
