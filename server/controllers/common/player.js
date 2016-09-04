@@ -63,9 +63,9 @@ const PlayerController = {
     .catch(next);
   },
 
-// agregar documentacion swagger despues
+// agregar documentacion swagger despuesLogin
 
-  facebook(req, res, next) {
+  facebookLogin(req, res, next) {
     Player.findOne({
         facebookId: req.body.facebookId
     }).then(user => {
@@ -89,7 +89,7 @@ const PlayerController = {
 
 
 
-twitter(req, res, next) {
+twitterLogin(req, res, next) {
     Player.findOne({
             twitterId: req.body.twitterId
         }).then(user => {
