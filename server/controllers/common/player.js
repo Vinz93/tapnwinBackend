@@ -61,8 +61,52 @@ const PlayerController = {
     .catch(next);
   },
 
-// agregar documentacion swagger despuesLogin
-
+  /**
+   * @swagger
+   * /players/facebook:
+   *   post:
+   *     tags:
+   *       - Players
+   *     description: Creates a player from facebook
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: player
+   *         description: Player object
+   *         in: body
+   *         required: true
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Player'
+   *              - properties:
+   *                  facebookId:
+   *                    type: string
+   *                required:
+   *                  - facebookId
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Player'
+   *              - properties:
+   *                  id:
+   *                    type: string
+   *                  balance:
+   *                    type: integer
+   *                  age:
+   *                    type: integer
+   *                  createdAt:
+   *                    type: string
+   *                    format: date-time
+   *                  updatedAt:
+   *                    type: string
+   *                    format: date-time
+   *                  facebookId:
+   *                    type: string
+   *                  sessionToken:
+   *                    type: string
+   */
   facebookLogin(req, res, next) {
     Player.findOne({
         facebookId: req.body.facebookId
@@ -84,7 +128,52 @@ const PlayerController = {
 },
 
 
-
+/**
+ * @swagger
+ * /players/twitter:
+ *   post:
+ *     tags:
+ *       - Players
+ *     description: Creates a player from twitter
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: player
+ *         description: Player object
+ *         in: body
+ *         required: true
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Player'
+ *              - properties:
+ *                  twitterId:
+ *                    type: string
+ *                required:
+ *                  - twitterId
+ *     responses:
+ *       200:
+ *         description: Successfully created
+ *         schema:
+ *           allOf:
+ *              - $ref: '#/definitions/Player'
+ *              - properties:
+ *                  id:
+ *                    type: string
+ *                  balance:
+ *                    type: integer
+ *                  age:
+ *                    type: integer
+ *                  createdAt:
+ *                    type: string
+ *                    format: date-time
+ *                  updatedAt:
+ *                    type: string
+ *                    format: date-time
+ *                  twitterId:
+ *                    type: string
+ *                  sessionToken:
+ *                    type: string
+ */
 
 
 
