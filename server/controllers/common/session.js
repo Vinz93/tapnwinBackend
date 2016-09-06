@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Company controller definition
- * @lastModifiedBy Andres Alvarez
+ * @lastModifiedBy Carlos Avilan
  */
 
 import httpStatus from 'http-status';
@@ -45,7 +45,7 @@ const SessionController = {
  *         description: Successfully created
  *         schema:
  *           properties:
- *             token:
+ *             sessionToken:
  *               type: string
  */
   create(req, res, next) {
@@ -63,7 +63,7 @@ const SessionController = {
 
       return user.save();
     })
-    .then((user) => res.status(httpStatus.CREATED).json({ token: user.sessionToken }))
+    .then((user) => res.status(httpStatus.CREATED).json({ sessionToken: user.sessionToken }))
     .catch(next);
   },
 
