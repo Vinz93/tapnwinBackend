@@ -45,7 +45,7 @@ const SessionController = {
  *         description: Successfully created
  *         schema:
  *           properties:
- *             sessionToken:
+ *             token:
  *               type: string
  */
   create(req, res, next) {
@@ -63,7 +63,7 @@ const SessionController = {
 
       return user.save();
     })
-    .then((user) => res.status(httpStatus.CREATED).json({ sessionToken: user.sessionToken }))
+    .then((user) => res.status(httpStatus.CREATED).json({ token: user.sessionToken }))
     .catch(next);
   },
 
