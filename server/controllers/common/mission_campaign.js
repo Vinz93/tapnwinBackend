@@ -68,6 +68,7 @@ const MissionCampaignController = {
       sort,
       offset,
       limit,
+      populate: ['mission'],
     })
     .then(missions => res.json(missions))
     .catch(next);
