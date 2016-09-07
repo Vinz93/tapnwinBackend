@@ -14,6 +14,7 @@ import APIError from '../../helpers/api_error';
 import MissionStatus from '../../models/common/mission_status';
 import MissionCampaign from '../../models/common/mission_campaign';
 import CampaignStatus from '../../models/common/campaign_status';
+import Mission from '../../models/common/mission';
 
 const Transaction = transaction(mongoose);
 
@@ -65,15 +66,21 @@ const MissionStatusController = {
     })
     .populate('missionCampaign')
     .then(missionStatus => {
-      if (!missionStatus)
+      if (!missionStatus) {
         return MissionStatus.create({
           player: res.locals.user.id,
           missionCampaign: missionCampaign.id,
         })
         .then(missionStatus => MissionStatus.populate(missionStatus, 'missionCampaign'))
         .then(missionStatus => missionStatus);
-
-      return missionStatus;
+      }
+      return Mission.findOne({
+        _id: missionCampaign.mission,
+      })
+      .then(mission => {
+        missionStatus.missionCampaign.mission = mission;
+      })
+      .then(() => missionStatus);
     })))
     .then(missionStatuses => res.json(missionStatuses))
     .catch(next);
