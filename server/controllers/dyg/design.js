@@ -148,9 +148,10 @@ const DesignController = {
     const limit = paginate.limit(req.query.limit);
 
     const find = Object.assign(req.query.find || {}, { player });
-    const sort = req.query.sort || { createdAt: 1 };
 
     if (req.query.random) {
+      const sort = req.query.sort || { random: 1 };
+      Design.syncRandom(() => '');
       Design.findRandom(find)
       .limit(limit)
       .sort(sort)
@@ -159,6 +160,7 @@ const DesignController = {
       .catch(next);
     } else {
       const offset = paginate.offset(req.query.offset);
+      const sort = req.query.sort || { createdAt: 1 };
 
       Design.paginate(find, {
         sort,
