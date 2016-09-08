@@ -43,11 +43,59 @@
     },
     "mission11": {
       "code": "0301",
-      "description": "Alcanza 3000 puntos"
+      "description": "Alcanza 2000 puntos"
     },
     "mission12": {
       "code": "0301",
+      "description": "Alcanza 3000 puntos"
+    },
+    "mission13": {
+      "code": "0301",
+      "description": "Alcanza 4000 puntos"
+    },
+    "mission14": {
+      "code": "0301",
+      "description": "Alcanza 5000 puntos"
+    },
+    "mission15": {
+      "code": "0301",
+      "description": "Alcanza 6000 puntos"
+    },
+    "mission16": {
+      "code": "0301",
+      "description": "Alcanza 7000 puntos"
+    },
+    "mission17": {
+      "code": "0301",
+      "description": "Alcanza 8000 puntos"
+    },
+    "mission18": {
+      "code": "0301",
+      "description": "Alcanza 9000 puntos"
+    },
+    "mission19": {
+      "code": "0301",
       "description": "Alcanza 10000 puntos"
+    },
+    "mission20": {
+      "code": "0301",
+      "description": "Alcanza 11000 puntos"
+    },
+    "mission21": {
+      "code": "0301",
+      "description": "Alcanza 12000 puntos"
+    },
+    "mission22": {
+      "code": "0301",
+      "description": "Alcanza 13000 puntos"
+    },
+    "mission23": {
+      "code": "0301",
+      "description": "Alcanza 14000 puntos"
+    },
+    "mission24": {
+      "code": "0301",
+      "description": "Alcanza 15000 puntos"
     }
   }
 }
