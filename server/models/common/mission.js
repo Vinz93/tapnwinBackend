@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Mission controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Carlos Avilan
  */
 
 import mongoose from 'mongoose';
@@ -30,7 +30,7 @@ const Schema = mongoose.Schema;
 const MissionSchema = new Schema({
   code: {
     type: String,
-    unique: true,
+    // unique: true,/
     required: true,
   },
   description: {
