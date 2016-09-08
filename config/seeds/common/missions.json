@@ -2,16 +2,52 @@
   "missions": {
     "_model": "Mission",
     "mission1": {
-      "code": "0001",
-      "description": "Misión1"
+      "code": "0101",
+      "description": "Crea 2 diseños"
     },
     "mission2": {
-      "code": "0002",
-      "description": "Misión2"
+      "code": "0101",
+      "description": "Crea 4 diseños"
     },
     "mission3": {
-      "code": "0003",
-      "description": "Misión3"
+      "code": "0104",
+      "description": "Vota por 3 diseños"
+    },
+    "mission4": {
+      "code": "0104",
+      "description": "Vota por 5 diseños"
+    },
+    "mission5": {
+      "code": "0105",
+      "description": "Recibe 3 votos"
+    },
+    "mission6": {
+      "code": "0105",
+      "description": "Recibe 5 votos"
+    },
+    "mission7": {
+      "code": "0201",
+      "description": "Responde 8 preguntas"
+    },
+    "mission8": {
+      "code": "0201",
+      "description": "Responde 12 preguntas"
+    },
+    "mission9": {
+      "code": "0202",
+      "description": "Adivina correctamente 3 preguntas"
+    },
+    "mission10": {
+      "code": "0202",
+      "description": "Adivina correctamente 6 preguntas"
+    },
+    "mission11": {
+      "code": "0301",
+      "description": "Alcanza 3000 puntos"
+    },
+    "mission12": {
+      "code": "0301",
+      "description": "Alcanza 10000 puntos"
     }
   }
 }

@@ -8,29 +8,110 @@
     "missionCampaign1": {
       "campaign": "->campaigns.campaign1",
       "mission": "->missions.mission1",
-      "balance": 0.0,
+      "balance": 2.0,
       "isRequired": true,
       "isBlocking": true,
       "blockTime": 0.2,
-      "max": 3
+      "max": 2
     },
     "missionCampaign2": {
       "campaign": "->campaigns.campaign1",
       "mission": "->missions.mission2",
-      "balance": 100.0,
-      "isRequired": false,
-      "isBlocking": false,
-      "blockTime": 0,
-      "max": 50
+      "balance": 4.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.4,
+      "max": 4
     },
     "missionCampaign3": {
       "campaign": "->campaigns.campaign1",
       "mission": "->missions.mission3",
-      "balance": 50.0,
-      "isRequired": false,
-      "isBlocking": false,
-      "blockTime": 0,
+      "balance": 3.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.3,
+      "max": 3
+    },
+    "missionCampaign4": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission4",
+      "balance": 5.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.5,
       "max": 5
+    },
+    "missionCampaign5": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission5",
+      "balance": 3.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.3,
+      "max": 3
+    },
+    "missionCampaign6": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission6",
+      "balance": 5.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.5,
+      "max": 5
+    },
+    "missionCampaign7": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission7",
+      "balance": 8.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.8,
+      "max": 8
+    },
+    "missionCampaign8": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission8",
+      "balance": 12.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 1.2,
+      "max": 12
+    },
+    "missionCampaign9": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission9",
+      "balance": 3.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.3,
+      "max": 3
+    },
+    "missionCampaign10": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission10",
+      "balance": 6.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.6,
+      "max": 6
+    },
+    "missionCampaign11": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission11",
+      "balance": 3.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 0.3,
+      "max": 3
+    },
+    "missionCampaign12": {
+      "campaign": "->campaigns.campaign1",
+      "mission": "->missions.mission12",
+      "balance": 10.0,
+      "isRequired": true,
+      "isBlocking": true,
+      "blockTime": 1.0,
+      "max": 10
     }
   }
 }
