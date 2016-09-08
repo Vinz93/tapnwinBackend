@@ -7,17 +7,72 @@
     ],
     "stringQuestion1": {
       "campaign": "->campaigns.campaign1",
-      "personal": "¿Cuáles jeans de esta marca siempre te quedan bien?",
-      "popular": "¿Cuáles jeans, en tu opinión, de las siguientes marcas siempre quedan bien?",
-      "inbox": "Los jeans de esta marca siempre quedan bien:",
-      "startAt": "2016-01-01T17:39:22.939Z",
-      "finishAt": "2016-12-01T17:39:22.939Z",
+      "personal": "<color=#6BFF52FF>Personalmente,</color> ¿los jeans de cuál de estas marcas siempre te quedan bien?",
+      "popular": "¿Los jeans de cuál de estas marcas siempre le quedan bien a <color=#A08BECFF>la mayoría de las personas</color>?",
+      "inbox": "¿Los jeans de cuál marca siempre quedan bien?",
+      "startAt": "2016-09-07T17:39:22.939Z",
+      "finishAt": "2016-09-14T17:39:22.939Z",
       "possibilityAssets": [
-        "->possibility_assets.levis",
-        "->possibility_assets.guess",
-        "->possibility_assets.gap",
-        "->possibility_assets.calvin",
-        "->possibility_assets.wrangler"
+        "->possibility_assets.4a",
+        "->possibility_assets.4b",
+        "->possibility_assets.4c",
+        "->possibility_assets.4d",
+        "->possibility_assets.4e"
+      ]
+    },
+    "stringQuestion2": {
+      "campaign": "->campaigns.campaign1",
+      "personal": "<color=#6BFF52FF>En tu opinión,</color> ¿cuál de los siguientes trajes de baño está más de moda?",
+      "popular": "¿Cuál de los siguientes trajes de baño <color=#A08BECFF>la mayoría de las personas</color> opina que está más de moda?",
+      "inbox": "¿Cuál de los siguientes trajes de baño está más de moda?",
+      "startAt": "2016-09-05T17:39:22.939Z",
+      "finishAt": "2016-09-12T17:39:22.939Z",
+      "possibilityAssets": [
+        "->possibility_assets.1a",
+        "->possibility_assets.1b",
+        "->possibility_assets.1c"
+      ]
+    },
+    "stringQuestion3": {
+      "campaign": "->campaigns.campaign1",
+      "personal": "Entre estos estampados para juegos de sábanas, ¿con cuál dormirías más placenteramente?",
+      "popular": "Entre estos estampados para sábanas, ¿cuál escogería <color=#A08BECFF>la mayoría de las personas</color> como más placentero?",
+      "inbox": "¿Cuál estampado para sábanas es más placentero para dormir?",
+      "startAt": "2016-09-06T17:39:22.939Z",
+      "finishAt": "2016-09-13T17:39:22.939Z",
+      "possibilityAssets": [
+        "->possibility_assets.3a",
+        "->possibility_assets.3b",
+        "->possibility_assets.3c",
+        "->possibility_assets.3d",
+        "->possibility_assets.3e",
+        "->possibility_assets.3f"
+      ]
+    },
+    "stringQuestion4": {
+      "campaign": "->campaigns.campaign1",
+      "personal": "<color=#6BFF52FF>En tu opinión,</color> ¿cuál de estos colores te gustaría que fuera la tendencia del próximo verano?",
+      "popular": "¿Cuál de estos colores a <color=#A08BECFF>la mayoría de las personas</color> le gustaría que fueran la tendencia del próximo verano?",
+      "inbox": "¿Cuál de estos colores te gustaría que fuera la tendencia del próximo verano?",
+      "startAt": "2016-09-13T17:39:22.939Z",
+      "finishAt": "2016-10-13T17:39:22.939Z",
+      "possibilityAssets": [
+        "->possibility_assets.5a",
+        "->possibility_assets.5b"
+      ]
+    },
+    "stringQuestion5": {
+      "campaign": "->campaigns.campaign1",
+      "personal": "<color=#6BFF52FF>En tu opinión,</color> ¿cuál de las siguientes marcas de licuadora es de mayor calidad?",
+      "popular": "¿Cuál de estas marcas de licuadora <color=#A08BECFF>la mayoría de las personas</color> opina que es de mayor calidad?",
+      "inbox": "¿Cuál de estas marcas de licuadora es de mayor calidad?",
+      "startAt": "2016-09-14T17:39:22.939Z",
+      "finishAt": "2016-10-14T17:39:22.939Z",
+      "possibilityAssets": [
+        "->possibility_assets.2a",
+        "->possibility_assets.2b",
+        "->possibility_assets.2c",
+        "->possibility_assets.2d"
       ]
     }
   }

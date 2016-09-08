@@ -4,31 +4,72 @@
     "_require": ["Campaign"],
     "stringQuestion1": {
       "campaign": "->campaigns.campaign1",
-      "personal": "Cuando tienes una cena importante, ¿Qué es en lo primero que piensas para decidir qué ponerte?",
-      "popular": "Cuando se tiene una cena importante, ¿Qué crees que es es en lo primero que piensan las personas para decidir qué ponerse?",
-      "inbox": "Cuando tengo una cena importante, en lo primero que pienso para decidir qué ponerme es:",
-      "startAt": "2016-01-01T17:39:22.939Z",
-      "finishAt": "2016-12-01T17:39:22.939Z",
+      "personal": "Para llegar en auto a la tienda Levy’s más cercana a tu casa, debes conducir...",
+      "popular": "<color=#6BFF52FF>La mayoría de las personas</color> llega a la tienda Levy’s más cercana a su casa tras conducir...",
+      "inbox": "Para llegar en auto a la tienda Levy’s más cercana a mi casa, debo conducir...",
+      "startAt": "2016-09-05T17:39:22.939Z",
+      "finishAt": "2016-09-12T17:39:22.939Z",
       "possibilityStrings": [
-        "Camisa/Top",
-        "Cinturón",
-        "Pantalones/Falda",
-        "Zapatos",
-        "Reloj"
+        "10 minutos",
+        "30 minutos",
+        "1 hora",
+        "2 horas o más"
       ]
     },
     "stringQuestion2": {
       "campaign": "->campaigns.campaign1",
-      "personal": "En tu opinión, Tap&Win sería aún mejor si:",
-      "popular": "¿Cuál crees que será la opción con más votos para que Tap&Win sea mejor?",
-      "inbox": "Tap&Win sería aún mejor si:",
-      "startAt": "2016-02-01T17:39:22.939Z",
-      "finishAt": "2016-12-01T17:39:22.939Z",
+      "personal": "<color=#6BFF52FF>Personalmente,</color> cuando no compras en Levi’s, lo haces en...",
+      "popular": "<color=#A08BECFF>La mayoría de las personas,</color> cuando no compra en Levi’s, lo hace en...",
+      "inbox": "Cuando no compro en Levi's, lo hago en...",
+      "startAt": "2016-09-06T17:39:22.939Z",
+      "finishAt": "2016-09-13T17:39:22.939Z",
       "possibilityStrings": [
-        "Ofreciera compras por internet",
-        "Tuviese más personal para asesorarme",
-        "El proceso de pago fuese más rápido",
-        "No conozco esa tienda"
+        "Macy's",
+        "Bloomingdale's",
+        "Target",
+        "Sears",
+        "Otra"
+      ]
+    },
+    "stringQuestion3": {
+      "campaign": "->campaigns.campaign1",
+      "personal": "<color=#6BFF52FF>Personalmente,</color> ¿ya has hecho \"tap\" en cualquiera de los puntos tap&win?",
+      "popular": "<color=#A08BECFF>La mayoría de las personas,</color> con esta app, ¿ya hicieron \"tap\" en algún punto tap&win?",
+      "inbox": "¿Ya has hecho \"tap\" en un punto tap&win?",
+      "startAt": "2016-09-07T17:39:22.939Z",
+      "finishAt": "2016-09-14T17:39:22.939Z",
+      "possibilityStrings": [
+        "Sí",
+        "No"
+      ]
+    },
+    "stringQuestion4": {
+      "campaign": "->campaigns.campaign1",
+      "personal": "<color=#6BFF52FF>Personalmente,</color> volverías a visitar una tienda en la que siempre...",
+      "popular": "<color=#A08BECFF>La mayoría de las personas,</color> volvería a visitar una tienda en que siempre....",
+      "inbox": "Volvería a visitar una tienda que siempre...",
+      "startAt": "2016-09-08T17:39:22.939Z",
+      "finishAt": "2016-10-14T17:39:22.939Z",
+      "possibilityStrings": [
+        "Ofrezca variedad de productos",
+        "Tenga marcas exclusivas",
+        "Tenga promociones/descuentos",
+        "Genere tranquilidad",
+        "Haya productos de moda",
+        "Atienda bien a los clientes"
+      ]
+    },
+    "stringQuestion5": {
+      "campaign": "->campaigns.campaign1",
+      "personal": "<color=#6BFF52FF>Personalmente,</color> ¿te gusta vestir a tu perro/gato?",
+      "popular": "¿Qué opinan <color=#A08BECFF>la mayoría de las personas,</color> sobre vestir a sus perros/gatos?",
+      "inbox": "¿Te gusta vestir a tu perro/gato?",
+      "startAt": "2016-09-13T17:39:22.939Z",
+      "finishAt": "2016-10-13T17:39:22.939Z",
+      "possibilityStrings": [
+        "Sí… ¡Se ve adorable!",
+        "¡No! No deben \"vestirse\"",
+        "No tengo perro/gato"
       ]
     }
   }
