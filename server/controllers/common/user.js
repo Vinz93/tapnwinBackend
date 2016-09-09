@@ -82,6 +82,37 @@ const UserController = {
     .catch(next);
   },
 
+
+
+
+//falta swagger
+
+
+  checkVerificationToken(req, res, next) {
+    const expiredTime = req.app.locals.config.expiredTime;
+    Player.findOne({
+            email: req.body.email
+        })
+        .then(player => {
+            if (!player)
+                return Promise.reject("user no found!!");
+
+            if (!(player.verificationToken == req.body.verificationToken) || player.expiredVerification(expiredTime))
+                return Promise.reject("Invalid Token!");
+
+            player.verificationToken = undefined;
+            player.verified = true;
+            player.createSessionToken();
+            return player.save();
+        })
+        .then(player => {
+            res.status(200).json(player);
+        })
+        .catch(err => res.status(400).json({
+            error: err
+        }));
+}
+
 /**
  * @swagger
  * /users/recovery_token:
