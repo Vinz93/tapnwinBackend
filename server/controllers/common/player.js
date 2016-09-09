@@ -54,9 +54,22 @@ const PlayerController = {
   create(req, res, next) {
     Player.create(req.body)
     .then(player =>{
-        player.createSessionToken();
-        player.save();
-       res.status(httpStatus.CREATED).json(player);
+      player.createVerificationToken();
+                const template = path.join(config.root, '/server/views/mail/mail_verification');
+                const send = req.app.locals.transporter.templateSender(new EmailTemplate(template));
+              send({
+                  to: player.email,
+                  subject: 'Tap and Win Verification',
+              }, {
+                  player,
+              }, err => {
+                  if (err)
+                      return next(err);
+
+                  player.save()
+                      .then(() => res.status(httpStatus.CREATED).end())
+                      .catch(next);
+              });
      })
     .catch(next);
   },
