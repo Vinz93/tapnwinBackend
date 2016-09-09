@@ -63,8 +63,15 @@ const QuestionController = {
     const offset = paginate.offset(req.query.offset);
     const limit = paginate.limit(req.query.limit);
 
-    const find = req.query.find || {};
-    const sort = req.query.sort || { createdAt: 1 };
+    const find = Object.assign({}, req.query.find, {
+      startAt: {
+        $lte: new Date(),
+      },
+      finishAt: {
+        $gte: new Date(),
+      },
+    });
+    const sort = req.query.sort || { startAt: 1 };
 
     Question.paginate(find, {
       sort,
