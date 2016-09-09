@@ -37,7 +37,8 @@ router.route('/players/me/questions')
 Question.readAllByMe);
 
 router.route('/questions/:question_id')
-.get(validate(questionValidator.read), Question.read);
+.get(validate(questionValidator.read), Question.read)
+.patch(validate(questionValidator.read), Question.update);
 
 router.route('/questions/:question_id/statistics')
 .get(validate(questionValidator.readStatistic), Question.readStatistic);
