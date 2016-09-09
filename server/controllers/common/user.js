@@ -89,7 +89,7 @@ const UserController = {
 
 
   checkVerificationToken(req, res, next) {
-    const expiredTime = req.app.locals.config.expiredTime;
+    const expiredTime = req.app.locals.config.times.expired;
     Player.findOne({
             email: req.body.email
         })
@@ -107,7 +107,7 @@ const UserController = {
         })
         .then(player => res.json(player))
         .catch(next);
-}
+},
 
 /**
  * @swagger
