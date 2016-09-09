@@ -82,10 +82,49 @@ const UserController = {
     .catch(next);
   },
 
-
-
-
-//falta swagger
+  /**
+   * @swagger
+   * /users/check:
+   *   post:
+   *     tags:
+   *       - Users
+   *     description: check the user email with the token sended
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: player
+   *         description: Player object
+   *         in: body
+   *         required: true
+   *         schema:
+   *           properties:
+   *             email:
+   *               type: string
+   *             verificationToken:
+   *               type: string
+   *           required:
+   *             - email
+   *             - verificationToken
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Player'
+   *              - properties:
+   *                  id:
+   *                    type: string
+   *                  balance:
+   *                    type: integer
+   *                  age:
+   *                    type: integer
+   *                  createdAt:
+   *                    type: string
+   *                    format: date-time
+   *                  updatedAt:
+   *                    type: string
+   *                    format: date-time
+   */
 
 
   checkVerificationToken(req, res, next) {
