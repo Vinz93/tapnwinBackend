@@ -139,6 +139,7 @@ const DesignController = {
   readAllByMe(req, res, next) {
     let player = res.locals.user._id;
     let populate = '';
+    let sort;
 
     if (req.query.exclusive) {
       player = { $ne: res.locals.user._id };
@@ -148,29 +149,22 @@ const DesignController = {
     const limit = paginate.limit(req.query.limit);
 
     const find = Object.assign(req.query.find || {}, { player });
+    const offset = paginate.offset(req.query.offset);
 
     if (req.query.random) {
-      const sort = req.query.sort || { random: 1 };
       Design.syncRandom(() => '');
-      Design.findRandom(find)
-      .limit(limit)
-      .sort(sort)
-      .populate(populate)
-      .then(designs => res.json(designs))
-      .catch(next);
+      sort = req.query.sort || { random: 1 };
     } else {
-      const offset = paginate.offset(req.query.offset);
-      const sort = req.query.sort || { createdAt: 1 };
-
-      Design.paginate(find, {
-        sort,
-        offset,
-        limit,
-        populate: [populate],
-      })
-      .then(designs => res.json(designs))
-      .catch(next);
+      sort = req.query.sort || { createdAt: 1 };
     }
+    Design.paginate(find, {
+      sort,
+      offset,
+      limit,
+      populate: [populate],
+    })
+    .then(designs => res.json(designs))
+    .catch(next);
   },
 
 /**
