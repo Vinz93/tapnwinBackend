@@ -83,7 +83,7 @@ UserSchema.methods = {
   createSessionToken() {
     this.sessionToken = this.generateToken();
   },
-  
+
   createVerificationToken() {
     this.verificationToken = this.generateToken();
 },
@@ -123,7 +123,7 @@ UserSchema.pre('save', function(next) {
   next();
 });
 
-UserSchema.plugin(fieldRemover, 'password recoveryToken recoveredAt');
+UserSchema.plugin(fieldRemover, 'password recoveryToken recoveredAt verificationToken');
 UserSchema.plugin(uniqueValidator);
 UserSchema.plugin(paginate);
 
