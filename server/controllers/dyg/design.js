@@ -1,7 +1,7 @@
 /**
  * @author Juan Sanchez
  * @description Company controller definition
- * @lastModifiedBy Andres Alvarez
+ * @lastModifiedBy Carlos Avilan
  */
 
 import httpStatus from 'http-status';

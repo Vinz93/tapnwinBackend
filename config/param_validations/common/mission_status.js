@@ -20,7 +20,7 @@ export default {
     },
 
     params: {
-      campaign_status_id: Joi.objectId().required(),
+      mission_status_id: Joi.objectId().required(),
     },
 
     body: {
