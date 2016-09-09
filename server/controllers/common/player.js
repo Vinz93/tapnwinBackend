@@ -59,22 +59,22 @@ const PlayerController = {
     Player.create(req.body)
     .then(player =>{
       player.createVerificationToken();
-                const config = req.app.locals.config;
-                const template = path.join(config.root, '/server/views/mail/mail_verification');
-                const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
-              send({
-                  to: player.email,
-                  subject: 'Tap and Win Verification',
-              }, {
-                  player,
-              }, err => {
-                  if (err)
-                      return next(err);
+      const config = req.app.locals.config;
+      const template = path.join(config.root, '/server/views/mail/mail_verification');
+      const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
+      send({
+          to: player.email,
+          subject: 'Tap and Win Verification',
+      }, {
+          player,
+      }, err => {
+          if (err)
+              return next(err);
 
-                  player.save()
-                      .then(() => res.status(httpStatus.CREATED).end())
-                      .catch(next);
-              });
+          player.save()
+              .then(() => res.status(httpStatus.CREATED).json(player))
+              .catch(next);
+      });
      })
     .catch(next);
   },
