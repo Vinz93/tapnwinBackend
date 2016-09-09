@@ -95,22 +95,18 @@ const UserController = {
         })
         .then(player => {
             if (!player)
-                return Promise.reject("user no found!!");
+                return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
             if (!(player.verificationToken == req.body.verificationToken) || player.expiredVerification(expiredTime))
-                return Promise.reject("Invalid Token!");
+                return Promise.reject(new APIError('Invalid Token', httpStatus.BAD_REQUEST));
 
             player.verificationToken = undefined;
             player.verified = true;
             player.createSessionToken();
             return player.save();
         })
-        .then(player => {
-            res.status(200).json(player);
-        })
-        .catch(err => res.status(400).json({
-            error: err
-        }));
+        .then(player => res.json(player))
+        .catch(next);
 }
 
 /**
