@@ -72,7 +72,15 @@ const MissionStatusController = {
           missionCampaign: missionCampaign.id,
         })
         .then(missionStatus => MissionStatus.populate(missionStatus, 'missionCampaign'))
-        .then(missionStatus => missionStatus);
+        .then(missionStatus =>
+          Mission.findOne({
+            _id: missionCampaign.mission,
+          })
+          .then(mission => {
+            missionStatus.missionCampaign.mission = mission;
+          })
+          .then(() => missionStatus)
+        );
       }
       return Mission.findOne({
         _id: missionCampaign.mission,
@@ -213,15 +221,22 @@ const MissionStatusController = {
         data.isBlocked = true;
         data.unblockAt = new Date(Date.now() + timeUnit.hours.toMillis(missionCampaign.blockTime));
 
-        if (this.m3.moves !== undefined)
-          data.m3 = {
-            isBlocked: true,
-            unblockAt: data.unblockAt,
-            moves: campaignStatus.m3.moves,
-            score: campaignStatus.m3.score,
-          };
+        MissionCampaign.find({
+          campaign: missionCampaign.campaign,
+        })
+        .populate('campaign')
+        .then(mission => {
+          console.log(mission);
+          if (mission.campaign.m3.moves !== undefined)
+            data.m3 = {
+              isBlocked: true,
+              unblockAt: data.unblockAt,
+              moves: campaignStatus.m3.moves,
+              score: campaignStatus.m3.score,
+            };
 
-        transaction.update('CampaignStatus', campaignStatus.id, data);
+          transaction.update('CampaignStatus', campaignStatus.id, data);
+        });
       }
 
       run();

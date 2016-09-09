@@ -272,8 +272,8 @@ const QuestionController = {
         if (!question)
           return Promise.reject(new APIError('Question not found', httpStatus.NOT_FOUND));
 
-        /* if (question.campaign.isActive())
-          return Promise.reject(new APIError('Active campaign', httpStatus.BAD_REQUEST)); */
+        if (question.campaign.isActive())
+          return Promise.reject(new APIError('Active campaign', httpStatus.BAD_REQUEST));
 
         question.set(req.body);
 
