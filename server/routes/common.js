@@ -35,6 +35,9 @@ validate.options({
 router.route('/users')
 .get(validate(userValidator.readAll), User.readAll);
 
+router.route('/users/check')
+.post(validate(userValidator.checkVerificationToken), User.checkVerificationToken);
+
 router.route('/users/recovery_token')
 .post(validate(userValidator.createRecoveryToken), User.createRecoveryToken);
 
