@@ -43,6 +43,10 @@ const UserSchema = new Schema({
     type: String,
     required: false,
   },
+  verificationToken: {
+    type: String,
+    required: false,
+  },
   recoveryToken: {
     type: String,
     required: false,
@@ -51,6 +55,11 @@ const UserSchema = new Schema({
     type: Date,
     required: false,
   },
+  verified: {
+    type: Boolean,
+    required: true,
+    default: false,
+  }
 }, {
   timestamps: true,
 });
@@ -60,6 +69,13 @@ UserSchema.methods = {
     return crypto.createHash('md5').update(password).digest('hex') === this.password;
   },
 
+  expiredVerification(time) {
+    const limit = timeUnit.hours.toMillis(time);
+    if (Date.now() - this.createdAt.getTime() > limit)
+        return true;
+    return false;
+},
+
   generateToken() {
     return `${this._id}${randtoken.generate(16)}`;
   },
@@ -67,6 +83,10 @@ UserSchema.methods = {
   createSessionToken() {
     this.sessionToken = this.generateToken();
   },
+  
+  createVerificationToken() {
+    this.verificationToken = this.generateToken();
+},
 
   createRecoveryToken(time) {
     const ms = timeUnit.hours.toMillis(time);
@@ -94,7 +114,7 @@ UserSchema.methods = {
   },
 };
 
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', function(next) {
   if (!this.isModified('password'))
     return next();
 
