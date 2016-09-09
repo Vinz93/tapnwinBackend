@@ -20,6 +20,13 @@ export default {
     },
   },
 
+  checkVerificationToken:{
+  body:{
+    email: Joi.string().email().required(),
+    verificationToken: Joi.string().required(),
+  }
+},
+
   readByMe: {
     headers: {
       'x-auth-token': Joi.string().token().required(),
