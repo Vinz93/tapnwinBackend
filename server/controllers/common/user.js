@@ -82,6 +82,72 @@ const UserController = {
     .catch(next);
   },
 
+  /**
+   * @swagger
+   * /users/check:
+   *   post:
+   *     tags:
+   *       - Users
+   *     description: check the user email with the token sended
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: player
+   *         description: Player object
+   *         in: body
+   *         required: true
+   *         schema:
+   *           properties:
+   *             email:
+   *               type: string
+   *             verificationToken:
+   *               type: string
+   *           required:
+   *             - email
+   *             - verificationToken
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Player'
+   *              - properties:
+   *                  id:
+   *                    type: string
+   *                  balance:
+   *                    type: integer
+   *                  age:
+   *                    type: integer
+   *                  createdAt:
+   *                    type: string
+   *                    format: date-time
+   *                  updatedAt:
+   *                    type: string
+   *                    format: date-time
+   */
+
+
+  checkVerificationToken(req, res, next) {
+    const expiredTime = req.app.locals.config.times.expired;
+    Player.findOne({
+            email: req.body.email
+        })
+        .then(player => {
+            if (!player)
+                return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
+
+            if (!(player.verificationToken == req.body.verificationToken) || player.expiredVerification(expiredTime))
+                return Promise.reject(new APIError('Invalid Token', httpStatus.BAD_REQUEST));
+
+            player.verificationToken = undefined;
+            player.verified = true;
+            player.createSessionToken();
+            return player.save();
+        })
+        .then(player => res.json(player))
+        .catch(next);
+},
+
 /**
  * @swagger
  * /users/recovery_token:

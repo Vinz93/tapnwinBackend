@@ -5,8 +5,12 @@
  */
 
 import httpStatus from 'http-status';
+import templates from 'email-templates';
+import path from 'path';
 
 import Player from '../../models/common/player';
+
+const EmailTemplate = templates.EmailTemplate;
 
 const PlayerController = {
 /**
@@ -54,9 +58,23 @@ const PlayerController = {
   create(req, res, next) {
     Player.create(req.body)
     .then(player =>{
-        player.createSessionToken();
-        player.save();
-       res.status(httpStatus.CREATED).json(player);
+      player.createVerificationToken();
+      const config = req.app.locals.config;
+      const template = path.join(config.root, '/server/views/mail/mail_verification');
+      const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
+      send({
+          to: player.email,
+          subject: 'Tap and Win Verification',
+      }, {
+          player,
+      }, err => {
+          if (err)
+              return next(err);
+
+          player.save()
+              .then(() => res.status(httpStatus.CREATED).json(player))
+              .catch(next);
+      });
      })
     .catch(next);
   },

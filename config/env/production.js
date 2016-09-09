@@ -10,12 +10,13 @@ export default {
     port: 465,
     secure: true,
     auth: {
-      user: 'portalasig.prueba@gmail.com',
-      pass: 'supersecret',
+      user: 'techludopia@gmail.com',
+      pass: '12ludotech34',
     },
   },
   times: {
     recovery: 0.5,
     update: 0.5,
+    expired: 24,
   },
 };
