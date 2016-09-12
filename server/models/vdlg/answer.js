@@ -90,10 +90,10 @@ AnswerSchema.pre('save', function (next) {
 
     if (this.popular > length)
       return Promise.reject(new ValidationError('Invalid popular value'));
-    /*
-    if (question.startAt.getTime() > now || question.finishAt.getTime() < now)
-      return Promise.reject(new ValidationError('Inactive question'));
-    */
+
+    if (question.finishAt.getTime() < now)
+      return Promise.reject(new ValidationError('Active question'));
+
     return Campaign.findById(question.campaign);
   })
   .then(campaign => {
