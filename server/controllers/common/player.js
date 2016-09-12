@@ -9,74 +9,102 @@ import templates from 'email-templates';
 import path from 'path';
 
 import Player from '../../models/common/player';
+import APIError from '../../helpers/api_error';
 
 const EmailTemplate = templates.EmailTemplate;
 
 const PlayerController = {
-/**
- * @swagger
- * /players:
- *   post:
- *     tags:
- *       - Players
- *     description: Creates a player
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: player
- *         description: Player object
- *         in: body
- *         required: true
- *         schema:
- *           allOf:
- *              - $ref: '#/definitions/Player'
- *              - properties:
- *                  password:
- *                    type: string
- *                required:
- *                  - password
- *     responses:
- *       200:
- *         description: Successfully created
- *         schema:
- *           allOf:
- *              - $ref: '#/definitions/Player'
- *              - properties:
- *                  id:
- *                    type: string
- *                  balance:
- *                    type: integer
- *                  age:
- *                    type: integer
- *                  createdAt:
- *                    type: string
- *                    format: date-time
- *                  updatedAt:
- *                    type: string
- *                    format: date-time
- */
+  /**
+   * @swagger
+   * /players:
+   *   post:
+   *     tags:
+   *       - Players
+   *     description: Creates a player
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: player
+   *         description: Player object
+   *         in: body
+   *         required: true
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Player'
+   *              - properties:
+   *                  password:
+   *                    type: string
+   *                required:
+   *                  - password
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Player'
+   *              - properties:
+   *                  id:
+   *                    type: string
+   *                  balance:
+   *                    type: integer
+   *                  age:
+   *                    type: integer
+   *                  createdAt:
+   *                    type: string
+   *                    format: date-time
+   *                  updatedAt:
+   *                    type: string
+   *                    format: date-time
+   */
   create(req, res, next) {
-    Player.create(req.body)
-    .then(player =>{
-      player.createVerificationToken();
-      const config = req.app.locals.config;
-      const template = path.join(config.root, '/server/views/mail/mail_verification');
-      const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
-      send({
-          to: player.email,
-          subject: 'Tap and Win Verification',
-      }, {
-          player,
-      }, err => {
-          if (err)
-              return next(err);
+    const config = req.app.locals.config;
+    const template = path.join(config.root, '/server/views/mail/mail_verification');
+    const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
+    Player.findOne({
+        email: req.body.email
+      })
+      .then(player => {
+        if (!player) {
+          Player.create(req.body)
+            .then(player => {
+              player.createVerificationToken();
+              send({
+                to: player.email,
+                subject: 'Tap and Win Verification',
+              }, {
+                player,
+              }, err => {
+                if (err)
+                  return next(err);
+                player.save()
+                  .then(player => res.status(httpStatus.CREATED).json(player))
+                  .catch(next);
+              });
+            });
+        } else {
+          if (player.verified == true)
+            return Promise.reject(new APIError('the user already exist', httpStatus.UNPROCESSABLE_ENTITY));
 
-          player.save()
-              .then(() => res.status(httpStatus.CREATED).json(player))
+          player.set(req.body);
+          player.createVerificationToken();
+          send({
+            to: player.email,
+            subject: 'Tap and Win Verification',
+          }, {
+            player,
+          }, err => {
+            if (err)
+              return next(err);
+            player.save()
+              .then(player => {
+                console.log("hey, second register: ",player);
+                res.status(httpStatus.OK).json(player);
+              })
               .catch(next);
-      });
-     })
-    .catch(next);
+          });
+        }
+      })
+      .catch(next);
   },
 
   /**
@@ -128,98 +156,98 @@ const PlayerController = {
   facebookLogin(req, res, next) {
     Player.findOne({
         facebookId: req.body.facebookId
-    }).then(user => {
+      }).then(user => {
         if (!user) {
           let data = req.body;
           data.verified = true;
           Player.create(data)
-              .then(player => {
-                  player.createSessionToken();
-                  player.save();
-                  res.status(httpStatus.CREATED).json(player);
-              })
-              .catch(next);
+            .then(player => {
+              player.createSessionToken();
+              player.save();
+              res.status(httpStatus.CREATED).json(player);
+            })
+            .catch(next);
         } else {
-            user.createSessionToken();
-            user.save();
-            res.status(200).json(user);
+          user.createSessionToken();
+          user.save();
+          res.status(200).json(user);
         }
-    })
-    .catch(next);
-},
+      })
+      .catch(next);
+  },
 
 
-/**
- * @swagger
- * /players/twitter:
- *   post:
- *     tags:
- *       - Players
- *     description: Creates a player from twitter
- *     produces:
- *       - application/json
- *     parameters:
- *       - name: player
- *         description: Player object
- *         in: body
- *         required: true
- *         schema:
- *           allOf:
- *              - $ref: '#/definitions/Player'
- *              - properties:
- *                  twitterId:
- *                    type: string
- *                required:
- *                  - twitterId
- *     responses:
- *       200:
- *         description: Successfully created
- *         schema:
- *           allOf:
- *              - $ref: '#/definitions/Player'
- *              - properties:
- *                  id:
- *                    type: string
- *                  balance:
- *                    type: integer
- *                  age:
- *                    type: integer
- *                  createdAt:
- *                    type: string
- *                    format: date-time
- *                  updatedAt:
- *                    type: string
- *                    format: date-time
- *                  twitterId:
- *                    type: string
- *                  sessionToken:
- *                    type: string
- */
+  /**
+   * @swagger
+   * /players/twitter:
+   *   post:
+   *     tags:
+   *       - Players
+   *     description: Creates a player from twitter
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: player
+   *         description: Player object
+   *         in: body
+   *         required: true
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Player'
+   *              - properties:
+   *                  twitterId:
+   *                    type: string
+   *                required:
+   *                  - twitterId
+   *     responses:
+   *       200:
+   *         description: Successfully created
+   *         schema:
+   *           allOf:
+   *              - $ref: '#/definitions/Player'
+   *              - properties:
+   *                  id:
+   *                    type: string
+   *                  balance:
+   *                    type: integer
+   *                  age:
+   *                    type: integer
+   *                  createdAt:
+   *                    type: string
+   *                    format: date-time
+   *                  updatedAt:
+   *                    type: string
+   *                    format: date-time
+   *                  twitterId:
+   *                    type: string
+   *                  sessionToken:
+   *                    type: string
+   */
 
 
 
-twitterLogin(req, res, next) {
+  twitterLogin(req, res, next) {
     Player.findOne({
-            twitterId: req.body.twitterId
-        }).then(user => {
-            if (!user) {
-              let data = req.body;
-              data.verified = true;
-                Player.create(data)
-                    .then(player => {
-                        player.createSessionToken();
-                        player.save();
-                        res.status(201).json(player);
-                    })
-                    .catch(next);
-            } else {
-                user.createSessionToken();
-                user.save();
-                res.status(200).json(user);
-            }
-        })
-        .catch(next);
-}
+        twitterId: req.body.twitterId
+      }).then(user => {
+        if (!user) {
+          let data = req.body;
+          data.verified = true;
+          Player.create(data)
+            .then(player => {
+              player.createSessionToken();
+              player.save();
+              res.status(201).json(player);
+            })
+            .catch(next);
+        } else {
+          user.createSessionToken();
+          user.save();
+          res.status(200).json(user);
+        }
+      })
+      .catch(next);
+  }
 
 
 
