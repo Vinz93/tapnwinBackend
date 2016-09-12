@@ -130,16 +130,19 @@ const PlayerController = {
         facebookId: req.body.facebookId
     }).then(user => {
         if (!user) {
-            Player.create(req.body)
-                .then(player => {
-                    player.createSessionToken();
-                    res.status(201).json(player);
-                })
-                .catch(next);
+          let data = req.body;
+          data.verified = true;
+          Player.create(data)
+              .then(player => {
+                  player.createSessionToken();
+                  player.save();
+                  res.status(httpStatus.CREATED).json(player);
+              })
+              .catch(next);
         } else {
             user.createSessionToken();
             user.save();
-            res.status(201).json(user)
+            res.status(200).json(user);
         }
     })
     .catch(next);
@@ -200,7 +203,9 @@ twitterLogin(req, res, next) {
             twitterId: req.body.twitterId
         }).then(user => {
             if (!user) {
-                Player.create(req.body)
+              let data = req.body;
+              data.verified = true;
+                Player.create(data)
                     .then(player => {
                         player.createSessionToken();
                         player.save();
