@@ -13,21 +13,21 @@ export default {
   },
   facebookLogin: {
     body: {
-      email: Joi.string().email().required(),
+      email: Joi.string().email(),
       firstName: Joi.string().required(),
-      lastName: Joi.string().required(),
-      gender: Joi.string().required(),
-      bornAt: Joi.string().isoDate().required(),
+      lastName: Joi.string(),
+      gender: Joi.string(),
+      bornAt: Joi.string().isoDate(),
       facebookId: Joi.string().required(),
     }
   },
   twitterLogin: {
     body: {
-      email: Joi.string().email().required(),
+      email: Joi.string().email(),
       firstName: Joi.string().required(),
-      lastName: Joi.string().required(),
-      gender: Joi.string().required(),
-      bornAt: Joi.string().isoDate().required(),
+      lastName: Joi.string(),
+      gender: Joi.string(),
+      bornAt: Joi.string().isoDate(),
       twitterId: Joi.string().required(),
     }
   }
