@@ -60,6 +60,7 @@ const PlayerSchema = new Schema({
   },
   bornAt: {
     type: Date,
+    default: new Date(),
   },
   balance: {
     type: Number,

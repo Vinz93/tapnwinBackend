@@ -34,6 +34,7 @@ const UserSchema = new Schema({
     }),
     unique: true,
     uniqueCaseInsensitive: true,
+    sparse: true,
   },
   password: {
     type: String
