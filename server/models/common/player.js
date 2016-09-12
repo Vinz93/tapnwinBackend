@@ -44,7 +44,6 @@ const PlayerSchema = new Schema({
   },
   lastName: {
     type: String,
-    required: true,
   },
   gender: {
     type: String,
@@ -61,7 +60,6 @@ const PlayerSchema = new Schema({
   },
   bornAt: {
     type: Date,
-    required: true,
   },
   balance: {
     type: Number,
