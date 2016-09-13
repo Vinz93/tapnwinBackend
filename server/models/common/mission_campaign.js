@@ -1,7 +1,7 @@
 /**
  * @author Juan Sanchez
  * @description Mission-Campaign model definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Carlos Avilan
  */
 
 import mongoose from 'mongoose';
@@ -26,7 +26,7 @@ const Schema = mongoose.Schema;
  *         type: boolean
  *       isBlocking:
  *         type: boolean
- *       blockedTime:
+ *       blockTime:
  *         type: number
  *       balance:
  *         type: number
