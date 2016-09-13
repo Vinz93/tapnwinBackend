@@ -7,9 +7,9 @@
       "name": "Anticuado",
       "isPositive": false,
       "urls": {
-        "animation": "https://52.37.117.104/tapnwin/api/v2/uploads/sprSticker01.png",
-        "enable": "https://52.37.117.104/tapnwin/api/v2/uploads/sprStickerVintage.png",
-        "disable": "https://52.37.117.104/tapnwin/api/v2/uploads/sprStickerVintage_off.png"
+        "animation": "https://52.39.109.204/tapnwin/api/v2/uploads/sprSticker01.png",
+        "enable": "https://52.39.109.204/tapnwin/api/v2/uploads/sprStickerVintage.png",
+        "disable": "https://52.39.109.204/tapnwin/api/v2/uploads/sprStickerVintage_off.png"
       }
     },
     "formal": {
@@ -17,9 +17,9 @@
       "name": "Formal",
       "isPositive": true,
       "urls": {
-        "animation": "https://52.37.117.104/tapnwin/api/v2/uploads/sprSticker02.png",
-        "enable": "https://52.37.117.104/tapnwin/api/v2/uploads/sprStickerFormal.png",
-        "disable": "https://52.37.117.104/tapnwin/api/v2/uploads/sprStickerFormal_off.png"
+        "animation": "https://52.39.109.204/tapnwin/api/v2/uploads/sprSticker02.png",
+        "enable": "https://52.39.109.204/tapnwin/api/v2/uploads/sprStickerFormal.png",
+        "disable": "https://52.39.109.204/tapnwin/api/v2/uploads/sprStickerFormal_off.png"
       }
     },
     "sexy": {
@@ -27,9 +27,9 @@
       "name": "Sexy",
       "isPositive": true,
       "urls": {
-        "animation": "https://52.37.117.104/tapnwin/api/v2/uploads/sprSticker03.png",
-        "enable": "https://52.37.117.104/tapnwin/api/v2/uploads/sprStickerSexy.png",
-        "disable": "https://52.37.117.104/tapnwin/api/v2/uploads/sprStickerSexy_off.png"
+        "animation": "https://52.39.109.204/tapnwin/api/v2/uploads/sprSticker03.png",
+        "enable": "https://52.39.109.204/tapnwin/api/v2/uploads/sprStickerSexy.png",
+        "disable": "https://52.39.109.204/tapnwin/api/v2/uploads/sprStickerSexy_off.png"
       }
     },
     "modern": {
@@ -37,9 +37,9 @@
       "name": "Moderno",
       "isPositive": true,
       "urls": {
-        "animation": "https://52.37.117.104/tapnwin/api/v2/uploads/sprSticker04.png",
-        "enable": "https://52.37.117.104/tapnwin/api/v2/uploads/sprStickerModern.png",
-        "disable": "https://52.37.117.104/tapnwin/api/v2/uploads/sprStickerModern_off.png"
+        "animation": "https://52.39.109.204/tapnwin/api/v2/uploads/sprSticker04.png",
+        "enable": "https://52.39.109.204/tapnwin/api/v2/uploads/sprStickerModern.png",
+        "disable": "https://52.39.109.204/tapnwin/api/v2/uploads/sprStickerModern_off.png"
       }
     }
   }
