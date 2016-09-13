@@ -129,7 +129,7 @@ const QuestionController = {
     const offset = paginate.offset(req.query.offset);
 
     const find = req.query.find || {};
-    const sort = req.query.sort || { createdAt: 1 };
+    const sort = req.query.sort || { startAt: 1 };
 
     Question.find(find)
     .sort(sort)
