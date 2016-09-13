@@ -5,127 +5,127 @@
     "levis": {
       "company": "->companies.company1",
       "name": "Levis",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/levis.jpg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/levis.jpg"
     },
     "guess": {
       "company": "->companies.company1",
       "name": "Guess",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/guess.jpg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/guess.jpg"
     },
     "gap": {
       "company": "->companies.company1",
       "name": "Gap",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/gap.jpg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/gap.jpg"
     },
     "calvin": {
       "company": "->companies.company1",
       "name": "Calvin Klein",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/calvin.jpg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/calvin.jpg"
     },
     "wrangler": {
       "company": "->companies.company1",
       "name": "Wrangler",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/wrangler.jpg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/wrangler.jpg"
     },
     "1a": {
       "company": "->companies.company1",
       "name": "Traje de baño 1",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/da9b65b3-2a03-4d36-846e-70e65dc87829.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/da9b65b3-2a03-4d36-846e-70e65dc87829.jpeg"
     },
     "1b": {
       "company": "->companies.company1",
       "name": "Traje de baño 2",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/dac147cf-3065-4679-880e-35d1a095acaf.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/dac147cf-3065-4679-880e-35d1a095acaf.jpeg"
     },
     "1c": {
       "company": "->companies.company1",
       "name": "Traje de baño 3",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/e7611a4d-c05b-494c-8689-71929962f2f8.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/e7611a4d-c05b-494c-8689-71929962f2f8.jpeg"
     },
     "2a": {
       "company": "->companies.company1",
       "name": "Licuadora 1",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/e5265f4f-4631-4090-b278-c120ee273aa6.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/e5265f4f-4631-4090-b278-c120ee273aa6.jpeg"
     },
     "2b": {
       "company": "->companies.company1",
       "name": "Licuadora 2",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/8bb8ba8e-fbcd-4b02-891c-f2a3319b784d.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/8bb8ba8e-fbcd-4b02-891c-f2a3319b784d.jpeg"
     },
     "2c": {
       "company": "->companies.company1",
       "name": "Licuadora 3",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/0c748115-d7a8-4099-86a9-a7074438dba1.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/0c748115-d7a8-4099-86a9-a7074438dba1.jpeg"
     },
     "2d": {
       "company": "->companies.company1",
       "name": "Licuadora 4",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/b8bd5e54-e887-4b96-bff4-13334688159f.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/b8bd5e54-e887-4b96-bff4-13334688159f.jpeg"
     },
     "3a": {
       "company": "->companies.company1",
       "name": "Estampado 1",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/27d7beaf-8aa5-4b94-ab3b-525280ca3825.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/27d7beaf-8aa5-4b94-ab3b-525280ca3825.jpeg"
     },
     "3b": {
       "company": "->companies.company1",
       "name": "Estampado 2",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/def4fee9-5d2c-46cb-9d15-dad1f753ae65.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/def4fee9-5d2c-46cb-9d15-dad1f753ae65.jpeg"
     },
     "3c": {
       "company": "->companies.company1",
       "name": "Estampado 3",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/9f756298-b6b0-4dd5-b992-0ff89d4aeb9d.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/9f756298-b6b0-4dd5-b992-0ff89d4aeb9d.jpeg"
     },
     "3d": {
       "company": "->companies.company1",
       "name": "Estampado 4",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/076f55e7-ba1c-4411-8400-5f25e7ff4fb1.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/076f55e7-ba1c-4411-8400-5f25e7ff4fb1.jpeg"
     },
     "3e": {
       "company": "->companies.company1",
       "name": "Estampado 5",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/f806f540-adda-4c50-9ec5-d2416a5e40f0.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/f806f540-adda-4c50-9ec5-d2416a5e40f0.jpeg"
     },
     "3f": {
       "company": "->companies.company1",
       "name": "Estampado 6",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/ee5e0f54-421f-47e1-aa21-3ad980c51113.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/ee5e0f54-421f-47e1-aa21-3ad980c51113.jpeg"
     },
     "4a": {
       "company": "->companies.company1",
       "name": "Levi's",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/4e2133cd-4a18-41b0-a40c-e58d6259625f.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/4e2133cd-4a18-41b0-a40c-e58d6259625f.jpeg"
     },
     "4b": {
       "company": "->companies.company1",
       "name": "Guess",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/cf718143-996e-42e0-a53a-55c4fb9f127c.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/cf718143-996e-42e0-a53a-55c4fb9f127c.jpeg"
     },
     "4c": {
       "company": "->companies.company1",
       "name": "Gap",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/4c3c233b-09bc-4bdb-995e-46af2596175e.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/4c3c233b-09bc-4bdb-995e-46af2596175e.jpeg"
     },
     "4d": {
       "company": "->companies.company1",
       "name": "Calvin Klein",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/2cfa0af9-63dc-49e6-a97b-3dfcea7784af.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/2cfa0af9-63dc-49e6-a97b-3dfcea7784af.jpeg"
     },
     "4e": {
       "company": "->companies.company1",
       "name": "Wrangler",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/289afdf6-7270-48db-95b4-176a497fe7d7.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/289afdf6-7270-48db-95b4-176a497fe7d7.jpeg"
     },
     "5a": {
       "company": "->companies.company1",
       "name": "Color 1",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/a38edd06-61b6-451f-a3ec-a172a0b693a6.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/a38edd06-61b6-451f-a3ec-a172a0b693a6.jpeg"
     },
     "5b": {
       "company": "->companies.company1",
       "name": "Color 2",
-      "url": "https://52.37.117.104/tapnwin/api/v2/uploads/12e9a7e5-0c45-4ef4-84b1-8da95f16b024.jpeg"
+      "url": "https://52.39.109.204/tapnwin/api/v1/uploads/12e9a7e5-0c45-4ef4-84b1-8da95f16b024.jpeg"
     }
   }
 }
