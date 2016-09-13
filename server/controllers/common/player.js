@@ -96,10 +96,7 @@ const PlayerController = {
             if (err)
               return next(err);
             player.save()
-              .then(player => {
-                console.log("hey, second register: ",player);
-                res.status(httpStatus.OK).json(player);
-              })
+              .then(player =>  res.status(httpStatus.OK).json(player))
               .catch(next);
           });
         }
