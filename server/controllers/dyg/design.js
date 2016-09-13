@@ -1,6 +1,6 @@
 /**
  * @author Juan Sanchez
- * @description Company controller definition
+ * @description Design controller definition
  * @lastModifiedBy Carlos Avilan
  */
 
@@ -10,6 +10,7 @@ import Promise from 'bluebird';
 import { paginate } from '../../helpers/utils';
 import APIError from '../../helpers/api_error';
 import Design from '../../models/dyg/design';
+import Vote from '../../models/dyg/vote';
 
 const DesignController = {
 /**
@@ -62,17 +63,52 @@ const DesignController = {
     const offset = paginate.offset(req.query.offset);
     const limit = paginate.limit(req.query.limit);
 
-    const find = req.query.find || {};
+    // const find = req.query.find || {};
     const sort = req.query.sort || { createdAt: 1 };
 
-    Design.paginate(find, {
-      sort,
-      offset,
-      limit,
-      populate: ['player'],
-    })
-    .then(designs => res.json(designs))
-    .catch(next);
+    Vote.aggregate([
+      {
+        $group: {
+          _id: '$design',
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { count: 1 } },
+      { $limit: limit },
+      { $skip: offset },
+    ], (err, votes) => {
+      const designsVoted = [];
+      for (let i = 0; i < votes.length; i++) {
+        designsVoted.push(votes[i]._id);
+      }
+      Design.paginate({ _id: { $nin: designsVoted } }, {
+        sort,
+        offset,
+        limit,
+        populate: ['player'],
+      })
+      .then(designsNotVoted => {
+        if (designsNotVoted.total === designsNotVoted.limit) {
+          res.json(designsNotVoted);
+        }
+        Design.paginate({ _id: { $in: designsVoted } }, {
+          sort,
+          offset,
+          limit,
+          populate: ['player'],
+        })
+        .then(designsIn => {
+          const designs = {};
+          const difference = designsNotVoted.limit - designsNotVoted.total;
+          designs.docs = [].concat(designsNotVoted.docs, designsIn.docs.slice(difference));
+          designs.total = designs.docs.length;
+          designs.offset = offset;
+          designs.limit = limit;
+          res.json(designs);
+        });
+      })
+      .catch(next);
+    });
   },
 
 /**
