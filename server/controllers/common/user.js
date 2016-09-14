@@ -415,6 +415,7 @@ const UserController = {
         if (player.verified == false) {
           send({
             to: player.email,
+            subject: 'Tap and Win Verification',
           }, {
             player,
           }, err => {
