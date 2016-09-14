@@ -77,7 +77,6 @@ AnswerSchema.index({
 AnswerSchema.pre('save', function (next) {
   Question.findById(this.question)
   .then(question => {
-    const now = Date.now();
     let length;
 
     if (question.__t === 'StringQuestion')
@@ -90,9 +89,6 @@ AnswerSchema.pre('save', function (next) {
 
     if (this.popular > length)
       return Promise.reject(new ValidationError('Invalid popular value'));
-
-    if (question.finishAt.getTime() > now)
-      return Promise.reject(new ValidationError('Active question'));
 
     return Campaign.findById(question.campaign);
   })
