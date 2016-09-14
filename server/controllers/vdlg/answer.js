@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Answer controller definition
- * @lastModifiedBy Andres Alvarez
+ * @lastModifiedBy Carlos Avilan
  */
 import httpStatus from 'http-status';
 import Promise from 'bluebird';
@@ -155,7 +155,14 @@ const AnswerController = {
         offset,
         limit,
         sort,
-        populate: ['question'],
+        populate: [{
+          path: 'question',
+          model: 'Question',
+          populate: {
+            path: 'possibilityAssets',
+            model: 'PossibilityAsset',
+          },
+        }],
       });
     })
     .then(answers => {
