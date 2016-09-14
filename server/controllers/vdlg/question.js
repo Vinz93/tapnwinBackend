@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Question controller definition
- * @lastModifiedBy Andres Alvarez
+ * @lastModifiedBy Carlos Avilan
  */
 
 import httpStatus from 'http-status';
@@ -221,7 +221,13 @@ const QuestionController = {
  *               items:
  *                 type: number
  *             percents:
- *               type: string
+ *               type: array
+ *               items:
+ *                 type: number
+ *             winners:
+ *               type: array
+ *               items:
+ *                 type: number
  *             total:
  *               type: string
  */
@@ -244,10 +250,17 @@ const QuestionController = {
     })
     .then(data => {
       const total = data.reduce((total, value) => total + value, 0);
-
+      const max = Math.max.apply(null, data);
+      let dataWinners = data.map((elem, index) => {
+        if (elem === max)
+          return index;
+        return -1;
+      });
+      dataWinners = dataWinners.filter(elem => elem !== -1);
       res.send({
         counts: data,
         percents: data.map(value => value / total * 100),
+        winners: dataWinners,
         total,
       });
     })
