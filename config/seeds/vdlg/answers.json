@@ -1,7 +1,7 @@
 {
   "answers": {
     "_model": "Answer",
-    "_require": ["Player", "StringQuestion"],
+    "_require": ["Player", "StringQuestion", "AssetQuestion"],
     "answer1": {
       "question": "->string_questions.stringQuestion1",
       "player": "->players.andres",
@@ -15,16 +15,76 @@
       "popular": 1
     },
     "answer3": {
-      "question": "->string_questions.stringQuestion2",
+      "question": "->string_questions.stringQuestion4",
+      "player": "->players.carlos",
+      "personal": 3,
+      "popular": 2
+    },
+    "answer4": {
+      "question": "->string_questions.stringQuestion4",
+      "player": "->players.david",
+      "personal": 2,
+      "popular": 3
+    },
+    "answer5": {
+      "question": "->string_questions.stringQuestion4",
+      "player": "->players.andres",
+      "personal": 2,
+      "popular": 3
+    },
+    "answer6": {
+      "question": "->string_questions.stringQuestion5",
+      "player": "->players.andres",
+      "personal": 1,
+      "popular": 1
+    },
+    "answer7": {
+      "question": "->string_questions.stringQuestion3",
+      "player": "->players.andres",
+      "personal": 1,
+      "popular": 0
+    },
+    "answer8": {
+      "question": "->asset_questions.assetQuestion2",
+      "player": "->players.andres",
+      "personal": 2,
+      "popular": 2
+    },
+    "answer9": {
+      "question": "->asset_questions.assetQuestion3",
+      "player": "->players.andres",
+      "personal": 2,
+      "popular": 2
+    },
+    "answer10": {
+      "question": "->string_questions.stringQuestion4",
+      "player": "->players.juan",
+      "personal": 2,
+      "popular": 3
+    },
+    "answer11": {
+      "question": "->string_questions.stringQuestion5",
+      "player": "->players.juan",
+      "personal": 1,
+      "popular": 1
+    },
+    "answer12": {
+      "question": "->string_questions.stringQuestion3",
+      "player": "->players.juan",
+      "personal": 1,
+      "popular": 1
+    },
+    "answer13": {
+      "question": "->asset_questions.assetQuestion2",
       "player": "->players.juan",
       "personal": 2,
       "popular": 2
     },
-    "answer4": {
-      "question": "->string_questions.stringQuestion2",
-      "player": "->players.david",
+    "answer14": {
+      "question": "->asset_questions.assetQuestion3",
+      "player": "->players.juan",
       "personal": 2,
-      "popular": 3
+      "popular": 2
     }
   }
 }

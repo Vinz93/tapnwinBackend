@@ -5,7 +5,7 @@
       "Campaign",
       "PossibilityAsset"
     ],
-    "stringQuestion1": {
+    "assetQuestion1": {
       "campaign": "->campaigns.campaign1",
       "personal": "<color=#6BFF52FF>Personalmente,</color> ¿los jeans de cuál de estas marcas siempre te quedan bien?",
       "popular": "¿Los jeans de cuál de estas marcas siempre le quedan bien a <color=#A08BECFF>la mayoría de las personas</color>?",
@@ -20,7 +20,7 @@
         "->possibility_assets.4e"
       ]
     },
-    "stringQuestion2": {
+    "assetQuestion2": {
       "campaign": "->campaigns.campaign1",
       "personal": "<color=#6BFF52FF>En tu opinión,</color> ¿cuál de los siguientes trajes de baño está más de moda?",
       "popular": "¿Cuál de los siguientes trajes de baño <color=#A08BECFF>la mayoría de las personas</color> opina que está más de moda?",
@@ -33,7 +33,7 @@
         "->possibility_assets.1c"
       ]
     },
-    "stringQuestion3": {
+    "assetQuestion3": {
       "campaign": "->campaigns.campaign1",
       "personal": "Entre estos estampados para juegos de sábanas, ¿con cuál dormirías más placenteramente?",
       "popular": "Entre estos estampados para sábanas, ¿cuál escogería <color=#A08BECFF>la mayoría de las personas</color> como más placentero?",
@@ -49,7 +49,7 @@
         "->possibility_assets.3f"
       ]
     },
-    "stringQuestion4": {
+    "assetQuestion4": {
       "campaign": "->campaigns.campaign1",
       "personal": "<color=#6BFF52FF>En tu opinión,</color> ¿cuál de estos colores te gustaría que fuera la tendencia del próximo verano?",
       "popular": "¿Cuál de estos colores a <color=#A08BECFF>la mayoría de las personas</color> le gustaría que fueran la tendencia del próximo verano?",
@@ -61,7 +61,7 @@
         "->possibility_assets.5b"
       ]
     },
-    "stringQuestion5": {
+    "assetQuestion5": {
       "campaign": "->campaigns.campaign1",
       "personal": "<color=#6BFF52FF>En tu opinión,</color> ¿cuál de las siguientes marcas de licuadora es de mayor calidad?",
       "popular": "¿Cuál de estas marcas de licuadora <color=#A08BECFF>la mayoría de las personas</color> opina que es de mayor calidad?",
