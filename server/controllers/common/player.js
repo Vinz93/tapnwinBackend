@@ -10,6 +10,8 @@ import path from 'path';
 
 import Player from '../../models/common/player';
 import APIError from '../../helpers/api_error';
+import ProvidersLogin from '../../helpers/providers_login';
+
 
 const EmailTemplate = templates.EmailTemplate;
 
