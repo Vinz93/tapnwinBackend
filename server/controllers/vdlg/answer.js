@@ -247,7 +247,11 @@ const AnswerController = {
     req.query.find = req.query.find || {};
 
     const campaign = req.query.find.campaign;
-    const find = {};
+    const find = {
+      finishAt: {
+        $gte: new Date(),
+      },
+    };
 
     if (campaign) {
       find.campaign = campaign;
@@ -261,7 +265,7 @@ const AnswerController = {
         question: { $in: questions.map(question => question._id) },
       });
 
-      return Answer.find(req.query.find)
+      return Answer.find(Object.assign({ seen: true }, req.query.find))
       .populate('question');
     })
     .then(answers => [
