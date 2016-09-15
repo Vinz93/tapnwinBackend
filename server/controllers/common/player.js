@@ -152,28 +152,60 @@ const PlayerController = {
    *                  sessionToken:
    *                    type: string
    */
+  // facebookLogin(req, res, next) {
+  //   Player.findOne({
+  //       facebookId: req.body.facebookId
+  //     }).then(user => {
+  //       if (!user) {
+  //         let data = req.body;
+  //         data.verified = true;
+  //         Player.create(data)
+  //           .then(player => {
+  //             player.createSessionToken();
+  //             player.save();
+  //             res.status(httpStatus.CREATED).json(player);
+  //           })
+  //           .catch(next);
+  //       } else {
+  //         user.createSessionToken();
+  //         user.save();
+  //         res.status(200).json(user);
+  //       }
+  //     })
+  //     .catch(next);
+  // },
   facebookLogin(req, res, next) {
+    let data = req.body;
     Player.findOne({
-        facebookId: req.body.facebookId
-      }).then(user => {
-        if (!user) {
-          let data = req.body;
-          data.verified = true;
-          Player.create(data)
-            .then(player => {
-              player.createSessionToken();
-              player.save();
-              res.status(httpStatus.CREATED).json(player);
-            })
-            .catch(next);
-        } else {
-          user.createSessionToken();
-          user.save();
-          res.status(200).json(user);
-        }
-      })
-      .catch(next);
-  },
+          facebookId: data.facebookId
+        })
+        .then(player => {
+          if (player) {
+            ProvidersLogin(res, httpStatus.OK, player);
+          } else {
+            if (!data.email) {
+              Player.create(data)
+                .then(ProvidersLogin.bind(this, res, httpStatus.CREATED))
+                .catch(next);
+            } else {
+              Player.findOne({
+                  email: data.email
+                })
+                .then(player => {
+                  if (!player) {
+                    Player.create(data)
+                      .then(ProvidersLogin.bind(this, res, httpStatus.CREATED))
+                      .catch(err => res.json(err));
+                  } else {
+                    ProvidersLogin(res, httpStatus.OK, player);
+                  }
+                })
+                .catch(next)
+            }
+          }
+        })
+        .catch(next);
+},
 
 
   /**
