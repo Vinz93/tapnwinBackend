@@ -1,7 +1,7 @@
 /**
  * @author Juan Sanchez
  * @description Mission-Status controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Carlos Avilan
  */
 
 import mongoose from 'mongoose';
@@ -164,6 +164,7 @@ const MissionStatusController = {
           MissionCampaign.find({
             campaign: missionCampaign.campaign,
           })
+          .populate('mission')
           .populate('campaign'),
         ];
       }
@@ -221,22 +222,32 @@ const MissionStatusController = {
         data.isBlocked = true;
         data.unblockAt = new Date(Date.now() + timeUnit.hours.toMillis(missionCampaign.blockTime));
 
-        MissionCampaign.find({
-          campaign: missionCampaign.campaign,
-        })
-        .populate('campaign')
-        .then(mission => {
-          console.log(mission);
-          if (mission.campaign.m3.moves !== undefined)
-            data.m3 = {
-              isBlocked: true,
-              unblockAt: data.unblockAt,
-              moves: campaignStatus.m3.moves,
-              score: campaignStatus.m3.score,
-            };
+        // ¿Cómo sabrás que está bloqueado?
+        if (campaignStatus.m3.moves !== undefined) {
+          // if moves <= 0 || isBlocked, está bloqueado
+          data.m3 = {
+            isBlocked: true,
+            unblockAt: data.unblockAt,
+            moves: campaignStatus.m3.moves,
+            score: campaignStatus.m3.score,
+          };
+        }
 
-          transaction.update('CampaignStatus', campaignStatus.id, data);
-        });
+        // TODO: agregar datos dependiendo del código de la misión
+        if (campaignStatus.dyg.dressed !== undefined) {
+          /* const status = {};
+          if (missionCampaign.mission) {
+
+          }*/
+          console.log(missionCampaign);
+          data.dyg = {
+            dressed: campaignStatus.dyg.dressed + 1,
+            isBlocked: false,
+            unblockAt: data.unblockAt,
+          };
+        }
+
+        transaction.update('CampaignStatus', campaignStatus.id, data);
       }
 
       run();

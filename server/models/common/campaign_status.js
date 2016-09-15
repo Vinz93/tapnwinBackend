@@ -1,7 +1,7 @@
 /**
  * @author Juan Sanchez
  * @description Mission controller definition
- * @lastModifiedBy Juan Sanchez
+ * @lastModifiedBy Carlos Avilan
  */
 
 import mongoose from 'mongoose';
@@ -22,9 +22,9 @@ const Schema = mongoose.Schema;
  *   M3Status:
  *     properties:
  *       score:
- *         type: string
+ *         type: number
  *       moves:
- *         type: string
+ *         type: number
  *       isBlocked:
  *         type: boolean
  */
@@ -36,6 +36,30 @@ const M3StatusSchema = new Schema({
 }, { _id: false });
 
 M3StatusSchema.plugin(fieldRemover);
+
+/**
+ * @swagger
+ * definition:
+ *   DygStatus:
+ *     properties:
+ *       votesGiven:
+ *         type: number
+ *       votesReceived:
+ *         type: number
+ *       dressed:
+ *         type: number
+ *       isBlocked:
+ *         type: boolean
+ */
+const DygStatusSchema = new Schema({
+  votesGiven: Number,
+  votesReceived: Number,
+  dressed: Number,
+  isBlocked: Boolean,
+  unblockAt: Date,
+}, { _id: false });
+
+DygStatusSchema.plugin(fieldRemover);
 
 /**
  * @swagger
@@ -53,6 +77,8 @@ M3StatusSchema.plugin(fieldRemover);
  *         type: boolean
  *       m3:
  *         $ref: '#/definitions/M3Status'
+ *       dyg:
+ *         $ref: '#/definitions/DygStatus'
  *     required:
  *       - player
  *       - campaign
@@ -79,6 +105,10 @@ const CampaignStatusSchema = new Schema({
   unblockAt: Date,
   m3: {
     type: M3StatusSchema,
+    default: {},
+  },
+  dyg: {
+    type: DygStatusSchema,
     default: {},
   },
 }, {
@@ -116,6 +146,12 @@ CampaignStatusSchema.statics = {
           campaignStatus.m3.unblockAt = undefined;
         }
 
+        if (campaignStatus.dyg.unblockAt && campaignStatus.dyg.unblockAt.getTime() <= now) {
+          changed = true;
+          campaignStatus.dyg.isBlocked = false;
+          campaignStatus.dyg.unblockAt = undefined;
+        }
+
         if (changed)
           return campaignStatus.save();
 
@@ -146,6 +182,13 @@ CampaignStatusSchema.pre('save', function (next) {
         this.m3.unblockAt = new Date(Date.now() + timeUnit.hours.toMillis(campaign.m3.blockTime));
         this.m3.moves = campaign.m3.initialMoves;
       }
+    }
+
+    if (this.dyg.dressed === undefined && campaign.dyg.isActive) {
+      this.dyg.isBlocked = false;
+      this.dyg.votesGiven = 0;
+      this.dyg.votesReceived = 0;
+      this.dyg.dressed = 0;
     }
 
     next();
