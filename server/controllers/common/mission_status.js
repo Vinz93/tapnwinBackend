@@ -140,7 +140,20 @@ const MissionStatusController = {
       player: res.locals.user.id,
       _id: req.params.mission_status_id,
     })
-    .populate('missionCampaign')
+    .populate({
+      path: 'missionCampaign',
+      model: 'MissionCampaign',
+      populate: [
+        {
+          path: 'mission',
+          model: 'Mission',
+        },
+        {
+          path: 'campaign',
+          model: 'Campaign',
+        },
+      ],
+    })
     .then(missionStatus => {
       if (!missionStatus)
         return Promise.reject(new APIError('MissionStatus not found', httpStatus.NOT_FOUND));
@@ -218,13 +231,31 @@ const MissionStatusController = {
 
       if (missionCampaign.isBlocking) {
         const data = {};
+        const code = missionStatus.missionCampaign.mission.code.substr(0, 2);
+        // console.log(missionStatus);
 
         data.isBlocked = true;
         data.unblockAt = new Date(Date.now() + timeUnit.hours.toMillis(missionCampaign.blockTime));
 
-        // ¿Cómo sabrás que está bloqueado?
-        if (campaignStatus.m3.moves !== undefined) {
-          // if moves <= 0 || isBlocked, está bloqueado
+        if (missionCampaign.campaign.dyg !== undefined &&
+          missionCampaign.campaign.dyg.isActive &&
+          missionCampaign.campaign.dyg.blockable) {
+          data.dyg = {
+            isBlocked: true,
+            unblockAt: data.unblockAt,
+          };
+        }
+        /* if (missionCampaign.campaign.vdlg !== undefined &&
+          missionCampaign.campaign.vdlg.isActive &&
+          missionCampaign.campaign.vdlg.blockable) {
+          data.vdlg = {
+            isBlocked: true,
+            unblockAt: data.unblockAt,
+          };
+        }*/
+        if (missionCampaign.campaign.m3 !== undefined &&
+          missionCampaign.campaign.m3.isActive &&
+          missionCampaign.campaign.m3.blockable) {
           data.m3 = {
             isBlocked: true,
             unblockAt: data.unblockAt,
@@ -232,20 +263,59 @@ const MissionStatusController = {
             score: campaignStatus.m3.score,
           };
         }
-
-        // TODO: agregar datos dependiendo del código de la misión
-        if (campaignStatus.dyg.dressed !== undefined) {
-          /* const status = {};
-          if (missionCampaign.mission) {
-
-          }*/
-          console.log(missionCampaign);
-          data.dyg = {
-            dressed: campaignStatus.dyg.dressed + 1,
-            isBlocked: false,
+        /* if (missionCampaign.campaign.ddt !== undefined &&
+          missionCampaign.campaign.ddt.isActive &&
+          missionCampaign.campaign.ddt.blockable) {
+          data.ddt = {
+            isBlocked: true,
             unblockAt: data.unblockAt,
           };
+        }*/
+
+        if (code === '01') {
+          if (campaignStatus.dyg.dressed !== undefined) {
+            const code = missionStatus.missionCampaign.mission.code.substr(2, 2);
+            data.dyg = {
+              isBlocked: true,
+              unblockAt: data.unblockAt,
+            };
+            if (code === '01') {
+              data.dyg.dressed = campaignStatus.dyg.dressed +
+                missionStatus.missionCampaign.max;
+              data.dyg.votesGiven = campaignStatus.dyg.votesGiven;
+              data.dyg.votesReceived = campaignStatus.dyg.votesReceived;
+            }
+            if (code === '04') {
+              data.dyg.votesGiven = campaignStatus.dyg.votesGiven +
+                missionStatus.missionCampaign.max;
+              data.dyg.dressed = campaignStatus.dyg.dressed;
+              data.dyg.votesReceived = campaignStatus.dyg.votesReceived;
+            }
+            if (code === '05') {
+              data.dyg.votesReceived = campaignStatus.dyg.votesReceived +
+                missionStatus.missionCampaign.max;
+              data.dyg.dressed = campaignStatus.dyg.dressed;
+              data.dyg.votesGiven = campaignStatus.dyg.votesGiven;
+            }
+          }
         }
+        if (code === '02') {
+          // vdlg
+        }
+        if (code === '03') {
+          if (campaignStatus.m3.moves !== undefined) {
+            data.m3 = {
+              isBlocked: true,
+              unblockAt: data.unblockAt,
+              moves: campaignStatus.m3.moves,
+              score: campaignStatus.m3.score + missionStatus.missionCampaign.max,
+            };
+          }
+        }
+        if (code === '04') {
+          // tt
+        }
+        // console.log(data);
 
         transaction.update('CampaignStatus', campaignStatus.id, data);
       }
