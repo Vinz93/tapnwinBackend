@@ -76,6 +76,15 @@ export default {
     },
   },
 
+  updateEmail:{
+    params: {
+      user_id: Joi.objectId().required(),
+    },
+    body: {
+      email: Joi.string().email().required(),
+    },
+  },
+
   delete: {
     params: {
       user_id: Joi.objectId().required(),
