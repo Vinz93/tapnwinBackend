@@ -53,6 +53,9 @@ router.route('/users/:user_id')
 .patch(validate(userValidator.update), User.update)
 .delete(validate(userValidator.delete), User.delete);
 
+router.route('/users/email/:user_id')
+.put(validate(userValidator.updateEmail), User.updateEmail);
+
 router.route('/administrators')
 .post(validate(administratorValidator.create), Administrator.create);
 
