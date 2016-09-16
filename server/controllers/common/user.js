@@ -1,7 +1,7 @@
 /**
  * @author Andres Alvarez
  * @description Company controller definition
- * @lastModifiedBy Andres Alvarez
+ * @lastModifiedBy Vincenzo Bianco
  */
 
 import path from 'path';
@@ -401,58 +401,68 @@ const UserController = {
    *         description: Successfully updated
    */
   update(req, res, next) {
+    User.findById(req.params.user_id)
+      .then(user => {
+        if (!user)
+          return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
+        user.set(req.body);
+        return user.save();
+      })
+      .then(player => {
+          return res.status(httpStatus.NO_CONTENT).end();
+      })
+      .catch(next);
+  },
+
+  /**
+   * @swagger
+   * /users/email/{user_id}:
+   *   put:
+   *     tags:
+   *       - Users
+   *     description: Updates a user email and send the verification Token again
+   *     produces:
+   *       - application/json
+   *     parameters:
+   *       - name: user_id
+   *         description: User's id
+   *         in: path
+   *         required: true
+   *         type: string
+   *       - name: email
+   *         description: User email
+   *         in: body
+   *         required: true
+   *         schema:
+   *           $ref: '#/definitions/User'
+   *     responses:
+   *       204:
+   *         description: Successfully updated
+   */
+
+  updateEmail(req, res, next){
     const config = req.app.locals.config;
     const template = path.join(config.root, '/server/views/mail/mail_verification');
     const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
-    // User.findById(req.params.user_id)
-    //   .then(user => {
-    //     if (!user)
-    //       return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
-    //     user.set(req.body);
-    //     return user.save();
-    //   })
-    //   .then(player => {
-    //     if (player.verified == false) {
-    //       send({
-    //         to: player.email,
-    //         subject: 'Tap and Win Verification',
-    //       }, {
-    //         player,
-    //       }, err => {
-    //         if (err)
-    //           return next(err);
-    //         return res.status(httpStatus.NO_CONTENT).end();
-    //       });
-    //     } else {
-    //       return res.status(httpStatus.NO_CONTENT).end();
-    //     }
-    //   })
-    //   .catch(next);
-    User.findByIdAndUpdate(req.params.user_id,{$set: req.body})
+      User.findById(req.params.user_id)
       .then(player => {
-        if (!player)
+        if(!player)
           return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
-        if (player.verified == false) {
-          send({
-            to: player.email,
-            subject: 'Tap and Win Verification',
-          }, {
-            player,
-          }, err => {
-            if (err)
-              return next(err);
-            //  res.status(httpStatus.NO_CONTENT).end();
-            console.log("yo si envio correos ",player.email);
-            res.status(httpStatus.OK).json(player);
-          });
-        } else {
-          // res.status(httpStatus.NO_CONTENT).end();
-          console.log("yo no envio correos")
-          res.status(httpStatus.OK).json(player);
-
-        }
-    })
-    .catch(next);
+        player.email = req.body.email;
+        player.createVerificationToken();
+        send({
+          to: player.email,
+          subject: 'Tap and Win Verification',
+        }, {
+          player,
+        }, err => {
+          if (err)
+            return next(err);
+          return player.save();
+        });
+      })
+      .then(player => res.status(httpStatus.NO_CONTENT).end())
+      .catch(next);
   },
 
   /**
