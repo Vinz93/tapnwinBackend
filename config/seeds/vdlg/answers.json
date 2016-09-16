@@ -85,6 +85,12 @@
       "player": "->players.juan",
       "personal": 2,
       "popular": 2
+    },
+    "answer15": {
+      "question": "->string_questions.stringQuestion1",
+      "player": "->players.juan",
+      "personal": 2,
+      "popular": 2
     }
   }
 }
