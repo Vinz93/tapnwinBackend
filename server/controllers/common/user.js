@@ -404,14 +404,34 @@ const UserController = {
     const config = req.app.locals.config;
     const template = path.join(config.root, '/server/views/mail/mail_verification');
     const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
-    User.findById(req.params.user_id)
-      .then(user => {
-        if (!user)
-          return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
-        user.set(req.body);
-        return user.save();
-      })
+    // User.findById(req.params.user_id)
+    //   .then(user => {
+    //     if (!user)
+    //       return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
+    //     user.set(req.body);
+    //     return user.save();
+    //   })
+    //   .then(player => {
+    //     if (player.verified == false) {
+    //       send({
+    //         to: player.email,
+    //         subject: 'Tap and Win Verification',
+    //       }, {
+    //         player,
+    //       }, err => {
+    //         if (err)
+    //           return next(err);
+    //         return res.status(httpStatus.NO_CONTENT).end();
+    //       });
+    //     } else {
+    //       return res.status(httpStatus.NO_CONTENT).end();
+    //     }
+    //   })
+    //   .catch(next);
+    User.findByIdAndUpdate(req.params.user_id,{$set: req.body})
       .then(player => {
+        if (!player)
+          return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
         if (player.verified == false) {
           send({
             to: player.email,
@@ -421,13 +441,18 @@ const UserController = {
           }, err => {
             if (err)
               return next(err);
-            return res.status(httpStatus.NO_CONTENT).end();
+            //  res.status(httpStatus.NO_CONTENT).end();
+            console.log("yo si envio correos ",player.email);
+            res.status(httpStatus.OK).json(player);
           });
         } else {
-          return res.status(httpStatus.NO_CONTENT).end();
+          // res.status(httpStatus.NO_CONTENT).end();
+          console.log("yo no envio correos")
+          res.status(httpStatus.OK).json(player);
+
         }
-      })
-      .catch(next);
+    })
+    .catch(next);
   },
 
   /**
