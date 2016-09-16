@@ -247,11 +247,7 @@ const AnswerController = {
     req.query.find = req.query.find || {};
 
     const campaign = req.query.find.campaign;
-    const find = {
-      finishAt: {
-        $gte: new Date(),
-      },
-    };
+    const find = {};
 
     if (campaign) {
       find.campaign = campaign;
