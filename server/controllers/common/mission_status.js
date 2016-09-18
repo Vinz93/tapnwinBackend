@@ -308,7 +308,8 @@ const MissionStatusController = {
               isBlocked: true,
               unblockAt: data.unblockAt,
               moves: campaignStatus.m3.moves,
-              score: campaignStatus.m3.score + missionStatus.missionCampaign.max,
+              // score: campaignStatus.m3.score + missionStatus.missionCampaign.max,
+              score: campaignStatus.m3.score,
             };
           }
         }
