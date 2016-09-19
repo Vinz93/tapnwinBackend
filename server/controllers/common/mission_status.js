@@ -311,7 +311,8 @@ const MissionStatusController = {
               // score: campaignStatus.m3.score + missionStatus.missionCampaign.max,
               score: campaignStatus.m3.score,
             };
-            let value = data.m3.score;
+            let value = missionStatus.missionCampaign.max;
+
             transaction.update('MissionStatus', missionStatus.id, { value });
           }
         }
