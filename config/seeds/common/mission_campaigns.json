@@ -17,11 +17,11 @@
     "missionCampaign2": {
       "campaign": "->campaigns.campaign1",
       "mission": "->missions.mission2",
-      "balance": 3.0,
+      "balance": 4.0,
       "isRequired": true,
       "isBlocking": true,
-      "blockTime": 0.3,
-      "max": 3000
+      "blockTime": 0.4,
+      "max": 4000
     }
   }
 }
