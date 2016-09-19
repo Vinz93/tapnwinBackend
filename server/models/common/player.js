@@ -64,7 +64,7 @@ const PlayerSchema = new Schema({
   },
   balance: {
     type: Number,
-    default: 0,
+    default: 1000,
   },
 }, {
   toObject: { virtuals: true },
