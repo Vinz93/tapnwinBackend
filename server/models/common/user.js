@@ -47,6 +47,9 @@ const UserSchema = new Schema({
     type: String,
     required: false,
   },
+  lastLogin:{
+    type: Date,
+  },
   recoveryToken: {
     type: String,
     required: false,
