@@ -28,6 +28,13 @@ export default {
       'm3.score': Joi.number().integer(),
       'm3.moves': Joi.number().integer(),
       'm3.isBlocked': Joi.boolean(),
+      'dyg.dressed': Joi.number().integer(),
+      'dyg.votesGiven': Joi.number().integer(),
+      'dyg.votesReceived': Joi.number().integer(),
+      'dg.isBlocked': Joi.boolean(),
+      'vdlg.correct': Joi.number().integer(),
+      'vdlg.answered': Joi.number().integer(),
+      'vdlg.isBlocked': Joi.boolean(),
     },
   },
 };
