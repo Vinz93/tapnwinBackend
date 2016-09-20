@@ -64,6 +64,27 @@ DygStatusSchema.plugin(fieldRemover);
 /**
  * @swagger
  * definition:
+ *   VDLGStatus:
+ *     properties:
+ *       answered:
+ *         type: number
+ *       correct:
+ *         type: number
+ *       isBlocked:
+ *         type: boolean
+ */
+const VDLGStatusSchema = new Schema({
+  answered: Number,
+  correct: Number,
+  isBlocked: Boolean,
+  unblockAt: Date,
+}, { _id: false });
+
+VDLGStatusSchema.plugin(fieldRemover);
+
+/**
+ * @swagger
+ * definition:
  *   CampaignStatus:
  *     properties:
  *       player:
@@ -79,6 +100,8 @@ DygStatusSchema.plugin(fieldRemover);
  *         $ref: '#/definitions/M3Status'
  *       dyg:
  *         $ref: '#/definitions/DygStatus'
+ *       vdlg:
+ *         $ref: '#/definitions/VDLGStatus'
  *     required:
  *       - player
  *       - campaign
@@ -109,6 +132,10 @@ const CampaignStatusSchema = new Schema({
   },
   dyg: {
     type: DygStatusSchema,
+    default: {},
+  },
+  vdlg: {
+    type: VDLGStatusSchema,
     default: {},
   },
 }, {
@@ -152,6 +179,12 @@ CampaignStatusSchema.statics = {
           campaignStatus.dyg.unblockAt = undefined;
         }
 
+        if (campaignStatus.vdlg.unblockAt && campaignStatus.vdlg.unblockAt.getTime() <= now) {
+          changed = true;
+          campaignStatus.vdlg.isBlocked = false;
+          campaignStatus.vdlg.unblockAt = undefined;
+        }
+
         if (changed)
           return campaignStatus.save();
 
@@ -189,6 +222,12 @@ CampaignStatusSchema.pre('save', function (next) {
       this.dyg.votesGiven = 0;
       this.dyg.votesReceived = 0;
       this.dyg.dressed = 0;
+    }
+
+    if (this.vdlg.correct === undefined && campaign.vdlg.isActive) {
+      this.vdlg.isBlocked = false;
+      this.vdlg.correct = 0;
+      this.vdlg.answered = 0;
     }
 
     next();
