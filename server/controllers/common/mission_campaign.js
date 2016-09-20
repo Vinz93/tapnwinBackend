@@ -68,6 +68,7 @@ const MissionCampaignController = {
       sort,
       offset,
       limit,
+      populate: ['mission'],
     })
     .then(missions => res.json(missions))
     .catch(next);
@@ -107,6 +108,7 @@ const MissionCampaignController = {
  */
   create(req, res, next) {
     MissionCampaign.create(req.body)
+    .then(mission => MissionCampaign.populate(mission, 'mission'))
     .then(mission => res.status(httpStatus.CREATED).json(mission))
     .catch(next);
   },
@@ -144,6 +146,7 @@ const MissionCampaignController = {
  */
   read(req, res, next) {
     MissionCampaign.findById(req.params.mission_campaign_id)
+    .populate('mission')
     .then(mission => {
       if (!mission)
         return Promise.reject(new APIError('MissionCampaign not found', httpStatus.NOT_FOUND));
@@ -183,6 +186,7 @@ const MissionCampaignController = {
       runValidators: true,
       context: 'query',
     })
+    .populate('mission')
     .then(mission => {
       if (!mission)
         return Promise.reject(new APIError('MissionCampaign not found', httpStatus.NOT_FOUND));
