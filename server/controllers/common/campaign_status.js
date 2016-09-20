@@ -234,8 +234,7 @@ const StatusController = {
           missionCompleted.value = missionCompleted.missionCampaign.max;
           missionCompleted.isDone = true;
           mission.set(missionCompleted);
-          // return mission.save();
-          return mission;
+          return mission.save();
         })
       )
     )
