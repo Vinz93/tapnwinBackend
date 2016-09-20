@@ -1,7 +1,10 @@
-<div>
-  <h3>Welcome to Tap and Win</h3>
-  <div>
-    <p> Hey <%= player.firstName %>, this is your verification token: <%= player.verificationToken %></p>
+<div class="mail-container">
+  <div class="title-container">
+    <h3 class="mail-title">Welcome to Tap and Win App</h3>
+  </div>
+  <div class="mail-body">
+    <p> Hi <%= player.firstName %>!</p>
+    <p> this is your verification token: <span class="token"><%= player.verificationToken %></span></p>
     <p>please use it in order to login into the app.</p>
   </div>
 </div>
