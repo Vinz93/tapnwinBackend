@@ -47,6 +47,9 @@ const UserSchema = new Schema({
     type: String,
     required: false,
   },
+  lastLogin:{
+    type: Date,
+  },
   recoveryToken: {
     type: String,
     required: false,
@@ -79,13 +82,16 @@ UserSchema.methods = {
   generateToken() {
     return `${this._id}${randtoken.generate(16)}`;
   },
+  generateSimpleToken(){
+    return randtoken.generate(8);
+  },
 
   createSessionToken() {
     this.sessionToken = this.generateToken();
   },
 
   createVerificationToken() {
-    this.verificationToken = this.generateToken();
+    this.verificationToken = this.generateSimpleToken();
 },
 
   createRecoveryToken(time) {
@@ -94,7 +100,7 @@ UserSchema.methods = {
     if (this.recoveredAt && (Date.now() - this.recoveredAt.getTime() <= ms))
       return false;
 
-    this.recoveryToken = this.generateToken();
+    this.recoveryToken = this.generateSimpleToken();
     this.recoveredAt = new Date();
 
     return true;
