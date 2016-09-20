@@ -6,9 +6,9 @@ export default {
       email: Joi.string().email().required(),
       password: Joi.string().required(),
       firstName: Joi.string().required(),
-      lastName: Joi.string().required(),
+      lastName: Joi.string(),
       gender: Joi.string().required(),
-      bornAt: Joi.string().isoDate().required(),
+      bornAt: Joi.string().isoDate(),
     },
   },
   facebookLogin: {
