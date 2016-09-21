@@ -123,7 +123,7 @@ const CampaignStatusSchema = new Schema({
   },
   isBlocked: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   unblockAt: Date,
   m3: {
