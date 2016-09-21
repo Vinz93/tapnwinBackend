@@ -192,14 +192,13 @@ CampaignStatusSchema.statics = {
       }
 
       return this.create(find)
-        .then(campaignStatus => [
-          campaignStatus,
-          Campaign.findOne({ _id: campaignStatus.campaign }),
-        ])
-        .spread((campaignStatus, campaign) => {
-          campaignStatus.balance = campaign.balance;
-          return campaignStatus.save();
-        });
+        .then(campaignStatus =>
+          Campaign.findOne({ _id: campaignStatus.campaign })
+          .then(campaign => {
+            campaignStatus.balance = campaign.balance;
+            return campaignStatus.save();
+          })
+        );
     });
   },
 };
