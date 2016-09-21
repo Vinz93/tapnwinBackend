@@ -191,7 +191,15 @@ CampaignStatusSchema.statics = {
         return new Promise.resolve(campaignStatus); // eslint-disable-line new-cap
       }
 
-      return this.create(find);
+      return this.create(find)
+        .then(campaignStatus => [
+          campaignStatus,
+          Campaign.findOne({ _id: campaignStatus.campaign }),
+        ])
+        .spread((campaignStatus, campaign) => {
+          campaignStatus.balance = campaign.balance;
+          return campaignStatus.save();
+        });
     });
   },
 };
