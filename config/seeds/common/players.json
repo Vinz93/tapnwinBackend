@@ -54,6 +54,42 @@
       "verified": true,
       "bornAt": "1992-08-18T19:15:09.069Z",
       "gender": "male"
+    },
+    "adriana": {
+      "firstName": "Adriana",
+      "lastName": "Urdaneta",
+      "email": "adrianau@ludopia.net",
+      "password": "secret",
+      "verified": true,
+      "bornAt": "2016-09-21T19:15:09.069Z",
+      "gender": "female"
+    },
+    "david2": {
+      "firstName": "David",
+      "lastName": "Marul",
+      "email": "davidm@ludopia.net",
+      "password": "secret",
+      "verified": true,
+      "bornAt": "1988-12-01T17:39:22.939Z",
+      "gender": "male"
+    },
+    "gian2": {
+      "firstName": "Gian",
+      "lastName": "Conti",
+      "email": "gianc2@ludopia.net",
+      "password": "ludopia",
+      "verified": true,
+      "bornAt": "1989-02-08T19:15:09.069Z",
+      "gender": "male"
+    },
+    "gian3": {
+      "firstName": "Gian",
+      "lastName": "Conti",
+      "email": "gianc3@ludopia.net",
+      "password": "ludopia",
+      "verified": true,
+      "bornAt": "1989-02-08T19:15:09.069Z",
+      "gender": "male"
     }
   }
 }
