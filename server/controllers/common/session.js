@@ -63,10 +63,13 @@ const SessionController = {
           return Promise.reject(new APIError('User is not verified yet', httpStatus.UNAUTHORIZED));
 
       user.createSessionToken();
+      user.lastLogin = Date.now();
 
       return user.save();
     })
-    .then((user) => res.status(httpStatus.CREATED).json({ token: user.sessionToken }))
+    .then((user) => res.status(httpStatus.CREATED).json({
+      token: user.sessionToken,
+      lastLogin: user.lastLogin}))
     .catch(next);
   },
 

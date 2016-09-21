@@ -150,6 +150,7 @@ const UserController = {
         player.verificationToken = undefined;
         player.verified = true;
         player.createSessionToken();
+        player.lastLogin = Date.now();
         return player.save();
       })
       .then(player => res.json(player))
