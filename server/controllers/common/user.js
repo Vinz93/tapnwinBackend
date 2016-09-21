@@ -77,7 +77,8 @@ const UserController = {
     const select = {
       sessionToken: 0,
       facebookId: 0,
-      twitterId: 0
+      twitterId: 0,
+      lastLogin:0
     };
 
     User.paginate(find, {
