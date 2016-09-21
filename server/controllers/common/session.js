@@ -59,6 +59,9 @@ const SessionController = {
       if (!user.authenticate(req.body.password))
         return Promise.reject(new APIError('Invalid password', httpStatus.BAD_REQUEST));
 
+      if(!user.verified && user.__t == 'Player')
+          return Promise.reject(new APIError('User is not verified yet', httpStatus.UNAUTHORIZED));
+
       user.createSessionToken();
 
       return user.save();
