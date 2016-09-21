@@ -72,6 +72,9 @@ router.route('/sessions')
 .post(validate(sessionValidator.create), Session.create)
 .delete(validate(sessionValidator.delete), Session.validate, Session.delete);
 
+router.route('/sessions/last_login/:id')
+.post(validate(sessionValidator.lastLogin), Session.lastLogin);
+
 router.route('/companies')
 .get(validate(companyValidator.create), Company.readAll)
 .post(validate(companyValidator.create), Company.create);

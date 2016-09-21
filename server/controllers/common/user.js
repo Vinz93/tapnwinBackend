@@ -77,7 +77,8 @@ const UserController = {
     const select = {
       sessionToken: 0,
       facebookId: 0,
-      twitterId: 0
+      twitterId: 0,
+      lastLogin:0
     };
 
     User.paginate(find, {
@@ -150,6 +151,7 @@ const UserController = {
         player.verificationToken = undefined;
         player.verified = true;
         player.createSessionToken();
+        player.lastLogin = Date.now();
         return player.save();
       })
       .then(player => res.json(player))

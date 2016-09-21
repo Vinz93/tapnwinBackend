@@ -5,6 +5,7 @@ const createAndLogin = (res, status, player) => {
         player.verificationToken = undefined;
 
     player.createSessionToken();
+    player.lastLogin = Date.now();
     player.save()
         .then(player => {
             res.status(status).json(player);
