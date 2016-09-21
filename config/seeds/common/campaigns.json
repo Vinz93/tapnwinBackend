@@ -18,6 +18,7 @@
       "company": "->companies.company1",
       "dyg": {
         "isActive": true,
+        "blockable": true,
         "models": [
           "->model_assets.model1"
         ],
