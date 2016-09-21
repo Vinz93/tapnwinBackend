@@ -153,94 +153,221 @@ const StatusController = {
       ),
     ])
     .spread((campaignStatus, missionCampaigns, missionStatuses) => {
-      let missionsCompleted = missionStatuses.filter(item => {
+      let blocked = false;
+      const missionsCompleted = [];
+      const missionsUpdated = missionStatuses.map(item => {
         const code = item.missionCampaign.mission.code;
-        if (code === '0101') {
+        if (code === '0101' && !item.isDone) {
           // Hacer (N) diseños
-          return !item.isDone && campaignStatus.dyg.dressed >= item.missionCampaign.max;
+          if (campaignStatus.dyg.dressed >= item.missionCampaign.max) {
+            // Mission Completed
+            if (item.missionCampaign.isBlocking) {
+              const blockTime = new Date(Date.now() +
+                timeUnit.hours.toMillis(item.missionCampaign.blockTime));
+              if (campaignStatus.campaign.m3.blockable) {
+                campaignStatus.m3.isBlocked = true;
+                campaignStatus.m3.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.dyg.blockable) {
+                campaignStatus.dyg.isBlocked = true;
+                campaignStatus.dyg.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.vdlg.blockable) {
+                campaignStatus.vdlg.isBlocked = true;
+                campaignStatus.vdlg.unblockAt = blockTime;
+              }
+            }
+            item.value = item.missionCampaign.max;
+            item.isDone = true;
+            missionsCompleted.push(item);
+          } else {
+            // Mission updated
+            item.value = campaignStatus.dyg.dressed;
+          }
         }
-        if (code === '0104') {
+        if (code === '0104' && !item.isDone) {
           // Votar en (N) diseños
-          return !item.isDone && campaignStatus.dyg.votesGiven >= item.missionCampaign.max;
+          if (campaignStatus.dyg.votesGiven >= item.missionCampaign.max) {
+            // Mission Completed
+            if (item.missionCampaign.isBlocking) {
+              const blockTime = new Date(Date.now() +
+                timeUnit.hours.toMillis(item.missionCampaign.blockTime));
+              if (campaignStatus.campaign.m3.blockable) {
+                campaignStatus.m3.isBlocked = true;
+                campaignStatus.m3.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.dyg.blockable) {
+                campaignStatus.dyg.isBlocked = true;
+                campaignStatus.dyg.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.vdlg.blockable) {
+                campaignStatus.vdlg.isBlocked = true;
+                campaignStatus.vdlg.unblockAt = blockTime;
+              }
+            }
+            item.value = item.missionCampaign.max;
+            item.isDone = true;
+            missionsCompleted.push(item);
+          } else {
+            // Mission updated
+            item.value = campaignStatus.dyg.votesGiven;
+          }
         }
-        if (code === '0105') {
+        if (code === '0105' && !item.isDone) {
           // Tener (N) votos en uno de los diseños propios
-          return !item.isDone && campaignStatus.dyg.votesReceived >= item.missionCampaign.max;
+          if (campaignStatus.dyg.votesReceived >= item.missionCampaign.max) {
+            // Mission Completed
+            if (item.missionCampaign.isBlocking) {
+              const blockTime = new Date(Date.now() +
+                timeUnit.hours.toMillis(item.missionCampaign.blockTime));
+              if (campaignStatus.campaign.m3.blockable) {
+                campaignStatus.m3.isBlocked = true;
+                campaignStatus.m3.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.dyg.blockable) {
+                campaignStatus.dyg.isBlocked = true;
+                campaignStatus.dyg.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.vdlg.blockable) {
+                campaignStatus.vdlg.isBlocked = true;
+                campaignStatus.vdlg.unblockAt = blockTime;
+              }
+            }
+            item.value = item.missionCampaign.max;
+            item.isDone = true;
+            missionsCompleted.push(item);
+          } else {
+            // Mission updated
+            item.value = campaignStatus.dyg.votesReceived;
+          }
         }
-        if (code === '0201') {
+        if (code === '0201' && !item.isDone) {
           // Completar (N) preguntas
-          return !item.isDone && campaignStatus.vdlg.answered >= item.missionCampaign.max;
+          if (campaignStatus.vdlg.answered >= item.missionCampaign.max) {
+            // Mission Completed
+            if (item.missionCampaign.isBlocking) {
+              const blockTime = new Date(Date.now() +
+                timeUnit.hours.toMillis(item.missionCampaign.blockTime));
+              if (campaignStatus.campaign.m3.blockable) {
+                campaignStatus.m3.isBlocked = true;
+                campaignStatus.m3.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.dyg.blockable) {
+                campaignStatus.dyg.isBlocked = true;
+                campaignStatus.dyg.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.vdlg.blockable) {
+                campaignStatus.vdlg.isBlocked = true;
+                campaignStatus.vdlg.unblockAt = blockTime;
+              }
+            }
+            item.value = item.missionCampaign.max;
+            item.isDone = true;
+            missionsCompleted.push(item);
+          } else {
+            // Mission updated
+            item.value = campaignStatus.vdlg.answered;
+          }
         }
-        if (code === '0202') {
+        if (code === '0202' && !item.isDone) {
           // Predecir (N) preguntas
-          return !item.isDone && campaignStatus.vdlg.correct >= item.missionCampaign.max;
+          if (campaignStatus.vdlg.correct >= item.missionCampaign.max) {
+            // Mission Completed
+            if (item.missionCampaign.isBlocking) {
+              const blockTime = new Date(Date.now() +
+                timeUnit.hours.toMillis(item.missionCampaign.blockTime));
+              if (campaignStatus.campaign.m3.blockable) {
+                campaignStatus.m3.isBlocked = true;
+                campaignStatus.m3.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.dyg.blockable) {
+                campaignStatus.dyg.isBlocked = true;
+                campaignStatus.dyg.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.vdlg.blockable) {
+                campaignStatus.vdlg.isBlocked = true;
+                campaignStatus.vdlg.unblockAt = blockTime;
+              }
+            }
+            item.value = item.missionCampaign.max;
+            item.isDone = true;
+            missionsCompleted.push(item);
+          } else {
+            // Mission updated
+            item.value = campaignStatus.vdlg.correct;
+          }
         }
-        if (code === '0301') {
+        if (code === '0301' && !item.isDone) {
           // Alcanzar (N) puntos.
-          return !item.isDone && campaignStatus.m3.score >= item.missionCampaign.max;
+          if (campaignStatus.m3.score >= item.missionCampaign.max) {
+            // Mission Completed
+            if (item.missionCampaign.isBlocking) {
+              const blockTime = new Date(Date.now() +
+                timeUnit.hours.toMillis(item.missionCampaign.blockTime));
+              if (campaignStatus.campaign.m3.blockable) {
+                campaignStatus.m3.isBlocked = true;
+                campaignStatus.m3.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.dyg.blockable) {
+                campaignStatus.dyg.isBlocked = true;
+                campaignStatus.dyg.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.vdlg.blockable) {
+                campaignStatus.vdlg.isBlocked = true;
+                campaignStatus.vdlg.unblockAt = blockTime;
+              }
+            }
+            item.value = item.missionCampaign.max;
+            item.isDone = true;
+            missionsCompleted.push(item);
+          } else {
+            // Mission updated
+            item.value = campaignStatus.m3.score;
+          }
         }
-        return false;
-      });
-
-      missionsCompleted = missionsCompleted.map(item => {
-        const code = item.missionCampaign.mission.code;
-        if (code === '0101') {
-          // Hacer (N) diseños
-          campaignStatus.dyg.isBlocked = true;
-          campaignStatus.dyg.unblockAt = new Date(Date.now() +
-            timeUnit.hours.toMillis(item.missionCampaign.blockTime));
-        }
-        if (code === '0104') {
-          // Votar en (N) diseños
-          campaignStatus.dyg.isBlocked = true;
-          campaignStatus.dyg.unblockAt = new Date(Date.now() +
-            timeUnit.hours.toMillis(item.missionCampaign.blockTime));
-        }
-        if (code === '0105') {
-          // Tener (N) votos en uno de los diseños propios
-          campaignStatus.dyg.isBlocked = true;
-          campaignStatus.dyg.unblockAt = new Date(Date.now() +
-            timeUnit.hours.toMillis(item.missionCampaign.blockTime));
-        }
-        if (code === '0201') {
-          // Completar (N) preguntas
-          campaignStatus.vdlg.isBlocked = true;
-          campaignStatus.vdlg.unblockAt = new Date(Date.now() +
-            timeUnit.hours.toMillis(item.missionCampaign.blockTime));
-        }
-        if (code === '0202') {
-          // Predecir (N) preguntas
-          campaignStatus.vdlg.isBlocked = true;
-          campaignStatus.vdlg.unblockAt = new Date(Date.now() +
-            timeUnit.hours.toMillis(item.missionCampaign.blockTime));
-        }
-        if (code === '0301') {
-          // Alcanzar (N) puntos.
-          campaignStatus.m3.isBlocked = true;
-          campaignStatus.m3.unblockAt = new Date(Date.now() +
-            timeUnit.hours.toMillis(item.missionCampaign.blockTime));
+        if (!item.isDone && item.missionCampaign.isRequired) {
+          blocked = true;
         }
         return item;
       });
-      return [campaignStatus.save(), missionsCompleted];
+
+      campaignStatus.isBlocked = blocked;
+
+      return [campaignStatus.save(), missionsUpdated, missionsCompleted];
     })
-    .spread((campaignStatus, missionsCompleted) =>
+    .spread((campaignStatus, missionsUpdated, missionsCompleted) =>
       // Save all mission statuses
+      [Promise.map(missionsUpdated, missionUpdated =>
+        MissionStatus.findOne({
+          _id: missionUpdated.id,
+        })
+        .then(mission => {
+          mission.set(missionUpdated);
+          return mission.save();
+        })
+      ),
+      missionsCompleted,
+    ]
+    )
+    .spread((missionsSaved, missionsCompleted) =>
       Promise.map(missionsCompleted, missionCompleted =>
         MissionStatus.findOne({
           _id: missionCompleted.id,
         })
-        .then(mission => {
-          missionCompleted.value = missionCompleted.missionCampaign.max;
-          missionCompleted.isDone = true;
-          mission.set(missionCompleted);
-          return mission.save();
-        })
+        .then(missionStatus => MissionStatus.populate(missionStatus, {
+          path: 'missionCampaign',
+          model: 'MissionCampaign',
+          populate: [
+            {
+              path: 'mission',
+              model: 'Mission',
+            },
+          ],
+        }))
       )
     )
-    .then(missionsSaved => {
-      const missionCampaigns = missionsSaved.map(item => item.missionCampaign);
-      res.json(missionCampaigns);
+    .then(missionsCompleted => {
+      res.json(missionsCompleted.map(item => item.missionCampaign));
     })
     .catch(next);
   },
