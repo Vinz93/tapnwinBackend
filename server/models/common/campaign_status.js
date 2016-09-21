@@ -123,7 +123,7 @@ const CampaignStatusSchema = new Schema({
   },
   isBlocked: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   unblockAt: Date,
   m3: {
@@ -191,7 +191,14 @@ CampaignStatusSchema.statics = {
         return new Promise.resolve(campaignStatus); // eslint-disable-line new-cap
       }
 
-      return this.create(find);
+      return this.create(find)
+        .then(campaignStatus =>
+          Campaign.findOne({ _id: campaignStatus.campaign })
+          .then(campaign => {
+            campaignStatus.balance = campaign.balance;
+            return campaignStatus.save();
+          })
+        );
     });
   },
 };

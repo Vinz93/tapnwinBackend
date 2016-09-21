@@ -12,7 +12,6 @@ import Promise from 'bluebird';
 
 import ValidationError from '../../helpers/validation_error';
 import Campaign from '../common/campaign';
-import CampaignStatus from '../common/campaign_status';
 import Question from './question';
 
 const Schema = mongoose.Schema;
@@ -99,20 +98,8 @@ AnswerSchema.pre('save', function (next) {
     if (!campaign.vdlg.isActive)
       return Promise.reject(new ValidationError('Inactive vdlg'));
 
-    if (campaign.vdlg.blockable)
-      return CampaignStatus.findOrCreate({
-        player: this.player,
-        campaign: campaign.id,
-      });
-
     next();
     throw new Promise.CancellationError();
-  })
-  .then(campaignStatus => {
-    if (campaignStatus.isBlocked)
-      return Promise.reject(new ValidationError('Blocked vdlg'));
-
-    next();
   })
   .catch(err => {
     if (err instanceof Promise.CancellationError)

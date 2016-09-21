@@ -13,7 +13,6 @@ import Promise from 'bluebird';
 
 import ValidationError from '../../helpers/validation_error';
 import Campaign from '../common/campaign';
-import CampaignStatus from '../common/campaign_status';
 import Vote from './vote';
 
 const Schema = mongoose.Schema;
@@ -113,20 +112,8 @@ DesignSchema.pre('save', function (next) {
         return Promise.reject(new ValidationError('Invalid item combination'));
     }
 
-    if (campaign.dyg.blockable)
-      return CampaignStatus.findOrCreate({
-        player: this.player,
-        campaign: campaign.id,
-      });
-
     next();
     throw new Promise.CancellationError();
-  })
-  .then(campaignStatus => {
-    if (campaignStatus.isBlocked)
-      return Promise.reject(new ValidationError('Blocked game'));
-
-    next();
   })
   .catch(err => {
     if (err instanceof Promise.CancellationError)
