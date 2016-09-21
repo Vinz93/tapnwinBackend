@@ -19,4 +19,12 @@ export default {
       'x-auth-token': Joi.string().token().required(),
     },
   },
+  lastLogin:{
+    params:{
+      id: Joi.objectId().required(),
+    },
+    body:{
+      lastLogin: Joi.string().isoDate().required(),
+    },
+  },
 };
