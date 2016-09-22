@@ -14,6 +14,16 @@ export default {
     },
   },
 
+  tradeBalance:{
+    headers: {
+      'x-auth-token': Joi.string().token().required(),
+    },
+
+    params: {
+      campaign_status_id: Joi.objectId().required(),
+    },
+  },
+
   updateByMe: {
     headers: {
       'x-auth-token': Joi.string().token().required(),

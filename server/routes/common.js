@@ -133,6 +133,10 @@ router.route('/players/me/campaign_statuses/:campaign_status_id')
 .patch(validate(campaignStatusValidator.updateByMe), Session.validate, User.isPlayer,
 CampaignStatus.updateByMe);
 
+router.route('/players/me/trade_balance/:campaign_status_id')
+.put(validate(campaignStatusValidator.tradeBalance), Session.validate, User.isPlayer,
+  CampaignStatus.tradeBalance);
+
 router.route('/players/me/campaigns/:campaign_id/mission_statuses')
 .get(validate(missionStatusValidator.readAllByMe), Session.validate, User.isPlayer,
 MissionStatus.readAllByMe);
