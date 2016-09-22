@@ -19,7 +19,7 @@
     },
     "calvin": {
       "company": "->companies.company1",
-      "name": "Calvin Klein",
+      "name": "CalvinKlein",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/calvin.jpg"
     },
     "wrangler": {
@@ -29,72 +29,72 @@
     },
     "1a": {
       "company": "->companies.company1",
-      "name": "Traje de baño 1",
+      "name": "Traje1",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/da9b65b3-2a03-4d36-846e-70e65dc87829.jpeg"
     },
     "1b": {
       "company": "->companies.company1",
-      "name": "Traje de baño 2",
+      "name": "Traje2",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/dac147cf-3065-4679-880e-35d1a095acaf.jpeg"
     },
     "1c": {
       "company": "->companies.company1",
-      "name": "Traje de baño 3",
+      "name": "Traje3",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/e7611a4d-c05b-494c-8689-71929962f2f8.jpeg"
     },
     "2a": {
       "company": "->companies.company1",
-      "name": "Licuadora 1",
+      "name": "Licuadora1",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/e5265f4f-4631-4090-b278-c120ee273aa6.jpeg"
     },
     "2b": {
       "company": "->companies.company1",
-      "name": "Licuadora 2",
+      "name": "Licuadora2",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/8bb8ba8e-fbcd-4b02-891c-f2a3319b784d.jpeg"
     },
     "2c": {
       "company": "->companies.company1",
-      "name": "Licuadora 3",
+      "name": "Licuadora3",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/0c748115-d7a8-4099-86a9-a7074438dba1.jpeg"
     },
     "2d": {
       "company": "->companies.company1",
-      "name": "Licuadora 4",
+      "name": "Licuadora4",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/b8bd5e54-e887-4b96-bff4-13334688159f.jpeg"
     },
     "3a": {
       "company": "->companies.company1",
-      "name": "Estampado 1",
+      "name": "Estampado1",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/27d7beaf-8aa5-4b94-ab3b-525280ca3825.jpeg"
     },
     "3b": {
       "company": "->companies.company1",
-      "name": "Estampado 2",
+      "name": "Estampado2",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/def4fee9-5d2c-46cb-9d15-dad1f753ae65.jpeg"
     },
     "3c": {
       "company": "->companies.company1",
-      "name": "Estampado 3",
+      "name": "Estampado3",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/9f756298-b6b0-4dd5-b992-0ff89d4aeb9d.jpeg"
     },
     "3d": {
       "company": "->companies.company1",
-      "name": "Estampado 4",
+      "name": "Estampado4",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/076f55e7-ba1c-4411-8400-5f25e7ff4fb1.jpeg"
     },
     "3e": {
       "company": "->companies.company1",
-      "name": "Estampado 5",
+      "name": "Estampado5",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/f806f540-adda-4c50-9ec5-d2416a5e40f0.jpeg"
     },
     "3f": {
       "company": "->companies.company1",
-      "name": "Estampado 6",
+      "name": "Estampado6",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/ee5e0f54-421f-47e1-aa21-3ad980c51113.jpeg"
     },
     "4a": {
       "company": "->companies.company1",
-      "name": "Levi's",
+      "name": "Levis",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/4e2133cd-4a18-41b0-a40c-e58d6259625f.jpeg"
     },
     "4b": {
@@ -109,7 +109,7 @@
     },
     "4d": {
       "company": "->companies.company1",
-      "name": "Calvin Klein",
+      "name": "CalvinKlein",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/2cfa0af9-63dc-49e6-a97b-3dfcea7784af.jpeg"
     },
     "4e": {
@@ -119,12 +119,12 @@
     },
     "5a": {
       "company": "->companies.company1",
-      "name": "Color 1",
+      "name": "Color1",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/a38edd06-61b6-451f-a3ec-a172a0b693a6.jpeg"
     },
     "5b": {
       "company": "->companies.company1",
-      "name": "Color 2",
+      "name": "Color2",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/12e9a7e5-0c45-4ef4-84b1-8da95f16b024.jpeg"
     }
   }
