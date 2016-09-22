@@ -10,6 +10,8 @@ import { paginate } from '../../helpers/utils';
 import APIError from '../../helpers/api_error';
 import Answer from '../../models/vdlg/answer';
 import Question from '../../models/vdlg/question';
+import MissionStatus from '../../models/common/mission_status';
+import MissionCampaign from '../../models/common/mission_campaign';
 
 const AnswerController = {
 /**
@@ -381,6 +383,7 @@ const AnswerController = {
       _id: req.params.answer_id,
       player: res.locals.user._id,
     })
+    .populate('question')
     .then(answer => {
       if (!answer)
         return Promise.reject(new APIError('Answer not found', httpStatus.NOT_FOUND));
@@ -388,6 +391,17 @@ const AnswerController = {
       answer.set(req.body);
 
       return answer.save();
+    })
+    .then(answer =>
+      MissionCampaign.find({
+        campaign: answer.question.campaign,
+        'mission.code': '0105', // FIXME: THIS DOESN'T WORK!
+      })
+    )
+
+    .then(missionStatuses => {
+      console.log(missionStatuses);
+      return missionStatuses;
     })
     .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
