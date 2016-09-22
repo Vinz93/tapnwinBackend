@@ -4,7 +4,7 @@
     "_require": ["Company"],
     "model1": {
       "company": "->companies.company1",
-      "name": "Modelo 1",
+      "name": "Modelo1",
       "url": "https://52.39.109.204/tapnwin/api/v1/uploads/sprModel01.png"
     }
   }
