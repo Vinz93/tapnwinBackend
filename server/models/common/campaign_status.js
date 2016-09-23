@@ -212,7 +212,7 @@ CampaignStatusSchema.pre('save', function (next) {
     if (this.m3.moves === undefined && campaign.m3.isActive) {
       this.m3.isBlocked = false;
       this.m3.moves = campaign.m3.initialMoves;
-      // this.m3.score = 0;
+      this.m3.score = 0;
     } else if (this.isModified('m3')) {
       if (!campaign.m3.isActive)
         return Promise.reject(new ValidationError('Inactive m3'));

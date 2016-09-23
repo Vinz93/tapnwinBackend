@@ -281,11 +281,19 @@ const AnswerController = {
           question: question._id,
           personal: posibility,
         }))
-        .then(data => data.indexOf(Math.max(...data)));
+        .then(data => {
+          const max = Math.max(...data);
+          return data.map((item, index) => {
+            if (item === max)
+              return index;
+            return -1;
+          })
+          .filter(item => item !== -1);
+        });
       }),
     ])
     .spread((answers, data) => {
-      const correct = answers.filter((answer, i) => answer.popular === data[i]).length;
+      const correct = answers.filter((answer, i) => data[i].indexOf(answer.popular) !== -1).length;
       const total = answers.length;
 
       res.send({
@@ -381,6 +389,7 @@ const AnswerController = {
       _id: req.params.answer_id,
       player: res.locals.user._id,
     })
+    .populate('question')
     .then(answer => {
       if (!answer)
         return Promise.reject(new APIError('Answer not found', httpStatus.NOT_FOUND));
