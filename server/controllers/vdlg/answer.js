@@ -4,6 +4,7 @@
  * @lastModifiedBy Carlos Avilan
  */
 import httpStatus from 'http-status';
+import timeUnit from 'time-unit';
 import Promise from 'bluebird';
 
 import { paginate } from '../../helpers/utils';
@@ -11,6 +12,7 @@ import APIError from '../../helpers/api_error';
 import Answer from '../../models/vdlg/answer';
 import Question from '../../models/vdlg/question';
 import MissionStatus from '../../models/common/mission_status';
+import CampaignStatus from '../../models/common/campaign_status';
 import MissionCampaign from '../../models/common/mission_campaign';
 
 const AnswerController = {
@@ -393,16 +395,171 @@ const AnswerController = {
       return answer.save();
     })
     .then(answer =>
-      MissionCampaign.find({
+      CampaignStatus.findOrCreate({
+        player: res.locals.user._id,
         campaign: answer.question.campaign,
-        'mission.code': '0105', // FIXME: THIS DOESN'T WORK!
       })
     )
+    .then(campaignStatus => [
+      campaignStatus,
+      MissionCampaign.find({
+        campaign: campaignStatus.campaign,
+      }),
+    ])
+    .spread((campaignStatus, missionCampaigns) => [
+      campaignStatus,
+      Promise.map(missionCampaigns, missionCampaign =>
+        MissionStatus.findOne({
+          player: res.locals.user.id,
+          missionCampaign: missionCampaign.id,
+        })
+        .populate({
+          path: 'missionCampaign',
+          model: 'MissionCampaign',
+          populate: [
+            {
+              path: 'mission',
+              model: 'Mission',
+            },
+          ],
+        })
+        .then(missionStatus => {
+          if (!missionStatus) {
+            return MissionStatus.create({
+              player: res.locals.user.id,
+              missionCampaign: missionCampaign.id,
+            })
+            .then(missionStatus => MissionStatus.populate(missionStatus, {
+              path: 'missionCampaign',
+              model: 'MissionCampaign',
+              populate: [
+                {
+                  path: 'mission',
+                  model: 'Mission',
+                },
+              ],
+            }));
+          }
+          return missionStatus;
+        })
+      ),
+    ])
+    .spread((campaignStatus, missionStatuses) => [
+      campaignStatus,
+      missionStatuses,
+      Question.find({
+        campaign: campaignStatus.campaign,
+      }),
+    ])
+    .spread((campaignStatus, missionStatuses, questions) => [
+      campaignStatus,
+      missionStatuses,
+      Answer.find({
+        question: { $in: questions.map(question => question._id) },
+        player: res.locals.user._id,
+        seen: true,
+      })
+      .populate('question'),
+    ])
+    .spread((campaignStatus, missionStatuses, answers) => [
+      campaignStatus,
+      missionStatuses,
+      answers,
+      Promise.map(answers, answer => {
+        const question = answer.question;
+        let length;
 
-    .then(missionStatuses => {
-      console.log(missionStatuses);
-      return missionStatuses;
+        if (question.__t === 'StringQuestion')
+          length = question.possibilityStrings.length;
+        else
+          length = question.possibilityAssets.length;
+
+        const possibilities = Array.from({ length }, (v, k) => k);
+
+        return Promise.map(possibilities, posibility => Answer.count({
+          question: question._id,
+          personal: posibility,
+        }))
+        .then(data => {
+          const max = Math.max(...data);
+          return data.map((item, index) => {
+            if (item === max)
+              return index;
+            return -1;
+          })
+          .filter(item => item !== -1);
+        });
+      }),
+    ])
+    .spread((campaignStatus, missionStatuses, answers, answersWinnersIndex) => [
+      campaignStatus,
+      missionStatuses,
+      answers.filter((item, index) =>
+        answersWinnersIndex[index].indexOf(item.personal) !== -1
+      ).length,
+    ])
+    .spread((campaignStatus, missionStatuses, winned) => {
+      campaignStatus.vdlg.correct = winned;
+      // console.log(campaignStatus);
+      return [
+        campaignStatus.save(),
+        missionStatuses,
+      ];
     })
+    .spread((campaignStatus, missionStatuses) => {
+      let blocked = false;
+      const missionsUpdated = missionStatuses.map(item => {
+        const code = item.missionCampaign.mission.code;
+        if (code === '0202' && !item.isDone) {
+          // Predecir (N) preguntas
+          if (campaignStatus.vdlg.correct >= item.missionCampaign.max) {
+            // Mission Completed
+            if (item.missionCampaign.isBlocking) {
+              const blockTime = new Date(Date.now() +
+                timeUnit.hours.toMillis(item.missionCampaign.blockTime));
+              if (campaignStatus.campaign.m3.blockable) {
+                campaignStatus.m3.isBlocked = true;
+                campaignStatus.m3.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.dyg.blockable) {
+                campaignStatus.dyg.isBlocked = true;
+                campaignStatus.dyg.unblockAt = blockTime;
+              }
+              if (campaignStatus.campaign.vdlg.blockable) {
+                campaignStatus.vdlg.isBlocked = true;
+                campaignStatus.vdlg.unblockAt = blockTime;
+              }
+            }
+            item.value = item.missionCampaign.max;
+            item.isDone = true;
+          } else {
+            // Mission updated
+            item.value = campaignStatus.vdlg.correct;
+          }
+          // console.log(item);
+        }
+        if (!item.isDone && item.missionCampaign.isRequired) {
+          blocked = true;
+        }
+        return item;
+      });
+
+      campaignStatus.isBlocked = blocked;
+
+      return [campaignStatus.save(), missionsUpdated];
+    })
+    .spread((campaignStatus, missionsUpdated) =>
+      // Save all mission statuses
+      Promise.map(missionsUpdated, missionUpdated =>
+        MissionStatus.findOne({
+          _id: missionUpdated.id,
+        })
+        .then(mission => {
+          mission.set(missionUpdated);
+          return mission.save();
+        })
+      )
+    )
     .then(() => res.status(httpStatus.NO_CONTENT).end())
     .catch(next);
   },
