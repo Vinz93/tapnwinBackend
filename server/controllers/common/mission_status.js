@@ -237,67 +237,8 @@ const MissionStatusController = {
         data.isBlocked = true;
         data.unblockAt = new Date(Date.now() + timeUnit.hours.toMillis(missionCampaign.blockTime));
 
-        if (missionCampaign.campaign.dyg !== undefined &&
-          missionCampaign.campaign.dyg.isActive &&
-          missionCampaign.campaign.dyg.blockable) {
-          data.dyg = {
-            isBlocked: true,
-            unblockAt: data.unblockAt,
-          };
-        }
-        /* if (missionCampaign.campaign.vdlg !== undefined &&
-          missionCampaign.campaign.vdlg.isActive &&
-          missionCampaign.campaign.vdlg.blockable) {
-          data.vdlg = {
-            isBlocked: true,
-            unblockAt: data.unblockAt,
-          };
-        }*/
-        if (missionCampaign.campaign.m3 !== undefined &&
-          missionCampaign.campaign.m3.isActive &&
-          missionCampaign.campaign.m3.blockable) {
-          data.m3 = {
-            isBlocked: true,
-            unblockAt: data.unblockAt,
-            moves: campaignStatus.m3.moves,
-            score: campaignStatus.m3.score,
-          };
-        }
-        /* if (missionCampaign.campaign.ddt !== undefined &&
-          missionCampaign.campaign.ddt.isActive &&
-          missionCampaign.campaign.ddt.blockable) {
-          data.ddt = {
-            isBlocked: true,
-            unblockAt: data.unblockAt,
-          };
-        }*/
-
         if (code === '01') {
-          if (campaignStatus.dyg.dressed !== undefined) {
-            const code = missionStatus.missionCampaign.mission.code.substr(2, 2);
-            data.dyg = {
-              isBlocked: true,
-              unblockAt: data.unblockAt,
-            };
-            if (code === '01') {
-              data.dyg.dressed = campaignStatus.dyg.dressed +
-                missionStatus.missionCampaign.max;
-              data.dyg.votesGiven = campaignStatus.dyg.votesGiven;
-              data.dyg.votesReceived = campaignStatus.dyg.votesReceived;
-            }
-            if (code === '04') {
-              data.dyg.votesGiven = campaignStatus.dyg.votesGiven +
-                missionStatus.missionCampaign.max;
-              data.dyg.dressed = campaignStatus.dyg.dressed;
-              data.dyg.votesReceived = campaignStatus.dyg.votesReceived;
-            }
-            if (code === '05') {
-              data.dyg.votesReceived = campaignStatus.dyg.votesReceived +
-                missionStatus.missionCampaign.max;
-              data.dyg.dressed = campaignStatus.dyg.dressed;
-              data.dyg.votesGiven = campaignStatus.dyg.votesGiven;
-            }
-          }
+          // dyg
         }
         if (code === '02') {
           // vdlg
@@ -308,10 +249,9 @@ const MissionStatusController = {
               isBlocked: true,
               unblockAt: data.unblockAt,
               moves: campaignStatus.m3.moves,
-              // score: campaignStatus.m3.score + missionStatus.missionCampaign.max,
               score: campaignStatus.m3.score,
             };
-            let value = missionStatus.missionCampaign.max;
+            const value = missionStatus.missionCampaign.max;
 
             transaction.update('MissionStatus', missionStatus.id, { value });
           }
