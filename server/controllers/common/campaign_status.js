@@ -60,49 +60,49 @@ const StatusController = {
     })
     .catch(next);
   },
-  /**
-   * @swagger
-   * /players/me/trade_balance/{campaign_status_id}:
-   *   put:
-   *     tags:
-   *       - CampaignStatuses
-   *     description: Trade the user's balance if they have it unblocked
-   *     produces:
-   *       - application/json
-   *     parameters:
-   *       - name: X-Auth-Token
-   *         description: Player's session token
-   *         in: header
-   *         required: true
-   *         type: string
-   *       - name: campaign_status_id
-   *         description: CampaignStatus' id
-   *         in: path
-   *         required: true
-   *         type: string
-   *     responses:
-   *       200:
-   *         description: Successfully trade
-   */
-  tradeBalance(req, res, next){
+/**
+ * @swagger
+ * /players/me/trade_balance/{campaign_status_id}:
+ *   put:
+ *     tags:
+ *       - CampaignStatuses
+ *     description: Trade the user's balance if they have it unblocked
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: X-Auth-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *       - name: campaign_status_id
+ *         description: CampaignStatus' id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       200:
+ *         description: Successfully trade
+ */
+  tradeBalance(req, res, next) {
     let balance = undefined;
     CampaignStatus.findOne({
       player: res.locals.user._id,
       _id: req.params.campaign_status_id,
     })
     .then(campaignStatus => {
-      if(!campaignStatus)
+      if (!campaignStatus)
         return Promise.reject(new APIError('CampaignStatus not found', httpStatus.NOT_FOUND));
-      if(campaignStatus.balance > 0 && campaignStatus.isBlocked == false){
+      if (campaignStatus.balance > 0 && campaignStatus.isBlocked == false) {
         balance = campaignStatus.balance;
         campaignStatus.balance = 0;
         return campaignStatus.save();
-      } else
-        return Promise.reject(new APIError('The balance is 0 or blocked', httpStatus.NOT_ACCEPTABLE));
+      }
+      return Promise.reject(new APIError('The balance is 0 or blocked',
+          httpStatus.NOT_ACCEPTABLE));
     })
-    .then(campaignStatus => {
-      res.status(httpStatus.OK)
-          .json({balanceRemoved: balance});
+    .then(() => {
+      res.status(httpStatus.OK).json({ balanceRemoved: balance });
     })
     .catch(next);
   },
