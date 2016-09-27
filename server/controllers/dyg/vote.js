@@ -151,7 +151,7 @@ const VoteController = {
       Promise.map(missionCampaigns, missionCampaign =>
         MissionStatus.findOne({
           player: votePopulated.design.player,
-          missionCampaign: missionCampaign.id,
+          missionCampaign: missionCampaign._id,
         })
         .populate({
           path: 'missionCampaign',
@@ -167,7 +167,7 @@ const VoteController = {
           if (!missionStatus) {
             return MissionStatus.create({
               player: votePopulated.design.player,
-              missionCampaign: missionCampaign.id,
+              missionCampaign: missionCampaign._id,
             })
             .then(missionStatus => MissionStatus.populate(missionStatus, {
               path: 'missionCampaign',
@@ -263,7 +263,7 @@ const VoteController = {
         .spread((campaignStatus, missionsUpdated) =>
           Promise.map(missionsUpdated, missionUpdated =>
             MissionStatus.findOne({
-              _id: missionUpdated.id,
+              _id: missionUpdated._id,
             })
             .then(mission => {
               mission.set(missionUpdated);

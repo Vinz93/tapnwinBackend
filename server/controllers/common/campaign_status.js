@@ -163,8 +163,8 @@ const StatusController = {
       missionCampaigns,
       Promise.map(missionCampaigns, missionCampaign =>
         MissionStatus.findOne({
-          player: res.locals.user.id,
-          missionCampaign: missionCampaign.id,
+          player: res.locals.user._id,
+          missionCampaign: missionCampaign._id,
         })
         .populate({
           path: 'missionCampaign',
@@ -179,8 +179,8 @@ const StatusController = {
         .then(missionStatus => {
           if (!missionStatus) {
             return MissionStatus.create({
-              player: res.locals.user.id,
-              missionCampaign: missionCampaign.id,
+              player: res.locals.user._id,
+              missionCampaign: missionCampaign._id,
             })
             .then(missionStatus => MissionStatus.populate(missionStatus, {
               path: 'missionCampaign',
@@ -384,7 +384,7 @@ const StatusController = {
       // Save all mission statuses
       [Promise.map(missionsUpdated, missionUpdated =>
         MissionStatus.findOne({
-          _id: missionUpdated.id,
+          _id: missionUpdated._id,
         })
         .then(mission => {
           mission.set(missionUpdated);
@@ -397,7 +397,7 @@ const StatusController = {
     .spread((missionsSaved, missionsCompleted) =>
       Promise.map(missionsCompleted, missionCompleted =>
         MissionStatus.findOne({
-          _id: missionCompleted.id,
+          _id: missionCompleted._id,
         })
         .then(missionStatus => MissionStatus.populate(missionStatus, {
           path: 'missionCampaign',
