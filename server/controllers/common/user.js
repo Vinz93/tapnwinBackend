@@ -9,9 +9,7 @@ import templates from 'email-templates';
 import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import {
-  paginate
-} from '../../helpers/utils';
+import {paginate} from '../../helpers/utils';
 import APIError from '../../helpers/api_error';
 import User from '../../models/common/user';
 import Player from '../../models/common/player';
