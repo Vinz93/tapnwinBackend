@@ -54,10 +54,6 @@ const UserSchema = new Schema({
     type: String,
     required: false,
   },
-  recoveredAt: {
-    type: Date,
-    required: false,
-  },
   verified: {
     type: Boolean,
     required: true,
@@ -83,7 +79,8 @@ UserSchema.methods = {
     return `${this._id}${randtoken.generate(16)}`;
   },
   generateSimpleToken(){
-    return randtoken.generate(8);
+    const id = this._id.toString();
+    return `${randtoken.generate(3)}${id.substring(2,4)}${randtoken.generate(3)}${id[1]}`;
   },
 
   createSessionToken() {
@@ -94,27 +91,13 @@ UserSchema.methods = {
     this.verificationToken = this.generateSimpleToken();
 },
 
-  createRecoveryToken(time) {
-    const ms = timeUnit.hours.toMillis(time);
-
-    if (this.recoveredAt && (Date.now() - this.recoveredAt.getTime() <= ms))
-      return false;
-
+  createRecoveryToken() {
     this.recoveryToken = this.generateSimpleToken();
-    this.recoveredAt = new Date();
-
-    return true;
   },
 
-  updatePassword(password, time) {
-    const ms = timeUnit.hours.toMillis(time);
-
-    if (Date.now() - this.recoveredAt.getTime() > ms)
-      return false;
-
+  updatePassword(password) {
     this.password = password;
     this.recoveryToken = undefined;
-    this.recoveredAt = undefined;
 
     return true;
   },
@@ -129,7 +112,7 @@ UserSchema.pre('save', function(next) {
   next();
 });
 
-UserSchema.plugin(fieldRemover, 'password recoveryToken recoveredAt verificationToken');
+UserSchema.plugin(fieldRemover, 'password recoveryToken verificationToken');
 UserSchema.plugin(uniqueValidator);
 UserSchema.plugin(paginate);
 
