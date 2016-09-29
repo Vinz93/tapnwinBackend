@@ -75,7 +75,7 @@
       "isRequired": true,
       "isBlocking": true,
       "blockTime": 0.1,
-      "max": 12
+      "max": 11
     },
     "missionCampaign9": {
       "campaign": "->campaigns.campaign1",
@@ -111,7 +111,7 @@
       "isRequired": true,
       "isBlocking": true,
       "blockTime": 0.1,
-      "max": 10000
+      "max": 5000
     }
   }
 }

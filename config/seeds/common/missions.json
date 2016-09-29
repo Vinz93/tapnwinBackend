@@ -31,7 +31,7 @@
     },
     "mission8": {
       "code": "0201",
-      "description": "Responde 12 preguntas"
+      "description": "Responde 11 preguntas"
     },
     "mission9": {
       "code": "0202",
@@ -47,7 +47,7 @@
     },
     "mission12": {
       "code": "0301",
-      "description": "Alcanza 10000 puntos"
+      "description": "Alcanza 5000 puntos"
     }
   }
 }
