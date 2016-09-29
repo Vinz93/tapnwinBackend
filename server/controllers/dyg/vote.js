@@ -198,7 +198,6 @@ const VoteController = {
             count: { $sum: 1 },
           },
         },
-        { $sort: { count: 1 } },
       ], (err, votes) =>
         Design.find({ _id: { $in: votes.map(item => item._id.design) } })
         .then(designs => {
@@ -206,12 +205,13 @@ const VoteController = {
             const designAndCount = {};
             designAndCount.count = votes[index].count;
             designAndCount.design = item;
-            // console.log(designAndCount);
+            console.log(designAndCount);
             return designAndCount;
           })
           .filter(item =>
             item.design.player.toString() === votePopulated.design.player.toString()
           );
+          console.log(designsVoted);
           return designsVoted.reduce((prev, item) =>
             Math.max(prev, item.count), 0);
         })
