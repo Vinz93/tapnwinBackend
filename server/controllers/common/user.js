@@ -9,9 +9,7 @@ import templates from 'email-templates';
 import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import {
-  paginate
-} from '../../helpers/utils';
+import {paginate} from '../../helpers/utils';
 import APIError from '../../helpers/api_error';
 import User from '../../models/common/user';
 import Player from '../../models/common/player';
@@ -197,8 +195,7 @@ const UserController = {
         const template = path.join(config.root, '/server/views/mail/password_recovery');
         const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
 
-        if (!user.createRecoveryToken(config.times.recovery))
-          return Promise.reject(new APIError('Recovery email already sent', httpStatus.BAD_REQUEST));
+        user.createRecoveryToken();
 
         send({
           to: user.email,
@@ -210,7 +207,7 @@ const UserController = {
             return next(err);
 
           user.save()
-            .then(() => res.status(201).end())
+            .then(() => res.status(httpStatus.CREATED).end())
             .catch(next);
         });
       })
@@ -324,11 +321,7 @@ const UserController = {
         if (!user)
           return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
-        const config = req.app.locals.config;
-
-        if (!user.updatePassword(req.body.password, config.times.update))
-          return Promise.reject(new APIError('Recovery token expired', httpStatus.BAD_REQUEST));
-
+        user.updatePassword(req.body.password);
         return user.save();
       })
       .then(() => res.status(httpStatus.NO_CONTENT).end())
