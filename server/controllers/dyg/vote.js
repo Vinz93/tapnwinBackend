@@ -201,17 +201,19 @@ const VoteController = {
       ], (err, votes) =>
         Design.find({ _id: { $in: votes.map(item => item._id.design) } })
         .then(designs => {
-          const designsVoted = designs.map((item, index) => {
+          const designsVoted = designs.map(item => {
             const designAndCount = {};
-            designAndCount.count = votes[index].count;
+            designAndCount.count = votes.filter(voteItem =>
+              voteItem._id.design.toString() === item._id.toString()
+            )[0].count;
             designAndCount.design = item;
-            console.log(designAndCount);
+            // console.log(designAndCount);
             return designAndCount;
           })
           .filter(item =>
             item.design.player.toString() === votePopulated.design.player.toString()
           );
-          console.log(designsVoted);
+          // console.log(designsVoted);
           return designsVoted.reduce((prev, item) =>
             Math.max(prev, item.count), 0);
         })
