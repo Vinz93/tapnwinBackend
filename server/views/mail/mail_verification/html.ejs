@@ -1,10 +1,25 @@
 <div class="mail-container">
+  <div class="pink-bar"></div>
+  <div class="brand-container">
+  </div>
+  <img src="http://52.39.109.204/tapnwin/api/v1/uploads/09377193-338c-4124-bb27-17600debbef0.png" alt="">
   <div class="title-container">
-    <h3 class="mail-title">Welcome to Tap and Win App</h3>
+    <h3 class="mail-title">¡Bienvenido a Tap and Win!</h3>
   </div>
   <div class="mail-body">
-    <p> Hi <%= player.firstName %>!</p>
-    <p> this is your verification token: <span class="token"><%= player.verificationToken %></span></p>
-    <p>please use it in order to login into the app.</p>
+    <p> Hola <%= player.firstName %>,</p>
+    <p> Introduce el siguiente código para verficar tu registro:</p>
+    <p class="token"><%= player.verificationToken %></p>
+    <p>Recibes este correo debido a que una persona intentó registrase en nuestra app
+      con tu dirección de correo. Si es un error, ignora este mensaje y el registro
+      no se llevará a cabo.</p>
+      <p>Con nuestra app, puedes:</p>
+      <ul>
+        <li>- Recibir premios y beneficios en tus tiendas favoritas.</li>
+        <li>- Jugar y ganar saldos a usar en tus tiendas participantes.</li>
+        <li>- Conocer descuentos y promociones al instante.</li>
+      </ul>
+      <p>¡Gracias por registrate!</p>
+      <p>tapnwin.today</p>
   </div>
 </div>

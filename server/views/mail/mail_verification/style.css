@@ -1,22 +1,50 @@
 .mail-container{
-  padding-top: 10px;
-  padding-left: 20px;
-  padding-bottom: 20px;
-  border-radius: 4px;
-  background-color: #22A7F0;
+  padding-top: 5px;
+  padding-left: 22px;
+  padding-bottom: 10px;
+  position: relative;
 }
-.mail-title {
-  text-align: center;
+
+.brand-container{
+  background: url(http://52.39.109.204/tapnwin/api/v1/uploads/09377193-338c-4124-bb27-17600debbef0.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.title-container > .mail-title{
   font-size: 20px;
+  color: #686868
 }
+
 
 .mail-body > p {
-  font-size: 16px;
-  text-align: center;
+  font-size: 18px;
+  text-align: left;
+  color: #8c8c8c;
 }
 
-.token{
-  font-size: 18px;
+.mail-body > .token{
+  font-size: 20px;
+  text-align: center;
   font-weight: bold;
   letter-spacing: 2px;
+  color: #FF3062;
+}
+
+.mail-body > ul{
+  list-style: none;
+}
+.mail-body > ul > li{
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #8c8c8c;
+}
+
+.pink-bar{
+  position: absolute;
+  background-color: #FF3062;
+  height: 100%;
+  width: 20px ;
 }
