@@ -9,7 +9,7 @@ import templates from 'email-templates';
 import httpStatus from 'http-status';
 import Promise from 'bluebird';
 
-import {paginate} from '../../helpers/utils';
+import { paginate } from '../../helpers/utils';
 import APIError from '../../helpers/api_error';
 import User from '../../models/common/user';
 import Player from '../../models/common/player';
@@ -70,23 +70,23 @@ const UserController = {
 
     const find = req.query.find || {};
     const sort = req.query.sort || {
-      createdAt: 1
+      createdAt: 1,
     };
     const select = {
       sessionToken: 0,
       facebookId: 0,
       twitterId: 0,
-      lastLogin:0
+      lastLogin: 0,
     };
 
     User.paginate(find, {
-        sort,
-        select,
-        offset,
-        limit,
-      })
-      .then(users => res.json(users))
-      .catch(next);
+      sort,
+      select,
+      offset,
+      limit,
+    })
+    .then(users => res.json(users))
+    .catch(next);
   },
 
   /**
@@ -137,13 +137,14 @@ const UserController = {
   checkVerificationToken(req, res, next) {
     const expiredTime = req.app.locals.config.times.expired;
     Player.findOne({
-        email: req.body.email
-      })
+      email: req.body.email,
+    })
       .then(player => {
         if (!player)
           return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
 
-        if (!(player.verificationToken == req.body.verificationToken) || player.expiredVerification(expiredTime))
+        if (!(player.verificationToken === req.body.verificationToken) ||
+         player.expiredVerification(expiredTime))
           return Promise.reject(new APIError('Invalid Token', httpStatus.BAD_REQUEST));
 
         player.verificationToken = undefined;
@@ -184,8 +185,8 @@ const UserController = {
     const UserChild = (req.query.type === 'Administrator') ? Administrator : Player;
 
     UserChild.findOne({
-        email: req.body.email,
-      })
+      email: req.body.email,
+    })
       .then(user => {
         if (!user)
           return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
@@ -199,7 +200,7 @@ const UserController = {
 
         send({
           to: user.email,
-          subject: 'Password recovery',
+          subject: 'Recupera tu contraseña en Tap and win',
         }, {
           user,
         }, err => {
@@ -315,8 +316,8 @@ const UserController = {
    */
   updatePassword(req, res, next) {
     User.findOne({
-        recoveryToken: req.query.recovery_token,
-      })
+      recoveryToken: req.query.recovery_token,
+    })
       .then(user => {
         if (!user)
           return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
@@ -403,9 +404,7 @@ const UserController = {
         user.set(req.body);
         return user.save();
       })
-      .then(player => {
-          return res.status(httpStatus.NO_CONTENT).end();
-      })
+      .then(() => res.status(httpStatus.NO_CONTENT).end())
       .catch(next);
   },
 
@@ -435,28 +434,31 @@ const UserController = {
    *         description: Successfully updated
    */
 
-  updateEmail(req, res, next){
+  updateEmail(req, res, next) {
     const config = req.app.locals.config;
     const template = path.join(config.root, '/server/views/mail/mail_verification');
     const send = req.app.locals.mailer.templateSender(new EmailTemplate(template));
-      User.findById(req.params.user_id)
+    User.findById(req.params.user_id)
       .then(player => {
-        if(!player)
+        if (!player)
           return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
         player.email = req.body.email;
         player.createVerificationToken();
-        send({
-          to: player.email,
-          subject: 'Tap and Win Verification',
-        }, {
-          player,
-        }, err => {
-          if (err)
-            return next(err);
-          return player.save();
-        });
+        return player.save()
+          .then(player => {
+            send({
+              to: player.email,
+              subject: 'Tap and Win Verification',
+            }, {
+              player,
+            }, err => {
+              if (err)
+                return next(err);
+            });
+          })
+          .catch(err => err);
       })
-      .then(player => res.status(httpStatus.NO_CONTENT).end())
+      .then(() => res.status(httpStatus.NO_CONTENT).end())
       .catch(next);
   },
 

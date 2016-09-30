@@ -59,8 +59,8 @@ const SessionController = {
       if (!user.authenticate(req.body.password))
         return Promise.reject(new APIError('Invalid password', httpStatus.BAD_REQUEST));
 
-      if(!user.verified && user.__t == 'Player')
-          return Promise.reject(new APIError('User is not verified yet', httpStatus.UNAUTHORIZED));
+      if (!user.verified && user.__t === 'Player')
+        return Promise.reject(new APIError('User is not verified yet', httpStatus.UNAUTHORIZED));
 
       user.createSessionToken();
       user.lastLogin = Date.now();
@@ -68,8 +68,9 @@ const SessionController = {
       return user.save();
     })
     .then((user) => res.status(httpStatus.CREATED).json({
+      id: user.id,
       token: user.sessionToken,
-      lastLogin: user.lastLogin}))
+      lastLogin: user.lastLogin }))
     .catch(next);
   },
 

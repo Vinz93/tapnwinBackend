@@ -37,7 +37,7 @@ const UserSchema = new Schema({
     sparse: true,
   },
   password: {
-    type: String
+    type: String,
   },
   sessionToken: {
     type: String,
@@ -47,7 +47,7 @@ const UserSchema = new Schema({
     type: String,
     required: false,
   },
-  lastLogin:{
+  lastLogin: {
     type: Date,
   },
   recoveryToken: {
@@ -58,7 +58,7 @@ const UserSchema = new Schema({
     type: Boolean,
     required: true,
     default: false,
-  }
+  },
 }, {
   timestamps: true,
 });
@@ -71,16 +71,16 @@ UserSchema.methods = {
   expiredVerification(time) {
     const limit = timeUnit.hours.toMillis(time);
     if (Date.now() - this.createdAt.getTime() > limit)
-        return true;
+      return true;
     return false;
-},
+  },
 
   generateToken() {
     return `${this._id}${randtoken.generate(16)}`;
   },
-  generateSimpleToken(){
+  generateSimpleToken() {
     const id = this._id.toString();
-    return `${randtoken.generate(3)}${id.substring(2,4)}${randtoken.generate(3)}${id[1]}`;
+    return `${randtoken.generate(3)}${id.substring(2, 4)}${randtoken.generate(3)}${id[1]}`;
   },
 
   createSessionToken() {
@@ -89,7 +89,7 @@ UserSchema.methods = {
 
   createVerificationToken() {
     this.verificationToken = this.generateSimpleToken();
-},
+  },
 
   createRecoveryToken() {
     this.recoveryToken = this.generateSimpleToken();
