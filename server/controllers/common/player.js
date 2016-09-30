@@ -72,7 +72,7 @@ const PlayerController = {
               player.createVerificationToken();
               send({
                 to: player.email,
-                subject: 'Tap and Win Verification',
+                subject: 'Confirma tu registro en Tap and win',
               }, {
                 player,
               }, err => {
@@ -91,7 +91,7 @@ const PlayerController = {
           player.createVerificationToken();
           send({
             to: player.email,
-            subject: 'Tap and Win Verification',
+            subject: 'Confirma tu registro en Tap and win',
           }, {
             player,
           }, err => {
