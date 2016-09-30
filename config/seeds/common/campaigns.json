@@ -15,6 +15,7 @@
       "startAt": "2015-12-01T17:39:22.939Z",
       "finishAt": "2016-12-01T17:39:22.939Z",
       "balance": 1000,
+      "blockTime": 0.016,
       "company": "->companies.company1",
       "dyg": {
         "isActive": true,

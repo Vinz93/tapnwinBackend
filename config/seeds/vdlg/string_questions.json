@@ -8,7 +8,7 @@
       "popular": "<color=#A08BECFF>La mayoría de las personas</color> llega a la tienda Levi’s más cercana a su casa tras conducir...",
       "inbox": "Para llegar en auto a la tienda Levi’s más cercana a mi casa, debo conducir...",
       "startAt": "2016-09-04T00:00:00.000Z",
-      "finishAt": "2016-09-30T14:00:00.000Z",
+      "finishAt": "2016-09-30T19:30:00.000Z",
       "possibilityStrings": [
         "10 minutos",
         "30 minutos",
@@ -22,7 +22,7 @@
       "popular": "<color=#A08BECFF>La mayoría de las personas,</color> cuando no compra en Levi’s, lo hace en...",
       "inbox": "Cuando no compro en Levi's, lo hago en...",
       "startAt": "2016-09-13T00:00:00.000Z",
-      "finishAt": "2016-09-30T14:10:00.000Z",
+      "finishAt": "2016-09-30T19:35:00.000Z",
       "possibilityStrings": [
         "Macy's",
         "Bloomingdale's",
@@ -37,7 +37,7 @@
       "popular": "<color=#A08BECFF>La mayoría de las personas,</color> con esta app, ¿ya hicieron \"tap\" en algún punto tap&win?",
       "inbox": "¿Ya has hecho \"tap\" en un punto tap&win?",
       "startAt": "2016-09-16T00:00:00.000Z",
-      "finishAt": "2016-09-30T14:20:00.000Z",
+      "finishAt": "2016-09-30T19:40:00.000Z",
       "possibilityStrings": [
         "Sí",
         "No"
@@ -49,7 +49,7 @@
       "popular": "<color=#A08BECFF>La mayoría de las personas,</color> volvería a visitar una tienda en que siempre....",
       "inbox": "Volvería a visitar una tienda que siempre...",
       "startAt": "2016-09-18T00:00:00.000Z",
-      "finishAt": "2016-09-30T14:30:00.000Z",
+      "finishAt": "2016-09-30T19:45:00.000Z",
       "possibilityStrings": [
         "Ofrezca variedad de productos",
         "Tenga marcas exclusivas",
@@ -64,8 +64,8 @@
       "personal": "<color=#6BFF52FF>Personalmente,</color> ¿te gusta vestir a tu perro/gato?",
       "popular": "¿Qué opinan <color=#A08BECFF>la mayoría de las personas,</color> sobre vestir a sus perros/gatos?",
       "inbox": "¿Te gusta vestir a tu perro/gato?",
-      "startAt": "2016-09-30T15:30:00.000Z",
-      "finishAt": "2016-09-30T16:00:00.020Z",
+      "startAt": "2016-09-20T15:30:00.000Z",
+      "finishAt": "2016-09-30T19:50:00.000Z",
       "possibilityStrings": [
         "Sí… ¡Se ve adorable!",
         "¡No! No deben \"vestirse\"",
