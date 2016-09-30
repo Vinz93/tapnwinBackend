@@ -99,6 +99,7 @@
       },
       "m3": {
         "isActive": true,
+        "blockTime": 0.016,
         "blockable": true
       }
     }

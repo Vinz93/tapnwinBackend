@@ -5,7 +5,7 @@
       "firstName": "Andres",
       "lastName": "Alvarez",
       "email": "a.alvarez.sor@gmail.com",
-      "password": "secret",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "1992-08-18T17:39:22.939Z",
       "gender": "male"
@@ -14,7 +14,7 @@
       "firstName": "Juan",
       "lastName": "Sanchez",
       "email": "juans@ludopia.net",
-      "password": "secret",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "1991-12-01T17:39:22.939Z",
       "gender": "male"
@@ -23,7 +23,7 @@
       "firstName": "David",
       "lastName": "Marul",
       "email": "david.marull@gmail.com",
-      "password": "secret",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "1988-12-01T17:39:22.939Z",
       "gender": "male"
@@ -32,7 +32,7 @@
       "firstName": "Gian",
       "lastName": "Conti",
       "email": "gianc@ludopia.net",
-      "password": "ludopia",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "1989-02-08T19:15:09.069Z",
       "gender": "male"
@@ -41,7 +41,7 @@
       "firstName": "Patricia",
       "lastName": "Zambrano",
       "email": "patriciaz@ludopia.net",
-      "password": "123456",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "2016-09-12T19:15:09.069Z",
       "gender": "female"
@@ -50,7 +50,7 @@
       "firstName": "Carlos",
       "lastName": "Avilan",
       "email": "carlosa@ludopia.net",
-      "password": "secret",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "1992-08-18T19:15:09.069Z",
       "gender": "male"
@@ -59,7 +59,7 @@
       "firstName": "Adriana",
       "lastName": "Urdaneta",
       "email": "adrianau@ludopia.net",
-      "password": "secret",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "2016-09-21T19:15:09.069Z",
       "gender": "female"
@@ -68,7 +68,7 @@
       "firstName": "David",
       "lastName": "Marul",
       "email": "davidm@ludopia.net",
-      "password": "secret",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "1988-12-01T17:39:22.939Z",
       "gender": "male"
@@ -77,7 +77,7 @@
       "firstName": "Gian",
       "lastName": "Conti",
       "email": "gianc2@ludopia.net",
-      "password": "ludopia",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "1989-02-08T19:15:09.069Z",
       "gender": "male"
@@ -86,7 +86,7 @@
       "firstName": "Gian",
       "lastName": "Conti",
       "email": "gianc3@ludopia.net",
-      "password": "ludopia",
+      "password": "E5E9FA1BA31ECD1AE84F75CAAA474F3A663F05F4",
       "verified": true,
       "bornAt": "1989-02-08T19:15:09.069Z",
       "gender": "male"
