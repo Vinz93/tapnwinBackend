@@ -37,7 +37,7 @@
       "popular": "<color=#A08BECFF>La mayoría de las personas,</color> con esta app, ¿ya hicieron \"tap\" en algún punto tap&win?",
       "inbox": "¿Ya has hecho \"tap\" en un punto tap&win?",
       "startAt": "2016-09-16T00:00:00.000Z",
-      "finishAt": "2016-09-30T22:15:00.000ZZ",
+      "finishAt": "2016-09-30T22:15:00.000Z",
       "possibilityStrings": [
         "Sí",
         "No"
