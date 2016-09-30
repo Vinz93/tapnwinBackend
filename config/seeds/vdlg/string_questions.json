@@ -7,8 +7,8 @@
       "personal": "Para llegar en auto a la tienda Levi’s más cercana a tu casa, debes conducir...",
       "popular": "<color=#A08BECFF>La mayoría de las personas</color> llega a la tienda Levi’s más cercana a su casa tras conducir...",
       "inbox": "Para llegar en auto a la tienda Levi’s más cercana a mi casa, debo conducir...",
-      "startAt": "2016-09-04T00:00:00.000Z",
-      "finishAt": "2016-09-30T22:20:00.000Z",
+      "startAt": "2016-09-30T00:00:00.001Z",
+      "finishAt": "2016-10-05T12:00:00.000Z",
       "possibilityStrings": [
         "10 minutos",
         "30 minutos",
@@ -21,8 +21,8 @@
       "personal": "<color=#6BFF52FF>Personalmente,</color> cuando no compras en Levi’s, lo haces en...",
       "popular": "<color=#A08BECFF>La mayoría de las personas,</color> cuando no compra en Levi’s, lo hace en...",
       "inbox": "Cuando no compro en Levi's, lo hago en...",
-      "startAt": "2016-09-13T00:00:00.000Z",
-      "finishAt": "2016-09-30T22:30:00.000Z",
+      "startAt": "2016-09-30T00:00:00.003Z",
+      "finishAt": "2016-10-05T12:00:00.000Z",
       "possibilityStrings": [
         "Macy's",
         "Bloomingdale's",
@@ -36,8 +36,8 @@
       "personal": "<color=#6BFF52FF>Personalmente,</color> ¿ya has hecho \"tap\" en cualquiera de los puntos tap&win?",
       "popular": "<color=#A08BECFF>La mayoría de las personas,</color> con esta app, ¿ya hicieron \"tap\" en algún punto tap&win?",
       "inbox": "¿Ya has hecho \"tap\" en un punto tap&win?",
-      "startAt": "2016-09-16T00:00:00.000Z",
-      "finishAt": "2016-09-30T22:35:00.000Z",
+      "startAt": "2016-09-30T00:00:00.005Z",
+      "finishAt": "2016-10-05T12:00:00.000Z",
       "possibilityStrings": [
         "Sí",
         "No"
@@ -48,8 +48,8 @@
       "personal": "<color=#6BFF52FF>Personalmente,</color> volverías a visitar una tienda en la que siempre...",
       "popular": "<color=#A08BECFF>La mayoría de las personas,</color> volvería a visitar una tienda en que siempre....",
       "inbox": "Volvería a visitar una tienda que siempre...",
-      "startAt": "2016-09-18T00:00:00.000Z",
-      "finishAt": "2016-09-30T22:45:00.000Z",
+      "startAt": "2016-10-05T12:00:00.003Z",
+      "finishAt": "2016-10-10T12:00:00.000Z",
       "possibilityStrings": [
         "Ofrezca variedad de productos",
         "Tenga marcas exclusivas",
@@ -64,8 +64,8 @@
       "personal": "<color=#6BFF52FF>Personalmente,</color> ¿te gusta vestir a tu perro/gato?",
       "popular": "¿Qué opinan <color=#A08BECFF>la mayoría de las personas,</color> sobre vestir a sus perros/gatos?",
       "inbox": "¿Te gusta vestir a tu perro/gato?",
-      "startAt": "2016-09-19T15:30:00.000Z",
-      "finishAt": "2016-09-30T22:50:00.000Z",
+      "startAt": "2016-10-05T12:00:00.005Z",
+      "finishAt": "2016-10-10T12:00:00.000Z",
       "possibilityStrings": [
         "Sí… ¡Se ve adorable!",
         "¡No! No deben \"vestirse\"",

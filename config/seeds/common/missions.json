@@ -19,11 +19,11 @@
     },
     "mission5": {
       "code": "0105",
-      "description": "Recibe 3 votos en un diseño"
+      "description": "Recibe 1 voto en un diseño"
     },
     "mission6": {
       "code": "0105",
-      "description": "Recibe 5 votos en un diseño"
+      "description": "Recibe 2 votos en un diseño"
     },
     "mission7": {
       "code": "0201",
@@ -35,19 +35,19 @@
     },
     "mission9": {
       "code": "0202",
-      "description": "Adivina correctamente 1 preguntas"
+      "description": "Adivina correctamente 2 preguntas"
     },
     "mission10": {
       "code": "0202",
-      "description": "Adivina correctamente 2 preguntas"
+      "description": "Adivina correctamente 3 preguntas"
     },
     "mission11": {
       "code": "0301",
-      "description": "Alcanza 3000 puntos"
+      "description": "Alcanza 2000 puntos"
     },
     "mission12": {
       "code": "0301",
-      "description": "Alcanza 5000 puntos"
+      "description": "Alcanza 4000 puntos"
     }
   }
 }
