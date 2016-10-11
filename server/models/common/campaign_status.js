@@ -66,6 +66,8 @@ DygStatusSchema.plugin(fieldRemover);
  * definition:
  *   VDLGStatus:
  *     properties:
+ *       tutorial:
+ *         type: number
  *       answered:
  *         type: number
  *       correct:
@@ -74,6 +76,7 @@ DygStatusSchema.plugin(fieldRemover);
  *         type: boolean
  */
 const VDLGStatusSchema = new Schema({
+  tutorial: Number,
   answered: Number,
   correct: Number,
   isBlocked: Boolean,
@@ -136,7 +139,9 @@ const CampaignStatusSchema = new Schema({
   },
   vdlg: {
     type: VDLGStatusSchema,
-    default: {},
+    default: {
+      tutorial: -1,
+    },
   },
 }, {
   timestamps: true,

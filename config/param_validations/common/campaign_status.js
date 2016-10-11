@@ -42,6 +42,7 @@ export default {
       'dyg.votesGiven': Joi.number().integer(),
       'dyg.votesReceived': Joi.number().integer(),
       'dg.isBlocked': Joi.boolean(),
+      'vdlg.tutorial': Joi.number().integer(),
       'vdlg.correct': Joi.number().integer(),
       'vdlg.answered': Joi.number().integer(),
       'vdlg.isBlocked': Joi.boolean(),
