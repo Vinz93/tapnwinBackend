@@ -79,8 +79,7 @@ UserSchema.methods = {
     return `${this._id}${randtoken.generate(16)}`;
   },
   generateSimpleToken() {
-    const id = this._id.toString();
-    return `${randtoken.generate(3)}${id.substring(2, 4)}${randtoken.generate(3)}${id[1]}`;
+    return randtoken.generate(6).toLowerCase();
   },
 
   createSessionToken() {
