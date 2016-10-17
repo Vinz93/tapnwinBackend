@@ -39,4 +39,13 @@ export default {
       design_id: Joi.objectId().required(),
     },
   },
+
+  update: {
+    params: {
+      design_id: Joi.objectId().required(),
+    },
+    body: {
+      views: Joi.number().integer(),
+    },
+  },
 };
