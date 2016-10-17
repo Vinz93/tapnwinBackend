@@ -51,7 +51,8 @@ router.route('/players/me/designs')
 .post(validate(designValidator.createByMe), Session.validate, User.isPlayer, Design.createByMe);
 
 router.route('/designs/:design_id')
-.get(validate(designValidator.read), Design.read);
+.get(validate(designValidator.read), Design.read)
+.patch(validate(designValidator.update), Design.update);
 
 router.route('/votes')
 .get(validate(voteValidator.readAll), Vote.readAll);
