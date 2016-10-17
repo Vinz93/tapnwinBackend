@@ -11,6 +11,9 @@
   border-left: 20px solid #FF3062;
 }
 
+.mail-container > img{
+  max-height: 122px;
+}
 /* Title and body text styles */
 
 .title-container > .mail-title{
