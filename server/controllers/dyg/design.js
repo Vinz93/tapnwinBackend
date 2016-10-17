@@ -290,6 +290,50 @@ const DesignController = {
     })
     .catch(next);
   },
+
+/**
+ * @swagger
+ * /designs/{design_id}:
+ *   patch:
+ *     tags:
+ *       - Designs
+ *     description: Add one more 'seen' person to a design
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: design_id
+ *         description: Design's id
+ *         in: path
+ *         required: true
+ *         type: string
+ *       - name: design
+ *         description: A new person saw that design
+ *         in: body
+ *         required: true
+ *         schema:
+ *           properties:
+ *             views:
+ *               type: number
+ *     responses:
+ *       201:
+ *         description: Successfully updated
+ */
+  update(req, res, next) {
+    Design.findById(req.params.design_id)
+    .then(design => {
+      if (!design)
+        return Promise.reject(new APIError('Design not found', httpStatus.NOT_FOUND));
+
+      if (req.body.views !== 1)
+        return Promise.reject(new APIError('Value too high!', httpStatus.CONFLICT));
+
+      req.body.views = design.views + 1;
+      design.set(req.body);
+      return design.save();
+    })
+    .then(() => res.status(httpStatus.NO_CONTENT).end())
+    .catch(next);
+  },
 };
 
 export default DesignController;
