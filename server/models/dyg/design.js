@@ -28,6 +28,8 @@ const Schema = mongoose.Schema;
  *         type: string
  *       model:
  *         type: string
+ *       views:
+ *         type: number
  *       items:
  *         type: array
  *         items:
@@ -52,6 +54,10 @@ const DesignSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'ModelAsset',
     required: true,
+  },
+  views: {
+    type: Number,
+    default: 0,
   },
   items: [{
     type: Schema.Types.ObjectId,
