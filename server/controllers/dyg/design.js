@@ -75,7 +75,7 @@ const DesignController = {
     const sort = req.query.sort || { views: 1 };
     let find;
 
-    if (req.query.exclusive) {
+    if (req.query.exclusive === 'true') {
       const player = { $ne: res.locals.user._id };
       find = Object.assign(req.query.find || {}, { player });
     } else {
