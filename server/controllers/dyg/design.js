@@ -10,7 +10,6 @@ import Promise from 'bluebird';
 import { paginate } from '../../helpers/utils';
 import APIError from '../../helpers/api_error';
 import Design from '../../models/dyg/design';
-import Vote from '../../models/dyg/vote';
 
 const DesignController = {
 /**
@@ -23,6 +22,16 @@ const DesignController = {
  *     produces:
  *       - application/json
  *     parameters:
+ *       - name: X-Auth-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *       - name: exclusive
+ *         description: True for player's designs and false otherwise
+ *         in: query
+ *         required: false
+ *         type: string
  *       - name: limit
  *         description: Return limit
  *         in: query
@@ -63,52 +72,24 @@ const DesignController = {
     const offset = paginate.offset(req.query.offset);
     const limit = paginate.limit(req.query.limit);
 
-    // const find = req.query.find || {};
-    const sort = req.query.sort || { createdAt: 1 };
+    const sort = req.query.sort || { views: 1 };
+    let find;
 
-    Vote.aggregate([
-      {
-        $group: {
-          _id: '$design',
-          count: { $sum: 1 },
-        },
-      },
-      { $sort: { count: 1 } },
-      { $limit: limit },
-      { $skip: offset },
-    ], (err, votes) => {
-      const designsVoted = [];
-      for (let i = 0; i < votes.length; i++) {
-        designsVoted.push(votes[i]._id);
-      }
-      Design.paginate({ _id: { $nin: designsVoted } }, {
-        sort,
-        offset,
-        limit,
-        populate: ['player'],
-      })
-      .then(designsNotVoted => {
-        if (designsNotVoted.total === designsNotVoted.limit) {
-          res.json(designsNotVoted);
-        }
-        Design.paginate({ _id: { $in: designsVoted } }, {
-          sort,
-          offset,
-          limit,
-          populate: ['player'],
-        })
-        .then(designsIn => {
-          const designs = {};
-          const difference = designsNotVoted.limit - designsNotVoted.total;
-          designs.docs = [].concat(designsNotVoted.docs, designsIn.docs.slice(0, difference));
-          designs.total = designs.docs.length;
-          designs.offset = offset;
-          designs.limit = limit;
-          res.json(designs);
-        });
-      })
-      .catch(next);
-    });
+    if (req.query.exclusive) {
+      const player = { $ne: res.locals.user._id };
+      find = Object.assign(req.query.find || {}, { player });
+    } else {
+      find = req.query.find || {};
+    }
+
+    Design.paginate(find, {
+      sort,
+      offset,
+      limit,
+      populate: ['player'],
+    })
+    .then(designs => res.json(designs))
+    .catch(next);
   },
 
 /**
