@@ -44,7 +44,7 @@ router.route('/categories/:category_id')
 .delete(validate(categoryValidator.delete), Category.delete);
 
 router.route('/designs')
-.get(validate(designValidator.readAll), Design.readAll);
+.get(validate(designValidator.readAll), Session.validate, User.isPlayer, Design.readAll);
 
 router.route('/players/me/designs')
 .get(validate(designValidator.readAllByMe), Session.validate, User.isPlayer, Design.readAllByMe)
