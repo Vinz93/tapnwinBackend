@@ -37,7 +37,7 @@ app.disable('x-powered-by');
 
 app.use(methodOverride('X-HTTP-Method-Override'));
 
-if (config.env === 'development') {
+if (config.env === 'development' || config.env === 'testing') {
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({
     extended: true,
