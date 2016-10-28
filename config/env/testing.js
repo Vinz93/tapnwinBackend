@@ -2,7 +2,7 @@ export default {
   env: 'testing',
   host: process.env.TAPNWIN_HOST || 'http://127.0.0.1',
   path: '/',
-  basePath: '/tapnwin/test/',
+  basePath: '/tapnwin/test',
   port: 4040,
   basePort: 4040,
   db: 'mongodb://localhost/tapnwin_test',
