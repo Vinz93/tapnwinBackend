@@ -10,8 +10,8 @@ export default {
     port: 465,
     secure: true,
     auth: {
-      user: 'techludopia@gmail.com',
-      pass: '12ludotech34',
+      user: 'registro@tapandwin.today',
+      pass: 'vinotinto2016',
     },
   },
   times: {
