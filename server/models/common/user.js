@@ -79,7 +79,7 @@ UserSchema.methods = {
     return `${this._id}${randtoken.generate(16)}`;
   },
   generateSimpleToken() {
-    return randtoken.generate(6).toLowerCase();
+    return randtoken.generate(4, '0123456789');
   },
 
   createSessionToken() {
@@ -102,7 +102,7 @@ UserSchema.methods = {
   },
 };
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   if (!this.isModified('password'))
     return next();
 
