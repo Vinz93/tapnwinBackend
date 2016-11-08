@@ -295,17 +295,16 @@ const UserController = {
    *     produces:
    *       - application/json
    *     parameters:
-   *       - name: recovery_token
-   *         description: User's recovery token
-   *         in: query
-   *         required: true
-   *         type: string
    *       - name: user
    *         description: User object
    *         in: body
    *         required: true
    *         schema:
    *           properties:
+   *             email:
+   *               type: string
+   *             recovery_token:
+   *               type: string
    *             password:
    *               type: string
    *           required:
@@ -316,12 +315,13 @@ const UserController = {
    */
   updatePassword(req, res, next) {
     User.findOne({
-      recoveryToken: req.query.recovery_token,
+      email: req.body.email,
     })
       .then(user => {
         if (!user)
-          return Promise.reject(new APIError('User not found', httpStatus.NOT_FOUND));
-
+          return Promise.reject(new APIError('User not found.', httpStatus.NOT_FOUND));
+        if (req.body.recovery_token !== user.recoveryToken)
+          return Promise.reject(new APIError('Invalid recovery Token.', httpStatus.BAD_REQUEST));
         user.updatePassword(req.body.password);
         return user.save();
       })
