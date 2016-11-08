@@ -6,6 +6,7 @@
   "scripts": {
     "start": "grunt",
     "build": "grunt build",
+    "test": "mocha ./server/tests/Player",
     "seed": "node --harmony_proxies ./config/seeds",
     "seed:dist": "node --harmony_proxies ./dist/config/seeds"
   },
@@ -56,6 +57,7 @@
     "walk-sync": "^0.2.6"
   },
   "devDependencies": {
+    "assert": "^1.4.1",
     "babel-eslint": "^6.0.4",
     "babel-preset-es2015": "^6.9.0",
     "eslint": "^2.10.2",
@@ -70,6 +72,8 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-mkdir": "^1.0.0",
     "grunt-nodemon": "^0.4.2",
-    "load-grunt-tasks": "^3.5.0"
+    "load-grunt-tasks": "^3.5.0",
+    "mocha": "^3.1.2",
+    "superagent": "^2.3.0"
   }
 }
