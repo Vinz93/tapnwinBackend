@@ -70,7 +70,7 @@ UserSchema.methods = {
 
   expiredVerification(time) {
     const limit = timeUnit.hours.toMillis(time);
-    if (Date.now() - this.createdAt.getTime() > limit)
+    if (Date.now() - this.updatedAt.getTime() > limit)
       return true;
     return false;
   },
