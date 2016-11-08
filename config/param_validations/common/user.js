@@ -20,12 +20,12 @@ export default {
     },
   },
 
-  checkVerificationToken:{
-  body:{
-    email: Joi.string().email().required(),
-    verificationToken: Joi.string().required(),
-  }
-},
+  checkVerificationToken: {
+    body: {
+      email: Joi.string().email().required(),
+      verificationToken: Joi.string().required(),
+    },
+  },
 
   readByMe: {
     headers: {
@@ -48,11 +48,10 @@ export default {
   },
 
   updatePassword: {
-    query: {
-      recovery_token: Joi.string().token(),
-    },
     body: {
+      email: Joi.string().email().required(),
       password: Joi.string().required(),
+      recovery_token: Joi.string().token(),
     },
   },
 
@@ -76,7 +75,7 @@ export default {
     },
   },
 
-  updateEmail:{
+  updateEmail: {
     params: {
       user_id: Joi.objectId().required(),
     },
