@@ -416,6 +416,52 @@ const StatusController = {
     })
     .catch(next);
   },
+/**
+ * @swagger
+ * /players/me/campaign_statuses/{campaign_status_id}/unlock_games:
+ *   patch:
+ *     tags:
+ *       - CampaignStatuses
+ *     description: Unlock games
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - name: X-Auth-Token
+ *         description: Player's session token
+ *         in: header
+ *         required: true
+ *         type: string
+ *       - name: campaign_status_id
+ *         description: CampaignStatus' id
+ *         in: path
+ *         required: true
+ *         type: string
+ *     responses:
+ *       204:
+ *         description: Successfully unlocked games
+ */
+  unlockGames(req, res, next) {
+    CampaignStatus.findOne({
+      player: res.locals.user._id,
+      _id: req.params.campaign_status_id,
+    })
+    .then(campaignStatus => {
+      campaignStatus.vdlg.isBlocked = false;
+      campaignStatus.vdlg.unblockAt = undefined;
+      campaignStatus.dyg.isBlocked = false;
+      campaignStatus.dyg.unblockAt = undefined;
+      campaignStatus.m3.isBlocked = false;
+      campaignStatus.m3.unblockAt = undefined;
+      return campaignStatus.save();
+    })
+    .then(campaignStatus => {
+      if (!campaignStatus)
+        return Promise.reject(new APIError('CampaignStatus not found', httpStatus.NOT_FOUND));
+
+      res.status(httpStatus.NO_CONTENT).end();
+    })
+    .catch(next);
+  },
 };
 
 export default StatusController;
