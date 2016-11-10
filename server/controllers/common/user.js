@@ -199,8 +199,9 @@ const UserController = {
         user.createRecoveryToken();
 
         send({
+          from: '"Registro tap&win" <registro@tapandwin.today>',
           to: user.email,
-          subject: 'Recupera tu contraseña en Tap and win',
+          subject: 'Recupera tu contraseña',
         }, {
           user,
         }, err => {
@@ -447,8 +448,9 @@ const UserController = {
         return player.save()
           .then(player => {
             send({
+              from: '"Registro tap&win" <registro@tapandwin.today>',
               to: player.email,
-              subject: 'Tap and Win Verification',
+              subject: 'Confirma tu registro',
             }, {
               player,
             }, err => {
