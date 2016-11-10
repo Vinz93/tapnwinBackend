@@ -71,7 +71,7 @@ const PlayerController = {
             .then(player => {
               player.createVerificationToken();
               send({
-                from: '"Registro tap&win" <registro@tapandwin.today>',
+                from: '"tap&win" <registro@tapandwin.today>',
                 to: player.email,
                 subject: 'Confirma tu registro',
               }, {
@@ -91,7 +91,7 @@ const PlayerController = {
           player.set(req.body);
           player.createVerificationToken();
           send({
-            from: '"Registro tap&win" <registro@tapandwin.today>',
+            from: '"tap&win" <registro@tapandwin.today>',
             to: player.email,
             subject: 'Confirma tu registro',
           }, {
