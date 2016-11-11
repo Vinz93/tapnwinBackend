@@ -1,50 +1,42 @@
 /* eslint-env node, mocha */
+/* eslint-disable */
 import chai from 'chai';
+import chaihttp from 'chai-http';
 import request from 'superagent';
 import mongoose from 'mongoose';
-import Promise from 'bluebird';
 import config from '../../config/env';
-// import Player from '../models/common/player';
 import User from '../models/common/user';
 import app from '../../index';
 
 let should = chai.should();
+chai.use(chaihttp);
 process.env.NODE_ENV = 'testing';
 
-// describe('User Tests', () => { // eslint-disable-line
-//
-//   it('Creates a user', done => { // eslint-disable-line
-//     request
-//     .post(`${API_URL}/players`)
-//     .send({
-//       email: 'vincenzob@ludopia.net',
-//       password: '123',
-//       firstName: 'Vincenzo',
-//       gender: 'male',
-//     })
-//     .end((err, res) => {
-//       assert.ifError(err);
-//       const user = JSON.parse(res.text);
-//       assert.equal(user.email, 'vincenzob@ludopia.net');
-//       assert.equal(user.verified, false);
-//       done();
-//     });
-//   });
-//
-//   it('the token has 4 digits', done => { // eslint-disable-line
-//     User.findOne({ email: 'vincenzob@ludopia.net' })
-//       .then(user => {
-//         const token = Number(user.verificationToken);
-//         assert.equal(typeof token, 'number');
-//         assert.equal(user.verificationToken.length, 4);
-//         done();
-//       });
-//   });
-//
-//   before(() => { // eslint-disable-line
-//     User.remove({ email: 'vincenzob@ludopia.net' }, err => {
-//       if (err)
-//         console.log('error deleting vinz');
-//     });
-//   });
-// });
+
+describe('Users', () => {
+
+  beforeEach(done => {
+    User.remove({}, (err) => {
+       done();
+    });
+  });
+  describe('/POST Player', () => {
+    it('it should not POST a Player without email field', done => {
+      const player = {
+        firstName: 'Vincenzo',
+        password: '123',
+        gender: 'male',
+      }
+      chai.request(app)
+        .post('/players')
+        .send(player)
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.be.a('object');
+           res.body.should.have.property('message');
+           res.body.message.should.equal('"email" is required');
+          done();
+        });
+    });
+  });
+});

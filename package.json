@@ -6,7 +6,7 @@
   "scripts": {
     "start": "grunt",
     "build": "grunt build",
-    "test": "mocha --harmony_proxies server/tests/Player  --compilers js:babel-core/register",
+    "test": "mocha --harmony_proxies server/tests/*.js  --compilers js:babel-core/register",
     "seed": "node --harmony_proxies ./config/seeds",
     "seed:dist": "node --harmony_proxies ./dist/config/seeds"
   },
