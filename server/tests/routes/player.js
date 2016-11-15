@@ -1,33 +1,30 @@
-/* eslint-env node, mocha */
 /* eslint-disable */
 import chai from 'chai';
 import chaihttp from 'chai-http';
 import request from 'superagent';
 import mongoose from 'mongoose';
-import config from '../../config/env';
-import User from '../models/common/user';
-import app from '../../index';
+import config from '../../../config/env';
+import User from '../../models/common/user';
+import Player from '../../models/common/player';
+import app from '../../../index';
 
 let should = chai.should();
 chai.use(chaihttp);
-process.env.NODE_ENV = 'testing';
 
-
-describe('Users', () => {
+describe('Player routes', () => {
 
   beforeEach(done => {
     User.remove({}, (err) => {
        done();
     });
   });
-
-  describe('/POST Player', () => {
-    it('it should not POST a user without email field', done => {
+  describe('POST /players', () => {
+    it('it should not create a user without email field', done => {
       const player = {
         firstName: 'Vincenzo',
         password: '123',
         gender: 'male',
-      }
+      };
       chai.request(app)
         .post('/players')
         .send(player)
@@ -42,11 +39,11 @@ describe('Users', () => {
 
     it('it should Create a user with all required fields', done => {
       const player = {
-        email: 'vincenzob@ludopia.net',
+        email: 'vincenzob2@ludopia.net',
         firstName: 'Vincenzo',
         password: '123',
         gender: 'male',
-      }
+      };
       chai.request(app)
       .post('/players')
       .send(player)

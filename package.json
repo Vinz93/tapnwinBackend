@@ -6,7 +6,8 @@
   "scripts": {
     "start": "grunt",
     "build": "grunt build",
-    "test": "mocha --harmony_proxies server/tests/*.js -w --timeout 10000 --compilers js:babel-core/register",
+    "test": "mocha --harmony_proxies server/tests/**/*.js  --timeout 10000 -c --compilers js:babel-core/register || true",
+    "test:nyan": "mocha --harmony_proxies server/tests/**/*.js  --timeout 10000 -c -R nyan --compilers js:babel-core/register || true",
     "seed": "node --harmony_proxies ./config/seeds",
     "seed:dist": "node --harmony_proxies ./dist/config/seeds"
   },
