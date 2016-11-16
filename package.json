@@ -6,6 +6,8 @@
   "scripts": {
     "start": "grunt",
     "build": "grunt build",
+    "test": "mocha --harmony_proxies server/tests/**/*.js  --timeout 10000 -c --compilers js:babel-core/register || true",
+    "test:nyan": "mocha --harmony_proxies server/tests/**/*.js  --timeout 10000 -c -R nyan --compilers js:babel-core/register || true",
     "seed": "node --harmony_proxies ./config/seeds",
     "seed:dist": "node --harmony_proxies ./dist/config/seeds"
   },
@@ -56,8 +58,12 @@
     "walk-sync": "^0.2.6"
   },
   "devDependencies": {
+    "assert": "^1.4.1",
+    "babel-core": "^6.18.2",
     "babel-eslint": "^6.0.4",
     "babel-preset-es2015": "^6.9.0",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "eslint": "^2.10.2",
     "eslint-config-airbnb-base": "^3.0.1",
     "eslint-plugin-import": "^1.8.0",
@@ -70,6 +76,8 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-mkdir": "^1.0.0",
     "grunt-nodemon": "^0.4.2",
-    "load-grunt-tasks": "^3.5.0"
+    "load-grunt-tasks": "^3.5.0",
+    "mocha": "^3.1.2",
+    "superagent": "^2.3.0"
   }
 }

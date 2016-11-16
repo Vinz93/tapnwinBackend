@@ -7,10 +7,9 @@ import app from './config/express';
 mongoose.Promise = Promise;
 
 function listen() {
-  if (config.env === 'test')
-    return;
-
   app.listen(config.port);
+  if (config.env === 'testing')
+    return;
 
   console.log(`Tapnwin API started on port ${config.port}`);
 }
